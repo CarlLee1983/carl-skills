@@ -1,7 +1,7 @@
 # 核心評估與授權流程
 
 Status: ready-for-agent
-State: open
+State: closed
 Owner: Primary
 Blocked by: none
 
@@ -22,3 +22,5 @@ release-assessment/SKILL.md 與 references/operations.md
 檢查文件連結與格式、按 SPEC.md 驗收；不進行真實發布。
 
 ## Comments
+
+Resolved: implemented and integrated through `61c04e7`; Standards and Spec review clean after fixes. See [validation summary](../validation/SUMMARY.md) for all 22 acceptance variants, affected-case replays and limitations.
