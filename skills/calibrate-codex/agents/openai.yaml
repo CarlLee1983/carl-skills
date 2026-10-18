@@ -1,0 +1,4 @@
+interface:
+  display_name: "Calibrate Codex"
+  short_description: "Turn feedback into durable Codex guardrails"
+  default_prompt: "Use $calibrate-codex to turn this correction into the narrowest durable Codex rule."

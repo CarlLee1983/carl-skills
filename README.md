@@ -1,12 +1,14 @@
 # carl-skills
 
-Carl 維護的開源 agent skills，提供可重複使用的工作流程。每個 skill 可獨立安裝到 Codex、Claude Code 等支援 Agent Skills 的工具。
+Carl 維護的開源 agent skills，提供可重複使用的工作流程。每個 skill 可獨立安裝，適用工具依下表列示。
 
 ## Skills
 
-| Skill | 用途 | 規格 |
+| Skill | 適用工具 | 用途 |
 | --- | --- | --- |
-| [release-assessment](skills/release-assessment/SKILL.md) | 分開判斷變更納入、版本調整與發布時機，取得具體授權後協助操作。 | [規格](docs/release-assessment/SPEC.md) |
+| [release-assessment](skills/release-assessment/SKILL.md) | Codex、Claude Code 等 | 分開判斷變更納入、版本調整與發布時機，取得具體授權後協助操作。[規格](docs/release-assessment/SPEC.md) |
+| [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；不限定模型。 |
+| [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
 
 ## 快速安裝
 
@@ -29,6 +31,18 @@ npx skills add CarlLee1983/carl-skills --skill release-assessment -g -a claude-c
 ```
 
 同時使用兩者時，可在一個指令中指定 `-a codex claude-code`。CLI 預設以共用副本與必要的 symlink 安裝，保留 `SKILL.md`、`references/` 與 `LICENSE`。安裝前若已有同名 skill，先比較或備份自訂內容。
+
+其他技能也可按需安裝：
+
+```sh
+# 繁中／英文潤稿；只使用一個 agent 時，保留對應名稱即可
+npx skills add CarlLee1983/carl-skills --skill humanize-writing -g -a codex claude-code
+
+# Codex 行為調校
+npx skills add CarlLee1983/carl-skills --skill calibrate-codex -g -a codex
+```
+
+`calibrate-codex` 依 Codex 的設定與規則機制運作；CLI 能將檔案放進其他 agent 的目錄，不代表那些平台受支援。
 
 ### 只安裝到目前專案
 
@@ -77,9 +91,25 @@ release-assessment 使用本機 `git` 蒐集提交與差異；查詢 GitHub PR�
 
 評估會分開回答「本次變更是否納入」、「累積變更如何調整版本」與「現在是否適合發布」。安裝或取得「可發布」結論，都不代表授權建立 tag、推送或實際發布。
 
+### 潤稿與 Codex 調校
+
+在 Codex 對話中使用：
+
+```text
+$humanize-writing 幫我潤飾下面的產品更新，保留數字、模型名稱、立場與不確定性：……
+```
+
+Claude Code 使用 `/humanize-writing`。繁中、英文與混合語言會使用對應規則；原文已自然時只做必要修改。
+
+```text
+$calibrate-codex Codex 已連續兩次只改呼叫端，沒有修正共用函式。請依這兩次 diff 的證據，把修正原則記在目前 repo 的適當指引，先檢查既有規則，保留無關內容。
+```
+
+`calibrate-codex` 先確認證據與作用範圍，再選擇指引、skill、hook、rule 或專案檢查。它依 `CODEX_HOME`（預設 `~/.codex`）定位使用者層級設定；只有需要驗證 hook 或 rule 時才使用相應的 Codex 能力。工具、信任設定或新 session 驗證不可用時，會列出未完成項目；安裝技能本身不會改寫設定或啟用 hook。
+
 ## 更新與移除
 
-以下指令適用以 Skills CLI 安裝的副本。更新前先備份本機修改；更新會取得來源的新內容。
+以下指令適用以 Skills CLI 安裝的副本。更新前先備份本機修改；更新會取得來源的新內容。範例中的 `release-assessment` 可換成 `humanize-writing` 或 `calibrate-codex`。
 
 ```sh
 # 只更新這個使用者層級 skill
@@ -113,7 +143,7 @@ git clone https://github.com/CarlLee1983/carl-skills.git && (
 )
 ```
 
-Claude Code 使用者可將 `skill_target_dir` 改為 `"$HOME/.claude/skills/release-assessment"`。其他安裝範圍依上表選擇目標。Windows 可 clone 或下載 repo ZIP，將 `skills/release-assessment/` 整個資料夾複製到使用者家目錄或專案的對應位置。
+Claude Code 使用者可將 `skill_target_dir` 改為 `"$HOME/.claude/skills/release-assessment"`。其他安裝範圍依上表選擇目標。安裝其他技能時，同時替換來源與目標中的技能名稱；`calibrate-codex` 使用 Codex 的目標路徑。Windows 可 clone 或下載 repo ZIP，將選定的 `skills/<skill-name>/` 整個資料夾複製到使用者家目錄或專案的對應位置。
 
 保留 `SKILL.md`、`references/` 與 `LICENSE` 的相對位置；不需要複製 repo 的 `docs/`、`.scratch/` 或 `AGENTS.md`。被評估專案的發布政策留在該專案中。
 
@@ -124,6 +154,8 @@ Claude Code 使用者可將 `skill_target_dir` 改為 `"$HOME/.claude/skills/rel
 ## 維護本集合
 
 每個 skill 保持完整、可攜的目錄；共用 repo 不代表所有 skills 必須一起安裝或升版。
+
+本集合以 `skills/` 為維護來源，本機 agent 的安裝目錄是使用副本。先在此修改及驗證，再更新安裝，避免兩處各自維護不同版本。
 
 ```text
 skills/<skill-name>/
@@ -147,6 +179,8 @@ docs/agents/               本 repo 的協作設定
 
 ```sh
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/release-assessment
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/humanize-writing
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/calibrate-codex
 ```
 
 這項檢查不代替行為驗收。release-assessment 的 [驗收案例](skills/release-assessment/references/acceptance.md) 與 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
