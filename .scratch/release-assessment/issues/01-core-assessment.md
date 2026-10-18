@@ -7,11 +7,11 @@ Blocked by: none
 
 ## Spec
 
-[定稿規格](../../../SPEC.md)
+[定稿規格](../../../docs/release-assessment/SPEC.md)
 
 ## Ownership
 
-release-assessment/SKILL.md 與 references/operations.md
+skills/release-assessment/SKILL.md 與 references/operations.md
 
 ## Acceptance
 

@@ -2,40 +2,38 @@
 
 ## Project Structure & Module Organization
 
-This repository provides a reusable prompt-based release-assessment skill. `SPEC.md` defines its behavior.
+`carl-skills` is a collection of independently installable, self-contained agent skills.
 
-- `SPEC.md` is the authoritative specification, including the project-policy template and 16 acceptance scenarios.
-- `.gitignore` excludes the local `graft/` graph cache; `.ignore` controls its search visibility. Preserve both conventions.
-- `release-assessment/SKILL.md` is the portable entry point; `references/` contains conditional operation guidance, the policy template, and acceptance scenarios.
-- `.scratch/release-assessment/issues/` records implementation work. No application runtime or test framework is required.
+- `skills/<skill-name>/SKILL.md` is each skill's entry point. Keep its required references, scripts, and assets within that directory.
+- `docs/<skill-name>/` holds specifications and maintenance documents. The release-assessment specification is `docs/release-assessment/SPEC.md`.
+- `README.md` lists available skills and installation guidance; update it when adding a skill.
+- `.scratch/<feature>/` records tickets and validation evidence. Preserve historical reports as evidence of their original checkpoints.
+- `.gitignore` excludes the local `graft/` cache; `.ignore` controls its search visibility. Preserve these conventions.
 
 ## Build, Test, and Development Commands
 
-No build system, package manifest, formatter, linter, or test runner is configured. Use repository inspection and documentation checks:
+No collection-wide build system, package manager, linter, or runtime is configured.
 
 - `git status --short --branch` — inspect the branch and pending changes before editing.
-- `git diff --check` — detect whitespace errors in tracked changes.
-- `git diff --no-index --check /dev/null <new-file>` — check an untracked Markdown file.
-- When the Codex skill-creator tools are installed, run `python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py release-assessment` to validate skill metadata.
-- Follow `release-assessment/references/acceptance.md` for behavioral simulation; metadata checks alone do not validate decisions.
+- `git diff --check` — check tracked changes for whitespace errors.
+- `git diff --no-index --check /dev/null <new-file>` — check a new Markdown file.
+- If Codex skill-creator tools are installed, run `python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/<skill-name>` for metadata validation.
 
-Document runnable commands when implementation introduces tooling.
+Document additional commands when a skill introduces executable tooling.
 
 ## Writing Style & Naming Conventions
 
-Use descriptive Markdown headings, short paragraphs, fenced examples, and tables for comparable outputs. Preserve Traditional Chinese terminology in `SPEC.md`. Use lowercase hyphenated names for skill directories, such as `release-assessment`, and the required `SKILL.md` entry-point filename. Keep shared assessment logic separate from project-specific policy; reference authoritative rules instead of duplicating them.
+Use descriptive Markdown headings, short paragraphs, fenced examples, and tables for comparable outputs. Preserve the language and domain terminology of existing documents. Name skill directories with lowercase hyphenated names and their entry points `SKILL.md`.
+
+Keep each skill independently portable: required files and relative links must work when only its directory is installed. Reference project policies rather than copying them into shared instructions. Add scripts or abstractions only for demonstrated needs.
 
 ## Testing Guidelines
 
-Use the acceptance scenarios in `SPEC.md` as the behavioral checklist. Verify change inclusion, version adjustment, and release readiness independently. Include missing evidence, monorepo dependencies, non-SemVer policies, and partial authorization cases. Simulate release actions rather than publishing real artifacts during validation. No automated coverage threshold or test naming convention exists yet; document the chosen framework and commands when adding tests.
+Verify affected behavior against the skill's specification and acceptance cases. For release-assessment, use `skills/release-assessment/references/acceptance.md`; simulate releases rather than publishing real artifacts. Metadata and link checks do not establish behavioral correctness. Reuse prior behavioral results for unchanged skill content after mechanical moves.
 
 ## Commit & Pull Request Guidelines
 
-Use concise imperative subjects describing the actual change, consistent with the initial commits. No enforced commit-prefix convention exists. PR descriptions should identify the affected specification or behavior, relevant acceptance scenarios, validation performed, and remaining limitations. Link an issue when one exists. Preserve unrelated uncommitted work.
-
-## Release Operations
-
-Follow the proposal and authorization contract in `SPEC.md` before version changes, tags, or publication. Assessment results alone do not authorize execution. Commit, push, and remote workflow actions must also be included in the approved scope.
+Use concise imperative commit subjects. PR descriptions should identify affected skills, behavior, validation, and limitations; link relevant tickets. Preserve unrelated work. Obtain authorization for commits, pushes, tags, and publication; assessment results alone do not authorize execution.
 
 ## Agent skills
 
