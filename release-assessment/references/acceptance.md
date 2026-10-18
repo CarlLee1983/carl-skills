@@ -71,11 +71,13 @@
 
 ## 07 非 SemVer 專案（分別重播）
 
-**輸入 A：** 發布單位改為日期版本服務 `status`；政策為台北日期 `YYYY.MM.DD.N`，每天序號由 1 起；已交付版本 2026.10.17.1 對應 A，2026-10-18 尚無版本；本次改動交付頁面，目標 B 檢查通過，逐次發布。
+**共用輸入：** 評估時間固定為 2026-10-18 09:00 Asia/Taipei。repo 為 `/fixtures/status`，發布單位為頁面服務 `status`，正式部署目的地為 `https://status.example`；`PR-12.diff` 與完整 `diff/A..B` 均只修正 `site/index.html` 的顯示文字，尚未交付。服務政策為逐次發布；`docs/release.md` 指定既有 `deploy.yml` 建置並部署頁面，以部署收據確認結果，不使用套件 registry 或 tag。必要檢查為 Node 22 / Linux 的 `test`、`build-site`，`checks/B.json` 證明兩項均在服務目標 B 通過。這些服務證據取代預設 orbit CLI、套件打包、版本檔、tag、registry 與 CLI 發布流程；SHA 定義與僅評估授權仍沿用共用證據。
+
+**輸入 A：** 服務採日期版本；政策為台北日期 `YYYY.MM.DD.N`，每天序號由 1 起，版本權威為 `release-version.txt`。`deployments/status.json` 的正式部署收據明定 status 2026.10.17.1 已交付於 A；2026-10-18 尚無版本。
 
 **預期 A：** 需要／依專案策略（2026.10.18.1）／可發布，列明日期與序號依據。
 
-**輸入 B：** 同一服務改為沒有對外版本；以部署收據 A 為基準，其他證據同 A。
+**輸入 B：** 服務採沒有對外版本的政策，不使用版本檔；`deployments/status.json` 的正式部署收據明定 status 已交付於 A，不帶對外版本。其餘使用本案共用輸入，不沿用輸入 A 的日期版本規則。
 
 **預期 B：** 需要／不適用／可發布，固定 B 並引用收據。
 
@@ -135,7 +137,7 @@
 
 ## 授權案例的共用提案
 
-13–16 使用預設 patch 候選。操作前的模擬證據為：工作區乾淨（13 另有覆寫）、本機與遠端均無 `v1.4.3` tag、目的地尚無 1.4.3 版本；16 已完成部分操作後的狀態依該案覆寫。既有工具將版本修改、commit、tag、push 與啟動 workflow 分為獨立步驟，每步只產生所列效果，沒有隱含的其他操作。檢查與操作結果依共用證據及各案指定內容回傳。
+13–16 的 repo 為 `/fixtures/orbit`，使用預設 patch 候選。`package.json` 的版本目前為 1.4.2；既有 `node scripts/prepare-version.mjs 1.4.3` 負責只將該版本改為 1.4.3 並更新 `CHANGELOG.md`，沒有其他檔案或隱含動作。操作前的模擬證據為：工作區乾淨（13 另有覆寫）、本機與遠端均無 `v1.4.3` tag、目的地尚無 1.4.3 版本；16 已完成部分操作後的狀態依該案覆寫。既有工具將版本修改、commit、tag、push 與啟動 workflow 分為獨立步驟，每步只產生所列效果，沒有隱含的其他操作。檢查與操作結果依共用證據及各案指定內容回傳。
 
 先要求準備提案，再提供各案授權。提案須固定 orbit／正式通道／B／1.4.3、`package.json` 與 `CHANGELOG.md`、`v1.4.3`、`registry.example/orbit`，以及版本修改 → commit → tag → push → `release.yml` → 查證的順序與副作用。版本修改將產生新提交 C；提案明列 C 須限於列出的版本與 changelog 變更，且須在 C 重跑必要檢查後才可繼續；模擬 `checks/C.json` 通過，tag 與收據須指向 C。這是提案內明確允許的準備提交，並非任意移動目標。
 
@@ -169,11 +171,11 @@
 
 ## 16 部分成功與執行中（分別重播）
 
-**輸入 A：** 整套提案已獲准，本機修改與 tag C 完成、push 成功；workflow 因目的地拒絕上傳而 failed；正式通道查無 1.4.3 收據。
+**輸入 A：** 整套提案已獲准，本機修改與 commit C 完成；C 僅含核准的 `package.json` 版本及 `CHANGELOG.md` 變更，`checks/C.json` 證明必要檢查在 C 通過。`v1.4.3` tag 指向 C，push 成功；workflow 因目的地拒絕上傳而 failed；正式通道查無 1.4.3 收據。
 
 **預期 A：** 分開記錄本機完成、遠端 tag 已建立、workflow 失敗、發布未成功；引用錯誤，提出查明原因與依既有恢復流程處理的下一步。
 
-**輸入 B：** 同樣已 push，但 workflow 為 in_progress、沒有正式通道收據。
+**輸入 B：** 本機修改、commit C、C 的內容與通過的必要檢查、tag 指向及 push 成功均同輸入 A；workflow 改為 in_progress，沒有正式通道收據。
 
 **預期 B：** 回報遠端 tag 已建立、workflow 執行中、發布結果待查；後續查詢同一 run。
 
