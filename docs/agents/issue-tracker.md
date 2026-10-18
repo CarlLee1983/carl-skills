@@ -10,6 +10,10 @@ Issues and specs for this repo live as markdown files in `.scratch/`.
 - Triage state is recorded as a `Status:` line near the top of each issue file (see `triage-labels.md` for the role strings)
 - Comments and conversation history append to the bottom of the file under a `## Comments` heading
 
+## Implementation lifecycle
+
+Keep triage readiness in `Status:` and completion in `State: open` or `State: closed`. Record prerequisites in `Blocked by:` using ticket numbers (`none` when independent); a ticket is available when all prerequisites are closed and it is unclaimed. Record `Owner:` when claimed. Close only after integration and verification, appending the result and commit/evidence pointers under `## Comments`.
+
 ## When a skill says "publish to the issue tracker"
 
 Create a new file under `.scratch/<feature-slug>/` (creating the directory if needed).
