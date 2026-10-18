@@ -33,3 +33,17 @@ The repository has no commits yet, so no historical message convention exists. U
 ## Release Operations
 
 Follow the proposal and authorization contract in `SPEC.md` before version changes, tags, or publication. Assessment results alone do not authorize execution. Commit, push, and remote workflow actions must also be included in the approved scope.
+
+## Agent skills
+
+### Issue tracker
+
+Track work in local Markdown under `.scratch/<feature>/`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the five default triage roles. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Use a single-context glossary and ADR layout. See `docs/agents/domain.md`.
