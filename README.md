@@ -29,6 +29,8 @@ docs/agents/               本 repo 的協作設定
 
 保留 `SKILL.md` 與其 references 的相對位置。每個 skill 只保留一份啟用來源，避免同時安裝多個副本。此 repo 的整理不會自動安裝或更新任何本機 skill。
 
+複製或散布 skill 時，請一併保留該目錄內的 `LICENSE`。
+
 安裝內容不需要包含本 repo 的 `docs/`、`.scratch/` 或 `AGENTS.md`。例如 release-assessment 所需的專案發布政策仍保留在被評估專案中，不搬進此集合。
 
 ## 維護與驗證
@@ -44,3 +46,7 @@ python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/r
 這項檢查不代替行為驗收。release-assessment 的 [驗收案例](skills/release-assessment/references/acceptance.md) 與 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
 
 目前沒有統一版本或自動發布流程。集中管理原始碼，不預設所有 skills 共用相容性承諾與發布節奏。
+
+## 授權
+
+本專案採用 [MIT License](LICENSE)，Copyright (c) 2026 CarlLee1983。每個可獨立安裝的 skill 目錄附有相同授權文字。
