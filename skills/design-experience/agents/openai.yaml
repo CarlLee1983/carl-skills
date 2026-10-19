@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Experience"
+  short_description: "從專案理解、方向比較與互動原型，推進到可接續的 UI／UX 定稿與實作交接"
+  default_prompt: "使用 $design-experience 理解這個專案，找出主要使用流程，提出可比較的設計方向並建立原型，依我的回饋收斂與定稿。"
