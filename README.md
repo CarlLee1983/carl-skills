@@ -9,6 +9,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | [release-assessment](skills/release-assessment/SKILL.md) | Codex、Claude Code 等 | 分開判斷變更納入、版本調整與發布時機，取得具體授權後協助操作。[規格](docs/release-assessment/SPEC.md) |
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
+| [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 理解產品任務、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
 
 ## 快速安裝
 
@@ -40,6 +41,9 @@ npx skills add CarlLee1983/carl-skills --skill humanize-writing -g -a codex clau
 
 # Codex 行為調校
 npx skills add CarlLee1983/carl-skills --skill calibrate-codex -g -a codex
+
+# UI／UX 探索與原型比較
+npx skills add CarlLee1983/carl-skills --skill design-experience -g -a codex claude-code
 ```
 
 `calibrate-codex` 依 Codex 的設定與規則機制運作；CLI 能將檔案放進其他 agent 的目錄，不代表那些平台受支援。
@@ -107,9 +111,19 @@ $calibrate-codex Codex 已連續兩次只改呼叫端，沒有修正共用函式
 
 `calibrate-codex` 先確認證據與作用範圍，再選擇指引、skill、hook、rule 或專案檢查。它依 `CODEX_HOME`（預設 `~/.codex`）定位使用者層級設定；只有需要驗證 hook 或 rule 時才使用相應的 Codex 能力。工具、信任設定或新 session 驗證不可用時，會列出未完成項目；安裝技能本身不會改寫設定或啟用 hook。
 
+### 設計探索與原型比較
+
+```text
+$design-experience 這個專案功能大致完成了，請先理解它，找出主要使用流程，提出幾個方向並建立比較原型。
+```
+
+Claude Code 使用 `/design-experience`。技能會沿用既有設計紀錄，使用相同任務與資料比較方向，並以 `SESSION.md` 保存選擇、原型入口與交接。定稿代表接受指定設計版本，正式實作與新增產品介面仍依實際授權範圍決定。
+
+不需預先安裝其他設計技能；有專項需求且工具可用時才選用協作能力。瀏覽器無法檢查時會交付可定位的產物並列明缺口；語法與模擬流程通過不代表視覺或真人可用性驗證通過。[維護驗收](docs/design-experience/acceptance.md) 列出檢查情境。
+
 ## 更新與移除
 
-以下指令適用以 Skills CLI 安裝的副本。更新前先備份本機修改；更新會取得來源的新內容。範例中的 `release-assessment` 可換成 `humanize-writing` 或 `calibrate-codex`。
+以下指令適用以 Skills CLI 安裝的副本。更新前先備份本機修改；更新會取得來源的新內容。範例中的 `release-assessment` 可換成上表其他技能名稱。
 
 ```sh
 # 只更新這個使用者層級 skill
@@ -181,6 +195,7 @@ docs/agents/               本 repo 的協作設定
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/release-assessment
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/humanize-writing
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/calibrate-codex
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/design-experience
 ```
 
 這項檢查不代替行為驗收。release-assessment 的 [驗收案例](skills/release-assessment/references/acceptance.md) 與 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
