@@ -1,6 +1,6 @@
-# 專案發布政策範本
+# Project release policy template
 
-建立或補齊專案政策時使用。將以下範本複製到專案根目錄的 `RELEASE-POLICY.md`；已有權威文件的欄位直接填入連結與適用章節。範本空白代表尚待確認，並非預設政策。不同發布單位的差異分別填寫。
+Use when creating or completing project policy. Copy the template to the project root as `RELEASE-POLICY.md`; link to relevant sections of existing authoritative documents instead of duplicating them. Blank fields require confirmation, not default assumptions. Record differences per release unit.
 
 ```markdown
 # 發布政策
@@ -35,6 +35,6 @@
 - 失敗恢復或撤回流程：
 ```
 
-填寫後確認每個發布單位的基準可對應到已交付提交、必要檢查可對應到候選提交及環境，並能辨認三種操作的既有流程。仍缺漏的欄位保留為資訊缺口；來源衝突且會改變結論時交由使用者決定。
+After filling it in, confirm that each unit's baseline maps to a delivered commit, required checks map to the candidate and environment, and existing bump, tag, and publication procedures are identifiable. Keep incomplete fields as evidence gaps; ask the user to resolve source conflicts that could change conclusions.
 
-政策只記錄專案規則；評估與授權流程沿用 [release-assessment](../SKILL.md)。填好政策或得到「可發布」建議，均不構成操作授權。
+Policy records project rules only; use [release-assessment](../SKILL.md) for assessment and authorization. Completing policy or receiving a `可發布` recommendation does not authorize operations.

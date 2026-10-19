@@ -1,46 +1,46 @@
-# 接續紀錄與設計交接
+# Continuation records and design handoff
 
-首次保存設計或接手既有探索時讀本檔。以一份 `SESSION.md` 作為進度與入口的來源；原型／圖片保存實際設計內容，不重抄成另一套規格。
+Read before first saving a design or taking over existing exploration. Use one `SESSION.md` as the source of progress and entry points. Prototypes/images hold the actual design; do not transcribe them into a second specification.
 
-## 存放與接續
+## Storage and continuation
 
-優先沿用專案已建立的設計文件／原型慣例，寫入前遵守該處規則。概念探索若不宜進入產品工作樹，使用持續保存的使用者工作目錄，例如 `~/Documents/design-experience/<project>/<topic>/`。首次交付說明實際位置，不自行改 `.gitignore` 或將原型加入正式路由。`/tmp` 可供檢查與隔離評估；正式交付與定稿不得只有暫存位置。
+Follow existing project conventions for design documents/prototypes and applicable rules before writing. If concept exploration should stay outside the product working tree, use persistent user storage such as `~/Documents/design-experience/<project>/<topic>/`. State the actual location on first delivery. Do not change `.gitignore` or add prototypes to production routes on your own. `/tmp` is suitable for checks and isolated evaluation, but delivered and finalized artifacts must also have persistent storage.
 
-只建立當輪需要的檔案：
+Create only files needed this round:
 
 ```text
 <design-directory>/
   SESSION.md
-  prototypes/           # 有可執行原型才建立
-  references/           # 有需保留的視覺參考才建立
+  prototypes/           # Only for runnable prototypes
+  references/           # Only for retained visual references
 ```
 
-小修改可直接更新當前原型；重大選擇與定稿保存可辨識版本，例如 `comparison.html`、`workbench-v2.html`。使用者指定名稱優先。已接受的版本保留；修改建立新版本並記錄受影響範圍。用 SESSION 的相對連結和最終回覆的絕對檔案連結讓人找得到入口。 原型標示版本與示例性質，接受狀態統一由 SESSION 維護；避免在原型嵌入「尚未定稿」等會過期的階段文字，讓版本保存與接受紀錄保持一致。
+Small changes can update the current prototype. Save identifiable versions for major choices and finalization, such as `comparison.html` or `workbench-v2.html`; user-specified names take precedence. Preserve accepted versions, making new versions for changes and recording their scope. Use relative links in SESSION and absolute file links in the final response. Label prototypes with their version and sample nature; keep acceptance status solely in SESSION. Avoid embedding stage text such as「尚未定稿」that can expire and conflict with acceptance records.
 
-接續時先確認 SESSION 的專案、主題與原始任務吻合，所連結檔案存在。對照目前專案邊界與相關變更；紀錄是上次觀察，不是現在仍成立的證明。內容已變時標示需要重驗的部分，保留仍有效的決策。使用者未提供紀錄位置時先查本輪已知產物及專案設計目錄，不廣掃整台電腦。
+On continuation, confirm SESSION matches the project, topic, and original task, and that linked files exist. Compare current project boundaries and relevant changes: records describe past observations, not proof that they still hold. Mark changed areas for revalidation and retain valid decisions. If no record location was given, check known artifacts from this round and project design directories; do not scan the whole computer.
 
-## SESSION 的必要內容
+## Required SESSION content
 
-使用簡短 Markdown；只填有意義的欄位，不製造空模板。探索初期只需要脈絡、階段、假設與入口，交接內容逐步累積。
+Use concise Markdown and meaningful fields rather than empty templates. Early exploration needs only context, stage, assumptions, and entry points; accumulate handoff details as work proceeds.
 
-- **任務與目標**：專案位置、原始請求、主要使用者、核心任務、範圍限制、來源文件。若是為測試 skill 而做的產品原型，保留這個外層目標。
-- **目前階段**：理解／比較／原型／收斂／定稿／交接。記錄最後進度與下一個尚未解決的問題；已有紀錄則接續，不重新開始。
-- **方向與決策**：穩定 ID、各方向取捨、使用者選擇與理由。理由沒有提供時寫「未陳述」，不補造。後續 agent 的建議與已接受決定分開。
-- **設計與入口**：當前比較稿、收斂稿、已接受版本的路徑或 URL，開啟方法與必要環境；示例資料、真實接點各是什麼。
-- **驗證紀錄**：對應版本、檢查方式、結果、相關畫面尺寸／情境、未執行項目與阻擋原因。接受設計的使用者回覆另外記錄，不代替操作證據。
-- **未決與交接**：影響後續的問題、可獨立推進的工作，以及正式實作是否已獲授權。
+- **Task and goal:** project location, original request, primary users, core task, scope constraints, and source documents. Preserve the outer goal when the product prototype is a skill test.
+- **Current stage:** understanding/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
+- **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions.
+- **Design and entry points:** paths or URLs for current comparisons, refined designs, and accepted versions; opening instructions and required environment; sample data versus real integration points.
+- **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence.
+- **Open items and handoff:** consequential questions, work that can proceed independently, and whether production implementation is authorized.
 
-## 定稿時的交接內容
+## Finalized-design handoff
 
-在同一份 SESSION 補充足夠讓另一位 agent 開工的資訊；複雜產品已有獨立設計文件時直接連結，避免全文複製。
+Add enough information to the same SESSION for another agent to begin. Link existing separate design documents for complex products rather than copying them in full.
 
-| 內容 | 要讓接手者知道的事 |
+| Content | What the next agent needs |
 | --- | --- |
-| 任務與畫面 | 主要入口、導覽、畫面職責、一步步的操作與完成回饋 |
-| 狀態與恢復 | 該流程必要的空白／載入／失敗／權限狀態，如何重試、返回或取消 |
-| 視覺與元件 | 現有元件能否沿用、tokens 的來源、文字與互動規則、響應式意圖 |
-| 資料與邊界 | 哪些內容由既有契約提供，哪些仍是假資料；需要新增的讀寫或權限能力 |
-| 驗收情境 | 使用者要做的動作、應看到的結果；鍵盤與相關尺寸的檢查方式 |
-| 實作順序 | 最小完整流程先做什麼，依賴什麼，哪些選擇須先決定 |
+| Tasks and screens | Main entry points, navigation, screen responsibilities, step-by-step operations, and completion feedback |
+| States and recovery | Required empty/loading/failure/permission states; retry, return, and cancel behavior |
+| Visuals and components | Reusable components, token sources, copy and interaction rules, responsive intent |
+| Data and boundaries | Existing contract-backed content versus sample data; required new read/write or permission capabilities |
+| Acceptance scenarios | User actions and observable results; keyboard and relevant screen-size checks |
+| Implementation order | First steps for the smallest complete flow, dependencies, and choices that must precede work |
 
-交接完整不代表每項都已決定：未知事項標明影響、誰需要決定、哪些工作可先做。若關鍵資料或權限契約未定，明說尚不能直接開始相依實作。
+A complete handoff can contain unresolved decisions. State their impact, who must decide, and work that can proceed. If essential data or permission contracts remain unsettled, explicitly identify dependent implementation that cannot yet start.

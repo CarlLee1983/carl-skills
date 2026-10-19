@@ -23,7 +23,9 @@ Document additional commands when a skill introduces executable tooling.
 
 ## Writing Style & Naming Conventions
 
-Use descriptive Markdown headings, short paragraphs, fenced examples, and tables for comparable outputs. Preserve the language and domain terminology of existing documents. Name skill directories with lowercase hyphenated names and their entry points `SKILL.md`.
+Use descriptive Markdown headings, short paragraphs, fenced examples, and tables for comparable outputs. Name skill directories with lowercase hyphenated names and their entry points `SKILL.md`.
+
+Write skill descriptions and general agent instructions in concise English. Preserve language-specific rules, examples, trigger phrases, fixed output text, and domain terminology where translation would lose meaning or change behavior. Human-facing documentation and UI metadata may retain their existing language. Review language edits for equivalent triggers, boundaries, and outputs; measure token savings with a named tokenizer rather than assuming them.
 
 Keep each skill independently portable: required files and relative links must work when only its directory is installed. Reference project policies rather than copying them into shared instructions. Add scripts or abstractions only for demonstrated needs.
 

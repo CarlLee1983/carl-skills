@@ -1,44 +1,44 @@
-# 操作提案與執行
+# Operation proposals and execution
 
-評估完成且有可行下一步時使用。這份文件管操作授權；版本與發布判斷遵循 `../SKILL.md`。
+Use after assessment identifies a feasible next step. This file owns operational authorization; version and release decisions follow `../SKILL.md`.
 
-## 準備可審閱的提案
+## Prepare a reviewable proposal
 
-先查看專案實際版本工具、發布文件、workflow、changelog、分支與工作樹狀態，再提出：
+Inspect actual version tools, release documentation, workflows, changelog, branch, and working tree. Specify:
 
-| 欄位 | 必須明確的內容 |
+| Field | Required detail |
 | --- | --- |
-| 對象 | repo、發布單位、通道、目的地、評估目標 SHA。 |
-| 變更 | 現有與預計版本、修改檔案、產物、changelog 與必要遷移。 |
-| 動作 | 升版、commit、建立 tag、push、觸發 workflow、發布各自的具體命令或流程，以及順序。 |
-| 目標 | tag 名稱與預定指向，發布來源提交、套件／服務及遠端目的地。 |
-| 條件與影響 | 已通過與尚待完成檢查；每步的外部副作用、已知失敗恢復方式。 |
+| Subject | Repository, release unit, channel, destination, and assessed target SHA. |
+| Changes | Current and planned versions, files, artifacts, changelog, and required migrations. |
+| Actions | Exact commands or processes and their order for bumping, committing, tagging, pushing, triggering workflows, and publishing. |
+| Targets | Tag name and intended commit, source commit, package/service, and remote destination. |
+| Conditions and effects | Passed and outstanding checks; each step's external effects and known recovery procedure. |
 
-不存在或不適用的動作明確省略。檢查複合命令的實際行為：若升版工具會自動 commit/tag，或 push 會觸發發布，將副作用納入授權，不能以命令名稱縮小描述。
+Explicitly omit unavailable or inapplicable actions. Inspect compound commands: automatic commit/tag effects of bump tools, or publication triggered by push, belong in the authorization scope regardless of command names.
 
-若升版必然產生新提交，提案可指定「以已評估 SHA 為基底，僅包含列出的版本／changelog 變更所產生的新提交」。這是授權範圍內的預期產物，不需要事先捏造 SHA；建立後記錄真實 SHA，重新查驗該產物需要的檢查。任何額外行為變更都須重新評估。
+If preparation necessarily creates a commit, the proposal may authorize a new commit based on the assessed SHA containing only the listed version/changelog changes. Do not invent its SHA in advance. Record the actual SHA after creation and recheck the required validation for that artifact. Reassess any additional behavior changes.
 
-## 取得與維持授權
+## Obtain and retain authorization
 
-明確詢問使用者同意哪些動作。可一次同意整套具體提案；只同意升版就只做升版。commit、push、遠端 workflow 與發布須各自明列於授權範圍。沉默、預選項、合併 PR 或「可發布」結論不等於同意。
+Ask which actions the user approves. One approval may cover the entire concrete proposal; bump-only approval permits only the bump. Explicitly include commits, pushes, remote workflows, and publication in the authorized scope. Silence, preselected options, a merged PR, or a `可發布` conclusion are not approval.
 
-使用者僅要評估時提供建議與提案，不執行操作。已明確同意且條件未變的範圍不重複索取同意。
+For assessment-only requests, provide recommendations and proposals without execution. Reuse explicit approval while its scope and conditions remain valid.
 
-同意不能消除必要檢查。檢查被阻擋時，先解除阻擋，或只進行政策允許且已獲授權、不依賴該阻擋的準備。
+Approval does not waive required checks. Resolve blockers first, or perform only policy-permitted, authorized preparation independent of them.
 
-## 依既有流程執行
+## Execute through the existing process
 
-每個有副作用的步驟前，核對目標、授權及前置條件。保留無關未提交工作，不把它混入版本提交或發布產物。
+Before each step with side effects, verify target, authorization, and prerequisites. Preserve unrelated uncommitted work and exclude it from release commits and artifacts.
 
-- 版本、目標提交、目的地或重要影響超出原提案時，暫停受影響操作，更新評估與提案，取得差異部分授權。提案內預期的版本提交依上節核對。
-- 檢查現有 tag 與已發布版本；先辨識已完成狀態，避免覆寫 tag 或重複發布。
-- 選用專案既有流程與工具，不臨時繞過失敗檢查或 credential 隔離。缺權限或工具時回報具體阻擋；使用者拒絕互動登入後，不反覆要求或改用環境中的其他憑證。
-- 依序執行獲准動作。必要步驟失敗或結果不明時，停下依賴它的動作；先查證現況，再提恢復方案。恢復若帶來原提案外的副作用，另取授權。
+- If version, target commit, destination, or material effects exceed the proposal, pause affected operations, update the assessment/proposal, and obtain approval for the delta. Verify expected preparation commits as described above.
+- Check existing tags and published versions; recognize completed work before acting to avoid overwriting tags or duplicate publication.
+- Use existing project tools and workflows. Do not bypass failed checks or credential isolation. Report missing tools or permissions; after a user declines interactive login, do not repeat the request or substitute ambient credentials.
+- Execute approved actions in order. If a required step fails or its result is unknown, stop dependent actions, inspect current state, and propose recovery. Obtain approval for recovery effects outside the original proposal.
 
-## 驗證與回報
+## Verify and report
 
-查證版本檔及差異、tag 指向、遠端紀錄、workflow 狀態和實際產物／部署版本。GitHub 遠端結果以已登入的 `gh` 查證；其他平台依既有工具。
+Verify version files/diffs, tag targets, remote records, workflow status, and actual artifacts/deployed versions. Use authenticated `gh` for GitHub remote verification and existing tools elsewhere.
 
-逐動作回報：未執行、本機完成、遠端已建立、執行中、成功、失敗或結果未知，附 SHA、tag、run 或產物連結。workflow 接受請求不代表發布成功；不得因輪詢結束就宣稱成功。
+Report each action as not run, locally complete, remotely created, running, successful, failed, or unknown, with SHA, tag, run, or artifact links. Workflow acceptance does not prove publication; ending polling does not establish success.
 
-部分成功時列出已完成動作、未完成部分及恢復建議，保留可恢復狀態。不要盲目重跑發布，也不要自行刪除既有遠端產物或重寫歷史。
+For partial success, list completed and outstanding actions with recovery advice, preserving recoverable state. Do not blindly retry publication, delete existing remote artifacts, or rewrite history.

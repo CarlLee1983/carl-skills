@@ -1,0 +1,14 @@
+{
+  "R1": {"skill": "design-experience", "reason": "功能大致完成，需要比較介面設計方向。"},
+  "R2": {"skill": "plan-pm", "reason": "檢視計畫進度並建議下一張可開始的工單。"},
+  "R3": {"skill": "release-assessment", "reason": "評估合併變更的版本調整與發布時機。"},
+  "R4": {"skill": "humanize-writing", "reason": "移除 X 貼文的 AI 語氣，保留本人聲音與不確定語氣。"},
+  "R5": {"skill": "calibrate-codex", "reason": "針對重複的 Codex 錯誤調校並記住工作規則。"},
+  "R6": {"skill": null, "reason": "依定案設計進行單一 CSS 修改，屬明確排除範圍。"},
+  "R7": {"skill": null, "reason": "普通 README 路徑修改，且涉及其他代理的配置。"},
+  "R8": {"skill": null, "reason": "單句翻譯不符合任何提供的技能描述。"},
+  "R9": {"skill": "plan-pm", "reason": "透過既有實作流程持續推進已授權的 Goal。"},
+  "R10": {"skill": "design-experience", "reason": "接續已儲存的 UI 設計探索。"},
+  "R11": {"skill": "humanize-writing", "reason": "移除英文產品筆記的 AI 語氣並保留原有主張。"},
+  "R12": {"skill": "release-assessment", "reason": "評估文件變更是否需要發布。"}
+}

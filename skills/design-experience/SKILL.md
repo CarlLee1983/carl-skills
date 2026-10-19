@@ -1,91 +1,91 @@
 ---
 name: design-experience
-description: 從專案功能與產品概念推進 UI／UX 探索、方向比較、互動原型、回饋收斂與設計定稿。用於功能大致完成卻不知道介面如何開始，或接續既有設計探索；單一 CSS 修正、已有明確設計稿的直接實作不走此流程。
+description: Develop UI/UX exploration, comparable directions, interactive prototypes, feedback, and finalized designs from product capabilities and concepts. Use when functionality is mostly complete but interface design needs a starting point, or to resume design exploration; exclude isolated CSS fixes and direct implementation from an established design.
 ---
 
 # Design Experience
 
-把「這個產品可以做什麼」轉成「使用者如何完成任務」，交付能比較、能試用、能接續的設計。UX 從理解任務開始；視覺、文字、互動一起服務該任務。
+Turn product capabilities into user tasks and deliver designs people can compare, try, and continue. Start UX with the task; visuals, copy, and interaction serve it together.
 
-## 先定位這一輪
+## Locate the current stage
 
-讀對話、專案規則與已有設計紀錄，辨識使用者要探索、做原型、收斂、定稿，或只詢問下一步。從第一個尚未解決的問題開始；已知答案沿用，功能完成不代表需要重做整個前端。
+Read the conversation, project rules, and existing design records. Identify whether the user wants exploration, prototyping, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
 
-首次持久化或跨 session 接續時，讀 [artifacts.md](references/artifacts.md)，使用一份 `SESSION.md` 維護脈絡與產物入口。先說明這輪會交出什麼，再進行必要的探索。純討論先在對話提供方案；建立檔案與原型依當次授權範圍。
+Before first persistence or resuming across sessions, read [artifacts.md](references/artifacts.md). Keep context and artifact entry points in one `SESSION.md`. State this round's deliverable before necessary exploration. For discussion only, propose in conversation first; create files and prototypes within the current authorization.
 
-本技能可自己完成 brief、方向提案、簡單原型與交接。需要專項能力時才讀 [collaboration.md](references/collaboration.md) 選協作技能；一次只選一個主要視覺方向。技能缺席時用現有能力完成允許的工作，明說實際採用的方法，不聲稱已呼叫它。
+This skill can produce briefs, directions, simple prototypes, and handoffs itself. Read [collaboration.md](references/collaboration.md) only when specialist capabilities are needed; choose one primary visual direction at a time. If a skill is unavailable, complete authorized work with available capabilities and name the method actually used, without claiming to have invoked it.
 
-## 理解產品與任務
+## Understand the product and tasks
 
-先讀能回答問題的材料：README／產品概念、現行規格與邊界決定、主要路由與畫面、元件與樣式、資料契約。查看既有介面時用可用的瀏覽器能力；狹窄問題不需要掃整個 repository。區分現行行為、歷史規格、使用者期待與設計假設。
+Read materials that answer the question: README/product concept, current specifications and boundary decisions, main routes and screens, components and styles, and data contracts. Use available browser capabilities to inspect existing interfaces. Narrow questions do not require a repository-wide scan. Distinguish current behavior, historical specifications, user expectations, and design assumptions.
 
-把工程功能整理成使用者任務，而不是一個 API 對一張頁面。先辨識介面類型：產品操作介面、品牌／行銷頁，或既有介面的局部改善。若是 CLI、後端服務或專案明確排除 UI，指出邊界，提出符合現況的體驗改善；只有使用者已授權概念探索時才做隔離的介面原型，並保留「是否新增產品介面」為未決範圍。
+Organize engineering capabilities into user tasks, rather than one screen per API. Identify the interface type: product UI, brand/marketing page, or a local improvement to an existing interface. For a CLI, backend service, or project explicitly excluding UI, state that boundary and propose experience improvements that fit. Create an isolated interface prototype only with authorization for concept exploration; leave adding a product interface as an unresolved scope decision.
 
-簡短 brief 應讓人能確認：
+A short brief must establish:
 
-- 誰在什麼情境使用；主要任務、入口與成功結果是什麼。
-- 哪條代表性流程最值得先設計；有哪些既有品牌、平台、資料與權限限制。
-- 哪些判斷有來源，哪些是推測；最影響方向的缺口是什麼。
+- Who uses it, in what context, their main task, entry point, and successful outcome.
+- Which representative flow to design first, and existing brand, platform, data, and permission constraints.
+- Which judgments have sources, which are assumptions, and which gaps most affect direction.
 
-先提供可修正的理解，再問少量會改變設計的問題，附推薦選項與理由。能從專案讀到的資訊自行取得。可逆的視覺選擇可先假設；使用者角色、核心流程或產品範圍的未知若會改變設計，先釐清該選擇，繼續其餘獨立工作。
+Offer a correctable understanding before asking a few design-changing questions with recommended options and reasons. Retrieve project facts yourself. Assume reversible visual choices when useful. Clarify unknown roles, core flows, or product scope when they would change the design, while advancing independent work.
 
-**完成條件：** 有來源支持的 brief，核心任務與範圍清楚；剩餘假設有標示，足以提出方向而不用捏造產品能力。
+**Complete when:** a sourced brief makes the core task and scope clear, with remaining assumptions labeled and enough evidence to propose directions without inventing capabilities.
 
-## 提出可比較的方向
+## Propose comparable directions
 
-通常給 2–3 個結構不同的方向；需求已收斂時直接深化選定方向。差異應落在主要入口、資訊層級、操作方式或內容節奏，讓使用者看得到取捨。同一版面只換色不算不同方向。
+Usually offer 2–3 structurally distinct directions; deepen the selected direction when requirements have converged. Vary entry points, information hierarchy, interaction, or content rhythm so trade-offs are visible. Recoloring one layout does not count.
 
-每個方向給穩定 ID（如 A／B／C）、一句核心想法、代表性畫面／線框、適合情境、代價與推薦理由。沿用相同任務、資料與情境公平比較。資料密集產品以操作與狀態為主；行銷頁以受眾、訊息、證據與轉換任務為主。規模隨問題決定，不強制每次做完整網站。
+Give each direction a stable ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website.
 
-**完成條件：** 使用者能指出想選哪個方向或混合哪些部分，並理解這個選擇犧牲了什麼。
+**Complete when:** the user can select a direction or parts to combine and understand the trade-offs.
 
-## 建立回答問題的原型
+## Build a prototype that answers a question
 
-先寫一句本輪要驗證的問題，再選保真度：
+Write the question to validate this round, then choose fidelity:
 
-- 操作、流程或資訊層級不確定：可點擊的低／中保真原型。
-- 品牌、構圖或視覺感受不確定：視覺參考稿；需要圖像生成時才使用生成能力。
-- 已選方向：深化代表性流程，補齊對該流程有影響的狀態。
+- Uncertain operations, flow, or hierarchy: a clickable low/mid-fidelity prototype.
+- Uncertain brand, composition, or visual feel: a visual reference; use image generation only when needed.
+- Selected direction: deepen the representative flow and relevant states.
 
-選載體前，先確認預定入口、使用者開啟方式，以及目前工具可支援的瀏覽器操作與畫面檢查；需要時先用最小樣例確認。無法自動檢查時，在建立前說明手動試用入口與未驗證範圍，再選可交付的形式。
+Before choosing a medium, confirm the intended entry point, how the user opens it, and available browser interaction and visual inspection tools. Test a minimal example if needed. If automated inspection is unavailable, explain the manual trial entry point and unverified scope before building, then choose a deliverable format.
 
-沿既有 stack、元件與路由做隔離原型；沒有前端宿主時，單檔離線 HTML 是可選形式。共用資料與元件可以保留，但不同方向須能自由改變結構；多方向放在同一個比較入口，切換時盡可能保留資料情境。
+Build an isolated prototype using the existing stack, components, and routes. Without a frontend host, a single offline HTML file is an option. Share data and components where useful, but let each direction change structure freely. Place multiple directions behind one comparison entry point and preserve data context across switches where possible.
 
-用接近實際長度、密度的內容，將示例資料標清楚。重要控制應能完成所宣稱的模擬行為；資料寫入接 stub，不接真實 mutation。帶入相關的空白、載入、錯誤、權限、資料過期或恢復情境，選擇會影響設計判斷者即可。顯示必要狀態，避免假進度、假通知或虛構整合能力。
+Use realistically sized and dense content, labeling sample data. Important controls must perform their claimed simulated behavior; stub writes rather than connecting real mutations. Include relevant empty, loading, error, permission, stale-data, or recovery scenarios that affect design judgment. Show necessary states without fake progress, fake notifications, or invented integrations.
 
-給使用者具體試用任務，例如「找出為何不能核准，並找到恢復路徑」。保持驗證證據分層：
+Give concrete trial tasks, such as「找出為何不能核准，並找到恢復路徑」. Keep evidence levels distinct:
 
-1. 語法／程式檢查只能支持程式可執行或局部邏輯正確。
-2. 瀏覽器實際操作與截圖支持已檢查的畫面、尺寸與互動；檢查鍵盤焦點、溢出與相關響應式尺寸。
-3. 使用者實際操作回饋才是該次試用證據；AI 評論或選擇方向不能冒充真人可用性測試。
+1. Syntax/code checks support executability or local logic only.
+2. Browser interactions and screenshots support the screens, dimensions, and interactions inspected. Check keyboard focus, overflow, and relevant responsive sizes.
+3. Actual user interaction feedback is trial evidence. AI commentary or direction selection is not human usability testing.
 
-無法開啟瀏覽器或工具拒絕操作時，保留可交付產物與可完成的檢查，明說未驗證項目；遵守工具阻擋，不經其他介面繞過。重用同一來源與環境的有效結果，變更後重查受影響部分。
+If the browser is unavailable or a tool refuses an operation, retain deliverables and feasible checks, and state unverified items. Respect tool blocks without bypassing them through another interface. Reuse valid results for unchanged source and environment; recheck affected parts after changes.
 
-**完成條件：** 入口可定位、示例與真實能力可區分、關鍵路徑可試用；驗證結果及缺口均有紀錄。工具受限時標示部分驗證，不把它當成畫面通過。
+**Complete when:** the entry point is discoverable, sample behavior is distinguishable from real capabilities, the key path can be tried, and results and gaps are recorded. Label tool-limited verification as partial rather than claiming visual approval.
 
-## 回饋、收斂與定稿
+## Feedback, refinement, and finalization
 
-以目前階段解讀短回覆，避免每輪重新訪談：
+Interpret short replies in the current stage rather than repeating the interview:
 
-| 使用者回覆 | 接續動作 |
+| User reply | Next action |
 | --- | --- |
-| `C`／選 B | 對照當輪方向 ID，記錄選擇並收斂該方向；若有多組 ID 才釐清。選方向不等於定稿。 |
-| A 的導覽配 C 的內容 | 記錄取用部分，做一個整合方向，檢查是否破壞原先的任務與資訊層級。 |
-| 太複雜／看不懂 | 指出可能的具體問題，優先用最小修改驗證；關鍵歧義再問。 |
-| 定稿 | 凍結當下被接受的版本與範圍，產出交接；尚未驗證的項目照實保留。 |
-| 下一步？ | 依原始目標、當前階段與未決事項說明下一步；這是詢問，不自行啟動正式實作。 |
-| OK／好的 | 接續它回應的具體提案；沿用已授權工作，不擴張到未提出的階段。 |
+| `C`／選 B | Match the current direction IDs, record the choice, and refine it. Clarify only if multiple ID sets exist. Selection does not finalize the design. |
+| A 的導覽配 C 的內容 | Record the chosen parts, build one combined direction, and check the original task and hierarchy remain coherent. |
+| 太複雜／看不懂 | Identify likely concrete issues and test the smallest change first; ask about consequential ambiguity. |
+| 定稿 | Freeze the accepted version and scope and produce a handoff, retaining unverified items accurately. |
+| 下一步？ | Explain the next step from the original goal, current stage, and unresolved items. This is a question, not authorization to start production implementation. |
+| OK／好的 | Continue the specific proposal being answered within existing authorization, without expanding to unproposed stages. |
 
-回饋改動後說明改了什麼、解決哪個問題；保留影響取捨的決策與仍有效的版本，避免一堆同名 `final`。新需求推翻既定前提時，只重開受影響的部分。
+After feedback changes, explain what changed and which problem it addresses. Preserve decisions affecting trade-offs and still-valid versions; avoid indistinguishable `final` files. Reopen only affected parts when new requirements overturn earlier premises.
 
-定稿是使用者對指定設計版本的接受。記錄已接受的資訊架構、核心流程、視覺與互動規則，以及尚未涵蓋的畫面／狀態。原型的 CSS tokens 可作為視覺規則來源，交接文件引用它，不另外維護一份可能漂移的色碼表。若使用者在未完成檢查時定稿，分開保存「已接受設計」和「驗證仍缺哪些證據」。
+Finalization is user acceptance of a specific design version. Record accepted information architecture, core flows, visual and interaction rules, and uncovered screens/states. Prototype CSS tokens can be the source of visual rules; reference them in the handoff rather than maintaining a drifting color table. If the user finalizes before checks are complete, record accepted design and missing verification evidence separately.
 
-**完成條件：** 可辨識的定稿版本、使用者接受的範圍、決策理由與驗證缺口都已保存；下一位 agent 不用重問已定案事項。
+**Complete when:** the identifiable final version, accepted scope, decision rationale, and verification gaps are saved so the next agent need not re-ask settled questions.
 
-## 交接與停止點
+## Handoff and stopping point
 
-依 [artifacts.md](references/artifacts.md) 完成交接：畫面與狀態、可重用元件、真實資料／權限接點、可觀察驗收情境、實作先後與未決範圍。先指出已能沿用的能力，再標出需要新契約或產品決策的部分。
+Complete the handoff using [artifacts.md](references/artifacts.md): screens and states, reusable components, real data/permission integration points, observable acceptance scenarios, implementation order, and unresolved scope. Identify reusable capabilities first, then parts requiring new contracts or product decisions.
 
-預設在設計交接結束。若使用者已明確授權正式實作，攜帶定稿與限制進入專案既有實作流程；保留人必須親自啟動的入口，不把設計接受視為架構、發布或產品範圍擴張的授權。
+Stop after design handoff by default. With explicit authorization for production implementation, carry the finalized design and constraints into the project's implementation workflow. Preserve entry points requiring human invocation; design acceptance does not authorize architecture decisions, release, or product scope expansion.
 
-最後給目前階段、產物入口、主要選擇、實際驗證與下一個必要動作。原始任務若是在開發本技能，設計試跑結束後回到技能建置與驗證，勿默認改成實作被拿來試跑的產品。
+Finish with the current stage, artifact entry points, main choices, actual verification, and next necessary action. If the original task is developing this skill, return to skill construction and validation after the design trial; do not silently switch to implementing the trial product.

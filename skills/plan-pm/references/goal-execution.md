@@ -1,28 +1,28 @@
-# Goal 推進
+# Goal execution
 
-本流程只在使用者明確授權 PM 推進指定計畫、選用實作入口，且有對應 active Goal 時使用。PM 沿用主 skill 的資料來源、DAG 判讀及完成規則；Goal 提供持續執行機制，實作交由已安裝的 `implement` 或 `implement-spec`。
+Use this workflow only when the user explicitly authorizes PM to advance a specified plan and select implementation entry points, and a corresponding active Goal exists. Reuse the main skill's sources, DAG interpretation, and completion rules. The Goal provides persistence; installed `implement` or `implement-spec` skills handle implementation.
 
-## 啟動與接續
+## Start and resume
 
-確認計畫範圍、Goal 的交付終點、驗收依據與已授權操作。使用者在 Goal 指派中明確授權 PM 選用 `$implement`／`$implement-spec` 時，這次指派就是使用者對這些入口的明示選用；沿用授權並讀取、執行所選 skill，不逐票要求重複輸入。不要僅因 skill 的 `disable-model-invocation: true` 或預設人工啟動規則，就把已獲明示授權的交接降為指令建議。若有不能由這次使用者指派滿足的上層規則或實際工具限制，才回報具體限制與所需入口；不能把尚未執行說成已啟動。
+Confirm plan scope, the Goal's delivery endpoint, acceptance evidence, and authorized operations. Explicit authorization in the Goal assignment for PM to select `$implement`/`$implement-spec` counts as the user's explicit invocation of those entry points. Reuse that authorization, read and execute the selected skill, and do not require repeated input per ticket. A skill's `disable-model-invocation: true` or default manual-invocation rule alone does not reduce an explicitly authorized handoff to a command suggestion. Report specific restrictions and required entry points only when higher-level rules cannot be satisfied by this assignment or actual tool limitations apply. Do not claim execution has started before it has.
 
-每次開始或恢復推進，先核對 tracker、目前分支／PR、既有執行代理及驗證結果。已有人承接、執行中或待整合的工作先接續原執行單位；缺乏承接狀態時先確認，避免重新派發。Goal 保存目標，不替代這些逐項執行事實。
+Whenever starting or resuming, check the tracker, current branch/PR, existing execution agents, and verification results. Continue the original execution unit for assigned, active, or integration-pending work. Confirm missing assignment state before dispatching to avoid duplication. The Goal stores the objective, not these per-item execution facts.
 
-若未完成結案所需的 commit、merge 或 tracker 更新且尚未獲授權，明確回報所欠操作；保留實作成果，不能把「可供審查」記成「已合併」。實作入口內建的寫入步驟也受本次授權約束。
+If closure requires a commit, merge, or tracker update that remains unauthorized, explicitly report the missing operation. Preserve the implementation; do not record “可供審查” as “已合併”. Built-in write steps in an implementation entry point remain subject to current authorization.
 
-## 推進循環
+## Execution loop
 
-1. **選工作單位。** 依目前 frontier 與使用者優先序，選擇單張工單的 `implement`，或整份已授權 spec 的 `implement-spec`。整份 spec 的內部依賴留給該入口處理；spec 外部前置未滿足或僅授權單張時，先處理範圍內可做的單張工作。完成過的節點作為背景，不重做。
-2. **交接並執行。** 傳遞來源指標、工作邊界、已完成部分、阻擋、既有分支／承接者、驗收與授權範圍。依環境用主代理進入該 skill 或交給有明確責任的開發代理，不要求固定多一層代理。使用者要求逐一時，交接包含一次一個工作單位，也約束 `implement-spec` 內部的並行行為。
-3. **核對交付。** 由實作流程依專案規則執行審查與驗證；PM 核對實際 diff、檢查結果及所需整合狀態。失敗或未滿足驗收時交回原執行單位修正，避免重複開工。同一份未變更成果已有有效檢查結果時沿用；有變更、失敗或未解風險才重跑相應檢查。
-4. **更新並重算。** 依主 skill 的「主動核對結案」處理已交付但仍開啟的 issue，僅將有證據、且獲准寫入的進度記回原 tracker；完成摘要提供來源及剩餘工作。以最新現況重新判讀 frontier，再推進下一個工作單位，不在完成第一張票後就停止整個 Goal。
+1. **Select a work unit.** From the current frontier and user priorities, choose `implement` for one ticket or `implement-spec` for an entire authorized spec. Leave internal spec dependencies to that entry point. If external spec prerequisites are unmet or only one ticket is authorized, first handle an executable in-scope ticket. Treat completed nodes as context, without redoing them.
+2. **Hand off and execute.** Pass source pointers, work boundaries, completed portions, blockers, existing branches/assignees, acceptance criteria, and authorization scope. Depending on the environment, enter the skill with the primary agent or delegate to a development agent with clear responsibility; no fixed extra agent layer is required. If the user requests sequential work, include one work unit at a time in the handoff; this also constrains parallelism within `implement-spec`.
+3. **Verify delivery.** The implementation workflow performs review and verification under project rules; PM checks the actual diff, check results, and required integration state. Return failures or unmet acceptance to the original execution unit for fixes to avoid duplicate starts. Reuse valid check results for unchanged work; rerun affected checks only for changes, failures, or unresolved risks.
+4. **Update and recompute.** Follow “Proactively verify closure” in the main skill for delivered but still-open issues. Record only evidenced, authorized progress in the original tracker; provide sources and remaining work in the completion summary. Recompute the frontier from current state and advance the next work unit rather than stopping the entire Goal after its first ticket.
 
-同一批工作只有一個排程者：PM 選擇外層工作單位；`implement-spec` 接管該 spec 的內部 DAG，直到交付或回報阻擋。仍在執行中的單位使用既有 handle 接續或等待，不另起同範圍的執行流程。
+Each batch has one scheduler: PM selects outer work units; `implement-spec` owns its spec's internal DAG until delivery or a blocker report. Resume or wait on an active unit's existing handle rather than starting another execution workflow for the same scope.
 
-## 決策與收尾
+## Decisions and completion
 
-遇到需要使用者取捨或額外授權，提出具體問題及受影響範圍；等待期間可推進其他獨立、已授權且沒有執行衝突的工作。不能略過未滿足前置條件，也不能因一張票受阻就把整個 Goal 判為無法推進。
+When user judgment or additional authorization is needed, ask a concrete question and state the affected scope. While waiting, advance other independent, authorized work without execution conflicts. Do not skip unmet prerequisites or deem the entire Goal unable to advance because one ticket is blocked.
 
-沒有可推進工作時，分清楚等待執行結果、等待人、資訊不足及全部完成，保留必要的接續指標。Goal 的暫停、阻擋、預算與恢復遵守當前原生工具契約；不另設繞過其條件的狀態更新。預算耗盡或等待不等於完成。
+When nothing can advance, distinguish waiting for execution results, waiting for a person, insufficient information, and all work complete; retain necessary continuation pointers. Follow the current native tool contract for Goal pause, blocked state, budgets, and resumption, without inventing state updates that bypass its conditions. Exhausted budget or waiting does not mean completion.
 
-所有範圍內工作符合各自結案條件，且整體整合、驗收及使用者約定的交付終點都已滿足時，才以證據結束 Goal。來源要求合併時，PR ready 仍是待完成；來源缺失時回報未確認部分，不宣布完成。正常查詢模式不觸碰 Goal 的生命週期。
+End the Goal with evidence only when every in-scope unit meets its closure conditions and overall integration, acceptance, and the user's agreed delivery endpoint are satisfied. Where the source requires merging, a ready PR remains unfinished. If source evidence is missing, report unconfirmed parts rather than declaring completion. Ordinary query mode leaves the Goal lifecycle untouched.

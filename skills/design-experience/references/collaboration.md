@@ -1,33 +1,33 @@
-# 按問題選協作能力
+# Choose collaboration capabilities by problem
 
-需要專項能力時讀本檔。下表是候選角色，不是固定流水線或安裝清單。先查看當前可用技能與其入口，再讀所選技能的現行指示；名稱相同的版本也可能有不同範圍。
+Read when specialist capabilities are needed. These are candidate roles, not a fixed pipeline or installation list. Check available skills and their entry points, then read the selected skill's current instructions; versions sharing a name may differ in scope.
 
-| 當前問題 | 可選協作技能 | 選擇依據 |
+| Current problem | Candidate skills | Selection criteria |
 | --- | --- | --- |
-| 要比較操作、狀態或版面 | `prototype` | 先判斷邏輯示範或 UI 比較分支；用共同情境比較結構差異。其整合／保存步驟仍須符合本輪授權。 |
-| 需要視覺方向或參考研究 | `hallmark` | 可用 study／audit 或適用的設計分支；檢查其固定審美是否符合專案。 |
-| 官網、品牌或行銷頁 | `design-taste-frontend` | 先確認版本範圍；已盤點版本排除 dashboard／app screens，不當產品介面的通用預設。 |
-| 要先看生成的視覺稿 | `imagegen-frontend-web`、`imagegen-frontend-mobile`、`image-to-code` | 平台與產物形式相符才選。圖片用來比較視覺；流程是否可用仍需互動驗證。 |
-| 元件互動、回饋與細節 | `emil-design-eng` | 在代表性操作已明確時補強，不為展示技巧增加互動。 |
-| 手機網頁的觸控與瀏覽器行為 | `mobile-native` | 用於 mobile web，真機與模擬器的驗證結果分開記錄。 |
-| 動畫確有目的 | `animate`、`animate-expo` | 按 web／native 平台選；以任務與頻率決定是否需要動效。 |
-| 已有介面的局部改善 | `redesign-existing-projects` | 先核對其變更範圍與固定規則是否符合既有設計系統。 |
-| 使用 Google Stitch 產生設計 | `stitch-design-taste` | 僅在選定 Stitch 且能力可用時；不為了產生 DESIGN.md 而引入整套工具。 |
+| Compare operations, states, or layouts | `prototype` | Choose its logic-demonstration or UI-comparison branch; compare structural differences using a shared scenario. Integration/persistence steps still require current authorization. |
+| Visual direction or reference research | `hallmark` | Use study/audit or a suitable design branch; check whether its fixed aesthetic fits the project. |
+| Corporate, brand, or marketing page | `design-taste-frontend` | Confirm version scope. The inventoried version excludes dashboards/app screens; do not use it as the general default for product interfaces. |
+| Generated visual concepts first | `imagegen-frontend-web`, `imagegen-frontend-mobile`, `image-to-code` | Match platform and artifact type. Images compare visuals; flow usability still needs interaction validation. |
+| Component interactions, feedback, and detail | `emil-design-eng` | Strengthen an established representative operation; avoid adding interactions only to demonstrate technique. |
+| Mobile web touch and browser behavior | `mobile-native` | Use for mobile web; record physical-device and emulator results separately. |
+| Purposeful animation | `animate`, `animate-expo` | Choose by web/native platform; let the task and frequency determine whether motion is needed. |
+| Local improvements to an existing interface | `redesign-existing-projects` | Check change scope and fixed rules against the existing design system. |
+| Design generation with Google Stitch | `stitch-design-taste` | Use only when Stitch is selected and available, rather than introducing the toolchain merely to generate DESIGN.md. |
 
-`pick-ui-library` 等明定須使用者啟動的技能，遵守其 invocation 規則；必要時提出入口。既有元件庫先沿用，設計探索不自動授權新增依賴。
+Honor invocation rules for skills requiring user initiation, such as `pick-ui-library`; offer their entry point when needed. Reuse existing component libraries first. Design exploration does not authorize new dependencies automatically.
 
-## 避免規則互相牽制
+## Resolve conflicting rules
 
-先確定專案的視覺來源與當輪主技能。協作技能的約束若與已接受 brief、品牌、產品任務或另一個主技能衝突，選擇適合這一輪的技能，或只依現有能力完成具體工作，說明選擇。不要宣稱同時遵循互斥規則，也不要把不同風格平均混合。使用者指定的品牌與專案規則優先。
+Establish the project's visual source and this round's primary skill. If collaboration constraints conflict with the accepted brief, brand, product task, or another primary skill, choose the skill suited to this round or complete the specific work using available capabilities and explain the choice. Do not claim compliance with incompatible rules or average conflicting styles. User-specified brand and project rules take precedence.
 
-必要時委派不同方向的原型或獨立評論，前提是委派已獲授權。共用同一 brief、資料與驗證問題；主 agent 負責選擇、整合與交接。小範圍收斂留在主 agent，避免每次回覆都派工。
+When useful and authorized, delegate direction prototypes or independent critiques. Share the same brief, data, and validation question; the primary agent owns selection, integration, and handoff. Keep small refinements with the primary agent rather than dispatching on every reply.
 
-## 外部候選（非必要依賴）
+## External candidates (optional)
 
-使用者希望擴充協作能力時才查驗現行來源與可用入口，不自動安裝：
+Check current sources and available entry points only when the user wants expanded collaboration capabilities; do not install automatically:
 
-- [Impeccable](https://impeccable.style/docs/)：可評估 `init`／`shape` 的產品脈絡與 brief，以及 `critique`／`audit` 的設計評論與實作檢查。已有 SESSION 時傳入決定並避免另建衝突的產品事實來源。
-- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)：可評估設計資料查詢與建議，將資料庫輸出視為候選，不替代產品研究。
-- [Anthropic frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design)：可作為主要視覺技能的替代選擇；與既有視覺技能按適配性擇一。
+- [Impeccable](https://impeccable.style/docs/): consider `init`/`shape` for product context and briefs, and `critique`/`audit` for design reviews and implementation checks. Pass existing SESSION decisions rather than creating a conflicting source of product facts.
+- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill): consider design-data queries and suggestions; treat database output as candidates rather than a substitute for product research.
+- [Anthropic frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design): an alternative primary visual skill; choose between it and existing visual skills by fit.
 
-外部名稱與指令可能變動。需要實際使用時讀其最新入口與授權需求；未安裝或未驗證可用時只描述候選用途。
+External names and commands may change. Read current entry points and authorization requirements before use. Describe candidate uses only when installation or availability is unverified.

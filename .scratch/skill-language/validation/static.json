@@ -1,0 +1,57 @@
+{
+  "skills": [
+    {
+      "skill": "calibrate-codex",
+      "metadata": "Skill is valid!",
+      "portable_links": [],
+      "copied_files": 3
+    },
+    {
+      "skill": "design-experience",
+      "metadata": "Skill is valid!",
+      "portable_links": [
+        "SKILL.md: references/artifacts.md",
+        "SKILL.md: references/collaboration.md",
+        "SKILL.md: references/artifacts.md"
+      ],
+      "copied_files": 5
+    },
+    {
+      "skill": "humanize-writing",
+      "metadata": "Skill is valid!",
+      "portable_links": [],
+      "copied_files": 5
+    },
+    {
+      "skill": "plan-pm",
+      "metadata": "Skill is valid!",
+      "portable_links": [
+        "SKILL.md: references/goal-execution.md"
+      ],
+      "copied_files": 3
+    },
+    {
+      "skill": "release-assessment",
+      "metadata": "Skill is valid!",
+      "portable_links": [
+        "SKILL.md: references/project-policy.md",
+        "SKILL.md: references/operations.md",
+        "SKILL.md: references/acceptance.md",
+        "references/project-policy.md: ../SKILL.md",
+        "references/acceptance.md: ../SKILL.md",
+        "references/acceptance.md: project-policy.md"
+      ],
+      "copied_files": 5
+    }
+  ],
+  "unchanged_contract_files": [
+    "README.md",
+    "skills/humanize-writing/references/zh-tw.md",
+    "skills/humanize-writing/references/en.md",
+    "skills/release-assessment/references/acceptance.md",
+    "skills/design-experience/agents/openai.yaml",
+    "skills/calibrate-codex/agents/openai.yaml",
+    "skills/humanize-writing/agents/openai.yaml"
+  ],
+  "diff_sha256": "66d0807b7bf0b2c36467c92bd4116f6bd8311b4f38dfad95b4295f28117a1c44"
+}

@@ -1,0 +1,21 @@
+{
+  "baseline": "9862035e06d16252872d9f42dec076ae1c251f73",
+  "diff_sha256": "44419afa97a025a052469d9b881805bc40b0d5a5febc16f137e0db3dd0900d95",
+  "files": {
+    "AGENTS.md": "4df02b6f9632f78b2e98ffb2902ad5e86cc08b884aa3db5ccee842b62193befd",
+    "skills/calibrate-codex/SKILL.md": "75d4037db0ddaa3ef512279d8c00a512dd831071a002261e14a78c0a3a8397f8",
+    "skills/design-experience/SKILL.md": "5defd3acb117d143955ab63e1911a3ee697311315fe668ff34b04d46275910fe",
+    "skills/design-experience/references/artifacts.md": "c840649d5cb721259d5f537c3710e9da4ce7018db90ef86b2963c6b45d2493a7",
+    "skills/design-experience/references/collaboration.md": "14a549a0a6398fb583eea4816f5a2cc00ab62408a2bfdcd441765859c464806f",
+    "skills/humanize-writing/SKILL.md": "9eb6ba53057901fcf359f84acdb983dcec822530363bfea4de131ab8badf2214",
+    "skills/plan-pm/SKILL.md": "59820070ef68797658859582d0782f946957319f92dd6e97cc87a6528465a237",
+    "skills/plan-pm/references/goal-execution.md": "dde13a3135402c4610ad199cefc24d0cc6b6d6361e1aedb55d6e7e93b95b11a7",
+    "skills/release-assessment/SKILL.md": "c5d68d39e2878046f7df71b05612be35fad947291f039e3ddd65df6f855eb428",
+    "skills/release-assessment/references/operations.md": "d65ba206de93c25fe377e00e02a884b5bb91aeb6d6098657f2c49bfc68163b4e",
+    "skills/release-assessment/references/project-policy.md": "3a72a1a9e04430a2adc24eca56fe831c2b93eda7b121748d4ac58c13adb3263d"
+  },
+  "rollback_patch": {
+    "format": "zero-context unified diff",
+    "sha256": "4de93b5088ec6c667293a3b7348fc1df7c9453240a69003b2b34caffef1c8c9a"
+  }
+}

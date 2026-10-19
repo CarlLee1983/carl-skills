@@ -1,0 +1,672 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 80a5a75..f32bbd0 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -26 +26,3 @@ Document additional commands when a skill introduces executable tooling.
+-Use descriptive Markdown headings, short paragraphs, fenced examples, and tables for comparable outputs. Preserve the language and domain terminology of existing documents. Name skill directories with lowercase hyphenated names and their entry points `SKILL.md`.
++Use descriptive Markdown headings, short paragraphs, fenced examples, and tables for comparable outputs. Name skill directories with lowercase hyphenated names and their entry points `SKILL.md`.
++
++Write skill descriptions and general agent instructions in concise English. Preserve language-specific rules, examples, trigger phrases, fixed output text, and domain terminology where translation would lose meaning or change behavior. Human-facing documentation and UI metadata may retain their existing language. Review language edits for equivalent triggers, boundaries, and outputs; measure token savings with a named tokenizer rather than assuming them.
+diff --git a/skills/calibrate-codex/SKILL.md b/skills/calibrate-codex/SKILL.md
+index 70cc728..fe1bdfd 100644
+--- a/skills/calibrate-codex/SKILL.md
++++ b/skills/calibrate-codex/SKILL.md
+@@ -3 +3 @@ name: calibrate-codex
+-description: Calibrate Codex behavior from user feedback or recurring failures by choosing the narrowest instruction, skill, hook, rule, or validation gate. Use for requests to 調校 Codex, remember a Codex workflow rule, or prevent a repeated Codex mistake; ordinary document edits and other agents' configuration are outside this skill.
++description: Calibrate Codex from feedback or recurring failures using the narrowest instruction, skill, hook, rule, or validation gate. Use to 調校 Codex, remember workflow rules, or prevent repeated mistakes; excludes ordinary document edits and other agents' configuration.
+diff --git a/skills/design-experience/SKILL.md b/skills/design-experience/SKILL.md
+index 8059f17..d1ce246 100644
+--- a/skills/design-experience/SKILL.md
++++ b/skills/design-experience/SKILL.md
+@@ -3 +3 @@ name: design-experience
+-description: 從專案功能與產品概念推進 UI／UX 探索、方向比較、互動原型、回饋收斂與設計定稿。用於功能大致完成卻不知道介面如何開始，或接續既有設計探索；單一 CSS 修正、已有明確設計稿的直接實作不走此流程。
++description: Develop UI/UX exploration, comparable directions, interactive prototypes, feedback, and finalized designs from product capabilities and concepts. Use when functionality is mostly complete but interface design needs a starting point, or to resume design exploration; exclude isolated CSS fixes and direct implementation from an established design.
+@@ -8 +8 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-把「這個產品可以做什麼」轉成「使用者如何完成任務」，交付能比較、能試用、能接續的設計。UX 從理解任務開始；視覺、文字、互動一起服務該任務。
++Turn product capabilities into user tasks and deliver designs people can compare, try, and continue. Start UX with the task; visuals, copy, and interaction serve it together.
+@@ -10 +10 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-## 先定位這一輪
++## Locate the current stage
+@@ -12 +12 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-讀對話、專案規則與已有設計紀錄，辨識使用者要探索、做原型、收斂、定稿，或只詢問下一步。從第一個尚未解決的問題開始；已知答案沿用，功能完成不代表需要重做整個前端。
++Read the conversation, project rules, and existing design records. Identify whether the user wants exploration, prototyping, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
+@@ -14 +14 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-首次持久化或跨 session 接續時，讀 [artifacts.md](references/artifacts.md)，使用一份 `SESSION.md` 維護脈絡與產物入口。先說明這輪會交出什麼，再進行必要的探索。純討論先在對話提供方案；建立檔案與原型依當次授權範圍。
++Before first persistence or resuming across sessions, read [artifacts.md](references/artifacts.md). Keep context and artifact entry points in one `SESSION.md`. State this round's deliverable before necessary exploration. For discussion only, propose in conversation first; create files and prototypes within the current authorization.
+@@ -16 +16 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-本技能可自己完成 brief、方向提案、簡單原型與交接。需要專項能力時才讀 [collaboration.md](references/collaboration.md) 選協作技能；一次只選一個主要視覺方向。技能缺席時用現有能力完成允許的工作，明說實際採用的方法，不聲稱已呼叫它。
++This skill can produce briefs, directions, simple prototypes, and handoffs itself. Read [collaboration.md](references/collaboration.md) only when specialist capabilities are needed; choose one primary visual direction at a time. If a skill is unavailable, complete authorized work with available capabilities and name the method actually used, without claiming to have invoked it.
+@@ -18 +18 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-## 理解產品與任務
++## Understand the product and tasks
+@@ -20 +20 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-先讀能回答問題的材料：README／產品概念、現行規格與邊界決定、主要路由與畫面、元件與樣式、資料契約。查看既有介面時用可用的瀏覽器能力；狹窄問題不需要掃整個 repository。區分現行行為、歷史規格、使用者期待與設計假設。
++Read materials that answer the question: README/product concept, current specifications and boundary decisions, main routes and screens, components and styles, and data contracts. Use available browser capabilities to inspect existing interfaces. Narrow questions do not require a repository-wide scan. Distinguish current behavior, historical specifications, user expectations, and design assumptions.
+@@ -22 +22 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-把工程功能整理成使用者任務，而不是一個 API 對一張頁面。先辨識介面類型：產品操作介面、品牌／行銷頁，或既有介面的局部改善。若是 CLI、後端服務或專案明確排除 UI，指出邊界，提出符合現況的體驗改善；只有使用者已授權概念探索時才做隔離的介面原型，並保留「是否新增產品介面」為未決範圍。
++Organize engineering capabilities into user tasks, rather than one screen per API. Identify the interface type: product UI, brand/marketing page, or a local improvement to an existing interface. For a CLI, backend service, or project explicitly excluding UI, state that boundary and propose experience improvements that fit. Create an isolated interface prototype only with authorization for concept exploration; leave adding a product interface as an unresolved scope decision.
+@@ -24 +24 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-簡短 brief 應讓人能確認：
++A short brief must establish:
+@@ -26,3 +26,3 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-- 誰在什麼情境使用；主要任務、入口與成功結果是什麼。
+-- 哪條代表性流程最值得先設計；有哪些既有品牌、平台、資料與權限限制。
+-- 哪些判斷有來源，哪些是推測；最影響方向的缺口是什麼。
++- Who uses it, in what context, their main task, entry point, and successful outcome.
++- Which representative flow to design first, and existing brand, platform, data, and permission constraints.
++- Which judgments have sources, which are assumptions, and which gaps most affect direction.
+@@ -30 +30 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-先提供可修正的理解，再問少量會改變設計的問題，附推薦選項與理由。能從專案讀到的資訊自行取得。可逆的視覺選擇可先假設；使用者角色、核心流程或產品範圍的未知若會改變設計，先釐清該選擇，繼續其餘獨立工作。
++Offer a correctable understanding before asking a few design-changing questions with recommended options and reasons. Retrieve project facts yourself. Assume reversible visual choices when useful. Clarify unknown roles, core flows, or product scope when they would change the design, while advancing independent work.
+@@ -32 +32 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-**完成條件：** 有來源支持的 brief，核心任務與範圍清楚；剩餘假設有標示，足以提出方向而不用捏造產品能力。
++**Complete when:** a sourced brief makes the core task and scope clear, with remaining assumptions labeled and enough evidence to propose directions without inventing capabilities.
+@@ -34 +34 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-## 提出可比較的方向
++## Propose comparable directions
+@@ -36 +36 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-通常給 2–3 個結構不同的方向；需求已收斂時直接深化選定方向。差異應落在主要入口、資訊層級、操作方式或內容節奏，讓使用者看得到取捨。同一版面只換色不算不同方向。
++Usually offer 2–3 structurally distinct directions; deepen the selected direction when requirements have converged. Vary entry points, information hierarchy, interaction, or content rhythm so trade-offs are visible. Recoloring one layout does not count.
+@@ -38 +38 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-每個方向給穩定 ID（如 A／B／C）、一句核心想法、代表性畫面／線框、適合情境、代價與推薦理由。沿用相同任務、資料與情境公平比較。資料密集產品以操作與狀態為主；行銷頁以受眾、訊息、證據與轉換任務為主。規模隨問題決定，不強制每次做完整網站。
++Give each direction a stable ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website.
+@@ -40 +40 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-**完成條件：** 使用者能指出想選哪個方向或混合哪些部分，並理解這個選擇犧牲了什麼。
++**Complete when:** the user can select a direction or parts to combine and understand the trade-offs.
+@@ -42 +42 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-## 建立回答問題的原型
++## Build a prototype that answers a question
+@@ -44 +44 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-先寫一句本輪要驗證的問題，再選保真度：
++Write the question to validate this round, then choose fidelity:
+@@ -46,3 +46,3 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-- 操作、流程或資訊層級不確定：可點擊的低／中保真原型。
+-- 品牌、構圖或視覺感受不確定：視覺參考稿；需要圖像生成時才使用生成能力。
+-- 已選方向：深化代表性流程，補齊對該流程有影響的狀態。
++- Uncertain operations, flow, or hierarchy: a clickable low/mid-fidelity prototype.
++- Uncertain brand, composition, or visual feel: a visual reference; use image generation only when needed.
++- Selected direction: deepen the representative flow and relevant states.
+@@ -50 +50 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-選載體前，先確認預定入口、使用者開啟方式，以及目前工具可支援的瀏覽器操作與畫面檢查；需要時先用最小樣例確認。無法自動檢查時，在建立前說明手動試用入口與未驗證範圍，再選可交付的形式。
++Before choosing a medium, confirm the intended entry point, how the user opens it, and available browser interaction and visual inspection tools. Test a minimal example if needed. If automated inspection is unavailable, explain the manual trial entry point and unverified scope before building, then choose a deliverable format.
+@@ -52 +52 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-沿既有 stack、元件與路由做隔離原型；沒有前端宿主時，單檔離線 HTML 是可選形式。共用資料與元件可以保留，但不同方向須能自由改變結構；多方向放在同一個比較入口，切換時盡可能保留資料情境。
++Build an isolated prototype using the existing stack, components, and routes. Without a frontend host, a single offline HTML file is an option. Share data and components where useful, but let each direction change structure freely. Place multiple directions behind one comparison entry point and preserve data context across switches where possible.
+@@ -54 +54 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-用接近實際長度、密度的內容，將示例資料標清楚。重要控制應能完成所宣稱的模擬行為；資料寫入接 stub，不接真實 mutation。帶入相關的空白、載入、錯誤、權限、資料過期或恢復情境，選擇會影響設計判斷者即可。顯示必要狀態，避免假進度、假通知或虛構整合能力。
++Use realistically sized and dense content, labeling sample data. Important controls must perform their claimed simulated behavior; stub writes rather than connecting real mutations. Include relevant empty, loading, error, permission, stale-data, or recovery scenarios that affect design judgment. Show necessary states without fake progress, fake notifications, or invented integrations.
+@@ -56 +56 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-給使用者具體試用任務，例如「找出為何不能核准，並找到恢復路徑」。保持驗證證據分層：
++Give concrete trial tasks, such as「找出為何不能核准，並找到恢復路徑」. Keep evidence levels distinct:
+@@ -58,3 +58,3 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-1. 語法／程式檢查只能支持程式可執行或局部邏輯正確。
+-2. 瀏覽器實際操作與截圖支持已檢查的畫面、尺寸與互動；檢查鍵盤焦點、溢出與相關響應式尺寸。
+-3. 使用者實際操作回饋才是該次試用證據；AI 評論或選擇方向不能冒充真人可用性測試。
++1. Syntax/code checks support executability or local logic only.
++2. Browser interactions and screenshots support the screens, dimensions, and interactions inspected. Check keyboard focus, overflow, and relevant responsive sizes.
++3. Actual user interaction feedback is trial evidence. AI commentary or direction selection is not human usability testing.
+@@ -62 +62 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-無法開啟瀏覽器或工具拒絕操作時，保留可交付產物與可完成的檢查，明說未驗證項目；遵守工具阻擋，不經其他介面繞過。重用同一來源與環境的有效結果，變更後重查受影響部分。
++If the browser is unavailable or a tool refuses an operation, retain deliverables and feasible checks, and state unverified items. Respect tool blocks without bypassing them through another interface. Reuse valid results for unchanged source and environment; recheck affected parts after changes.
+@@ -64 +64 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-**完成條件：** 入口可定位、示例與真實能力可區分、關鍵路徑可試用；驗證結果及缺口均有紀錄。工具受限時標示部分驗證，不把它當成畫面通過。
++**Complete when:** the entry point is discoverable, sample behavior is distinguishable from real capabilities, the key path can be tried, and results and gaps are recorded. Label tool-limited verification as partial rather than claiming visual approval.
+@@ -66 +66 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-## 回饋、收斂與定稿
++## Feedback, refinement, and finalization
+@@ -68 +68 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-以目前階段解讀短回覆，避免每輪重新訪談：
++Interpret short replies in the current stage rather than repeating the interview:
+@@ -70 +70 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-| 使用者回覆 | 接續動作 |
++| User reply | Next action |
+@@ -72,6 +72,6 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-| `C`／選 B | 對照當輪方向 ID，記錄選擇並收斂該方向；若有多組 ID 才釐清。選方向不等於定稿。 |
+-| A 的導覽配 C 的內容 | 記錄取用部分，做一個整合方向，檢查是否破壞原先的任務與資訊層級。 |
+-| 太複雜／看不懂 | 指出可能的具體問題，優先用最小修改驗證；關鍵歧義再問。 |
+-| 定稿 | 凍結當下被接受的版本與範圍，產出交接；尚未驗證的項目照實保留。 |
+-| 下一步？ | 依原始目標、當前階段與未決事項說明下一步；這是詢問，不自行啟動正式實作。 |
+-| OK／好的 | 接續它回應的具體提案；沿用已授權工作，不擴張到未提出的階段。 |
++| `C`／選 B | Match the current direction IDs, record the choice, and refine it. Clarify only if multiple ID sets exist. Selection does not finalize the design. |
++| A 的導覽配 C 的內容 | Record the chosen parts, build one combined direction, and check the original task and hierarchy remain coherent. |
++| 太複雜／看不懂 | Identify likely concrete issues and test the smallest change first; ask about consequential ambiguity. |
++| 定稿 | Freeze the accepted version and scope and produce a handoff, retaining unverified items accurately. |
++| 下一步？ | Explain the next step from the original goal, current stage, and unresolved items. This is a question, not authorization to start production implementation. |
++| OK／好的 | Continue the specific proposal being answered within existing authorization, without expanding to unproposed stages. |
+@@ -79 +79 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-回饋改動後說明改了什麼、解決哪個問題；保留影響取捨的決策與仍有效的版本，避免一堆同名 `final`。新需求推翻既定前提時，只重開受影響的部分。
++After feedback changes, explain what changed and which problem it addresses. Preserve decisions affecting trade-offs and still-valid versions; avoid indistinguishable `final` files. Reopen only affected parts when new requirements overturn earlier premises.
+@@ -81 +81 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-定稿是使用者對指定設計版本的接受。記錄已接受的資訊架構、核心流程、視覺與互動規則，以及尚未涵蓋的畫面／狀態。原型的 CSS tokens 可作為視覺規則來源，交接文件引用它，不另外維護一份可能漂移的色碼表。若使用者在未完成檢查時定稿，分開保存「已接受設計」和「驗證仍缺哪些證據」。
++Finalization is user acceptance of a specific design version. Record accepted information architecture, core flows, visual and interaction rules, and uncovered screens/states. Prototype CSS tokens can be the source of visual rules; reference them in the handoff rather than maintaining a drifting color table. If the user finalizes before checks are complete, record accepted design and missing verification evidence separately.
+@@ -83 +83 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-**完成條件：** 可辨識的定稿版本、使用者接受的範圍、決策理由與驗證缺口都已保存；下一位 agent 不用重問已定案事項。
++**Complete when:** the identifiable final version, accepted scope, decision rationale, and verification gaps are saved so the next agent need not re-ask settled questions.
+@@ -85 +85 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-## 交接與停止點
++## Handoff and stopping point
+@@ -87 +87 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-依 [artifacts.md](references/artifacts.md) 完成交接：畫面與狀態、可重用元件、真實資料／權限接點、可觀察驗收情境、實作先後與未決範圍。先指出已能沿用的能力，再標出需要新契約或產品決策的部分。
++Complete the handoff using [artifacts.md](references/artifacts.md): screens and states, reusable components, real data/permission integration points, observable acceptance scenarios, implementation order, and unresolved scope. Identify reusable capabilities first, then parts requiring new contracts or product decisions.
+@@ -89 +89 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-預設在設計交接結束。若使用者已明確授權正式實作，攜帶定稿與限制進入專案既有實作流程；保留人必須親自啟動的入口，不把設計接受視為架構、發布或產品範圍擴張的授權。
++Stop after design handoff by default. With explicit authorization for production implementation, carry the finalized design and constraints into the project's implementation workflow. Preserve entry points requiring human invocation; design acceptance does not authorize architecture decisions, release, or product scope expansion.
+@@ -91 +91 @@ description: 從專案功能與產品概念推進 UI／UX 探索、方向比較
+-最後給目前階段、產物入口、主要選擇、實際驗證與下一個必要動作。原始任務若是在開發本技能，設計試跑結束後回到技能建置與驗證，勿默認改成實作被拿來試跑的產品。
++Finish with the current stage, artifact entry points, main choices, actual verification, and next necessary action. If the original task is developing this skill, return to skill construction and validation after the design trial; do not silently switch to implementing the trial product.
+diff --git a/skills/design-experience/references/artifacts.md b/skills/design-experience/references/artifacts.md
+index a075b15..e1996b4 100644
+--- a/skills/design-experience/references/artifacts.md
++++ b/skills/design-experience/references/artifacts.md
+@@ -1 +1 @@
+-# 接續紀錄與設計交接
++# Continuation records and design handoff
+@@ -3 +3 @@
+-首次保存設計或接手既有探索時讀本檔。以一份 `SESSION.md` 作為進度與入口的來源；原型／圖片保存實際設計內容，不重抄成另一套規格。
++Read before first saving a design or taking over existing exploration. Use one `SESSION.md` as the source of progress and entry points. Prototypes/images hold the actual design; do not transcribe them into a second specification.
+@@ -5 +5 @@
+-## 存放與接續
++## Storage and continuation
+@@ -7 +7 @@
+-優先沿用專案已建立的設計文件／原型慣例，寫入前遵守該處規則。概念探索若不宜進入產品工作樹，使用持續保存的使用者工作目錄，例如 `~/Documents/design-experience/<project>/<topic>/`。首次交付說明實際位置，不自行改 `.gitignore` 或將原型加入正式路由。`/tmp` 可供檢查與隔離評估；正式交付與定稿不得只有暫存位置。
++Follow existing project conventions for design documents/prototypes and applicable rules before writing. If concept exploration should stay outside the product working tree, use persistent user storage such as `~/Documents/design-experience/<project>/<topic>/`. State the actual location on first delivery. Do not change `.gitignore` or add prototypes to production routes on your own. `/tmp` is suitable for checks and isolated evaluation, but delivered and finalized artifacts must also have persistent storage.
+@@ -9 +9 @@
+-只建立當輪需要的檔案：
++Create only files needed this round:
+@@ -14,2 +14,2 @@
+-  prototypes/           # 有可執行原型才建立
+-  references/           # 有需保留的視覺參考才建立
++  prototypes/           # Only for runnable prototypes
++  references/           # Only for retained visual references
+@@ -18 +18 @@
+-小修改可直接更新當前原型；重大選擇與定稿保存可辨識版本，例如 `comparison.html`、`workbench-v2.html`。使用者指定名稱優先。已接受的版本保留；修改建立新版本並記錄受影響範圍。用 SESSION 的相對連結和最終回覆的絕對檔案連結讓人找得到入口。 原型標示版本與示例性質，接受狀態統一由 SESSION 維護；避免在原型嵌入「尚未定稿」等會過期的階段文字，讓版本保存與接受紀錄保持一致。
++Small changes can update the current prototype. Save identifiable versions for major choices and finalization, such as `comparison.html` or `workbench-v2.html`; user-specified names take precedence. Preserve accepted versions, making new versions for changes and recording their scope. Use relative links in SESSION and absolute file links in the final response. Label prototypes with their version and sample nature; keep acceptance status solely in SESSION. Avoid embedding stage text such as「尚未定稿」that can expire and conflict with acceptance records.
+@@ -20 +20 @@
+-接續時先確認 SESSION 的專案、主題與原始任務吻合，所連結檔案存在。對照目前專案邊界與相關變更；紀錄是上次觀察，不是現在仍成立的證明。內容已變時標示需要重驗的部分，保留仍有效的決策。使用者未提供紀錄位置時先查本輪已知產物及專案設計目錄，不廣掃整台電腦。
++On continuation, confirm SESSION matches the project, topic, and original task, and that linked files exist. Compare current project boundaries and relevant changes: records describe past observations, not proof that they still hold. Mark changed areas for revalidation and retain valid decisions. If no record location was given, check known artifacts from this round and project design directories; do not scan the whole computer.
+@@ -22 +22 @@
+-## SESSION 的必要內容
++## Required SESSION content
+@@ -24 +24 @@
+-使用簡短 Markdown；只填有意義的欄位，不製造空模板。探索初期只需要脈絡、階段、假設與入口，交接內容逐步累積。
++Use concise Markdown and meaningful fields rather than empty templates. Early exploration needs only context, stage, assumptions, and entry points; accumulate handoff details as work proceeds.
+@@ -26,6 +26,6 @@
+-- **任務與目標**：專案位置、原始請求、主要使用者、核心任務、範圍限制、來源文件。若是為測試 skill 而做的產品原型，保留這個外層目標。
+-- **目前階段**：理解／比較／原型／收斂／定稿／交接。記錄最後進度與下一個尚未解決的問題；已有紀錄則接續，不重新開始。
+-- **方向與決策**：穩定 ID、各方向取捨、使用者選擇與理由。理由沒有提供時寫「未陳述」，不補造。後續 agent 的建議與已接受決定分開。
+-- **設計與入口**：當前比較稿、收斂稿、已接受版本的路徑或 URL，開啟方法與必要環境；示例資料、真實接點各是什麼。
+-- **驗證紀錄**：對應版本、檢查方式、結果、相關畫面尺寸／情境、未執行項目與阻擋原因。接受設計的使用者回覆另外記錄，不代替操作證據。
+-- **未決與交接**：影響後續的問題、可獨立推進的工作，以及正式實作是否已獲授權。
++- **Task and goal:** project location, original request, primary users, core task, scope constraints, and source documents. Preserve the outer goal when the product prototype is a skill test.
++- **Current stage:** understanding/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
++- **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions.
++- **Design and entry points:** paths or URLs for current comparisons, refined designs, and accepted versions; opening instructions and required environment; sample data versus real integration points.
++- **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence.
++- **Open items and handoff:** consequential questions, work that can proceed independently, and whether production implementation is authorized.
+@@ -33 +33 @@
+-## 定稿時的交接內容
++## Finalized-design handoff
+@@ -35 +35 @@
+-在同一份 SESSION 補充足夠讓另一位 agent 開工的資訊；複雜產品已有獨立設計文件時直接連結，避免全文複製。
++Add enough information to the same SESSION for another agent to begin. Link existing separate design documents for complex products rather than copying them in full.
+@@ -37 +37 @@
+-| 內容 | 要讓接手者知道的事 |
++| Content | What the next agent needs |
+@@ -39,8 +39,8 @@
+-| 任務與畫面 | 主要入口、導覽、畫面職責、一步步的操作與完成回饋 |
+-| 狀態與恢復 | 該流程必要的空白／載入／失敗／權限狀態，如何重試、返回或取消 |
+-| 視覺與元件 | 現有元件能否沿用、tokens 的來源、文字與互動規則、響應式意圖 |
+-| 資料與邊界 | 哪些內容由既有契約提供，哪些仍是假資料；需要新增的讀寫或權限能力 |
+-| 驗收情境 | 使用者要做的動作、應看到的結果；鍵盤與相關尺寸的檢查方式 |
+-| 實作順序 | 最小完整流程先做什麼，依賴什麼，哪些選擇須先決定 |
+-
+-交接完整不代表每項都已決定：未知事項標明影響、誰需要決定、哪些工作可先做。若關鍵資料或權限契約未定，明說尚不能直接開始相依實作。
++| Tasks and screens | Main entry points, navigation, screen responsibilities, step-by-step operations, and completion feedback |
++| States and recovery | Required empty/loading/failure/permission states; retry, return, and cancel behavior |
++| Visuals and components | Reusable components, token sources, copy and interaction rules, responsive intent |
++| Data and boundaries | Existing contract-backed content versus sample data; required new read/write or permission capabilities |
++| Acceptance scenarios | User actions and observable results; keyboard and relevant screen-size checks |
++| Implementation order | First steps for the smallest complete flow, dependencies, and choices that must precede work |
++
++A complete handoff can contain unresolved decisions. State their impact, who must decide, and work that can proceed. If essential data or permission contracts remain unsettled, explicitly identify dependent implementation that cannot yet start.
+diff --git a/skills/design-experience/references/collaboration.md b/skills/design-experience/references/collaboration.md
+index 62c339b..bee7df1 100644
+--- a/skills/design-experience/references/collaboration.md
++++ b/skills/design-experience/references/collaboration.md
+@@ -1 +1 @@
+-# 按問題選協作能力
++# Choose collaboration capabilities by problem
+@@ -3 +3 @@
+-需要專項能力時讀本檔。下表是候選角色，不是固定流水線或安裝清單。先查看當前可用技能與其入口，再讀所選技能的現行指示；名稱相同的版本也可能有不同範圍。
++Read when specialist capabilities are needed. These are candidate roles, not a fixed pipeline or installation list. Check available skills and their entry points, then read the selected skill's current instructions; versions sharing a name may differ in scope.
+@@ -5 +5 @@
+-| 當前問題 | 可選協作技能 | 選擇依據 |
++| Current problem | Candidate skills | Selection criteria |
+@@ -7,9 +7,9 @@
+-| 要比較操作、狀態或版面 | `prototype` | 先判斷邏輯示範或 UI 比較分支；用共同情境比較結構差異。其整合／保存步驟仍須符合本輪授權。 |
+-| 需要視覺方向或參考研究 | `hallmark` | 可用 study／audit 或適用的設計分支；檢查其固定審美是否符合專案。 |
+-| 官網、品牌或行銷頁 | `design-taste-frontend` | 先確認版本範圍；已盤點版本排除 dashboard／app screens，不當產品介面的通用預設。 |
+-| 要先看生成的視覺稿 | `imagegen-frontend-web`、`imagegen-frontend-mobile`、`image-to-code` | 平台與產物形式相符才選。圖片用來比較視覺；流程是否可用仍需互動驗證。 |
+-| 元件互動、回饋與細節 | `emil-design-eng` | 在代表性操作已明確時補強，不為展示技巧增加互動。 |
+-| 手機網頁的觸控與瀏覽器行為 | `mobile-native` | 用於 mobile web，真機與模擬器的驗證結果分開記錄。 |
+-| 動畫確有目的 | `animate`、`animate-expo` | 按 web／native 平台選；以任務與頻率決定是否需要動效。 |
+-| 已有介面的局部改善 | `redesign-existing-projects` | 先核對其變更範圍與固定規則是否符合既有設計系統。 |
+-| 使用 Google Stitch 產生設計 | `stitch-design-taste` | 僅在選定 Stitch 且能力可用時；不為了產生 DESIGN.md 而引入整套工具。 |
++| Compare operations, states, or layouts | `prototype` | Choose its logic-demonstration or UI-comparison branch; compare structural differences using a shared scenario. Integration/persistence steps still require current authorization. |
++| Visual direction or reference research | `hallmark` | Use study/audit or a suitable design branch; check whether its fixed aesthetic fits the project. |
++| Corporate, brand, or marketing page | `design-taste-frontend` | Confirm version scope. The inventoried version excludes dashboards/app screens; do not use it as the general default for product interfaces. |
++| Generated visual concepts first | `imagegen-frontend-web`, `imagegen-frontend-mobile`, `image-to-code` | Match platform and artifact type. Images compare visuals; flow usability still needs interaction validation. |
++| Component interactions, feedback, and detail | `emil-design-eng` | Strengthen an established representative operation; avoid adding interactions only to demonstrate technique. |
++| Mobile web touch and browser behavior | `mobile-native` | Use for mobile web; record physical-device and emulator results separately. |
++| Purposeful animation | `animate`, `animate-expo` | Choose by web/native platform; let the task and frequency determine whether motion is needed. |
++| Local improvements to an existing interface | `redesign-existing-projects` | Check change scope and fixed rules against the existing design system. |
++| Design generation with Google Stitch | `stitch-design-taste` | Use only when Stitch is selected and available, rather than introducing the toolchain merely to generate DESIGN.md. |
+@@ -17 +17 @@
+-`pick-ui-library` 等明定須使用者啟動的技能，遵守其 invocation 規則；必要時提出入口。既有元件庫先沿用，設計探索不自動授權新增依賴。
++Honor invocation rules for skills requiring user initiation, such as `pick-ui-library`; offer their entry point when needed. Reuse existing component libraries first. Design exploration does not authorize new dependencies automatically.
+@@ -19 +19 @@
+-## 避免規則互相牽制
++## Resolve conflicting rules
+@@ -21 +21 @@
+-先確定專案的視覺來源與當輪主技能。協作技能的約束若與已接受 brief、品牌、產品任務或另一個主技能衝突，選擇適合這一輪的技能，或只依現有能力完成具體工作，說明選擇。不要宣稱同時遵循互斥規則，也不要把不同風格平均混合。使用者指定的品牌與專案規則優先。
++Establish the project's visual source and this round's primary skill. If collaboration constraints conflict with the accepted brief, brand, product task, or another primary skill, choose the skill suited to this round or complete the specific work using available capabilities and explain the choice. Do not claim compliance with incompatible rules or average conflicting styles. User-specified brand and project rules take precedence.
+@@ -23 +23 @@
+-必要時委派不同方向的原型或獨立評論，前提是委派已獲授權。共用同一 brief、資料與驗證問題；主 agent 負責選擇、整合與交接。小範圍收斂留在主 agent，避免每次回覆都派工。
++When useful and authorized, delegate direction prototypes or independent critiques. Share the same brief, data, and validation question; the primary agent owns selection, integration, and handoff. Keep small refinements with the primary agent rather than dispatching on every reply.
+@@ -25 +25 @@
+-## 外部候選（非必要依賴）
++## External candidates (optional)
+@@ -27 +27 @@
+-使用者希望擴充協作能力時才查驗現行來源與可用入口，不自動安裝：
++Check current sources and available entry points only when the user wants expanded collaboration capabilities; do not install automatically:
+@@ -29,3 +29,3 @@
+-- [Impeccable](https://impeccable.style/docs/)：可評估 `init`／`shape` 的產品脈絡與 brief，以及 `critique`／`audit` 的設計評論與實作檢查。已有 SESSION 時傳入決定並避免另建衝突的產品事實來源。
+-- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)：可評估設計資料查詢與建議，將資料庫輸出視為候選，不替代產品研究。
+-- [Anthropic frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design)：可作為主要視覺技能的替代選擇；與既有視覺技能按適配性擇一。
++- [Impeccable](https://impeccable.style/docs/): consider `init`/`shape` for product context and briefs, and `critique`/`audit` for design reviews and implementation checks. Pass existing SESSION decisions rather than creating a conflicting source of product facts.
++- [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill): consider design-data queries and suggestions; treat database output as candidates rather than a substitute for product research.
++- [Anthropic frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design): an alternative primary visual skill; choose between it and existing visual skills by fit.
+@@ -33 +33 @@
+-外部名稱與指令可能變動。需要實際使用時讀其最新入口與授權需求；未安裝或未驗證可用時只描述候選用途。
++External names and commands may change. Read current entry points and authorization requirements before use. Describe candidate uses only when installation or availability is unverified.
+diff --git a/skills/humanize-writing/SKILL.md b/skills/humanize-writing/SKILL.md
+index aa75cf6..fd33f7e 100644
+--- a/skills/humanize-writing/SKILL.md
++++ b/skills/humanize-writing/SKILL.md
+@@ -3 +3 @@ name: humanize-writing
+-description: Bilingual (Traditional Chinese / English) editor that removes "AI flavor" from tech articles, X/Twitter posts, product notes, and essays while preserving the author's facts, stance, and voice. Use when the user asks to 去AI味, 改得像本人, 潤稿, 讓文字更像人寫的, or in English to humanize / de-slop / remove AI tone / "make this sound less like ChatGPT" / edit an X post / fix an over-polished draft. Auto-detects the input language and applies the matching banned-pattern set.
++description: Edit tech articles, X posts, product notes, and essays to remove AI tone while preserving facts, stance, and voice. Use for humanizing, de-slopping, 潤稿, or 去AI味; detect Traditional Chinese, English, or mixed text and apply the matching language rules.
+@@ -14,4 +14,4 @@ Apply in order; a lower priority never justifies breaking a higher one.
+-1. **保留事實 / Preserve facts** — numbers, model names, technical terms, API names, proper nouns, quoted results. Never alter, round, or invent them.
+-2. **保留立場與不確定性 / Preserve stance and uncertainty** — if the author hedges ("大概", "I think", "not sure yet"), keep the hedge. Do not upgrade a guess into a confident claim.
+-3. **具體優先於抽象 / Concrete over abstract** — prefer the specific result over the abstract lesson. Cut sentences that could apply to any topic.
+-4. **先拆結構殼、再潤詞 / Structure before words** — delete empty framing sentences first; only then polish wording. Most AI flavor is structural, not lexical.
++1. **Preserve facts** — numbers, model names, technical terms, API names, proper nouns, quoted results. Never alter, round, or invent them.
++2. **Preserve stance and uncertainty** — if the author hedges ("大概", "I think", "not sure yet"), keep the hedge. Do not upgrade a guess into a confident claim.
++3. **Concrete over abstract** — prefer the specific result over the abstract lesson. Cut sentences that could apply to any topic.
++4. **Structure before words** — delete empty framing sentences first; only then polish wording. Most AI flavor is structural, not lexical.
+@@ -22 +22 @@ Apply in order; a lower priority never justifies breaking a higher one.
+-   - Predominantly 繁體中文 → read `references/zh-tw.md`.
++   - Predominantly Traditional Chinese → read `references/zh-tw.md`.
+@@ -43 +43 @@ Load the matching file — it contains the full ban list with before/after examp
+-- **繁體中文**: `references/zh-tw.md`
++- **Traditional Chinese**: `references/zh-tw.md`
+diff --git a/skills/plan-pm/SKILL.md b/skills/plan-pm/SKILL.md
+index d80b48b..525b485 100644
+--- a/skills/plan-pm/SKILL.md
++++ b/skills/plan-pm/SKILL.md
+@@ -3 +3 @@ name: plan-pm
+-description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 implement-spec 接續入口；在使用者明確授權推進的 Goal 中，交由既有流程執行並核對成果，持續推動範圍內工作。
++description: Review plan progress as a PM and recommend implement or implement-spec entry points from the DAG. For explicitly authorized Goals, delegate execution to existing workflows, verify delivery, and keep advancing within scope.
+@@ -8 +8 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-掌握整體計畫、選擇可執行的工作單位，並把接續交給既有開發流程。沿用計畫與 tracker，不建立另一套執行引擎或進度帳本。
++Understand the overall plan, select executable work units, and hand them to existing development workflows. Reuse the plan and tracker rather than creating another execution engine or progress ledger.
+@@ -10 +10 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-## 選擇模式
++## Choose a mode
+@@ -12 +12 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-一般情境先查看進度。若計畫已拆好但尚未執行，提出可開始的工作及適合的入口，依下方「單次交接」讓使用者選定後直接接續，不把查看請求當作開發授權。使用者只要報告時直接交付報告，已完成的計畫依下方結案出口收尾。
++Default to reviewing progress. If a plan is already broken down but execution has not started, propose ready work and an entry point; use “單次交接” below to continue directly after the user selects it. A review request does not authorize development. Deliver a report when that is all the user requests; use the closure exit below for completed plans.
+@@ -14 +14 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-使用者明確要求在相關的 active Goal 中推進指定計畫，且授權 PM 選用實作入口時，使用 [Goal 推進流程](references/goal-execution.md)。從使用者指派及可用的 Goal 工具確認目標與範圍；Goal 的存在或訊息裡出現 `/goal` 不會把查詢自動切換成執行。沿用已有授權，不要求每張工單重新核准相同行為。
++Use [Goal execution](references/goal-execution.md) when the user explicitly requests advancing a specified plan within its active Goal and authorizes PM to select implementation entry points. Confirm the objective and scope from the assignment and available Goal tools. An existing Goal or `/goal` in a message does not turn a query into execution. Reuse existing authorization without requesting the same approval for every ticket.
+@@ -16 +16 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-## 取得計畫現況
++## Establish current state
+@@ -18 +18 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-先確認使用者指定的 Goal、spec、計畫文件或 tracker 範圍，讀取專案的追蹤與結案慣例。沒有指定時，從目前對話及 repository 找既有入口；有多份合理候選時，只問需要檢視哪份。
++Confirm the requested Goal, spec, plan document, or tracker scope, then read the project's tracking and closure conventions. If none is specified, find an existing entry point in the conversation and repository; ask which to review only when several candidates are plausible.
+@@ -20 +20 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-沿用原有資料來源，不另建進度檔、狀態機或匯入格式。使用現有工具唯讀查詢；GitHub 使用 `gh`。取得範圍內全部工單及必要的範圍外前置工作，包含狀態、依賴、承接者、阻擋、完成依據與明示優先序。相關 spec、PR、決策紀錄以連結提供上下文，按疑點讀取，不全面重掃程式碼。
++Reuse existing sources, without adding progress files, state machines, or import formats. Query existing tools read-only; use `gh` for GitHub. Retrieve all in-scope tickets and necessary out-of-scope prerequisites, including status, dependencies, assignees, blockers, completion evidence, and explicit priorities. Link related specs, PRs, and decisions for context; read them to resolve questions rather than rescanning all code.
+@@ -22 +22 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-標明查詢來源與時點。資料無法取得時，回報涵蓋範圍及缺口；將舊資料標為舊資料，不用對話記憶補成即時狀態。
++State the query source and time. If data is unavailable, report coverage and gaps; label stale data as stale instead of filling in current state from conversation memory.
+@@ -24 +24 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-## 判讀依賴與進度
++## Interpret dependencies and progress
+@@ -26,5 +26,5 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-- 以明示依賴建立工作關係；`A → B` 表示 B 必須等 A。已排序的執行清單可沿用其明示的先後約束，不從標題相似度發明依賴，也不把未說明的關係當成可並行。
+-- 依來源的結案規則判讀完成。分開呈現來源狀態與觀察到的矛盾，例如「已關閉，但驗收要求的 PR 尚未合併」。關閉、取消、有人說寫完、測試通過各有不同含義；取消前置工作不自動解除依賴，除非已有明確豁免或替代依據。
+-- 檢查缺失節點、循環及互相矛盾的狀態。列出具體鏈路與需確認事項；受影響節點及其下游不能列為可開始，獨立且資訊完整的分支仍可建議。
+-- 依賴與狀態只在本次分析中整理。區分已完成、進行中／待審、可開始、等待前置／決策及資訊不足；保留來源的原始狀態名稱，不寫回新的分類。
+-- 可開始的 frontier 是：尚未開始、前置條件均有滿足依據、沒有未決阻擋的工作。已有承接者的項目應標明承接情況，避免建議他人重複開工。依賴未滿足卻已在進行的工作，列為進度風險，不替它改寫依賴。
++- Build relationships from explicit dependencies: `A → B` means B must wait for A. Reuse explicit ordering constraints in ordered execution lists. Do not invent dependencies from similar titles or assume unexplained relationships permit parallel work.
++- Judge completion by the source's closure rules. Separate source status from observed contradictions, such as “已關閉，但驗收要求的 PR 尚未合併”. Closed, canceled, reported implemented, and tests passed mean different things. Canceling a prerequisite does not release its dependents without an explicit waiver or replacement.
++- Check for missing nodes, cycles, and contradictory states. Show concrete chains and open questions. Affected nodes and their descendants cannot be ready; independent branches with sufficient information may still be recommended.
++- Organize dependencies and statuses only for this analysis. Distinguish completed, in progress/awaiting review, ready, waiting for prerequisites/decisions, and insufficient information. Preserve original source status names and do not write back these classifications.
++- The ready frontier contains unstarted work with evidence that every prerequisite is satisfied and no unresolved blocker. Identify existing assignees to avoid duplicate starts. Treat work already underway with unmet dependencies as a progress risk; do not rewrite its dependencies.
+@@ -32 +32 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-## 主動核對結案
++## Proactively verify closure
+@@ -34 +34 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-每次查看計畫、恢復推進或收到實作交付時，主動檢查範圍內仍開啟 issue 的關聯 PR，包含已合併與已關閉的 PR；不能只查 open PR，也不等使用者逐張詢問是否可關閉。以明示連結及內容核對對應關係、合併目標、整張 issue 的驗收與剩餘工作；一張 PR 合併可能只完成部分需求，父 issue 還須核對子項及整體驗收。資料不足時標明待確認。
++Whenever reviewing a plan, resuming execution, or receiving implementation delivery, check related PRs for still-open in-scope issues, including merged and closed PRs. Do not limit the query to open PRs or wait for the user to ask about each issue. Use explicit links and content to verify the correspondence, merge target, whole-issue acceptance, and remaining work. One merged PR may satisfy only part of an issue; parent issues also require checking children and overall acceptance. Mark insufficient evidence as needing confirmation.
+@@ -36 +36 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-將結果分為「符合關閉條件」「尚有工作」「證據不足」，附 issue、PR／驗收證據及具體缺口。符合條件且本次授權包含結案寫入時，依 tracker 慣例關閉並重新查詢確認狀態；已自動關閉者不重複操作。查詢模式只交付結案建議；推進模式欠缺關閉授權時，一次提出具體可關閉清單與依據，沿用後續取得的範圍授權，不逐張重問。區分「驗收已滿足、tracker 待結案」與「已關閉」，依來源規則判定下游是否可開始。
++Classify results as “符合關閉條件”, “尚有工作”, or “證據不足”, with issue links, PR/acceptance evidence, and concrete gaps. When closure conditions and current write authorization are satisfied, close according to tracker conventions and query again to confirm; skip issues already closed automatically. Query mode delivers closure recommendations only. In execution mode without closure authorization, present one concrete list of closable issues and evidence, then reuse any subsequent scope authorization without asking issue by issue. Distinguish “驗收已滿足、tracker 待結案” from “已關閉”; use source rules to decide whether downstream work can start.
+@@ -38 +38 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-## 建議接續處理
++## Recommend next work
+@@ -40 +40 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-先指出進行中工作應接續、修復或等待的原因，再列出可開始的 frontier。排序遵循已明示的優先序及期限；未指定時，以能解除後續阻擋的程度與計畫順序提出建議，說明理由。
++First explain why ongoing work should continue, be fixed, or wait, then list the ready frontier. Follow explicit priorities and deadlines. Otherwise, recommend based on how much work an item unblocks and its plan order, explaining the reason.
+@@ -42 +42 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-沒有工作可開始時，依證據區分原因：範圍內工作均已符合結案規則，則附結案依據並明說目前無工作可接續；查詢模式到此結束，推進模式再核對 Goal 的整體交付條件。仍有未完成工作，則交代需完成的前置條件、待誰決策或缺少哪些資訊。後續新目標由使用者另行提出，不為了提供「下一步」而替已完成計畫追加工作。
++When nothing is ready, distinguish the cause using evidence. If all in-scope work meets closure rules, provide closure evidence and explicitly state that nothing remains to continue. Query mode ends there; execution mode also checks the Goal's overall delivery conditions. If work remains, explain the prerequisites, whose decision is needed, or which information is missing. Let the user introduce later objectives; do not add work to a completed plan merely to supply a “next step”.
+@@ -44 +44 @@ description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 impl
+-DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或整合流程允許同時執行。並行建議須說明已知資源與整合限制；沒有工期資料時，不把最長依賴鏈稱為時程上的 critical path，也不推算完工日期。
++Independent DAG branches permit parallelism only in dependencies, not necessarily in staffing, shared code, or integration. State known resource and integration constraints when recommending parallel work. Without duration data, do not call the longest dependency chain a scheduling critical path or estimate a completion date.
+@@ -46 +46 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-為優先接續的工作提供精簡交接：工作 ID 與連結、目的與範圍、前置條件現況、spec／驗收／決策的閱讀入口、第一個具體動作，以及既有驗證與結案要求。引用現有契約，不重寫一份 spec。
++Provide a concise handoff for the recommended work: ID and link, purpose and scope, prerequisite state, reading entry points for spec/acceptance/decisions, first concrete action, and existing verification and closure requirements. Reference existing contracts rather than rewriting a spec.
+@@ -48 +48 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-選一張工單或有明確邊界的工作用 `implement`；使用者要執行整份已拆成工單的 spec，且其外部前置條件已滿足時用 `implement-spec`。依專案規定的入口提供可直接使用的指令，例如 Codex 的 `$implement <工單>`、`$implement-spec <spec>`。實際交接前讀取該入口的已安裝 skill；找不到時說明缺少的入口，不聲稱已啟動。交出整份 spec 後，其內部選工與整合由 `implement-spec` 擁有，PM 不重複派發其中節點。
++Use `implement` for one ticket or a clearly bounded unit. Use `implement-spec` when the user wants an entire spec already broken into tickets executed and its external prerequisites are satisfied. Follow project entry-point conventions, with directly usable commands such as Codex's `$implement <工單>` or `$implement-spec <spec>`. Read the installed skill before the actual handoff; if absent, report the missing entry point without claiming execution has started. Once an entire spec is handed off, `implement-spec` owns its internal selection and integration; PM must not dispatch its nodes again.
+@@ -52 +52 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-提出可執行建議時，將既有交接內容收斂為一個明確提案：工單或 spec 的 ID／路徑、選用的 `implement`／`implement-spec`、本次工作範圍與交付終點。告知使用者可回覆「執行這張」或「執行這份 spec」接續；指令保留作為另開對話的入口，不要求在本對話重貼 prompt。
++Turn an executable recommendation into one concrete proposal: ticket or spec ID/path, selected `implement`/`implement-spec` entry point, scope, and delivery endpoint. Tell the user they can reply “執行這張” or “執行這份 spec” to continue. Keep commands as entry points for a separate conversation; do not require the user to paste the prompt again here.
+@@ -54 +54 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-使用者直接要求執行，或對上述明確執行提案回覆「同意」「開始」，且上下文能唯一對應工作與入口時，視為使用者明示選用該入口，讀取並執行已安裝的 skill。只有認同分析、確認進度或同意修改規則，不算授權執行工單；多個提案尚未選定、或交接上下文缺失時，只確認缺少的選擇，不自行挑一張。
++A direct execution request, or “同意”/“開始” in response to that concrete execution proposal, counts as the user's explicit selection when context uniquely identifies the work and entry point. Read and execute the installed skill. Agreement with analysis, confirmation of progress, or approval to change rules does not authorize ticket execution. When several proposals remain unselected or handoff context is missing, ask only for the missing choice; do not select a ticket yourself.
+@@ -56 +56 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-接續前重新核對該工作必要的前置條件、承接者與分支／PR 現況；已完成者回報結果，已在執行者接續原執行單位。若提案的工作範圍、入口或交付終點已改變，先說明差異並取得新選擇；新出現的阻擋依實際證據處理，不偷偷換票。交接沿用前文的來源指標、驗收與授權範圍，不重建 spec。
++Before continuing, recheck necessary prerequisites, assignees, and branch/PR state. Report already-completed work; continue the original execution unit for work already underway. If scope, entry point, or delivery endpoint has changed, explain the difference and obtain a new selection. Handle new blockers from evidence without silently switching tickets. Reuse the prior source pointers, acceptance criteria, and authorization scope rather than rebuilding a spec.
+@@ -58 +58 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-這次選擇只授權該工作單位；單張完成後回報結果與下一步建議，不自動接下一張或建立 Goal。整份 spec 的內部執行仍由 `implement-spec` 擁有。commit、push、merge、發布及 tracker 寫入沿用既有授權；入口中的寫入步驟不額外授權這些操作。若有適用的上層限制或入口不可用，指出具體限制與可用的接續方式，不把尚未執行說成已啟動。
++This selection authorizes only that work unit. After a single ticket, report results and next-step recommendations without automatically starting another ticket or creating a Goal. `implement-spec` still owns execution within an entire spec. Commit, push, merge, publication, and tracker writes follow existing authorization; write steps in an entry point grant no additional authority. If higher-level restrictions apply or an entry point is unavailable, state the specific restriction and available continuation route without claiming execution has started.
+@@ -60 +60 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-## 交付
++## Delivery
+@@ -62 +62 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-先回答整體進度；有可接續工作時指出最值得接續的一件事，再依需要附狀態表、阻擋鏈及交接內容。每個會影響選工或完成判定的結論都附來源，推論與未知明示。
++Lead with overall progress. When work can continue, identify the most valuable next item, then add a status table, blocker chains, and handoff details as needed. Source every conclusion affecting selection or completion; label inferences and unknowns.
+@@ -64 +64 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-進度數字交代分母與取消／範圍外工作如何處理；任務完成比例只代表件數，不代表工時或功能完成百分比。資料不完整時只報已知範圍，不宣告整體完成。
++For progress counts, state the denominator and treatment of canceled/out-of-scope work. A ticket completion ratio measures item count, not effort or percentage of functionality delivered. With incomplete data, report only known coverage and do not declare overall completion.
+@@ -66 +66 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-適合用圖說明分支或匯合時，附簡短 Mermaid DAG；單線清單用文字即可。
++Use a brief Mermaid DAG when it clarifies branches or joins; text suffices for a linear list.
+@@ -68 +68 @@ DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或
+-查詢與建議本身維持唯讀；領票、tracker 更新、Git 寫入及實作等行為依使用者對所選入口或 Goal 的授權處理。人工啟動依上述「單次交接」或 Goal 推進的明示選用規則判定，並遵守適用的上層及專案限制；入口的 `disable-model-invocation: true` 不把使用者已明示選用的交接降回指令建議。Goal 的持續執行機制不擴大授權。
++Queries and recommendations remain read-only. Claiming tickets, tracker updates, Git writes, and implementation follow the user's authorization for the selected entry point or Goal. Determine manual invocation from “單次交接” above or the explicit selection rules for Goal execution, subject to applicable higher-level and project restrictions. An entry point's `disable-model-invocation: true` does not reduce an explicitly user-selected handoff to a command suggestion. Goal persistence does not expand authorization.
+diff --git a/skills/plan-pm/references/goal-execution.md b/skills/plan-pm/references/goal-execution.md
+index 2e896b0..5a15e1e 100644
+--- a/skills/plan-pm/references/goal-execution.md
++++ b/skills/plan-pm/references/goal-execution.md
+@@ -1 +1 @@
+-# Goal 推進
++# Goal execution
+@@ -3 +3 @@
+-本流程只在使用者明確授權 PM 推進指定計畫、選用實作入口，且有對應 active Goal 時使用。PM 沿用主 skill 的資料來源、DAG 判讀及完成規則；Goal 提供持續執行機制，實作交由已安裝的 `implement` 或 `implement-spec`。
++Use this workflow only when the user explicitly authorizes PM to advance a specified plan and select implementation entry points, and a corresponding active Goal exists. Reuse the main skill's sources, DAG interpretation, and completion rules. The Goal provides persistence; installed `implement` or `implement-spec` skills handle implementation.
+@@ -5 +5 @@
+-## 啟動與接續
++## Start and resume
+@@ -7 +7 @@
+-確認計畫範圍、Goal 的交付終點、驗收依據與已授權操作。使用者在 Goal 指派中明確授權 PM 選用 `$implement`／`$implement-spec` 時，這次指派就是使用者對這些入口的明示選用；沿用授權並讀取、執行所選 skill，不逐票要求重複輸入。不要僅因 skill 的 `disable-model-invocation: true` 或預設人工啟動規則，就把已獲明示授權的交接降為指令建議。若有不能由這次使用者指派滿足的上層規則或實際工具限制，才回報具體限制與所需入口；不能把尚未執行說成已啟動。
++Confirm plan scope, the Goal's delivery endpoint, acceptance evidence, and authorized operations. Explicit authorization in the Goal assignment for PM to select `$implement`/`$implement-spec` counts as the user's explicit invocation of those entry points. Reuse that authorization, read and execute the selected skill, and do not require repeated input per ticket. A skill's `disable-model-invocation: true` or default manual-invocation rule alone does not reduce an explicitly authorized handoff to a command suggestion. Report specific restrictions and required entry points only when higher-level rules cannot be satisfied by this assignment or actual tool limitations apply. Do not claim execution has started before it has.
+@@ -9 +9 @@
+-每次開始或恢復推進，先核對 tracker、目前分支／PR、既有執行代理及驗證結果。已有人承接、執行中或待整合的工作先接續原執行單位；缺乏承接狀態時先確認，避免重新派發。Goal 保存目標，不替代這些逐項執行事實。
++Whenever starting or resuming, check the tracker, current branch/PR, existing execution agents, and verification results. Continue the original execution unit for assigned, active, or integration-pending work. Confirm missing assignment state before dispatching to avoid duplication. The Goal stores the objective, not these per-item execution facts.
+@@ -11 +11 @@
+-若未完成結案所需的 commit、merge 或 tracker 更新且尚未獲授權，明確回報所欠操作；保留實作成果，不能把「可供審查」記成「已合併」。實作入口內建的寫入步驟也受本次授權約束。
++If closure requires a commit, merge, or tracker update that remains unauthorized, explicitly report the missing operation. Preserve the implementation; do not record “可供審查” as “已合併”. Built-in write steps in an implementation entry point remain subject to current authorization.
+@@ -13 +13 @@
+-## 推進循環
++## Execution loop
+@@ -15,4 +15,4 @@
+-1. **選工作單位。** 依目前 frontier 與使用者優先序，選擇單張工單的 `implement`，或整份已授權 spec 的 `implement-spec`。整份 spec 的內部依賴留給該入口處理；spec 外部前置未滿足或僅授權單張時，先處理範圍內可做的單張工作。完成過的節點作為背景，不重做。
+-2. **交接並執行。** 傳遞來源指標、工作邊界、已完成部分、阻擋、既有分支／承接者、驗收與授權範圍。依環境用主代理進入該 skill 或交給有明確責任的開發代理，不要求固定多一層代理。使用者要求逐一時，交接包含一次一個工作單位，也約束 `implement-spec` 內部的並行行為。
+-3. **核對交付。** 由實作流程依專案規則執行審查與驗證；PM 核對實際 diff、檢查結果及所需整合狀態。失敗或未滿足驗收時交回原執行單位修正，避免重複開工。同一份未變更成果已有有效檢查結果時沿用；有變更、失敗或未解風險才重跑相應檢查。
+-4. **更新並重算。** 依主 skill 的「主動核對結案」處理已交付但仍開啟的 issue，僅將有證據、且獲准寫入的進度記回原 tracker；完成摘要提供來源及剩餘工作。以最新現況重新判讀 frontier，再推進下一個工作單位，不在完成第一張票後就停止整個 Goal。
++1. **Select a work unit.** From the current frontier and user priorities, choose `implement` for one ticket or `implement-spec` for an entire authorized spec. Leave internal spec dependencies to that entry point. If external spec prerequisites are unmet or only one ticket is authorized, first handle an executable in-scope ticket. Treat completed nodes as context, without redoing them.
++2. **Hand off and execute.** Pass source pointers, work boundaries, completed portions, blockers, existing branches/assignees, acceptance criteria, and authorization scope. Depending on the environment, enter the skill with the primary agent or delegate to a development agent with clear responsibility; no fixed extra agent layer is required. If the user requests sequential work, include one work unit at a time in the handoff; this also constrains parallelism within `implement-spec`.
++3. **Verify delivery.** The implementation workflow performs review and verification under project rules; PM checks the actual diff, check results, and required integration state. Return failures or unmet acceptance to the original execution unit for fixes to avoid duplicate starts. Reuse valid check results for unchanged work; rerun affected checks only for changes, failures, or unresolved risks.
++4. **Update and recompute.** Follow “Proactively verify closure” in the main skill for delivered but still-open issues. Record only evidenced, authorized progress in the original tracker; provide sources and remaining work in the completion summary. Recompute the frontier from current state and advance the next work unit rather than stopping the entire Goal after its first ticket.
+@@ -20 +20 @@
+-同一批工作只有一個排程者：PM 選擇外層工作單位；`implement-spec` 接管該 spec 的內部 DAG，直到交付或回報阻擋。仍在執行中的單位使用既有 handle 接續或等待，不另起同範圍的執行流程。
++Each batch has one scheduler: PM selects outer work units; `implement-spec` owns its spec's internal DAG until delivery or a blocker report. Resume or wait on an active unit's existing handle rather than starting another execution workflow for the same scope.
+@@ -22 +22 @@
+-## 決策與收尾
++## Decisions and completion
+@@ -24 +24 @@
+-遇到需要使用者取捨或額外授權，提出具體問題及受影響範圍；等待期間可推進其他獨立、已授權且沒有執行衝突的工作。不能略過未滿足前置條件，也不能因一張票受阻就把整個 Goal 判為無法推進。
++When user judgment or additional authorization is needed, ask a concrete question and state the affected scope. While waiting, advance other independent, authorized work without execution conflicts. Do not skip unmet prerequisites or deem the entire Goal unable to advance because one ticket is blocked.
+@@ -26 +26 @@
+-沒有可推進工作時，分清楚等待執行結果、等待人、資訊不足及全部完成，保留必要的接續指標。Goal 的暫停、阻擋、預算與恢復遵守當前原生工具契約；不另設繞過其條件的狀態更新。預算耗盡或等待不等於完成。
++When nothing can advance, distinguish waiting for execution results, waiting for a person, insufficient information, and all work complete; retain necessary continuation pointers. Follow the current native tool contract for Goal pause, blocked state, budgets, and resumption, without inventing state updates that bypass its conditions. Exhausted budget or waiting does not mean completion.
+@@ -28 +28 @@
+-所有範圍內工作符合各自結案條件，且整體整合、驗收及使用者約定的交付終點都已滿足時，才以證據結束 Goal。來源要求合併時，PR ready 仍是待完成；來源缺失時回報未確認部分，不宣布完成。正常查詢模式不觸碰 Goal 的生命週期。
++End the Goal with evidence only when every in-scope unit meets its closure conditions and overall integration, acceptance, and the user's agreed delivery endpoint are satisfied. Where the source requires merging, a ready PR remains unfinished. If source evidence is missing, report unconfirmed parts rather than declaring completion. Ordinary query mode leaves the Goal lifecycle untouched.
+diff --git a/skills/release-assessment/SKILL.md b/skills/release-assessment/SKILL.md
+index b4b64b6..e96f1f0 100644
+--- a/skills/release-assessment/SKILL.md
++++ b/skills/release-assessment/SKILL.md
+@@ -3 +3 @@ name: release-assessment
+-description: 評估 PR 或累積變更是否需要納入版本、應如何調整版本，以及現在是否適合發布；適用套件、CLI、服務及 monorepo，並在使用者同意具體方案後協助升版、建立 tag 或發布。
++description: Assess whether a PR or accumulated changes need delivery, what version change they require, and whether to release now. Covers packages, CLIs, services, and monorepos; assist with version bumps, tags, or releases after approval of a concrete proposal.
+@@ -8 +8 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-把「本次變更是否需要交付」、「累積變更需要什麼版本」與「現在是否發布」分開回答。合併 PR 不是發布時機或操作授權。
++Separate three decisions: whether the current change needs delivery, how accumulated changes affect the version, and whether to release now. Merging a PR establishes neither release timing nor operational authorization.
+@@ -10 +10 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-共用流程在此；專案的交付、相容性與節奏規則以其權威文件為準。適用 SemVer、日期版本及沒有對外版本的專案。評估階段蒐集證據與報告；操作依下方獨立入口進行。
++This file owns the shared workflow; each project's authoritative documents own delivery, compatibility, and cadence rules. Support SemVer, date versions, and projects without public versions. Assessment gathers evidence and reports findings; use the separate operations entry point below for execution.
+@@ -12 +12 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-## 1. 固定評估範圍
++## 1. Fix the assessment scope
+@@ -14 +14 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-先讀專案指引及發布政策；建議入口為 `RELEASE-POLICY.md`，已有權威發布文件則沿用。記錄：
++Read project instructions and release policy. Prefer `RELEASE-POLICY.md` as the entry point; reuse an existing authoritative document. Record:
+@@ -16,4 +16,4 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-- 本次變更：指定 PR 或提交範圍；第一項判斷只回答此範圍是否需納入下一版。
+-- 發布單位：可獨立交付的套件、CLI、服務或共同發布群組，以及目的地、通道。
+-- 基準 release：該單位與通道上一個實際發布版本及提交。核對 registry、release 或部署紀錄；tag 存在不等於已交付。
+-- 目標提交：解析為固定 SHA；「發布候選」是基準到該 SHA 的完整累積變更。
++- **Current change:** the specified PR or commit range. The first decision concerns only whether this scope needs inclusion in the next release.
++- **Release unit:** an independently deliverable package, CLI, service, or release group, with destination and channel.
++- **Baseline release:** the unit and channel's last delivered version and commit. Verify registry, release, or deployment records; a tag alone does not prove delivery.
++- **Target commit:** resolve to a fixed SHA. The **release candidate** is the complete accumulated change from baseline to that SHA.
+@@ -21 +21 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-不要把尚未合併的 PR 當成候選既有內容。可另外提供「若納入此 PR」的條件式預估。首次發布、基準不可得或不在目標歷史上時，先查初始版本及發布分支政策；無法釐清就列明缺口，不任選最近 tag。
++Keep unmerged PRs outside the actual candidate; optionally provide a conditional forecast if included. For a first release, missing baseline, or baseline outside the target history, check initial-version and release-branch policies. Report unresolved gaps rather than choosing the nearest tag.
+@@ -23 +23 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-完成條件：各發布單位的範圍可辨識，未確定部分明列；必要缺口不妨礙其他可獨立判斷項目。
++**Done:** each unit's scope is identifiable, with uncertainties explicit. Missing evidence blocks only decisions that depend on it.
+@@ -25 +25 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-## 2. 蒐集可追溯證據
++## 2. Gather traceable evidence
+@@ -27 +27 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-讀實際 PR diff 及基準到目標的完整 diff、相關呼叫端、測試與公開契約，並查閱：
++Read the actual PR diff, complete baseline-to-target diff, affected callers, tests, and public contracts. Inspect:
+@@ -29,3 +29,3 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-- 版本權威來源、changelog、打包清單／產物、建置及部署設定。
+-- release workflow、必要檢查、結果適用的 SHA、環境與通道。
+-- 專案相容性承諾、發布節奏、版本群組與相依連動規則。
++- Version authority, changelog, package manifests/artifacts, build and deployment configuration.
++- Release workflows, required checks, and the SHA, environment, and channel covered by results.
++- Compatibility commitments, release cadence, version groups, and dependency propagation rules.
+@@ -33 +33 @@ description: 評估 PR 或累積變更是否需要納入版本、應如何調整
+-GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`；本機提交、差異與狀態使用 `git`。其他平台用專案既有工具。工具、權限或完整歷史不可得時，明列缺口，不能將無結果視為通過。
++Use authenticated `gh` for GitHub PRs, releases, checks, and workflows; use `git` for local commits, diffs, and status. Use existing project tools on other platforms. Report unavailable tools, permissions, or history as gaps; missing results are not passes.
+@@ -35 +35 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-追蹤候選全部變更的有效影響，包含撤銷、替代、重複變更及遷移需求。PR 標題、feat/fix、changelog 只能作索引，不能代替實際差異。文件是否需交付取決於是否打包、生成公開契約或構成產品；建置與相依更新同樣看實際產物與行為。
++Trace the net effects of all candidate changes, including reverts, replacements, duplicates, and migrations. PR titles, feat/fix labels, and changelogs are indexes, not substitutes for diffs. Documentation needs delivery when it is packaged, generates a public contract, or constitutes the product. Assess build and dependency changes by their artifact and behavior effects too.
+@@ -37 +37 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-檢查結果須能證明適用於目標候選；舊 SHA、未完成或環境不符的檢查不能列為已通過。只讀查證與必要的安全本機驗證可直接進行；會發布或修改外部狀態的命令走操作授權流程。
++Check results must apply to the target candidate. Results for an old SHA, unfinished checks, or a different environment cannot count as passes. Proceed with read-only inspection and necessary safe local validation; commands that publish or change external state require the operations authorization workflow.
+@@ -39 +39 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-政策缺漏時先推導可查證的事實，將推定與事實分開。相容性承諾與發布節奏不能自行補定。衝突足以改變結論時詢問使用者。需要協助建立或補齊政策時才讀 [專案政策範本](references/project-policy.md)；填入政策不屬於一般評估的自動副作用。
++When policy is incomplete, establish verifiable facts and label inferences. Do not invent compatibility commitments or cadence. Ask the user to resolve conflicts that could change the conclusion. Read the [project policy template](references/project-policy.md) only when helping create or complete policy; policy edits are not an automatic assessment side effect.
+@@ -41 +41 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-完成條件：每個結論可連到檔案／行號、diff、提交、檢查或發布紀錄；未知事項保留為未知。
++**Done:** each conclusion links to files/lines, diffs, commits, checks, or delivery records. Unknowns remain explicit.
+@@ -43 +43 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-## 3. 分開作出三項判斷
++## 3. Make three separate decisions
+@@ -45 +45,3 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-| 判斷 | 允許輸出 | 範圍與規則 |
++Retain these output values:
++
++| Decision | Allowed output | Scope and rule |
+@@ -47,3 +49,3 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-| 本次變更是否納入下一版 | 需要／不需要／資訊不足 | 看本次變更的交付影響及是否已交付；本次不需要不代表候選沒有可發布內容。 |
+-| 版本調整 | 不變／patch／minor／major／依專案策略／不適用／資訊不足 | 看整個發布候選與單位版本政策，不能只看本次 PR。 |
+-| 現在是否發布 | 可發布／累積到下次／被阻擋 | 分辨必要條件與主動等待，依下列優先序回答。 |
++| Include the current change in the next release | 需要／不需要／資訊不足 | Assess its delivery impact and whether it was already delivered. No need for this change does not mean the candidate has nothing to release. |
++| Version change | 不變／patch／minor／major／依專案策略／不適用／資訊不足 | Assess the entire candidate against the unit's version policy, not just the current PR. |
++| Release now | 可發布／累積到下次／被阻擋 | Distinguish prerequisites from deliberate waiting, using the precedence below. |
+@@ -51 +53 @@ GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`
+-SemVer 按已承諾的公開契約判定：不相容變更 major、向下相容功能 minor、向下相容修正 patch；0.x、預發布與例外遵循專案政策。檢查最終有效差異與必要轉換影響，不能直接取提交標籤最大值。日期版本用「依專案策略」，並給出能確認的候選版本；無對外版本用「不適用」。僅確定不需升版才用「不變」，未知用「資訊不足」。
++For SemVer, assess the promised public contract: incompatible changes require major, compatible features minor, compatible fixes patch. Follow project policy for 0.x, prereleases, and exceptions. Assess the final net diff and required transition effects, not the highest commit label. Use `依專案策略` for date versions and provide a candidate version when established; use `不適用` without public versions. Use `不變` only when no bump is needed; use `資訊不足` when unknown.
+@@ -53 +55 @@ SemVer 按已承諾的公開契約判定：不相容變更 major、向下相容
+-發布結論優先序：
++Release precedence:
+@@ -55,3 +57,3 @@ SemVer 按已承諾的公開契約判定：不相容變更 major、向下相容
+-1. 已知必要內容（例如政策要求的相依版本更新）尚未進入候選，或必要驗證失敗、未完成、證據過期或缺少發布判斷必要資訊 → **被阻擋**。列出原因與解除方式，另列解除後的節奏建議。
+-2. 必要條件已滿足，但政策要求累積、窗口未到或沒有新內容 → **累積到下次**。
+-3. 必要條件與節奏皆符合 → **可發布**；仍須操作授權。
++1. Required content (such as mandated dependency updates) is absent from the candidate, or required validation failed, is incomplete, is stale, or lacks information needed for a release decision → **被阻擋**. List causes, remedies, and the cadence recommendation after resolution.
++2. Prerequisites pass, but policy requires accumulation, the window has not arrived, or there is no new content → **累積到下次**.
++3. Prerequisites and cadence both allow release → **可發布**; operational authorization is still required.
+@@ -59 +61 @@ SemVer 按已承諾的公開契約判定：不相容變更 major、向下相容
+-「可準備升版」與「可發布目前候選」分開：尚缺必要相依更新的候選是被阻擋，即使既有候選測試通過；可另外提出準備更新及驗證新候選的操作。
++Distinguish preparing a bump from releasing the current candidate. Missing required dependency updates block that candidate even if its existing tests pass; separately propose preparing updates and validating the new candidate.
+@@ -61 +63 @@ SemVer 按已承諾的公開契約判定：不相容變更 major、向下相容
+-同時有阻擋與等待窗口，以被阻擋為主，分列兩者。資訊缺漏只影響依賴它的判斷，例如新增功能可確定需納入，但升版幅度資訊不足且發布被阻擋。
++When both a blocker and a waiting window apply, lead with the blocker and retain both reasons. A gap affects only dependent decisions: a feature may clearly need delivery while its bump is unknown and release is blocked.
+@@ -63 +65 @@ SemVer 按已承諾的公開契約判定：不相容變更 major、向下相容
+-Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；獨立版本查依賴與既定連動規則；即使沒有直接程式差異，相依版本更新仍可能要求另一單位發布。彙整共同阻擋及發布順序。政策不明時指出缺口，不能假設整個 repo 一起升版或發明依賴連動機制。
++For monorepos, report all three decisions per release unit. Aggregate fixed versions by established groups; for independent versions, check dependencies and existing propagation rules. Dependency updates may require a unit's release without direct code changes. A dependent's missing preparation blocks that unit, not an otherwise-ready dependency, unless policy requires a joint release. Derive dependency-first release order from verified dependency rules; distinguish that order from unknown operational commands. Summarize shared blockers and release order. Report unclear policy rather than assuming a repo-wide bump or inventing propagation rules.
+@@ -65 +67 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；
+-## 4. 交付評估報告
++## 4. Deliver the assessment
+@@ -67 +69 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；
+-先一句話總結版本與發布建議，再列各單位的三項判斷、理由、證據及缺口。報告必含本次範圍、基準 release、目標 SHA、通道；多單位用表格。範例：
++Lead with a one-sentence version and release recommendation, then provide each unit's three decisions, reasons, evidence, and gaps. Include current-change scope, baseline release, target SHA, and channel. Use a table for multiple units. Example:
+@@ -76 +78 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；
+-結論附證據而非僅列來源清單。區分實際候選與條件式預估，資訊不足時說明需補哪項事實或決策。
++Attach evidence to conclusions, not just a source list. Separate the actual candidate from conditional forecasts; identify missing facts or decisions.
+@@ -78 +80 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；
+-## 5. 提出並協助下一步
++## 5. Propose and assist with next steps
+@@ -80 +82 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；
+-有符合條件的操作時，讀 [操作提案與執行](references/operations.md)，查明專案流程、準備具體提案並詢問使用者。評估結果不授權修改版本、tag 或發布。
++When an operation is appropriate, read [operation proposals and execution](references/operations.md), inspect the project process, prepare a concrete proposal, and ask the user. An assessment does not authorize version edits, tags, or releases.
+@@ -82 +84 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；
+-「累積到下次」仍可依政策提出升版準備；「被阻擋」先提出解除阻擋或可獨立進行的準備，不把同意當成檢查通過。沒有適合的操作時，以可執行的下一步結束報告。
++For `累積到下次`, policy may still permit bump preparation. For `被阻擋`, propose resolving blockers or independent preparation first; approval cannot substitute for passing checks. If no operation is appropriate, end with an actionable next step.
+@@ -84 +86 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；
+-只有維護或驗證本 skill 時才讀 [驗收案例](references/acceptance.md)，以模擬情境驗證，不真實發布。
++Read [acceptance cases](references/acceptance.md) only when maintaining or validating this skill. Simulate scenarios; never publish real artifacts for validation.
+diff --git a/skills/release-assessment/references/operations.md b/skills/release-assessment/references/operations.md
+index 95dc801..c0c067d 100644
+--- a/skills/release-assessment/references/operations.md
++++ b/skills/release-assessment/references/operations.md
+@@ -1 +1 @@
+-# 操作提案與執行
++# Operation proposals and execution
+@@ -3 +3 @@
+-評估完成且有可行下一步時使用。這份文件管操作授權；版本與發布判斷遵循 `../SKILL.md`。
++Use after assessment identifies a feasible next step. This file owns operational authorization; version and release decisions follow `../SKILL.md`.
+@@ -5 +5 @@
+-## 準備可審閱的提案
++## Prepare a reviewable proposal
+@@ -7 +7 @@
+-先查看專案實際版本工具、發布文件、workflow、changelog、分支與工作樹狀態，再提出：
++Inspect actual version tools, release documentation, workflows, changelog, branch, and working tree. Specify:
+@@ -9 +9 @@
+-| 欄位 | 必須明確的內容 |
++| Field | Required detail |
+@@ -11,5 +11,5 @@
+-| 對象 | repo、發布單位、通道、目的地、評估目標 SHA。 |
+-| 變更 | 現有與預計版本、修改檔案、產物、changelog 與必要遷移。 |
+-| 動作 | 升版、commit、建立 tag、push、觸發 workflow、發布各自的具體命令或流程，以及順序。 |
+-| 目標 | tag 名稱與預定指向，發布來源提交、套件／服務及遠端目的地。 |
+-| 條件與影響 | 已通過與尚待完成檢查；每步的外部副作用、已知失敗恢復方式。 |
++| Subject | Repository, release unit, channel, destination, and assessed target SHA. |
++| Changes | Current and planned versions, files, artifacts, changelog, and required migrations. |
++| Actions | Exact commands or processes and their order for bumping, committing, tagging, pushing, triggering workflows, and publishing. |
++| Targets | Tag name and intended commit, source commit, package/service, and remote destination. |
++| Conditions and effects | Passed and outstanding checks; each step's external effects and known recovery procedure. |
+@@ -17 +17 @@
+-不存在或不適用的動作明確省略。檢查複合命令的實際行為：若升版工具會自動 commit/tag，或 push 會觸發發布，將副作用納入授權，不能以命令名稱縮小描述。
++Explicitly omit unavailable or inapplicable actions. Inspect compound commands: automatic commit/tag effects of bump tools, or publication triggered by push, belong in the authorization scope regardless of command names.
+@@ -19 +19 @@
+-若升版必然產生新提交，提案可指定「以已評估 SHA 為基底，僅包含列出的版本／changelog 變更所產生的新提交」。這是授權範圍內的預期產物，不需要事先捏造 SHA；建立後記錄真實 SHA，重新查驗該產物需要的檢查。任何額外行為變更都須重新評估。
++If preparation necessarily creates a commit, the proposal may authorize a new commit based on the assessed SHA containing only the listed version/changelog changes. Do not invent its SHA in advance. Record the actual SHA after creation and recheck the required validation for that artifact. Reassess any additional behavior changes.
+@@ -21 +21 @@
+-## 取得與維持授權
++## Obtain and retain authorization
+@@ -23 +23 @@
+-明確詢問使用者同意哪些動作。可一次同意整套具體提案；只同意升版就只做升版。commit、push、遠端 workflow 與發布須各自明列於授權範圍。沉默、預選項、合併 PR 或「可發布」結論不等於同意。
++Ask which actions the user approves. One approval may cover the entire concrete proposal; bump-only approval permits only the bump. Explicitly include commits, pushes, remote workflows, and publication in the authorized scope. Silence, preselected options, a merged PR, or a `可發布` conclusion are not approval.
+@@ -25 +25 @@
+-使用者僅要評估時提供建議與提案，不執行操作。已明確同意且條件未變的範圍不重複索取同意。
++For assessment-only requests, provide recommendations and proposals without execution. Reuse explicit approval while its scope and conditions remain valid.
+@@ -27 +27 @@
+-同意不能消除必要檢查。檢查被阻擋時，先解除阻擋，或只進行政策允許且已獲授權、不依賴該阻擋的準備。
++Approval does not waive required checks. Resolve blockers first, or perform only policy-permitted, authorized preparation independent of them.
+@@ -29 +29 @@
+-## 依既有流程執行
++## Execute through the existing process
+@@ -31 +31 @@
+-每個有副作用的步驟前，核對目標、授權及前置條件。保留無關未提交工作，不把它混入版本提交或發布產物。
++Before each step with side effects, verify target, authorization, and prerequisites. Preserve unrelated uncommitted work and exclude it from release commits and artifacts.
+@@ -33,4 +33,4 @@
+-- 版本、目標提交、目的地或重要影響超出原提案時，暫停受影響操作，更新評估與提案，取得差異部分授權。提案內預期的版本提交依上節核對。
+-- 檢查現有 tag 與已發布版本；先辨識已完成狀態，避免覆寫 tag 或重複發布。
+-- 選用專案既有流程與工具，不臨時繞過失敗檢查或 credential 隔離。缺權限或工具時回報具體阻擋；使用者拒絕互動登入後，不反覆要求或改用環境中的其他憑證。
+-- 依序執行獲准動作。必要步驟失敗或結果不明時，停下依賴它的動作；先查證現況，再提恢復方案。恢復若帶來原提案外的副作用，另取授權。
++- If version, target commit, destination, or material effects exceed the proposal, pause affected operations, update the assessment/proposal, and obtain approval for the delta. Verify expected preparation commits as described above.
++- Check existing tags and published versions; recognize completed work before acting to avoid overwriting tags or duplicate publication.
++- Use existing project tools and workflows. Do not bypass failed checks or credential isolation. Report missing tools or permissions; after a user declines interactive login, do not repeat the request or substitute ambient credentials.
++- Execute approved actions in order. If a required step fails or its result is unknown, stop dependent actions, inspect current state, and propose recovery. Obtain approval for recovery effects outside the original proposal.
+@@ -38 +38 @@
+-## 驗證與回報
++## Verify and report
+@@ -40 +40 @@
+-查證版本檔及差異、tag 指向、遠端紀錄、workflow 狀態和實際產物／部署版本。GitHub 遠端結果以已登入的 `gh` 查證；其他平台依既有工具。
++Verify version files/diffs, tag targets, remote records, workflow status, and actual artifacts/deployed versions. Use authenticated `gh` for GitHub remote verification and existing tools elsewhere.
+@@ -42 +42 @@
+-逐動作回報：未執行、本機完成、遠端已建立、執行中、成功、失敗或結果未知，附 SHA、tag、run 或產物連結。workflow 接受請求不代表發布成功；不得因輪詢結束就宣稱成功。
++Report each action as not run, locally complete, remotely created, running, successful, failed, or unknown, with SHA, tag, run, or artifact links. Workflow acceptance does not prove publication; ending polling does not establish success.
+@@ -44 +44 @@
+-部分成功時列出已完成動作、未完成部分及恢復建議，保留可恢復狀態。不要盲目重跑發布，也不要自行刪除既有遠端產物或重寫歷史。
++For partial success, list completed and outstanding actions with recovery advice, preserving recoverable state. Do not blindly retry publication, delete existing remote artifacts, or rewrite history.
+diff --git a/skills/release-assessment/references/project-policy.md b/skills/release-assessment/references/project-policy.md
+index 963f8f9..4b9b075 100644
+--- a/skills/release-assessment/references/project-policy.md
++++ b/skills/release-assessment/references/project-policy.md
+@@ -1 +1 @@
+-# 專案發布政策範本
++# Project release policy template
+@@ -3 +3 @@
+-建立或補齊專案政策時使用。將以下範本複製到專案根目錄的 `RELEASE-POLICY.md`；已有權威文件的欄位直接填入連結與適用章節。範本空白代表尚待確認，並非預設政策。不同發布單位的差異分別填寫。
++Use when creating or completing project policy. Copy the template to the project root as `RELEASE-POLICY.md`; link to relevant sections of existing authoritative documents instead of duplicating them. Blank fields require confirmation, not default assumptions. Record differences per release unit.
+@@ -38 +38 @@
+-填寫後確認每個發布單位的基準可對應到已交付提交、必要檢查可對應到候選提交及環境，並能辨認三種操作的既有流程。仍缺漏的欄位保留為資訊缺口；來源衝突且會改變結論時交由使用者決定。
++After filling it in, confirm that each unit's baseline maps to a delivered commit, required checks map to the candidate and environment, and existing bump, tag, and publication procedures are identifiable. Keep incomplete fields as evidence gaps; ask the user to resolve source conflicts that could change conclusions.
+@@ -40 +40 @@
+-政策只記錄專案規則；評估與授權流程沿用 [release-assessment](../SKILL.md)。填好政策或得到「可發布」建議，均不構成操作授權。
++Policy records project rules only; use [release-assessment](../SKILL.md) for assessment and authorization. Completing policy or receiving a `可發布` recommendation does not authorize operations.
