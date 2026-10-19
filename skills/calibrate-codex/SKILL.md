@@ -1,6 +1,6 @@
 ---
 name: calibrate-codex
-description: Calibrate Codex behavior from user feedback or recurring failures by choosing the narrowest instruction, skill, hook, rule, or validation gate. Use for requests to 調校 Codex, remember a Codex workflow rule, or prevent a repeated Codex mistake; ordinary document edits and other agents' configuration are outside this skill.
+description: Calibrate Codex from feedback or recurring failures using the narrowest instruction, skill, hook, rule, or validation gate. Use to 調校 Codex, remember workflow rules, or prevent repeated mistakes; excludes ordinary document edits and other agents' configuration.
 ---
 
 # Calibrate Codex

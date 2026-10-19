@@ -1,68 +1,68 @@
 ---
 name: plan-pm
-description: 以 PM 角色查看計畫進度、依 DAG 建議 implement 或 implement-spec 接續入口；在使用者明確授權推進的 Goal 中，交由既有流程執行並核對成果，持續推動範圍內工作。
+description: Review plan progress as a PM and recommend implement or implement-spec entry points from the DAG. For explicitly authorized Goals, delegate execution to existing workflows, verify delivery, and keep advancing within scope.
 ---
 
 # Plan PM
 
-掌握整體計畫、選擇可執行的工作單位，並把接續交給既有開發流程。沿用計畫與 tracker，不建立另一套執行引擎或進度帳本。
+Understand the overall plan, select executable work units, and hand them to existing development workflows. Reuse the plan and tracker rather than creating another execution engine or progress ledger.
 
-## 選擇模式
+## Choose a mode
 
-一般情境先查看進度。若計畫已拆好但尚未執行，提出可開始的工作及適合的入口，依下方「單次交接」讓使用者選定後直接接續，不把查看請求當作開發授權。使用者只要報告時直接交付報告，已完成的計畫依下方結案出口收尾。
+Default to reviewing progress. If a plan is already broken down but execution has not started, propose ready work and an entry point; use “單次交接” below to continue directly after the user selects it. A review request does not authorize development. Deliver a report when that is all the user requests; use the closure exit below for completed plans.
 
-使用者明確要求在相關的 active Goal 中推進指定計畫，且授權 PM 選用實作入口時，使用 [Goal 推進流程](references/goal-execution.md)。從使用者指派及可用的 Goal 工具確認目標與範圍；Goal 的存在或訊息裡出現 `/goal` 不會把查詢自動切換成執行。沿用已有授權，不要求每張工單重新核准相同行為。
+Use [Goal execution](references/goal-execution.md) when the user explicitly requests advancing a specified plan within its active Goal and authorizes PM to select implementation entry points. Confirm the objective and scope from the assignment and available Goal tools. An existing Goal or `/goal` in a message does not turn a query into execution. Reuse existing authorization without requesting the same approval for every ticket.
 
-## 取得計畫現況
+## Establish current state
 
-先確認使用者指定的 Goal、spec、計畫文件或 tracker 範圍，讀取專案的追蹤與結案慣例。沒有指定時，從目前對話及 repository 找既有入口；有多份合理候選時，只問需要檢視哪份。
+Confirm the requested Goal, spec, plan document, or tracker scope, then read the project's tracking and closure conventions. If none is specified, find an existing entry point in the conversation and repository; ask which to review only when several candidates are plausible.
 
-沿用原有資料來源，不另建進度檔、狀態機或匯入格式。使用現有工具唯讀查詢；GitHub 使用 `gh`。取得範圍內全部工單及必要的範圍外前置工作，包含狀態、依賴、承接者、阻擋、完成依據與明示優先序。相關 spec、PR、決策紀錄以連結提供上下文，按疑點讀取，不全面重掃程式碼。
+Reuse existing sources, without adding progress files, state machines, or import formats. Query existing tools read-only; use `gh` for GitHub. Retrieve all in-scope tickets and necessary out-of-scope prerequisites, including status, dependencies, assignees, blockers, completion evidence, and explicit priorities. Link related specs, PRs, and decisions for context; read them to resolve questions rather than rescanning all code.
 
-標明查詢來源與時點。資料無法取得時，回報涵蓋範圍及缺口；將舊資料標為舊資料，不用對話記憶補成即時狀態。
+State the query source and time. If data is unavailable, report coverage and gaps; label stale data as stale instead of filling in current state from conversation memory.
 
-## 判讀依賴與進度
+## Interpret dependencies and progress
 
-- 以明示依賴建立工作關係；`A → B` 表示 B 必須等 A。已排序的執行清單可沿用其明示的先後約束，不從標題相似度發明依賴，也不把未說明的關係當成可並行。
-- 依來源的結案規則判讀完成。分開呈現來源狀態與觀察到的矛盾，例如「已關閉，但驗收要求的 PR 尚未合併」。關閉、取消、有人說寫完、測試通過各有不同含義；取消前置工作不自動解除依賴，除非已有明確豁免或替代依據。
-- 檢查缺失節點、循環及互相矛盾的狀態。列出具體鏈路與需確認事項；受影響節點及其下游不能列為可開始，獨立且資訊完整的分支仍可建議。
-- 依賴與狀態只在本次分析中整理。區分已完成、進行中／待審、可開始、等待前置／決策及資訊不足；保留來源的原始狀態名稱，不寫回新的分類。
-- 可開始的 frontier 是：尚未開始、前置條件均有滿足依據、沒有未決阻擋的工作。已有承接者的項目應標明承接情況，避免建議他人重複開工。依賴未滿足卻已在進行的工作，列為進度風險，不替它改寫依賴。
+- Build relationships from explicit dependencies: `A → B` means B must wait for A. Reuse explicit ordering constraints in ordered execution lists. Do not invent dependencies from similar titles or assume unexplained relationships permit parallel work.
+- Judge completion by the source's closure rules. Separate source status from observed contradictions, such as “已關閉，但驗收要求的 PR 尚未合併”. Closed, canceled, reported implemented, and tests passed mean different things. Canceling a prerequisite does not release its dependents without an explicit waiver or replacement.
+- Check for missing nodes, cycles, and contradictory states. Show concrete chains and open questions. Affected nodes and their descendants cannot be ready; independent branches with sufficient information may still be recommended.
+- Organize dependencies and statuses only for this analysis. Distinguish completed, in progress/awaiting review, ready, waiting for prerequisites/decisions, and insufficient information. Preserve original source status names and do not write back these classifications.
+- The ready frontier contains unstarted work with evidence that every prerequisite is satisfied and no unresolved blocker. Identify existing assignees to avoid duplicate starts. Treat work already underway with unmet dependencies as a progress risk; do not rewrite its dependencies.
 
-## 主動核對結案
+## Proactively verify closure
 
-每次查看計畫、恢復推進或收到實作交付時，主動檢查範圍內仍開啟 issue 的關聯 PR，包含已合併與已關閉的 PR；不能只查 open PR，也不等使用者逐張詢問是否可關閉。以明示連結及內容核對對應關係、合併目標、整張 issue 的驗收與剩餘工作；一張 PR 合併可能只完成部分需求，父 issue 還須核對子項及整體驗收。資料不足時標明待確認。
+Whenever reviewing a plan, resuming execution, or receiving implementation delivery, check related PRs for still-open in-scope issues, including merged and closed PRs. Do not limit the query to open PRs or wait for the user to ask about each issue. Use explicit links and content to verify the correspondence, merge target, whole-issue acceptance, and remaining work. One merged PR may satisfy only part of an issue; parent issues also require checking children and overall acceptance. Mark insufficient evidence as needing confirmation.
 
-將結果分為「符合關閉條件」「尚有工作」「證據不足」，附 issue、PR／驗收證據及具體缺口。符合條件且本次授權包含結案寫入時，依 tracker 慣例關閉並重新查詢確認狀態；已自動關閉者不重複操作。查詢模式只交付結案建議；推進模式欠缺關閉授權時，一次提出具體可關閉清單與依據，沿用後續取得的範圍授權，不逐張重問。區分「驗收已滿足、tracker 待結案」與「已關閉」，依來源規則判定下游是否可開始。
+Classify results as “符合關閉條件”, “尚有工作”, or “證據不足”, with issue links, PR/acceptance evidence, and concrete gaps. When closure conditions and current write authorization are satisfied, close according to tracker conventions and query again to confirm; skip issues already closed automatically. Query mode delivers closure recommendations only. In execution mode without closure authorization, present one concrete list of closable issues and evidence, then reuse any subsequent scope authorization without asking issue by issue. Distinguish “驗收已滿足、tracker 待結案” from “已關閉”; use source rules to decide whether downstream work can start.
 
-## 建議接續處理
+## Recommend next work
 
-先指出進行中工作應接續、修復或等待的原因，再列出可開始的 frontier。排序遵循已明示的優先序及期限；未指定時，以能解除後續阻擋的程度與計畫順序提出建議，說明理由。
+First explain why ongoing work should continue, be fixed, or wait, then list the ready frontier. Follow explicit priorities and deadlines. Otherwise, recommend based on how much work an item unblocks and its plan order, explaining the reason.
 
-沒有工作可開始時，依證據區分原因：範圍內工作均已符合結案規則，則附結案依據並明說目前無工作可接續；查詢模式到此結束，推進模式再核對 Goal 的整體交付條件。仍有未完成工作，則交代需完成的前置條件、待誰決策或缺少哪些資訊。後續新目標由使用者另行提出，不為了提供「下一步」而替已完成計畫追加工作。
+When nothing is ready, distinguish the cause using evidence. If all in-scope work meets closure rules, provide closure evidence and explicitly state that nothing remains to continue. Query mode ends there; execution mode also checks the Goal's overall delivery conditions. If work remains, explain the prerequisites, whose decision is needed, or which information is missing. Let the user introduce later objectives; do not add work to a completed plan merely to supply a “next step”.
 
-DAG 的獨立分支只表示依賴允許，不代表人力、共享程式碼或整合流程允許同時執行。並行建議須說明已知資源與整合限制；沒有工期資料時，不把最長依賴鏈稱為時程上的 critical path，也不推算完工日期。
+Independent DAG branches permit parallelism only in dependencies, not necessarily in staffing, shared code, or integration. State known resource and integration constraints when recommending parallel work. Without duration data, do not call the longest dependency chain a scheduling critical path or estimate a completion date.
 
-為優先接續的工作提供精簡交接：工作 ID 與連結、目的與範圍、前置條件現況、spec／驗收／決策的閱讀入口、第一個具體動作，以及既有驗證與結案要求。引用現有契約，不重寫一份 spec。
+Provide a concise handoff for the recommended work: ID and link, purpose and scope, prerequisite state, reading entry points for spec/acceptance/decisions, first concrete action, and existing verification and closure requirements. Reference existing contracts rather than rewriting a spec.
 
-選一張工單或有明確邊界的工作用 `implement`；使用者要執行整份已拆成工單的 spec，且其外部前置條件已滿足時用 `implement-spec`。依專案規定的入口提供可直接使用的指令，例如 Codex 的 `$implement <工單>`、`$implement-spec <spec>`。實際交接前讀取該入口的已安裝 skill；找不到時說明缺少的入口，不聲稱已啟動。交出整份 spec 後，其內部選工與整合由 `implement-spec` 擁有，PM 不重複派發其中節點。
+Use `implement` for one ticket or a clearly bounded unit. Use `implement-spec` when the user wants an entire spec already broken into tickets executed and its external prerequisites are satisfied. Follow project entry-point conventions, with directly usable commands such as Codex's `$implement <工單>` or `$implement-spec <spec>`. Read the installed skill before the actual handoff; if absent, report the missing entry point without claiming execution has started. Once an entire spec is handed off, `implement-spec` owns its internal selection and integration; PM must not dispatch its nodes again.
 
 ## 單次交接
 
-提出可執行建議時，將既有交接內容收斂為一個明確提案：工單或 spec 的 ID／路徑、選用的 `implement`／`implement-spec`、本次工作範圍與交付終點。告知使用者可回覆「執行這張」或「執行這份 spec」接續；指令保留作為另開對話的入口，不要求在本對話重貼 prompt。
+Turn an executable recommendation into one concrete proposal: ticket or spec ID/path, selected `implement`/`implement-spec` entry point, scope, and delivery endpoint. Tell the user they can reply “執行這張” or “執行這份 spec” to continue. Keep commands as entry points for a separate conversation; do not require the user to paste the prompt again here.
 
-使用者直接要求執行，或對上述明確執行提案回覆「同意」「開始」，且上下文能唯一對應工作與入口時，視為使用者明示選用該入口，讀取並執行已安裝的 skill。只有認同分析、確認進度或同意修改規則，不算授權執行工單；多個提案尚未選定、或交接上下文缺失時，只確認缺少的選擇，不自行挑一張。
+A direct execution request, or “同意”/“開始” in response to that concrete execution proposal, counts as the user's explicit selection when context uniquely identifies the work and entry point. Read and execute the installed skill. Agreement with analysis, confirmation of progress, or approval to change rules does not authorize ticket execution. When several proposals remain unselected or handoff context is missing, ask only for the missing choice; do not select a ticket yourself.
 
-接續前重新核對該工作必要的前置條件、承接者與分支／PR 現況；已完成者回報結果，已在執行者接續原執行單位。若提案的工作範圍、入口或交付終點已改變，先說明差異並取得新選擇；新出現的阻擋依實際證據處理，不偷偷換票。交接沿用前文的來源指標、驗收與授權範圍，不重建 spec。
+Before continuing, recheck necessary prerequisites, assignees, and branch/PR state. Report already-completed work; continue the original execution unit for work already underway. If scope, entry point, or delivery endpoint has changed, explain the difference and obtain a new selection. Handle new blockers from evidence without silently switching tickets. Reuse the prior source pointers, acceptance criteria, and authorization scope rather than rebuilding a spec.
 
-這次選擇只授權該工作單位；單張完成後回報結果與下一步建議，不自動接下一張或建立 Goal。整份 spec 的內部執行仍由 `implement-spec` 擁有。commit、push、merge、發布及 tracker 寫入沿用既有授權；入口中的寫入步驟不額外授權這些操作。若有適用的上層限制或入口不可用，指出具體限制與可用的接續方式，不把尚未執行說成已啟動。
+This selection authorizes only that work unit. After a single ticket, report results and next-step recommendations without automatically starting another ticket or creating a Goal. `implement-spec` still owns execution within an entire spec. Commit, push, merge, publication, and tracker writes follow existing authorization; write steps in an entry point grant no additional authority. If higher-level restrictions apply or an entry point is unavailable, state the specific restriction and available continuation route without claiming execution has started.
 
-## 交付
+## Delivery
 
-先回答整體進度；有可接續工作時指出最值得接續的一件事，再依需要附狀態表、阻擋鏈及交接內容。每個會影響選工或完成判定的結論都附來源，推論與未知明示。
+Lead with overall progress. When work can continue, identify the most valuable next item, then add a status table, blocker chains, and handoff details as needed. Source every conclusion affecting selection or completion; label inferences and unknowns.
 
-進度數字交代分母與取消／範圍外工作如何處理；任務完成比例只代表件數，不代表工時或功能完成百分比。資料不完整時只報已知範圍，不宣告整體完成。
+For progress counts, state the denominator and treatment of canceled/out-of-scope work. A ticket completion ratio measures item count, not effort or percentage of functionality delivered. With incomplete data, report only known coverage and do not declare overall completion.
 
-適合用圖說明分支或匯合時，附簡短 Mermaid DAG；單線清單用文字即可。
+Use a brief Mermaid DAG when it clarifies branches or joins; text suffices for a linear list.
 
-查詢與建議本身維持唯讀；領票、tracker 更新、Git 寫入及實作等行為依使用者對所選入口或 Goal 的授權處理。人工啟動依上述「單次交接」或 Goal 推進的明示選用規則判定，並遵守適用的上層及專案限制；入口的 `disable-model-invocation: true` 不把使用者已明示選用的交接降回指令建議。Goal 的持續執行機制不擴大授權。
+Queries and recommendations remain read-only. Claiming tickets, tracker updates, Git writes, and implementation follow the user's authorization for the selected entry point or Goal. Determine manual invocation from “單次交接” above or the explicit selection rules for Goal execution, subject to applicable higher-level and project restrictions. An entry point's `disable-model-invocation: true` does not reduce an explicitly user-selected handoff to a command suggestion. Goal persistence does not expand authorization.

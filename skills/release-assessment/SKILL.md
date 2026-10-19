@@ -1,70 +1,72 @@
 ---
 name: release-assessment
-description: 評估 PR 或累積變更是否需要納入版本、應如何調整版本，以及現在是否適合發布；適用套件、CLI、服務及 monorepo，並在使用者同意具體方案後協助升版、建立 tag 或發布。
+description: Assess whether a PR or accumulated changes need delivery, what version change they require, and whether to release now. Covers packages, CLIs, services, and monorepos; assist with version bumps, tags, or releases after approval of a concrete proposal.
 ---
 
 # Release assessment
 
-把「本次變更是否需要交付」、「累積變更需要什麼版本」與「現在是否發布」分開回答。合併 PR 不是發布時機或操作授權。
+Separate three decisions: whether the current change needs delivery, how accumulated changes affect the version, and whether to release now. Merging a PR establishes neither release timing nor operational authorization.
 
-共用流程在此；專案的交付、相容性與節奏規則以其權威文件為準。適用 SemVer、日期版本及沒有對外版本的專案。評估階段蒐集證據與報告；操作依下方獨立入口進行。
+This file owns the shared workflow; each project's authoritative documents own delivery, compatibility, and cadence rules. Support SemVer, date versions, and projects without public versions. Assessment gathers evidence and reports findings; use the separate operations entry point below for execution.
 
-## 1. 固定評估範圍
+## 1. Fix the assessment scope
 
-先讀專案指引及發布政策；建議入口為 `RELEASE-POLICY.md`，已有權威發布文件則沿用。記錄：
+Read project instructions and release policy. Prefer `RELEASE-POLICY.md` as the entry point; reuse an existing authoritative document. Record:
 
-- 本次變更：指定 PR 或提交範圍；第一項判斷只回答此範圍是否需納入下一版。
-- 發布單位：可獨立交付的套件、CLI、服務或共同發布群組，以及目的地、通道。
-- 基準 release：該單位與通道上一個實際發布版本及提交。核對 registry、release 或部署紀錄；tag 存在不等於已交付。
-- 目標提交：解析為固定 SHA；「發布候選」是基準到該 SHA 的完整累積變更。
+- **Current change:** the specified PR or commit range. The first decision concerns only whether this scope needs inclusion in the next release.
+- **Release unit:** an independently deliverable package, CLI, service, or release group, with destination and channel.
+- **Baseline release:** the unit and channel's last delivered version and commit. Verify registry, release, or deployment records; a tag alone does not prove delivery.
+- **Target commit:** resolve to a fixed SHA. The **release candidate** is the complete accumulated change from baseline to that SHA.
 
-不要把尚未合併的 PR 當成候選既有內容。可另外提供「若納入此 PR」的條件式預估。首次發布、基準不可得或不在目標歷史上時，先查初始版本及發布分支政策；無法釐清就列明缺口，不任選最近 tag。
+Keep unmerged PRs outside the actual candidate; optionally provide a conditional forecast if included. For a first release, missing baseline, or baseline outside the target history, check initial-version and release-branch policies. Report unresolved gaps rather than choosing the nearest tag.
 
-完成條件：各發布單位的範圍可辨識，未確定部分明列；必要缺口不妨礙其他可獨立判斷項目。
+**Done:** each unit's scope is identifiable, with uncertainties explicit. Missing evidence blocks only decisions that depend on it.
 
-## 2. 蒐集可追溯證據
+## 2. Gather traceable evidence
 
-讀實際 PR diff 及基準到目標的完整 diff、相關呼叫端、測試與公開契約，並查閱：
+Read the actual PR diff, complete baseline-to-target diff, affected callers, tests, and public contracts. Inspect:
 
-- 版本權威來源、changelog、打包清單／產物、建置及部署設定。
-- release workflow、必要檢查、結果適用的 SHA、環境與通道。
-- 專案相容性承諾、發布節奏、版本群組與相依連動規則。
+- Version authority, changelog, package manifests/artifacts, build and deployment configuration.
+- Release workflows, required checks, and the SHA, environment, and channel covered by results.
+- Compatibility commitments, release cadence, version groups, and dependency propagation rules.
 
-GitHub 的 PR、release、檢查與 workflow 資訊使用已驗證登入的 `gh`；本機提交、差異與狀態使用 `git`。其他平台用專案既有工具。工具、權限或完整歷史不可得時，明列缺口，不能將無結果視為通過。
+Use authenticated `gh` for GitHub PRs, releases, checks, and workflows; use `git` for local commits, diffs, and status. Use existing project tools on other platforms. Report unavailable tools, permissions, or history as gaps; missing results are not passes.
 
-追蹤候選全部變更的有效影響，包含撤銷、替代、重複變更及遷移需求。PR 標題、feat/fix、changelog 只能作索引，不能代替實際差異。文件是否需交付取決於是否打包、生成公開契約或構成產品；建置與相依更新同樣看實際產物與行為。
+Trace the net effects of all candidate changes, including reverts, replacements, duplicates, and migrations. PR titles, feat/fix labels, and changelogs are indexes, not substitutes for diffs. Documentation needs delivery when it is packaged, generates a public contract, or constitutes the product. Assess build and dependency changes by their artifact and behavior effects too.
 
-檢查結果須能證明適用於目標候選；舊 SHA、未完成或環境不符的檢查不能列為已通過。只讀查證與必要的安全本機驗證可直接進行；會發布或修改外部狀態的命令走操作授權流程。
+Check results must apply to the target candidate. Results for an old SHA, unfinished checks, or a different environment cannot count as passes. Proceed with read-only inspection and necessary safe local validation; commands that publish or change external state require the operations authorization workflow.
 
-政策缺漏時先推導可查證的事實，將推定與事實分開。相容性承諾與發布節奏不能自行補定。衝突足以改變結論時詢問使用者。需要協助建立或補齊政策時才讀 [專案政策範本](references/project-policy.md)；填入政策不屬於一般評估的自動副作用。
+When policy is incomplete, establish verifiable facts and label inferences. Do not invent compatibility commitments or cadence. Ask the user to resolve conflicts that could change the conclusion. Read the [project policy template](references/project-policy.md) only when helping create or complete policy; policy edits are not an automatic assessment side effect.
 
-完成條件：每個結論可連到檔案／行號、diff、提交、檢查或發布紀錄；未知事項保留為未知。
+**Done:** each conclusion links to files/lines, diffs, commits, checks, or delivery records. Unknowns remain explicit.
 
-## 3. 分開作出三項判斷
+## 3. Make three separate decisions
 
-| 判斷 | 允許輸出 | 範圍與規則 |
+Retain these output values:
+
+| Decision | Allowed output | Scope and rule |
 | --- | --- | --- |
-| 本次變更是否納入下一版 | 需要／不需要／資訊不足 | 看本次變更的交付影響及是否已交付；本次不需要不代表候選沒有可發布內容。 |
-| 版本調整 | 不變／patch／minor／major／依專案策略／不適用／資訊不足 | 看整個發布候選與單位版本政策，不能只看本次 PR。 |
-| 現在是否發布 | 可發布／累積到下次／被阻擋 | 分辨必要條件與主動等待，依下列優先序回答。 |
+| Include the current change in the next release | 需要／不需要／資訊不足 | Assess its delivery impact and whether it was already delivered. No need for this change does not mean the candidate has nothing to release. |
+| Version change | 不變／patch／minor／major／依專案策略／不適用／資訊不足 | Assess the entire candidate against the unit's version policy, not just the current PR. |
+| Release now | 可發布／累積到下次／被阻擋 | Distinguish prerequisites from deliberate waiting, using the precedence below. |
 
-SemVer 按已承諾的公開契約判定：不相容變更 major、向下相容功能 minor、向下相容修正 patch；0.x、預發布與例外遵循專案政策。檢查最終有效差異與必要轉換影響，不能直接取提交標籤最大值。日期版本用「依專案策略」，並給出能確認的候選版本；無對外版本用「不適用」。僅確定不需升版才用「不變」，未知用「資訊不足」。
+For SemVer, assess the promised public contract: incompatible changes require major, compatible features minor, compatible fixes patch. Follow project policy for 0.x, prereleases, and exceptions. Assess the final net diff and required transition effects, not the highest commit label. Use `依專案策略` for date versions and provide a candidate version when established; use `不適用` without public versions. Use `不變` only when no bump is needed; use `資訊不足` when unknown.
 
-發布結論優先序：
+Release precedence:
 
-1. 已知必要內容（例如政策要求的相依版本更新）尚未進入候選，或必要驗證失敗、未完成、證據過期或缺少發布判斷必要資訊 → **被阻擋**。列出原因與解除方式，另列解除後的節奏建議。
-2. 必要條件已滿足，但政策要求累積、窗口未到或沒有新內容 → **累積到下次**。
-3. 必要條件與節奏皆符合 → **可發布**；仍須操作授權。
+1. Required content (such as mandated dependency updates) is absent from the candidate, or required validation failed, is incomplete, is stale, or lacks information needed for a release decision → **被阻擋**. List causes, remedies, and the cadence recommendation after resolution.
+2. Prerequisites pass, but policy requires accumulation, the window has not arrived, or there is no new content → **累積到下次**.
+3. Prerequisites and cadence both allow release → **可發布**; operational authorization is still required.
 
-「可準備升版」與「可發布目前候選」分開：尚缺必要相依更新的候選是被阻擋，即使既有候選測試通過；可另外提出準備更新及驗證新候選的操作。
+Distinguish preparing a bump from releasing the current candidate. Missing required dependency updates block that candidate even if its existing tests pass; separately propose preparing updates and validating the new candidate.
 
-同時有阻擋與等待窗口，以被阻擋為主，分列兩者。資訊缺漏只影響依賴它的判斷，例如新增功能可確定需納入，但升版幅度資訊不足且發布被阻擋。
+When both a blocker and a waiting window apply, lead with the blocker and retain both reasons. A gap affects only dependent decisions: a feature may clearly need delivery while its bump is unknown and release is blocked.
 
-Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；獨立版本查依賴與既定連動規則；即使沒有直接程式差異，相依版本更新仍可能要求另一單位發布。彙整共同阻擋及發布順序。政策不明時指出缺口，不能假設整個 repo 一起升版或發明依賴連動機制。
+For monorepos, report all three decisions per release unit. Aggregate fixed versions by established groups; for independent versions, check dependencies and existing propagation rules. Dependency updates may require a unit's release without direct code changes. A dependent's missing preparation blocks that unit, not an otherwise-ready dependency, unless policy requires a joint release. Derive dependency-first release order from verified dependency rules; distinguish that order from unknown operational commands. Summarize shared blockers and release order. Report unclear policy rather than assuming a repo-wide bump or inventing propagation rules.
 
-## 4. 交付評估報告
+## 4. Deliver the assessment
 
-先一句話總結版本與發布建議，再列各單位的三項判斷、理由、證據及缺口。報告必含本次範圍、基準 release、目標 SHA、通道；多單位用表格。範例：
+Lead with a one-sentence version and release recommendation, then provide each unit's three decisions, reasons, evidence, and gaps. Include current-change scope, baseline release, target SHA, and channel. Use a table for multiple units. Example:
 
 > 建議：下一版升 minor；目前被阻擋。
 > 納入下一版：需要，新增向下相容 CLI 選項。
@@ -73,12 +75,12 @@ Monorepo 按發布單位列三項結果：統一版本依既定群組聚合；�
 > 節奏：驗證通過後依專案政策累積到下次。
 > 證據與下一步：附 diff、政策及檢查位置，指出應完成的驗證。
 
-結論附證據而非僅列來源清單。區分實際候選與條件式預估，資訊不足時說明需補哪項事實或決策。
+Attach evidence to conclusions, not just a source list. Separate the actual candidate from conditional forecasts; identify missing facts or decisions.
 
-## 5. 提出並協助下一步
+## 5. Propose and assist with next steps
 
-有符合條件的操作時，讀 [操作提案與執行](references/operations.md)，查明專案流程、準備具體提案並詢問使用者。評估結果不授權修改版本、tag 或發布。
+When an operation is appropriate, read [operation proposals and execution](references/operations.md), inspect the project process, prepare a concrete proposal, and ask the user. An assessment does not authorize version edits, tags, or releases.
 
-「累積到下次」仍可依政策提出升版準備；「被阻擋」先提出解除阻擋或可獨立進行的準備，不把同意當成檢查通過。沒有適合的操作時，以可執行的下一步結束報告。
+For `累積到下次`, policy may still permit bump preparation. For `被阻擋`, propose resolving blockers or independent preparation first; approval cannot substitute for passing checks. If no operation is appropriate, end with an actionable next step.
 
-只有維護或驗證本 skill 時才讀 [驗收案例](references/acceptance.md)，以模擬情境驗證，不真實發布。
+Read [acceptance cases](references/acceptance.md) only when maintaining or validating this skill. Simulate scenarios; never publish real artifacts for validation.
