@@ -1,0 +1,1 @@
+請用 pm skill 做開工前的 scope 稽核：.scratch/search 的 spec 與工單有沒有互相矛盾或缺漏？

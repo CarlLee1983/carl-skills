@@ -22,7 +22,7 @@ Blocked by: 02
 ## Comments
 
 - 實作：新增 `skills/pm/references/risk.md`、`change.md`；`skills/pm/SKILL.md` 分派表加入兩列（接在 next-step 之後），description 加入風險／假設與變更的觸發詞。
-- 行為證據：[04-behavior.md](../validation/04-behavior.md)（10 情境：r1–r4、c1–c5、m1）。RED 5 列失敗（r2、r3、r4、c4、c5），GREEN 兩次取樣 10 列全數通過；fixture、`run.sh` 與萃取輸出（含寫入差異）在 `../validation/04/`。宿主：Claude Code CLI 2.1.304。
+- 行為證據：[04-behavior.md](../validation/04-behavior.md)（10 情境：r1–r4、ch1–ch5、m1）。RED 5 列失敗（r2、r3、r4、ch4、ch5），GREEN 兩次取樣 10 列全數通過（合併後重跑發現 ch3 一次取樣超出決定範圍，補規則後重跑通過，見證據文件）；fixture、`run.sh` 與萃取輸出（含寫入差異）在 `../validation/04/`。宿主：Claude Code CLI 2.1.304。
 - 封裝檢查：單獨複製 `skills/pm/` 後 `quick_validate.py` 通過、相對連結留在目錄內、無個人絕對路徑、空白檢查通過；靜態掃描無寫死入口名稱或 `/x`、`$x` 語法。
 - 維護驗收：`docs/pm/acceptance.md` 已補情境表、封裝清單與「第 4 層」結果、宿主與限制。
-- 已知限制：寫入後重新查詢這一步在部分取樣中沒有執行；RED 中 r1、c1、c2、c3、m1 已通過，僅作不退步對照。
+- 已知限制：寫入後重新查詢這一步在部分取樣中沒有執行；RED 中 r1、ch1、ch2、ch3、m1 已通過，僅作不退步對照。

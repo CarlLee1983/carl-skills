@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 用法：[RAW_DIR=<目錄>] [SKILL_SRC=<skill 目錄>] run.sh <標籤> <情境名稱>...   例：run.sh red r1-identify c1-impact
+# 用法：[RAW_DIR=<目錄>] [SKILL_SRC=<skill 目錄>] run.sh <標籤> <情境名稱>...   例：run.sh red r1-identify ch1-impact
 # 在拋棄式暫存目錄組出假專案（_base + 情境覆蓋層 + 單獨複製的 skills/pm），
 # 以 claude -p 跑一個全新對話。預設只開放唯讀工具；情境目錄有 tools.txt 時改用其中的工具
 # （可寫的情境不含 Bash，並在結束後比對暫存專案的變更，存成 out/<標籤>/<情境>.diff）。

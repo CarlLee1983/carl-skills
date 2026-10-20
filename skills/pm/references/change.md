@@ -25,7 +25,7 @@ After the user chooses, and within current write authorization, change only tick
 - Dependencies and statuses, including canceling a ticket with the reason recorded where the tracker keeps reasons.
 - A placeholder ticket for new work: a title, its dependencies, and a note that its content comes from the project entry. Do not invent its scope or acceptance criteria.
 
-Do not edit ticket scope or acceptance criteria, the spec, code, or other documents. Do not claim, assign, or start work.
+Apply exactly what the decision names. Do not extend it to other tickets by interpretation; when the decision is ambiguous about which tickets it covers, ask. Do not edit ticket scope or acceptance criteria, the spec, code, or other documents. Do not claim, assign, or start work.
 
 When a prerequisite is canceled without a replacement or waiver, leave its dependents' dependencies in place, do not mark them ready, and report them as still waiting. Remove or redirect a dependency only when the decision explicitly names a waiver or a replacement. When the tracker cannot express the change (no canceled state, no place for a reason), report the gap and let the user decide.
 
