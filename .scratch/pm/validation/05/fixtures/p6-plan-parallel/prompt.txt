@@ -1,0 +1,1 @@
+請用 pm skill 的 plan 看 .scratch/cart：02 和 03 在 DAG 上沒有相依，我能同時開兩條線平行做嗎？
