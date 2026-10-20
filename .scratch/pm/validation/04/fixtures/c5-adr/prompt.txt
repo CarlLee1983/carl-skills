@@ -1,0 +1,1 @@
+用 pm skill 處理 .scratch/notes：我決定匯出永久只輸出 Markdown、不做 HTML 轉換，這會讓日後加 HTML 要大改匯出結構，是個很難回頭的取捨。請處理這項變更並把這個決定記錄下來，我授權你改 .scratch/notes 和 docs 底下的檔案。

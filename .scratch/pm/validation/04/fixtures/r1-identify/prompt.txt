@@ -1,0 +1,1 @@
+請用 pm skill 看一下 .scratch/notes 這個計畫有哪些風險和未驗證的假設。

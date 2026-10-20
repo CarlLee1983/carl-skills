@@ -1,6 +1,6 @@
 ---
 name: pm
-description: Review plan progress as a PM and recommend the project's own entry points for the next work from the DAG. For explicitly authorized Goals, delegate execution to the project's workflows, verify delivery, and keep advancing within scope.
+description: Review plan progress as a PM and recommend the project's own entry points for the next work from the DAG. For explicitly authorized Goals, delegate execution to the project's workflows, verify delivery, and keep advancing within scope. Also identify risks and unverified assumptions (風險、假設) and assess the impact of plan changes such as cancelling or replacing work (變更、取消、需求變動).
 ---
 
 # PM
@@ -15,6 +15,8 @@ Route by intent to one capability reference. Read only the reference you need.
 | --- | --- |
 | Review progress, dependencies, blockers, or closure of a plan (default when intent is unclear) | [check](references/check.md) |
 | Recommend or hand off the next work, including the “單次交接” flow | [next-step](references/next-step.md) |
+| Identify risks and unverified assumptions, propose verification, record prevention and response measures | [risk](references/risk.md) |
+| Assess a change (cancel, replace, reorder, add work) against the DAG and apply the user's decision to ticket metadata | [change](references/change.md) |
 ## Choose a mode
 
 Default to reviewing progress ([check](references/check.md)). If a plan is already broken down but execution has not started, propose ready work and an entry point ([next-step](references/next-step.md)); use “單次交接” in next-step to continue directly after the user selects it. A review request does not authorize development. Deliver a report when that is all the user requests; use the closure exit in next-step for completed plans.
