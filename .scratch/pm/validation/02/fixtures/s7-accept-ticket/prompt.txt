@@ -1,0 +1,6 @@
+請用 pm skill。以下是這個對話稍早的內容。
+
+[使用者] 看一下 .scratch/notes 的進度，下一步做什麼？
+[pm 稍早的提案] 工單 01 已關閉，02 是唯一就緒的工作。建議交給專案規則宣告的 docs/workflow/build-ticket.md，範圍：.scratch/notes/issues/02-markdown-writer.md，交付終點：工作區變更經驗證、未 commit。可回覆「執行這張」接續。
+
+[使用者] 執行這張

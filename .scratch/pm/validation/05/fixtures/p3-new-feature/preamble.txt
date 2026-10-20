@@ -1,0 +1,1 @@
+[唯讀模擬] 這是行為評估：不要修改檔案、不要 commit/push/merge。專案的 .claude/skills/ 下有已安裝的 skill；請自行判斷是否有適用的 skill，適用才載入，並處理下面的需求。

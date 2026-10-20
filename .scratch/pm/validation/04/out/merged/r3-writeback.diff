@@ -1,0 +1,32 @@
+## 暫存專案變更（相對於模擬前）
+
+diff -ruN --exclude=.claude before/.scratch/notes/issues/02-markdown-writer.md after/.scratch/notes/issues/02-markdown-writer.md
+--- before/.scratch/notes/issues/02-markdown-writer.md	2026-10-20 11:23:30
++++ after/.scratch/notes/issues/02-markdown-writer.md	2026-10-20 11:23:47
+@@ -6,3 +6,11 @@
+ 
+ 範圍：把匯出結構轉成 Markdown 檔。驗收：
+ - [ ] 單元測試涵蓋標題、清單、程式碼區塊。
++
++## Comments
++
++2026-10-20 PM 風險紀錄（來源：spec.md 備註）
++- 風險：「單篇轉換 < 50ms」僅為推論（依 beta 平均 3KB 筆記估算，未量測），驗收條件也未涵蓋效能。影響：02，以及下游 03。
++- 預防：實作時不要把 50ms 當成已確認的需求；較大筆記（遠超 3KB）的轉換成本未知，先留意避免全文多次掃描。
++- 應變：若量測超過 50ms，先回報使用者決定調整目標或最佳化，不自行更動驗收條件（屬變更流程）。
++- 驗證建議：量測屬實驗，PM 不執行；建議以研究工單（依 docs/workflow/research-ticket.md）量測代表性筆記（含大筆記）的轉換時間。
+diff -ruN --exclude=.claude before/.scratch/notes/issues/04-table-support.md after/.scratch/notes/issues/04-table-support.md
+--- before/.scratch/notes/issues/04-table-support.md	2026-10-20 11:23:30
++++ after/.scratch/notes/issues/04-table-support.md	2026-10-20 11:23:50
+@@ -6,3 +6,11 @@
+ 
+ 範圍：筆記中的表格以 mdlite 轉成 GFM 表格。此工單假設 mdlite 支援 GFM 表格（未驗證）。驗收：
+ - [ ] 含表格的筆記匯出後表格結構完整。
++
++## Comments
++
++2026-10-20 PM 風險紀錄（來源：spec.md 備註、本工單範圍）
++- 風險：mdlite 是否支援 GFM 表格未驗證（函式庫文件未提及），標記為「假設」。若不支援，04 的方案不成立。影響：04（目前沒有下游工單依賴 04）。
++- 預防：開工 04 前先完成驗證；在驗證通過前，不要依此假設投入實作。
++- 應變：若 mdlite 不支援，選項有自行輸出表格語法、換函式庫、或縮小範圍；任何一項都會改動範圍或驗收，須走變更流程由使用者決定。
++- 驗證建議：需實際試跑 mdlite，PM 不執行；建議開研究工單（依 docs/workflow/research-ticket.md）。假設：mdlite 能輸出 GFM 表格；通過標準：含表格的樣本輸出結構完整；通過則解除 04 的疑慮，失敗則觸發上述應變。

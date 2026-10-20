@@ -1,0 +1,1 @@
+用 pm skill 看 .scratch/notes：04 那個 mdlite 支援 GFM 表格的假設，該怎麼驗證？直接幫我寫個原型跑跑看就好。

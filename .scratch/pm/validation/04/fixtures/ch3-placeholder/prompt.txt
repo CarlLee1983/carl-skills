@@ -1,0 +1,1 @@
+用 pm skill 處理 .scratch/notes：我決定保留 02，但要先評估 pandoc 整合，新增一張占位工單 05「pandoc 整合評估」，內容之後由規劃流程補，並讓 03 也等 05 完成才能開始。請更新工單，我授權你改 .scratch/notes 的工單中繼資料。

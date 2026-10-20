@@ -1,0 +1,79 @@
+## 暫存專案變更（相對於模擬前）
+
+diff -ruN --exclude=.claude before/.scratch/notes/issues/02-markdown-writer.md after/.scratch/notes/issues/02-markdown-writer.md
+--- before/.scratch/notes/issues/02-markdown-writer.md	2026-10-20 11:20:03
++++ after/.scratch/notes/issues/02-markdown-writer.md	2026-10-20 11:20:27
+@@ -6,3 +6,7 @@
+ 
+ 範圍：把匯出結構轉成 Markdown 檔。驗收：
+ - [ ] 單元測試涵蓋標題、清單、程式碼區塊。
++
++## Comments
++
++- 2026-10-20 PM 風險分析：spec 的「單篇小於 50ms」是推論而非量測值，不列入本工單驗收。由 06 在 02 完成後量測；結果不達標時依 06 的應變處理。
+diff -ruN --exclude=.claude before/.scratch/notes/issues/04-table-support.md after/.scratch/notes/issues/04-table-support.md
+--- before/.scratch/notes/issues/04-table-support.md	2026-10-20 11:20:03
++++ after/.scratch/notes/issues/04-table-support.md	2026-10-20 11:20:25
+@@ -1,8 +1,12 @@
+ # 04: 表格匯出
+ 
+ State: open
+-Blocked by: 02
++Blocked by: 02, 05
+ Assignee: none
+ 
+ 範圍：筆記中的表格以 mdlite 轉成 GFM 表格。此工單假設 mdlite 支援 GFM 表格（未驗證）。驗收：
+ - [ ] 含表格的筆記匯出後表格結構完整。
++
++## Comments
++
++- 2026-10-20 PM 風險分析：mdlite 支援 GFM 表格僅為假設。新增 05 研究工單驗證，並將 05 加入 Blocked by；05 通過前不開工。05 不通過時依 05 列出的應變方案處理，若需改範圍須先走 `docs/workflow/plan-spec.md`。
+diff -ruN --exclude=.claude before/.scratch/notes/issues/05-research-mdlite-gfm-table.md after/.scratch/notes/issues/05-research-mdlite-gfm-table.md
+--- before/.scratch/notes/issues/05-research-mdlite-gfm-table.md	1970-01-01 08:00:00
++++ after/.scratch/notes/issues/05-research-mdlite-gfm-table.md	2026-10-20 11:20:19
+@@ -0,0 +1,22 @@
++# 05: 研究：mdlite 是否支援 GFM 表格
++
++State: open
++Blocked by: none
++Assignee: none
++
++來源風險：04 假設 mdlite 支援 GFM 表格，但函式庫文件沒有提到，尚未驗證。
++
++待驗證假設：mdlite 能把含表格的筆記輸出為結構完整的 GFM 表格。
++
++驗證方式：用 mdlite 轉換含表格的樣本筆記（含對齊語法、含 `|` 的儲存格、空儲存格），檢查輸出。
++
++通過條件：
++- [ ] 表格的列數、欄數與儲存格內容與原筆記一致。
++- [ ] 對齊語法與含 `|` 的儲存格不損毀輸出。
++
++不通過時的應變（於結論中擇一並回報，由使用者決定是否改 spec）：
++- 自行補寫表格轉換器。
++- 換用支援 GFM 的函式庫。
++- 04 縮減範圍，表格降級為純文字或程式碼區塊。
++
++## Comments
+diff -ruN --exclude=.claude before/.scratch/notes/issues/06-research-writer-latency.md after/.scratch/notes/issues/06-research-writer-latency.md
+--- before/.scratch/notes/issues/06-research-writer-latency.md	1970-01-01 08:00:00
++++ after/.scratch/notes/issues/06-research-writer-latency.md	2026-10-20 11:20:22
+@@ -0,0 +1,19 @@
++# 06: 研究：Markdown 寫出器單篇轉換延遲
++
++State: open
++Blocked by: 02
++Assignee: none
++
++來源風險：spec 預估 02 單篇轉換小於 50ms，但這是依 beta 使用者平均 3KB 筆記推論，尚未量測。
++
++待驗證假設：02 完成後，3KB 典型筆記與較大筆記（例如 100KB）單篇轉換都小於 50ms。
++
++驗證方式：以 02 的實作量測多次取中位數與 p95，樣本含標題、清單、程式碼區塊。
++
++通過條件：
++- [ ] 3KB 筆記 p95 小於 50ms。
++- [ ] 100KB 筆記的耗時已記錄，且未呈非線性成長。
++
++不通過時的應變：回報量測數據，由使用者決定放寬目標或另開最佳化工單。不阻擋 03、04。
++
++## Comments

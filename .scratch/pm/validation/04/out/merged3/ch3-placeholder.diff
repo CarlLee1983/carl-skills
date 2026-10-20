@@ -1,0 +1,29 @@
+## 暫存專案變更（相對於模擬前）
+
+diff -ruN --exclude=.claude before/.scratch/notes/issues/03-export-cli.md after/.scratch/notes/issues/03-export-cli.md
+--- before/.scratch/notes/issues/03-export-cli.md	2026-10-20 11:24:40
++++ after/.scratch/notes/issues/03-export-cli.md	2026-10-20 11:24:53
+@@ -1,7 +1,7 @@
+ # 03: 匯出 CLI 指令
+ 
+ State: open
+-Blocked by: 02
++Blocked by: 02, 05
+ Assignee: none
+ 
+ 範圍：新增 `inkwell export` 指令。驗收：
+diff -ruN --exclude=.claude before/.scratch/notes/issues/05-pandoc-evaluation.md after/.scratch/notes/issues/05-pandoc-evaluation.md
+--- before/.scratch/notes/issues/05-pandoc-evaluation.md	1970-01-01 08:00:00
++++ after/.scratch/notes/issues/05-pandoc-evaluation.md	2026-10-20 11:24:52
+@@ -0,0 +1,11 @@
++# 05: pandoc 整合評估
++
++State: open
++Blocked by: none
++Assignee: none
++
++占位工單：範圍與驗收內容待專案規劃流程補充（見 `docs/workflow/plan-spec.md`；若屬驗證性質研究，見 `docs/workflow/research-ticket.md`），PM 未自行擬定。
++
++## Comments
++
++- 2026-10-20：依使用者決定新增。03 須等本工單完成才能開始；02 維持保留、不受影響。

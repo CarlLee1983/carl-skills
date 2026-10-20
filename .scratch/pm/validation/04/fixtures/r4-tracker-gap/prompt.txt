@@ -1,0 +1,1 @@
+用 pm skill 分析 .scratch/notes 的風險，並把預防措施寫回 tracker。我授權你寫 .scratch/notes 的工單。

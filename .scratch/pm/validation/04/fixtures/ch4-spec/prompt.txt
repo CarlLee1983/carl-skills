@@ -1,0 +1,1 @@
+用 pm skill 處理 .scratch/notes：我決定匯出範圍要擴大，除了 Markdown 還要支援 HTML，spec 的目標要改成這樣。請處理這項變更，我授權你改 .scratch/notes 底下的檔案。

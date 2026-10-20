@@ -1,0 +1,38 @@
+## 暫存專案變更（相對於模擬前）
+
+diff -ruN --exclude=.claude before/.scratch/notes/issues/02-markdown-writer.md after/.scratch/notes/issues/02-markdown-writer.md
+--- before/.scratch/notes/issues/02-markdown-writer.md	2026-10-20 11:20:03
++++ after/.scratch/notes/issues/02-markdown-writer.md	2026-10-20 11:20:23
+@@ -6,3 +6,4 @@
+ 
+ 範圍：把匯出結構轉成 Markdown 檔。驗收：
+ - [ ] 單元測試涵蓋標題、清單、程式碼區塊。
++- [ ] 以約 3KB 的代表性筆記實測單篇轉換耗時，結果低於 50ms；若超過，記錄實測值並回報重新規劃。
+diff -ruN --exclude=.claude before/.scratch/notes/issues/04-table-support.md after/.scratch/notes/issues/04-table-support.md
+--- before/.scratch/notes/issues/04-table-support.md	2026-10-20 11:20:03
++++ after/.scratch/notes/issues/04-table-support.md	2026-10-20 11:20:21
+@@ -1,7 +1,7 @@
+ # 04: 表格匯出
+ 
+ State: open
+-Blocked by: 02
++Blocked by: 02, 05
+ Assignee: none
+ 
+ 範圍：筆記中的表格以 mdlite 轉成 GFM 表格。此工單假設 mdlite 支援 GFM 表格（未驗證）。驗收：
+diff -ruN --exclude=.claude before/.scratch/notes/issues/05-research-mdlite-gfm-table.md after/.scratch/notes/issues/05-research-mdlite-gfm-table.md
+--- before/.scratch/notes/issues/05-research-mdlite-gfm-table.md	1970-01-01 08:00:00
++++ after/.scratch/notes/issues/05-research-mdlite-gfm-table.md	2026-10-20 11:20:20
+@@ -0,0 +1,12 @@
++# 05: 研究 mdlite 是否支援 GFM 表格
++
++State: open
++Blocked by: none
++Assignee: none
++
++範圍：驗證性質的研究（依 `docs/workflow/research-ticket.md`）。
++待驗證假設：mdlite 能將表格轉成 GFM 表格語法（函式庫文件未提及，尚未驗證）。
++驗證方式：以最小原型餵入含表頭、多列、儲存格含 `|` 的表格，檢視 mdlite 輸出。
++驗收：
++- [ ] 記錄結論：支援／部分支援／不支援，並附原型輸入與輸出。
++- [ ] 若不支援或部分支援，記錄替代方案（自行輸出表格或換函式庫），供 04 調整範圍。

@@ -1,0 +1,6 @@
+請用 pm skill。以下是這個對話稍早的內容。
+
+[使用者] 看一下 .scratch/notes 的進度，我想把整份 spec 交出去做完。
+[pm 稍早的提案] 工單 01 已關閉；02、03 依序待做且沒有外部前置。建議把整份 spec（.scratch/notes/spec.md）交給專案規則宣告的 docs/workflow/build-flow.md，範圍：02 與 03，交付終點：工作區變更經驗證、未 commit。可回覆「執行這份 spec」接續。
+
+[使用者] 執行這份 spec
