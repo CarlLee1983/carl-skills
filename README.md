@@ -6,7 +6,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 
 | Skill | 適用工具 | 用途 |
 | --- | --- | --- |
-| [release-assessment](skills/release-assessment/SKILL.md) | Codex、Claude Code 等 | 分開判斷變更納入、版本調整與發布時機，取得具體授權後協助操作。[規格](docs/release-assessment/SPEC.md) |
+| [devops](skills/devops/SKILL.md) | Codex、Claude Code 等 | 軟體交付與維運的統一入口：環境、CI、發布評估與套件發布、部署與回復、監控告警、事故、備份還原、容量與成本；先取得證據，在明確授權內執行並核驗。取代原 release-assessment。[規格](docs/devops/SPEC.md) |
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
 | [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 理解產品任務、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
@@ -22,14 +22,14 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 npx skills add CarlLee1983/carl-skills --list
 ```
 
-選擇你使用的 agent，安裝 `release-assessment` 到使用者目錄，供不同專案共用：
+選擇你使用的 agent，安裝 `devops` 到使用者目錄，供不同專案共用：
 
 ```sh
 # Codex
-npx skills add CarlLee1983/carl-skills --skill release-assessment -g -a codex
+npx skills add CarlLee1983/carl-skills --skill devops -g -a codex
 
 # Claude Code
-npx skills add CarlLee1983/carl-skills --skill release-assessment -g -a claude-code
+npx skills add CarlLee1983/carl-skills --skill devops -g -a claude-code
 ```
 
 同時使用兩者時，可在一個指令中指定 `-a codex claude-code`。CLI 預設以共用副本與必要的 symlink 安裝，保留 `SKILL.md`、`references/` 與 `LICENSE`。安裝前若已有同名 skill，先比較或備份自訂內容。
@@ -57,15 +57,15 @@ npx skills add CarlLee1983/carl-skills --skill pm -g -a codex claude-code
 在**要使用 skill 的專案根目錄**執行，不加 `-g`：
 
 ```sh
-npx skills add CarlLee1983/carl-skills --skill release-assessment -a codex
+npx skills add CarlLee1983/carl-skills --skill devops -a codex
 ```
 
 Claude Code 將 `codex` 改為 `claude-code`。CLI 會在專案內建立技能檔案與 `skills-lock.json`；需要團隊共用時，將相關檔案及 symlink 一併納入該專案的版本控制。
 
 | Agent | 專案內的技能入口 | 使用者層級的技能入口 |
 | --- | --- | --- |
-| Codex | `.agents/skills/release-assessment/` | `~/.agents/skills/release-assessment/` |
-| Claude Code | `.claude/skills/release-assessment/` | `~/.claude/skills/release-assessment/` |
+| Codex | `.agents/skills/devops/` | `~/.agents/skills/devops/` |
+| Claude Code | `.claude/skills/devops/` | `~/.claude/skills/devops/` |
 
 CLI 管理的入口可能是 symlink，更新及移除時請使用相同工具。以上路徑適用本機 agent；其他工具請參考 [Skills CLI 支援清單](https://github.com/vercel-labs/skills#supported-agents)。
 
@@ -81,23 +81,43 @@ npx skills list -g
 npx skills list
 ```
 
-接著在要評估的專案開啟 agent。Codex CLI／IDE 可用 `/skills` 或輸入 `$` 選取技能；在對話中輸入：
+接著在要處理的專案開啟 agent。Codex CLI／IDE 可用 `/skills` 或輸入 `$` 選取技能；在對話中輸入：
 
 ```text
-$release-assessment 評估目前 main 相較上次正式發布的累積變更，判斷版本調整與發布時機。先提供評估報告。
+$devops 評估目前 main 相較上次正式發布的累積變更，判斷版本調整與發布時機。先提供評估報告。
 ```
 
 Claude Code 在對話中輸入：
 
 ```text
-/release-assessment 評估 PR #123 是否需要納入下一版，並分開判斷 main 的累積變更與發布時機。
+/devops 評估 PR #123 是否需要納入下一版，並分開判斷 main 的累積變更與發布時機。
 ```
 
-將範例中的分支或 PR 編號換成實際目標。這些是 agent 對話指令，不是終端機命令。若安裝後沒有出現技能，重新啟動 agent，並檢查上表入口是否包含 `SKILL.md`。
+同一個入口也處理其他交付與維運需求，直接用自然語言描述即可，不需要子指令：
 
-release-assessment 使用本機 `git` 蒐集提交與差異；查詢 GitHub PR、release 或檢查結果時，需要已登入的 [GitHub CLI](https://cli.github.com/)，可用 `gh auth status` 確認。專案已有發布政策時沿用；需要建立政策時可參考 [政策範本](skills/release-assessment/references/project-policy.md)。缺少政策或驗證證據時，技能會列明缺口。
+```text
+$devops 檢查 B 能不能部署到 production，先給就緒評估與部署方案，不要執行。
+$devops 授權依 runbook 把 B 部署到 staging，冒煙通過後再上 production，canary 指標正常就切 100%。
+$devops production 錯誤率暴增，先確認影響與近期變更，提出緩解方案。
+$devops 檢查 orders-db 的備份是否真的能還原。
+```
 
-評估會分開回答「本次變更是否納入」、「累積變更如何調整版本」與「現在是否適合發布」。安裝或取得「可發布」結論，都不代表授權建立 tag、推送或實際發布。
+將範例中的分支、PR 編號、環境與服務換成實際目標。這些是 agent 對話指令，不是終端機命令。若安裝後沒有出現技能，重新啟動 agent，並檢查上表入口是否包含 `SKILL.md`。
+
+devops 沿用專案自己的工具與部署方式：本機 `git` 蒐集提交與差異；查詢 GitHub PR、release、workflow 或檢查結果時，需要已登入的 [GitHub CLI](https://cli.github.com/)，可用 `gh auth status` 確認。Cloudflare、Terraform 等平台工作可按需搭配已安裝的平台技能；缺少技能或權限時，技能仍交付可完成的盤點、評估與方案，並列明無法驗證的部分。專案已有發布政策時沿用；需要建立政策時可參考 [政策範本](skills/devops/references/release-policy.md)。
+
+發布評估會分開回答「本次變更是否納入」、「累積變更如何調整版本」與「現在是否適合發布」。每次回報固定列出範圍、判斷、操作、證據與後續。安裝或取得「可發布」、「可部署」結論，都不代表授權建立 tag、推送、部署或發布；已明確授權的完整流程則會持續推進並逐步核驗。
+
+### 從 release-assessment 改用 devops
+
+release-assessment 已整併為 devops 的 release 能力，發布評估行為與驗收案例不變，[遷移對照](docs/devops/migration.md) 列出新位置。已安裝舊技能時，先移除再安裝 devops，避免兩個入口同時觸發：
+
+```sh
+npx skills remove release-assessment -g
+npx skills add CarlLee1983/carl-skills --skill devops -g -a codex claude-code
+```
+
+手動安裝的副本則刪除自己安裝的 `release-assessment/` 目錄。
 
 ### 潤稿與 Codex 調校
 
@@ -143,23 +163,23 @@ Claude Code 使用 `/pm`。技能沿用專案現有的 spec、工單與 tracker�
 
 ## 更新與移除
 
-以下指令適用以 Skills CLI 安裝的副本。更新前先備份本機修改；更新會取得來源的新內容。範例中的 `release-assessment` 可換成上表其他技能名稱。
+以下指令適用以 Skills CLI 安裝的副本。更新前先備份本機修改；更新會取得來源的新內容。範例中的 `devops` 可換成上表其他技能名稱。
 
 ```sh
 # 只更新這個使用者層級 skill
-npx skills update release-assessment -g
+npx skills update devops -g
 
 # 只更新目前專案的這個 skill
-npx skills update release-assessment -p
+npx skills update devops -p
 
 # 從所有 agent 移除使用者層級的這個 skill
-npx skills remove release-assessment -g
+npx skills remove devops -g
 
 # 從所有 agent 移除目前專案的這個 skill
-npx skills remove release-assessment
+npx skills remove devops
 ```
 
-省略 `-a` 會從所選範圍的所有 agent 移除具名的 `release-assessment`，不會移除其他技能。選擇與安裝時相同的全域或專案範圍。Codex 與其他 agent 可能共用 `.agents/skills`；只指定移除 Codex 時，CLI 可能為其他 agent 保留共用副本，Codex 仍能載入，因此完整移除使用上述指令。
+省略 `-a` 會從所選範圍的所有 agent 移除具名的 `devops`，不會移除其他技能。選擇與安裝時相同的全域或專案範圍。Codex 與其他 agent 可能共用 `.agents/skills`；只指定移除 Codex 時，CLI 可能為其他 agent 保留共用副本，Codex 仍能載入，因此完整移除使用上述指令。
 
 ## 手動安裝
 
@@ -167,21 +187,21 @@ npx skills remove release-assessment
 
 ```sh
 git clone https://github.com/CarlLee1983/carl-skills.git && (
-  skill_target_dir="$HOME/.agents/skills/release-assessment"
+  skill_target_dir="$HOME/.agents/skills/devops"
   if [ -e "$skill_target_dir" ] || [ -L "$skill_target_dir" ]; then
     printf '%s\n' "目標已存在，請先比較或備份：$skill_target_dir" >&2
     exit 1
   fi
   mkdir -p "$(dirname "$skill_target_dir")" &&
-    cp -R carl-skills/skills/release-assessment "$skill_target_dir"
+    cp -R carl-skills/skills/devops "$skill_target_dir"
 )
 ```
 
-Claude Code 使用者可將 `skill_target_dir` 改為 `"$HOME/.claude/skills/release-assessment"`。其他安裝範圍依上表選擇目標。安裝其他技能時，同時替換來源與目標中的技能名稱；`calibrate-codex` 使用 Codex 的目標路徑。Windows 可 clone 或下載 repo ZIP，將選定的 `skills/<skill-name>/` 整個資料夾複製到使用者家目錄或專案的對應位置。
+Claude Code 使用者可將 `skill_target_dir` 改為 `"$HOME/.claude/skills/devops"`。其他安裝範圍依上表選擇目標。安裝其他技能時，同時替換來源與目標中的技能名稱；`calibrate-codex` 使用 Codex 的目標路徑。Windows 可 clone 或下載 repo ZIP，將選定的 `skills/<skill-name>/` 整個資料夾複製到使用者家目錄或專案的對應位置。
 
-保留 `SKILL.md`、`references/` 與 `LICENSE` 的相對位置；不需要複製 repo 的 `docs/`、`.scratch/` 或 `AGENTS.md`。被評估專案的發布政策留在該專案中。
+保留 `SKILL.md`、`references/` 與 `LICENSE` 的相對位置；不需要複製 repo 的 `docs/`、`.scratch/` 或 `AGENTS.md`。被評估專案的發布政策、runbook 與部署設定留在該專案中。
 
-手動副本不會隨原始碼自動更新。更新時，在 clone 目錄執行 `git pull --ff-only`，比較來源與已安裝副本，把舊副本備份到技能搜尋目錄之外，再複製完整新目錄。移除時只刪除自己安裝的 `release-assessment/` 目錄。請選用 CLI 或手動方式管理同一份安裝，避免重複來源。
+手動副本不會隨原始碼自動更新。更新時，在 clone 目錄執行 `git pull --ff-only`，比較來源與已安裝副本，把舊副本備份到技能搜尋目錄之外，再複製完整新目錄。移除時只刪除自己安裝的 `devops/` 目錄。請選用 CLI 或手動方式管理同一份安裝，避免重複來源。
 
 安裝路徑與啟用方式依 [Codex 官方文件](https://developers.openai.com/codex/skills)及 [Claude Code 官方文件](https://code.claude.com/docs/en/skills)；CLI 選項依 [Skills CLI 文件](https://github.com/vercel-labs/skills)。
 
@@ -212,14 +232,14 @@ docs/agents/               本 repo 的協作設定
 若已安裝 Codex skill-creator 的驗證工具，可檢查技能 metadata：
 
 ```sh
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/release-assessment
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/devops
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/humanize-writing
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/calibrate-codex
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/design-experience
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/pm
 ```
 
-這項檢查不代替行為驗收。release-assessment 的 [驗收案例](skills/release-assessment/references/acceptance.md) 與 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
+這項檢查不代替行為驗收。devops 先以 [發布驗收案例](skills/devops/references/release-acceptance.md) 驗證遷移行為，再以 [devops 驗收案例](skills/devops/references/acceptance.md) 驗證其他能力；[本次驗證紀錄](.scratch/devops/validation/SUMMARY.md) 與 release-assessment 的 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
 
 目前沒有統一版本或自動發布流程。集中管理原始碼，不預設所有 skills 共用相容性承諾與發布節奏。
 

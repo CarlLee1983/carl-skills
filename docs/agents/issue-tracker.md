@@ -5,7 +5,7 @@ Issues and specs for this repo live as markdown files in `.scratch/`.
 ## Conventions
 
 - One feature per directory: `.scratch/<feature-slug>/`
-- New feature specs live at `.scratch/<feature-slug>/spec.md`. The release-assessment specification remains authoritative at `docs/release-assessment/SPEC.md`; link to it rather than duplicating it.
+- New feature specs live at `.scratch/<feature-slug>/spec.md`. The devops specification is authoritative at `docs/devops/SPEC.md`, and its release capability at `docs/devops/release-SPEC.md`; link to them rather than duplicating them.
 - Implementation issues are one file per ticket at `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01`, never a single combined tickets file
 - Triage state is recorded as a `Status:` line near the top of each issue file (see `triage-labels.md` for the role strings)
 - Comments and conversation history append to the bottom of the file under a `## Comments` heading
