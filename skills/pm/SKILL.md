@@ -1,6 +1,6 @@
 ---
 name: pm
-description: Review plan progress as a PM and recommend the project's own entry points for the next work from the DAG. For explicitly authorized Goals, delegate execution to the project's workflows, verify delivery, and keep advancing within scope.
+description: Review plan progress as a PM and recommend the project's own entry points for the next work from the DAG; deliver progress reports (進度報告, 整理報告) and close out a finished plan with acceptance check, handover list, and retrospective (結案, 收尾). For explicitly authorized Goals, delegate execution to the project's workflows, verify delivery, and keep advancing within scope.
 ---
 
 # PM
@@ -15,9 +15,14 @@ Route by intent to one capability reference. Read only the reference you need.
 | --- | --- |
 | Review progress, dependencies, blockers, or closure of a plan (default when intent is unclear) | [check](references/check.md) |
 | Recommend or hand off the next work, including the “單次交接” flow | [next-step](references/next-step.md) |
+| Deliver a progress report: status, pending decisions, action items (“整理報告”, “進度報告”, status update) | [report](references/report.md) |
+| Close out a whole plan: overall acceptance, delivery endpoint, handover, retrospective (“結案”, “收尾驗收”, wrap up the project) | [close](references/close.md) |
+
+When one request spans several capabilities (for example “看進度並整理報告”), run them in lifecycle order: scope → plan → check → next-step → risk → change → report → close. A later capability reuses the facts an earlier one established.
+
 ## Choose a mode
 
-Default to reviewing progress ([check](references/check.md)). If a plan is already broken down but execution has not started, propose ready work and an entry point ([next-step](references/next-step.md)); use “單次交接” in next-step to continue directly after the user selects it. A review request does not authorize development. Deliver a report when that is all the user requests; use the closure exit in next-step for completed plans.
+Default to reviewing progress ([check](references/check.md)). If a plan is already broken down but execution has not started, propose ready work and an entry point ([next-step](references/next-step.md)); use “單次交接” in next-step to continue directly after the user selects it. A review request does not authorize development. Deliver a [report](references/report.md) when that is all the user requests; use the closure exit in next-step for completed plans, and [close](references/close.md) when the user asks to close out the whole plan.
 
 Use [Goal execution](references/goal-execution.md) when the user explicitly requests advancing a specified plan within its active Goal and authorizes PM to select implementation entry points. Confirm the objective and scope from the assignment and available Goal tools. An existing Goal, or a mention of one in a message, does not turn a query into execution. Reuse existing authorization without requesting the same approval for every ticket.
 
