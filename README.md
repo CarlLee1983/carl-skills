@@ -10,7 +10,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
 | [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 理解產品任務、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
-| [plan-pm](skills/plan-pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 查看計畫與依賴、核對結案、建議下一步；接受明確提案後交接實作，或在已授權的 Goal 中持續推進。 |
+| [pm](skills/pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 查看計畫與依賴、核對結案、建議下一步；接受明確提案後交接實作，或在已授權的 Goal 中持續推進。 |
 
 ## 快速安裝
 
@@ -47,7 +47,7 @@ npx skills add CarlLee1983/carl-skills --skill calibrate-codex -g -a codex
 npx skills add CarlLee1983/carl-skills --skill design-experience -g -a codex claude-code
 
 # 計畫進度、依賴判讀與實作交接
-npx skills add CarlLee1983/carl-skills --skill plan-pm -g -a codex claude-code
+npx skills add CarlLee1983/carl-skills --skill pm -g -a codex claude-code
 ```
 
 `calibrate-codex` 依 Codex 的設定與規則機制運作；CLI 能將檔案放進其他 agent 的目錄，不代表那些平台受支援。
@@ -128,10 +128,10 @@ Claude Code 使用 `/design-experience`。技能會沿用既有設計紀錄，�
 ### 計畫進度與實作交接
 
 ```text
-$plan-pm 查看 .scratch/my-plan/spec.md 的進度、阻擋與最適合接續的工作，先提供報告。
+$pm 查看 .scratch/my-plan/spec.md 的進度、阻擋與最適合接續的工作，先提供報告。
 ```
 
-Claude Code 使用 `/plan-pm`。技能沿用專案現有的 spec、工單與 tracker，不另建進度帳本。查看進度可獨立使用；查詢 GitHub 時需要已登入的 `gh`，來源不可用時會列出資料缺口。
+Claude Code 使用 `/pm`。技能沿用專案現有的 spec、工單與 tracker，不另建進度帳本。查看進度可獨立使用；查詢 GitHub 時需要已登入的 `gh`，來源不可用時會列出資料缺口。
 
 實作交接使用另行安裝的 `implement`／`implement-spec`（例如 [mattpocock/skills](https://github.com/mattpocock/skills) 的對應技能），不隨本集合附送。PM 提出唯一、明確的工單或 spec、執行入口、範圍及交付終點後，可直接回覆「執行這張」或「執行這份 spec」；對明確執行提案回覆「同意」也能接續。僅認同報告不會啟動實作，多個候選未選定時會先確認。
 
@@ -139,7 +139,7 @@ Claude Code 使用 `/plan-pm`。技能沿用專案現有的 spec、工單與 tra
 
 持續推進需要環境提供可查詢與管理的 active Goal，以及使用者對指定計畫與實作入口的明確授權。沒有 Goal 能力時，仍可查看進度與逐次交接；不能宣稱已啟動背景推進。單次交接不自動接下一張，commit、push、merge、發布與 tracker 寫入依既有授權處理。
 
-[維護驗收](docs/plan-pm/acceptance.md) 列出封裝、交接與 Goal 情境；本次納入沿用已驗證的流程內容，完整 Goal 執行與各平台整合的驗證範圍見紀錄。
+[維護驗收](docs/pm/acceptance.md) 列出封裝、交接與 Goal 情境；本次納入沿用已驗證的流程內容，完整 Goal 執行與各平台整合的驗證範圍見紀錄。
 
 ## 更新與移除
 
@@ -216,7 +216,7 @@ python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/r
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/humanize-writing
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/calibrate-codex
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/design-experience
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/plan-pm
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/pm
 ```
 
 這項檢查不代替行為驗收。release-assessment 的 [驗收案例](skills/release-assessment/references/acceptance.md) 與 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。

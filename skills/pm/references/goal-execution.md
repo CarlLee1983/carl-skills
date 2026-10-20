@@ -1,6 +1,6 @@
 # Goal execution
 
-Use this workflow only when the user explicitly authorizes PM to advance a specified plan and select implementation entry points, and a corresponding active Goal exists. Reuse the main skill's sources, DAG interpretation, and completion rules. The Goal provides persistence; installed `implement` or `implement-spec` skills handle implementation.
+Use this workflow only when the user explicitly authorizes PM to advance a specified plan and select implementation entry points, and a corresponding active Goal exists. Reuse the main skill's sources and the [check](check.md) reference's DAG interpretation and completion rules. The Goal provides persistence; installed `implement` or `implement-spec` skills handle implementation.
 
 ## Start and resume
 
@@ -15,7 +15,7 @@ If closure requires a commit, merge, or tracker update that remains unauthorized
 1. **Select a work unit.** From the current frontier and user priorities, choose `implement` for one ticket or `implement-spec` for an entire authorized spec. Leave internal spec dependencies to that entry point. If external spec prerequisites are unmet or only one ticket is authorized, first handle an executable in-scope ticket. Treat completed nodes as context, without redoing them.
 2. **Hand off and execute.** Pass source pointers, work boundaries, completed portions, blockers, existing branches/assignees, acceptance criteria, and authorization scope. Depending on the environment, enter the skill with the primary agent or delegate to a development agent with clear responsibility; no fixed extra agent layer is required. If the user requests sequential work, include one work unit at a time in the handoff; this also constrains parallelism within `implement-spec`.
 3. **Verify delivery.** The implementation workflow performs review and verification under project rules; PM checks the actual diff, check results, and required integration state. Return failures or unmet acceptance to the original execution unit for fixes to avoid duplicate starts. Reuse valid check results for unchanged work; rerun affected checks only for changes, failures, or unresolved risks.
-4. **Update and recompute.** Follow “Proactively verify closure” in the main skill for delivered but still-open issues. Record only evidenced, authorized progress in the original tracker; provide sources and remaining work in the completion summary. Recompute the frontier from current state and advance the next work unit rather than stopping the entire Goal after its first ticket.
+4. **Update and recompute.** Follow “Proactively verify closure” in [check](check.md) for delivered but still-open issues. Record only evidenced, authorized progress in the original tracker; provide sources and remaining work in the completion summary. Recompute the frontier from current state and advance the next work unit rather than stopping the entire Goal after its first ticket.
 
 Each batch has one scheduler: PM selects outer work units; `implement-spec` owns its spec's internal DAG until delivery or a blocker report. Resume or wait on an active unit's existing handle rather than starting another execution workflow for the same scope.
 

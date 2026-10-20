@@ -1,10 +1,10 @@
-# plan-pm 維護驗收
+# pm 維護驗收
 
-流程以 [SKILL.md](../../skills/plan-pm/SKILL.md) 與其 Goal reference 為準。安裝只需完整的 `skills/plan-pm/`；本文件與 `.scratch/` 不是執行依賴。
+流程以 [SKILL.md](../../skills/pm/SKILL.md) 與其 `references/` 為準。安裝只需完整的 `skills/pm/`；本文件與 `.scratch/` 不是執行依賴。
 
 ## 封裝與依賴
 
-1. 將技能目錄單獨複製到暫存目錄，確認 `SKILL.md`、`references/goal-execution.md`、`LICENSE` 齊全。
+1. 將技能目錄單獨複製到暫存目錄，確認 `SKILL.md`、`references/check.md`、`references/next-step.md`、`references/goal-execution.md`、`LICENSE` 齊全。
 2. 對副本執行 README 的 `quick_validate.py`；此維護工具需要 Python 與 PyYAML，不是技能執行依賴。
 3. 確認 Markdown 相對連結都在副本內解析成功，沒有個人絕對路徑或對本 repo 的必要引用。
 4. 查看進度不要求安裝實作入口；實際交接前須能讀取所選的 `implement` 或 `implement-spec`。缺少時回報限制，不聲稱已啟動。
@@ -32,3 +32,7 @@
 | Goal 內部分節點受阻，仍有獨立可執行工作 | 只推進已授權且無執行衝突的工作；整體完成須符合交付終點與原生 Goal 契約。 |
 
 內容未變的機械搬移可沿用既有行為證據；新增封裝檢查不能冒充完整實作或跨平台測試。[初次納入紀錄](../../.scratch/plan-pm/validation/SUMMARY.md) 區分本次檢查與既有證據。
+
+## 第 1 層（改名為 pm、結構重組）
+
+本層只改名並把原內容逐段搬進主入口、`check`、`next-step` 與 Goal reference，行為不變。行為情境沿用 plan-pm 匯入時的行為證據（上方紀錄），未重跑行為模擬；本層只重做封裝檢查，並以[逐條對照紀錄](../../.scratch/pm/validation/01-mapping.md)確認沒有規則遺失。
