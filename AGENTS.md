@@ -5,7 +5,7 @@
 `carl-skills` is a collection of independently installable, self-contained agent skills.
 
 - `skills/<skill-name>/SKILL.md` is each skill's entry point. Keep its required references, scripts, and assets within that directory.
-- `docs/<skill-name>/` holds specifications and maintenance documents. The release-assessment specification is `docs/release-assessment/SPEC.md`.
+- `docs/<skill-name>/` holds specifications and maintenance documents. The devops specification is `docs/devops/SPEC.md`; its release capability keeps the former release-assessment specification at `docs/devops/release-SPEC.md`.
 - `README.md` lists available skills and installation guidance; update it when adding a skill.
 - `.scratch/<feature>/` records tickets and validation evidence. Preserve historical reports as evidence of their original checkpoints.
 - `.gitignore` excludes the local `graft/` cache; `.ignore` controls its search visibility. Preserve these conventions.
@@ -31,7 +31,7 @@ Keep each skill independently portable: required files and relative links must w
 
 ## Testing Guidelines
 
-Verify affected behavior against the skill's specification and acceptance cases. For release-assessment, use `skills/release-assessment/references/acceptance.md`; simulate releases rather than publishing real artifacts. Metadata and link checks do not establish behavioral correctness. Reuse prior behavioral results for unchanged skill content after mechanical moves.
+Verify affected behavior against the skill's specification and acceptance cases. For devops, replay `skills/devops/references/release-acceptance.md` first, then `skills/devops/references/acceptance.md`; simulate releases, deployments, and restores rather than publishing real artifacts or changing real environments. `.scratch/devops/validation/replay.py` runs the offline replay and `static_check.sh` the packaging check. Metadata and link checks do not establish behavioral correctness. Reuse prior behavioral results for unchanged skill content after mechanical moves.
 
 ## Commit & Pull Request Guidelines
 

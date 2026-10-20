@@ -1,0 +1,16 @@
+[
+  {
+    "group": "devops",
+    "case": "D01",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "group": "devops",
+    "case": "D05",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  }
+]
