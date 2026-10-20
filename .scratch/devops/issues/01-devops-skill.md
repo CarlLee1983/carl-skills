@@ -1,7 +1,7 @@
 # 01 devops 主技能整併並取代 release-assessment
 
 Status: ready-for-agent
-State: open
+State: closed
 Blocked by: none
 Owner: claude-code (feat/devops)
 
@@ -37,3 +37,7 @@ Owner: claude-code (feat/devops)
 7. `git diff --check` 通過；無真實發布或環境變更。
 
 維持 `State: open`：等待使用者審閱、commit 授權，以及是否接受 15A 的 PARTIAL。
+
+### 2026-10-20 合併
+
+[PR #6](https://github.com/CarlLee1983/carl-skills/pull/6) 於 2026-10-20T04:43:33Z 合併至 `main`（merge commit `2664e1a`，head `a9bb6e9`）。驗證證據同上一則與 [validation/SUMMARY.md](../validation/SUMMARY.md)；release 15A 仍為 PARTIAL，以已知限制記錄。關閉本工單。
