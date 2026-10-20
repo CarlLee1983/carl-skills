@@ -9,7 +9,7 @@ Turn product capabilities into user tasks and deliver designs people can compare
 
 ## Locate the current stage
 
-Read the conversation, project rules, and existing design records. Identify whether the user wants exploration, prototyping, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
+Read the conversation, project rules, and existing design records. Identify whether the user wants exploration, prototyping, visual development, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
 
 Before first persistence or resuming across sessions, read [artifacts.md](references/artifacts.md). Keep context and artifact entry points in one `SESSION.md`. State this round's deliverable before necessary exploration. For discussion only, propose in conversation first; create files and prototypes within the current authorization.
 
@@ -63,13 +63,24 @@ If the browser is unavailable or a tool refuses an operation, retain deliverable
 
 **Complete when:** the entry point is discoverable, sample behavior is distinguishable from real capabilities, the key path can be tried, and results and gaps are recorded. Label tool-limited verification as partial rather than claiming visual approval.
 
+## Develop the visual language
+
+After a structure is selected, treat visual language as its own design question. Start from the project's visual source (brand, tokens, design system); when it fixes the visuals, say so and move to refinement.
+
+Otherwise build 2–3 visual treatments of the selected representative screen, keeping structure, data, and states identical. Give each a one-line visual concept (such as "dense ledger" or "calm editorial") that decides typography, density, color roles, and surface depth. Treatments sharing type scale and spacing with only a palette change count as one. Read [collaboration.md](references/collaboration.md) to choose a visual skill for this step.
+
+Review each treatment as rendered screenshots at relevant sizes and revise until its concept is visible on screen before presenting it. Without screenshots, present treatments as visually unreviewed.
+
+**Complete when:** the user has chosen a treatment from rendered comparisons, or the project's visual source fixes the visuals, and the visual choice is recorded separately from the structure choice.
+
 ## Feedback, refinement, and finalization
 
 Interpret short replies in the current stage rather than repeating the interview:
 
 | User reply | Next action |
 | --- | --- |
-| `C`／選 B | Match the current direction IDs, record the choice, and refine it. Clarify only if multiple ID sets exist. Selection does not finalize the design. |
+| `C`／選 B | Match the current direction IDs and record the choice. Apply structural changes the user requested first, then develop the visual language unless the project fixes it. Clarify only if multiple ID sets exist. Selection does not finalize the design. |
+| 太普通／像模板 | Treat as visual-language feedback: keep the accepted structure and propose treatments with stronger stated concepts, compared as screenshots. |
 | A 的導覽配 C 的內容 | Record the chosen parts, build one combined direction, and check the original task and hierarchy remain coherent. |
 | 太複雜／看不懂 | Identify likely concrete issues and test the smallest change first; ask about consequential ambiguity. |
 | 定稿 | Freeze the accepted version and scope and produce a handoff, retaining unverified items accurately. |
@@ -78,7 +89,7 @@ Interpret short replies in the current stage rather than repeating the interview
 
 After feedback changes, explain what changed and which problem it addresses. Preserve decisions affecting trade-offs and still-valid versions; avoid indistinguishable `final` files. Reopen only affected parts when new requirements overturn earlier premises.
 
-Finalization is user acceptance of a specific design version. Record accepted information architecture, core flows, visual and interaction rules, and uncovered screens/states. Prototype CSS tokens can be the source of visual rules; reference them in the handoff rather than maintaining a drifting color table. If the user finalizes before checks are complete, record accepted design and missing verification evidence separately.
+Finalization is user acceptance of a specific design version. Record accepted information architecture, core flows, visual and interaction rules, and uncovered screens/states. Record structure and visual acceptance separately. Tokens from an accepted visual treatment can be the source of visual rules; reference them rather than maintaining a drifting color table. When visuals were never reviewed as rendered screens, record them as unaccepted even if the structure is finalized. If the user finalizes before checks are complete, record accepted design and missing verification evidence separately.
 
 **Complete when:** the identifiable final version, accepted scope, decision rationale, and verification gaps are saved so the next agent need not re-ask settled questions.
 
@@ -88,4 +99,4 @@ Complete the handoff using [artifacts.md](references/artifacts.md): screens and 
 
 Stop after design handoff by default. With explicit authorization for production implementation, carry the finalized design and constraints into the project's implementation workflow. Preserve entry points requiring human invocation; design acceptance does not authorize architecture decisions, release, or product scope expansion.
 
-Finish with the current stage, artifact entry points, main choices, actual verification, and next necessary action. If the original task is developing this skill, return to skill construction and validation after the design trial; do not silently switch to implementing the trial product.
+Finish with the current stage, artifact entry points, main choices, actual verification, and next necessary action.

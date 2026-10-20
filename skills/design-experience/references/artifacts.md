@@ -23,9 +23,9 @@ On continuation, confirm SESSION matches the project, topic, and original task, 
 
 Use concise Markdown and meaningful fields rather than empty templates. Early exploration needs only context, stage, assumptions, and entry points; accumulate handoff details as work proceeds.
 
-- **Task and goal:** project location, original request, primary users, core task, scope constraints, and source documents. Preserve the outer goal when the product prototype is a skill test.
+- **Task and goal:** project location, original request, primary users, core task, scope constraints, and source documents.
 - **Current stage:** understanding/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
-- **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions.
+- **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions. Record structure and visual choices separately.
 - **Design and entry points:** paths or URLs for current comparisons, refined designs, and accepted versions; opening instructions and required environment; sample data versus real integration points.
 - **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence.
 - **Open items and handoff:** consequential questions, work that can proceed independently, and whether production implementation is authorized.
@@ -38,7 +38,7 @@ Add enough information to the same SESSION for another agent to begin. Link exis
 | --- | --- |
 | Tasks and screens | Main entry points, navigation, screen responsibilities, step-by-step operations, and completion feedback |
 | States and recovery | Required empty/loading/failure/permission states; retry, return, and cancel behavior |
-| Visuals and components | Reusable components, token sources, copy and interaction rules, responsive intent |
+| Visuals and components | Accepted visual treatment and its token source, reusable components, copy and interaction rules, responsive intent |
 | Data and boundaries | Existing contract-backed content versus sample data; required new read/write or permission capabilities |
 | Acceptance scenarios | User actions and observable results; keyboard and relevant screen-size checks |
 | Implementation order | First steps for the smallest complete flow, dependencies, and choices that must precede work |
