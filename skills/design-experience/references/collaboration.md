@@ -5,8 +5,8 @@ Read when specialist capabilities are needed. These are candidate roles, not a f
 | Current problem | Candidate skills | Selection criteria |
 | --- | --- | --- |
 | Compare operations, states, or layouts | `prototype` | Choose its logic-demonstration or UI-comparison branch; compare structural differences using a shared scenario. Integration/persistence steps still require current authorization. |
-| Visual direction or reference research | `hallmark` | Use study/audit or a suitable design branch; check whether its fixed aesthetic fits the project. |
-| Corporate, brand, or marketing page | `design-taste-frontend` | Confirm version scope. The inventoried version excludes dashboards/app screens; do not use it as the general default for product interfaces. |
+| Visual language for a selected structure, visual direction, or reference research | `hallmark` | Use study/audit or a suitable design branch; check whether its fixed aesthetic fits the project. |
+| Corporate, brand, or marketing page | `design-taste-frontend` | Read the installed version's scope; versions that exclude dashboards/app screens are not a general default for product interfaces. |
 | Generated visual concepts first | `imagegen-frontend-web`, `imagegen-frontend-mobile`, `image-to-code` | Match platform and artifact type. Images compare visuals; flow usability still needs interaction validation. |
 | Component interactions, feedback, and detail | `emil-design-eng` | Strengthen an established representative operation; avoid adding interactions only to demonstrate technique. |
 | Mobile web touch and browser behavior | `mobile-native` | Use for mobile web; record physical-device and emulator results separately. |
@@ -24,7 +24,7 @@ When useful and authorized, delegate direction prototypes or independent critiqu
 
 ## External candidates (optional)
 
-Check current sources and available entry points only when the user wants expanded collaboration capabilities; do not install automatically:
+Treat an already installed candidate like the table's skills. Otherwise check current sources and entry points only when the user wants expanded collaboration capabilities; do not install automatically:
 
 - [Impeccable](https://impeccable.style/docs/): consider `init`/`shape` for product context and briefs, and `critique`/`audit` for design reviews and implementation checks. Pass existing SESSION decisions rather than creating a conflicting source of product facts.
 - [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill): consider design-data queries and suggestions; treat database output as candidates rather than a substitute for product research.
