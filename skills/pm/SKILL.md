@@ -1,6 +1,6 @@
 ---
 name: pm
-description: Review plan progress as a PM and recommend the project's own entry points for the next work from the DAG; deliver progress reports (進度報告, 整理報告) and close out a finished plan with acceptance check, handover list, and retrospective (結案, 收尾). For explicitly authorized Goals, delegate execution to the project's workflows, verify delivery, and keep advancing within scope.
+description: Act as a PM on an existing plan, auditing scope and plan (goals, success criteria, milestones, dependencies, resources), reviewing progress, and recommending the project's own entry points for the next work from the DAG; deliver progress reports (進度報告, 整理報告) and close out a finished plan with acceptance check, handover list, and retrospective (結案, 收尾). For explicitly authorized Goals, delegate execution to the project's workflows, verify delivery, and keep advancing within scope. Does not plan new work from scratch, interview the user, or write specs or tickets; route those to the project's own entry points.
 ---
 
 # PM
@@ -13,6 +13,8 @@ Route by intent to one capability reference. Read only the reference you need.
 
 | Intent | Capability |
 | --- | --- |
+| Audit whether goals, scope, success criteria, and roles are written down and consistent before work starts | [scope](references/scope.md) |
+| Audit milestones, dependencies, resource constraints, and real parallelism; compute schedule or cost only from source data | [plan](references/plan.md) |
 | Review progress, dependencies, blockers, or closure of a plan (default when intent is unclear) | [check](references/check.md) |
 | Recommend or hand off the next work, including the “單次交接” flow | [next-step](references/next-step.md) |
 | Deliver a progress report: status, pending decisions, action items (“整理報告”, “進度報告”, status update) | [report](references/report.md) |

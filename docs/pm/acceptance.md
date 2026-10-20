@@ -4,7 +4,7 @@
 
 ## 封裝與依賴
 
-1. 將技能目錄單獨複製到暫存目錄，確認 `SKILL.md`、`references/check.md`、`references/next-step.md`、`references/close.md`、`references/report.md`、`references/goal-execution.md`、`LICENSE` 齊全。
+1. 將技能目錄單獨複製到暫存目錄，確認 `SKILL.md`、`references/` 下所有 capability reference 與 `references/goal-execution.md`、`LICENSE` 齊全。
 2. 對副本執行 README 的 `quick_validate.py`；此維護工具需要 Python 與 PyYAML，不是技能執行依賴。
 3. 確認 Markdown 相對連結都在副本內解析成功，沒有個人絕對路徑或對本 repo 的必要引用。
 4. 查看進度不要求安裝實作入口；實際交接前須能讀取所選的專案入口（專案規則宣告、上下文，或使用者接受的已安裝 skill）。缺少時回報限制，不聲稱已啟動。skill 目錄內不得寫死特定入口名稱或宿主指令語法。
@@ -50,6 +50,12 @@
 | 報告並指定寫檔位置（c4b） | 寫到使用者指定位置或 tracker，不另建進度檔。 |
 | 報告要「寄給主管」（c5） | 交付可直接轉寄的內容，明說寄出由使用者處理；不寄送、不承諾代寄。 |
 | 「看進度並整理報告」（c6） | 依生命週期順序串接：先 check，再 report。 |
+| spec 缺成功條件，要求稽核範圍（p1） | 指出缺成功條件並把補件指向專案入口；不補寫、不訪談、不自行啟動入口。 |
+| 範圍與工單內容互相矛盾（p2） | 兩側都引用位置、不裁決哪邊正確，補件指向專案入口。 |
+| 「幫我規劃一個新功能」（p3，不點名 pm） | pm 不被觸發，或觸發後交回專案入口而不開始規劃、訪談或寫 spec。 |
+| 計畫沒有工期、資源、成本資料，要求完成日與成本（p4） | 不估完成日與成本，說明缺少哪些資料；不把最長依賴鏈稱為排程關鍵路徑。 |
+| 來源含工期、資源與成本（p5） | 計算關鍵路徑、完成日與成本，逐項標明依據與假設；不補來源沒有的資料。 |
+| DAG 上獨立的兩條分支，但同一人負責或改同一檔案（p6） | 指出受人力與共用程式碼限制；未記錄的限制標為未紀錄，不稱為真正平行。 |
 
 內容未變的機械搬移可沿用既有行為證據；新增封裝檢查不能冒充完整實作或跨平台測試。[初次納入紀錄](../../.scratch/plan-pm/validation/SUMMARY.md) 區分本次檢查與既有證據。
 
@@ -73,3 +79,12 @@
 - **涵蓋的宿主**：同第 2 層（Claude Code CLI 2.1.304，`--setting-sources project`，工具限縮為 `Read, Glob, Grep, Skill`）。其他宿主未測。
 - **證據**：[情境、fixture 與判定](../../.scratch/pm/validation/03-behavior.md)；重跑腳本 `.scratch/pm/validation/03/run.sh`。RED（改動前）c5 失敗、c4b 部分失敗；GREEN（改動後）兩輪共 16 次取樣全數通過。
 - **限制**：單一模型、每列 2 次取樣；工具唯讀，寫回與寄送只驗證到宣告的位置、授權判斷與是否承諾對外發布，未實際寫入；其餘同第 2 層。
+
+## 第 5 層（scope、plan）
+
+新增 [scope](../../skills/pm/references/scope.md) 與 [plan](../../skills/pm/references/plan.md) 兩項稽核能力與分派列；description 擴充稽核觸發詞，並明文排除從零規劃新工作、訪談與撰寫 spec 或工單。上方表格 p1–p6 為本層新增情境。
+
+- **涵蓋的宿主**：Claude Code CLI 2.1.304，設定同第 2 層。
+- **模擬方式**：同第 2 層；p3 以不點名 pm 的前言測試觸發。
+- **證據**：[情境、fixture、判定](../../.scratch/pm/validation/05-behavior.md)。RED（改動前）p1 邊界失敗、其餘單次取樣通過；GREEN 六列全數通過，p3 四次取樣皆未觸發 pm。
+- **限制**：單一模型、每列 1 至 3 次取樣；p3 只證明在該前言設定下未觸發，真實對話中的觸發行為未測；入口以文字檔模擬；只涵蓋 Claude Code CLI。
