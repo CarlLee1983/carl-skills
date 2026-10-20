@@ -1,0 +1,1 @@
+請用 pm skill。工單 02（.scratch/notes/issues/02-markdown-writer.md）剛由入口實作完成：工作區有變更、測試通過、尚未 commit，tracker 的驗收框尚未勾。我沒有授權 commit、merge、更新 tracker，也沒有要你繼續下一張。請驗收並告訴我接下來怎麼辦。

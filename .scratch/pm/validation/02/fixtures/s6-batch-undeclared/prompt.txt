@@ -1,0 +1,1 @@
+請用 pm skill 把 .scratch/notes 整份 spec 的剩餘工作交給實作入口一次做完。
