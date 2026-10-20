@@ -6,7 +6,7 @@
 
 - 宿主：Claude Code CLI 2.1.304；`claude -p --model sonnet --setting-sources project --tools "Read,Glob,Grep,Skill"`。`--setting-sources project` 讓使用者全域 skill 與規則不進入評估（init 事件的 skills 清單只有內建與專案 skill）。工具唯讀，評估代理無法寫檔或執行指令。
 - 每個情境在拋棄式暫存目錄組出假專案：`fixtures/_base`（notes 匯出計畫：01 closed、02 ready、03 等待 02）加 `fixtures/<情境>/` 覆蓋層，再把當時的 `skills/pm/` 單獨複製到 `.claude/skills/pm/`。prompt 先聲明唯讀模擬，再給情境。
-- 重跑：`./run.sh <標籤> <情境>...`（本目錄 `02/run.sh`）。原始 stream-json 與萃取的工具呼叫／最終回覆在 `02/out/<標籤>/`。
+- 重跑：`./run.sh <標籤> <情境>...`（本目錄 `02/run.sh`）。萃取的工具呼叫／最終回覆在 `02/out/<標籤>/`。原始 stream-json 轉錄（`*.jsonl`、`*.err`）不納入版本庫，保存在 repo 之外；`02/.gitignore` 排除重跑時寫入 `out/` 的同類檔案。
 - 標籤：`red` = 改動前的 `skills/pm/`（5f7f8b6）；`green`、`green2` = 改動後。
 - 「先前提案」類情境（s5、s7、s8、s9、s10）以逐字貼入的對話代替真實多輪。
 - 入口以假檔案模擬：規則宣告的入口是 `docs/workflow/build-ticket.md`（單張）或 `build-flow.md`（宣告接受整份 spec）；已安裝 skill 是 `ticket-runner`（`disable-model-invocation: true`）。內容帶「STARTED」標記，用來辨識是否被讀取為入口。

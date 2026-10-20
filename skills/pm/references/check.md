@@ -5,7 +5,7 @@ Review plan progress: interpret dependencies, verify closure, and deliver the re
 ## Interpret dependencies and progress
 
 - Build relationships from explicit dependencies: `A → B` means B must wait for A. Reuse explicit ordering constraints in ordered execution lists. Do not invent dependencies from similar titles or assume unexplained relationships permit parallel work.
-- Judge completion by the source's closure rules. Separate source status from observed contradictions, such as “已關閉，但驗收要求的 PR 尚未合併”. Closed, canceled, reported implemented, and tests passed mean different things. Canceling a prerequisite does not release its dependents without an explicit waiver or replacement.
+- Judge completion by the source's closure rules. Separate source status from observed contradictions, such as “已關閉，但驗收要求的 PR 尚未合併”. Closed, canceled, reported implemented, and tests passed mean different things. Canceled prerequisites follow “Write-back” in the main skill.
 - Check for missing nodes, cycles, and contradictory states. Show concrete chains and open questions. Affected nodes and their descendants cannot be ready; independent branches with sufficient information may still be recommended.
 - Organize dependencies and statuses only for this analysis. Distinguish completed, in progress/awaiting review, ready, waiting for prerequisites/decisions, and insufficient information. Preserve original source status names and do not write back these classifications.
 - The ready frontier contains unstarted work with evidence that every prerequisite is satisfied and no unresolved blocker. Identify existing assignees to avoid duplicate starts. Treat work already underway with unmet dependencies as a progress risk; do not rewrite its dependencies.

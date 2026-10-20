@@ -1,6 +1,6 @@
 # Close
 
-Close out a whole plan: confirm everything in scope is done and delivered, hand over, and record lessons. This extends single-ticket closure in [check](check.md) to the entire plan scope. Sources, evidence labels, and write authorization come from the main skill; Goal completion conditions in [Goal execution](goal-execution.md) apply unchanged.
+Close out a whole plan: confirm everything in scope is done and delivered, hand over, and record lessons. This extends single-ticket closure in [check](check.md) to the entire plan scope. Sources, evidence labels, and write-back rules come from the main skill; Goal completion conditions in [Goal execution](goal-execution.md) apply unchanged.
 
 ## Gate: only when every in-scope ticket is closed
 
@@ -11,7 +11,7 @@ Run the check first (see [check](check.md)): retrieve every in-scope ticket and 
 - Read the plan's overall acceptance (spec, parent ticket, or plan document) and the delivery endpoint the user agreed on, from the project rules, the plan, or the user. Compare each against current evidence, not against ticket status alone.
 - A delivery endpoint that is not reached means the plan is not complete, even when every ticket is closed. Example: the source requires merging, and the PR is only ready or open. Name the unmet endpoint and what it waits on.
 - If the delivery endpoint cannot be determined from the sources, ask the user instead of assuming one.
-- Declare completion only when the gate and both verifications pass. Label what is verified, inferred, or unconfirmed.
+- Declare completion only when the gate and both verifications pass. Label each conclusion verified, inferred, or assumed.
 
 ## Handover list
 
@@ -23,7 +23,7 @@ When the plan is complete, deliver a handover list in the conversation:
 
 ## Retrospective
 
-Summarize what went well, what went wrong, and what to change, grounded in the tracker's history (blockers, reopened work, cancellations, changes). Write it back only to the plan's own record source (for example the plan document or a comment on the parent ticket), and only within the user's and project's existing write authorization. Without authorization, deliver it in the conversation and say where it would be written. If the record source has no suitable place, report the gap and let the user decide; do not invent a file or format.
+Summarize what went well, what went wrong, and what to change, grounded in the tracker's history (blockers, reopened work, cancellations, changes). Write it back following “Write-back” in the main skill, to the plan's own record source (for example the plan document or a comment on the parent ticket). Without authorization, deliver it in the conversation and say where it would be written.
 
 When the retrospective suggests changing rules (project rules, workflow, skills, or decision records), only propose the change with its rationale. Do not edit rules or decision records yourself.
 

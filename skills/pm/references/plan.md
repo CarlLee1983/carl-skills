@@ -8,7 +8,7 @@ Audit whether the milestones, dependencies, and resource constraints of a plan a
 - **Dependencies**: build the DAG from explicit dependencies as in [check](check.md); report missing nodes, cycles, and a dependency that contradicts a milestone order.
 - **Resource constraints**: people, shared code, environments, or integration points the sources record, and any conflict between them and the plan.
 
-Report what is recorded and what is missing. Point gaps back to the project entry for planning work, found using “Find the project entry point” in the main skill; do not fill them in.
+Report what is recorded and what is missing. Point gaps back to the project entry point for planning work, found using “Find the project entry point” in the main skill; do not fill them in.
 
 ## Parallelism
 

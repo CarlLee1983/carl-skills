@@ -10,7 +10,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
 | [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 理解產品任務、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
-| [pm](skills/pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 查看計畫與依賴、核對結案、建議下一步；接受明確提案後交接實作，或在已授權的 Goal 中持續推進。 |
+| [pm](skills/pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 八項專案經理能力：範圍與計畫稽核（scope、plan）、進度與依賴檢查（check）、下一步建議與交接（next-step）、風險與假設（risk）、變更影響（change）、進度報告（report）、結案（close）；依專案規則查找各自的專案入口，接受明確提案後交接，或在已授權的 Goal 中持續推進。 |
 
 ## 快速安裝
 
@@ -46,7 +46,7 @@ npx skills add CarlLee1983/carl-skills --skill calibrate-codex -g -a codex
 # UI／UX 探索與原型比較
 npx skills add CarlLee1983/carl-skills --skill design-experience -g -a codex claude-code
 
-# 計畫進度、依賴判讀與實作交接
+# 專案經理能力（scope、plan、check、next-step、risk、change、report、close）與專案入口查找
 npx skills add CarlLee1983/carl-skills --skill pm -g -a codex claude-code
 ```
 
@@ -125,7 +125,7 @@ Claude Code 使用 `/design-experience`。技能會沿用既有設計紀錄，�
 
 不需預先安裝其他設計技能；有專項需求且工具可用時才選用協作能力。瀏覽器無法檢查時會交付可定位的產物並列明缺口；語法與模擬流程通過不代表視覺或真人可用性驗證通過。[維護驗收](docs/design-experience/acceptance.md) 列出檢查情境。
 
-### 計畫進度與實作交接
+### 專案管理與專案入口交接
 
 ```text
 $pm 查看 .scratch/my-plan/spec.md 的進度、阻擋與最適合接續的工作，先提供報告。
@@ -137,7 +137,7 @@ Claude Code 使用 `/pm`。技能沿用專案現有的 spec、工單與 tracker�
 
 自然語言交接仍受宿主與專案的上層規則約束；若環境強制手動輸入指令，需先讓該規則承認明確接受的交接，或使用提供的入口指令。`carl-mode` 是個人路由設定，不是安裝依賴，本技能不會替使用者修改它。
 
-持續推進需要環境提供可查詢與管理的 active Goal，以及使用者對指定計畫與實作入口的明確授權。沒有 Goal 能力時，仍可查看進度與逐次交接；不能宣稱已啟動背景推進。單次交接不自動接下一張，commit、push、merge、發布與 tracker 寫入依既有授權處理。
+持續推進需要環境提供可查詢與管理的 active Goal，以及使用者對指定計畫與實作入口的明確授權；僅來自已安裝 skill 的候選入口，除非專案規則宣告、Goal 指派點名或你已接受，否則會先問一次，不會自動執行。沒有 Goal 能力時，仍可查看進度與逐次交接；不能宣稱已啟動背景推進。單次交接不自動接下一張，commit、push、merge、發布與 tracker 寫入依既有授權處理。
 
 [維護驗收](docs/pm/acceptance.md) 列出封裝、交接與 Goal 情境；本次納入沿用已驗證的流程內容，完整 Goal 執行與各平台整合的驗證範圍見紀錄。
 
