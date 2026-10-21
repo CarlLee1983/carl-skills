@@ -38,3 +38,4 @@ Owner: claude-code (feat/design-experience-theme-first)
 ## Comments
 
 2026-10-21：完成。情境 I1–I5 與回歸 R3 通過；見[驗證紀錄](../validation/improve.md)。
+2026-10-21：PR [#9](https://github.com/CarlLee1983/carl-skills/pull/9) 已合併至 main（2026-10-21T03:43:31Z，head `c04ac1f`）。
