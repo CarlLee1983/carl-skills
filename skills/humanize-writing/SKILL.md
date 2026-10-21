@@ -12,7 +12,7 @@ Strip machine-flavored patterns from writing while keeping what the author actua
 Apply in order; a lower priority never justifies breaking a higher one.
 
 1. **Preserve facts** — numbers, model names, technical terms, API names, proper nouns, quoted results. Never alter, round, or invent them. In narrative, the events, their order, names, and setting are facts too.
-2. **Preserve stance and uncertainty** — if the author hedges ("大概", "I think", "not sure yet"), keep the hedge. Do not upgrade a guess into a confident claim.
+2. **Preserve stance and uncertainty** — if the author hedges ("大概", "I think", "not sure yet"), keep the hedge. Do not upgrade a guess into a confident claim, and keep a reworded hedge at its original strength (尚不是…的指令 does not become 還不能; "may" does not become "will").
 3. **Concrete over abstract** — prefer the specific result over the abstract lesson. Cut sentences that could apply to any topic.
 4. **Structure before words** — delete empty framing sentences first; only then polish wording. Most AI flavor is structural, not lexical.
 
@@ -36,6 +36,8 @@ Apply in order; a lower priority never justifies breaking a higher one.
 - Match the source register (casual post stays casual; spec stays precise). Do not formalize a tweet.
 - When unsure whether a sentence is substance or shell, ask: _does deleting it lose a fact, a stance, or an action?_ If no, it's shell. In narrative, also ask whether it loses a beat, an image, or the narrator's voice.
 - Never add claims the source doesn't make. Humanizing removes; it does not embellish.
+- When rewording or moving a scope limit, keep its scope exactly: "not run in the reader's environment" does not become "never run".
+- When a heading or sentence carries two halves (a concession and its limit), the edit keeps both halves' information.
 - If the source is already clean, say so and make minimal edits rather than manufacturing changes.
 - Traditional Chinese uses Taiwan usage and vocabulary (軟體/程式/資料/伺服器, not 軟件/代碼/數據/服務器).
 
