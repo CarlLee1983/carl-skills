@@ -72,7 +72,7 @@ Hold every prototype and treatment to the **taste baseline**: draw interface ico
 
 Use realistically sized and dense content, labeling sample data. Important controls must perform their claimed simulated behavior; stub writes rather than connecting real mutations. Include relevant empty, loading, error, permission, stale-data, or recovery scenarios that affect design judgment. Show necessary states without fake progress, fake notifications, or invented integrations.
 
-Give concrete trial tasks, such as「找出為何不能核准，並找到恢復路徑」. Keep evidence levels distinct:
+Give concrete trial tasks, such as「找出為何不能核准，並找到恢復路徑」. When collecting feedback on a trial, ask two separate questions — what the user likes, and where they got stuck doing the main action — and record the answers separately. When only one is answered, ask the other alongside the next step rather than holding work for it. Keep evidence levels distinct:
 
 1. Syntax/code checks support executability or local logic only.
 2. Browser interactions and screenshots support the screens, dimensions, and interactions inspected. Check keyboard focus, overflow, and relevant responsive sizes.
@@ -102,6 +102,7 @@ Interpret short replies in the current stage rather than repeating the interview
 | 1 的字體配 3 的色彩 | Record which parts come from which treatment, build one combined treatment, and screenshot it to check its concept still reads as one. Dimensions the user did not name follow the treatment supplying typography and spacing, stated as an assumption. |
 | 太普通／像模板 | Treat as visual-language feedback: keep the accepted structure and propose treatments with stronger stated concepts, compared as screenshots. |
 | A 的導覽配 C 的內容 | Record the chosen parts, build one combined direction, and check the original task and hierarchy remain coherent. |
+| 這顆按鈕太搶眼／標題換個字體 | Detail refinement: change only the named element or issue, saving a new version when the current one was chosen or accepted, deliver before/after screenshots of the affected area (without a browser, link both versions and mark the screenshots not produced), and add one line to the SESSION refinement log. Everything else stays as it was; mention other issues you notice as proposals for a later round. |
 | 太複雜／看不懂 | Identify likely concrete issues and test the smallest change first; ask about consequential ambiguity. |
 | 定稿 | Freeze the accepted version and scope and produce a handoff, retaining unverified items accurately. |
 | 下一步？ | Explain the next step from the original goal, current stage, and unresolved items. This is a question, not authorization to start production implementation. |

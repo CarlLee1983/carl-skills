@@ -1,8 +1,9 @@
 # 04 細節微調循環與喜好／可用性分開
 
 Status: ready-for-agent
-State: open
+State: closed
 Blocked by: 03
+Owner: claude-code (feat/design-experience-theme-first)
 
 規格：[spec.md](../spec.md)。
 
@@ -20,3 +21,5 @@ Blocked by: 03
 4. 總封裝檢查通過；驗證紀錄區分本次重跑、沿用結果與未驗證範圍。
 
 ## Comments
+
+2026-10-21：完成。情境 U1、U2 通過，U1 產物以 cmp／diff 與掃描確認；總封裝檢查通過；見 [驗證紀錄](../validation/theme-first.md)。

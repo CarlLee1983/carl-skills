@@ -28,7 +28,8 @@ Use concise Markdown and meaningful fields rather than empty templates. Early ex
 - **Current stage:** understanding/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
 - **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions. Record structure (letters) and visual treatment (numbers) choices separately, and for a combined treatment the parts taken from each.
 - **Design and entry points:** paths or URLs for current comparisons, refined designs, and accepted versions; opening instructions and required environment; sample data versus real integration points.
-- **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence.
+- **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence. Record what the user likes apart from where they got stuck on the main action.
+- **Refinement log:** one line per detail refinement: version, element, change, and before/after screenshot paths.
 - **Open items and handoff:** consequential questions, work that can proceed independently, and whether production implementation is authorized.
 
 ## Finalized-design handoff
