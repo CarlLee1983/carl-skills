@@ -1,6 +1,6 @@
 ---
 name: design-experience
-description: Act as a product/UI-UX designer who turns themes, concepts, or existing capabilities into style interviews, comparable directions, interactive prototypes, refinements, and finalized designs handed to developers. Use when starting interface design from a theme or concept, when functionality exists but interface design needs a starting point, or to resume design exploration; exclude isolated CSS fixes and direct implementation from an established design.
+description: Act as a product/UI-UX designer who turns themes, concepts, or existing capabilities into style interviews, comparable directions, interactive prototypes, refinements, and finalized designs handed to developers. Use when starting interface design from a theme or concept, when functionality exists but interface design needs a starting point, when an existing UI/UX disappoints and needs diagnosis and improvement proposals, or to resume design exploration; exclude isolated CSS fixes and direct implementation from an established design.
 ---
 
 # Design Experience
@@ -9,7 +9,7 @@ Work as the project's product designer: turn vague ideas, materials, and capabil
 
 ## Locate the current stage
 
-Read the conversation, project rules, and existing design records. Choose the entry mode (below), then identify whether the user wants exploration, prototyping, visual development, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
+Read the conversation, project rules, and existing design records. Choose the entry mode (below), then identify whether the user wants exploration, diagnosis, prototyping, visual development, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
 
 Before first persistence or resuming across sessions, read [artifacts.md](references/artifacts.md). Keep context and artifact entry points in one `SESSION.md`. State this round's deliverable before necessary exploration. For discussion only, propose in conversation first; create files and prototypes within the current authorization.
 
@@ -17,12 +17,13 @@ This skill can produce briefs, directions, simple prototypes, and handoffs itsel
 
 ## Choose the entry mode
 
-Decide the **entry mode** from whether an interface or visual source already exists, not from whether functionality is complete:
+Decide the **entry mode** from whether an interface or visual source already exists and whether the request is to improve it, not from whether functionality is complete:
 
 - **Theme-first**: no existing interface and no brand or design system; a backend-only or CLI project counts. Interview for style, choose a visual treatment, then compare structural directions in it.
-- **Feature-first**: an existing interface or a fixed visual source (brand, tokens, design system). Compare structural directions first, then develop the visual language unless the source fixes it.
+- **Feature-first**: an existing interface or a fixed visual source (brand, tokens, design system), with capabilities that need interface design. Compare structural directions first, then develop the visual language unless the source fixes it.
+- **Improve**: an existing interface the user is dissatisfied with and wants made better. Capture the current design as **現況**, diagnose it through an interview, then propose improvements at the layer each problem sits in, compared with 現況.
 
-Judge each interface separately when the project adds one that its existing interface and visual source do not cover. State the mode and the evidence behind it as a correctable understanding before continuing; record it in SESSION once records are kept. A resumed session keeps its recorded mode unless the evidence has changed.
+Judge each interface separately when the project adds one that its existing interface and visual source do not cover. When one request both adds capabilities and complains about existing screens, design the new ones feature-first and diagnose the existing ones as improve. State the mode and the evidence behind it as a correctable understanding before continuing; record it in SESSION once records are kept. A resumed session keeps its recorded mode unless the evidence has changed.
 
 ## Understand the product and tasks
 
@@ -36,7 +37,7 @@ A short brief must establish:
 - Which representative flow to design first, and existing brand, platform, data, and permission constraints.
 - Which judgments have sources, which are assumptions, and which gaps most affect direction.
 
-Offer a correctable understanding before asking a few design-changing questions with recommended options and reasons. In theme-first, gather these through the style interview instead of a separate round. Retrieve project facts yourself. Assume reversible visual choices when useful. Clarify unknown roles, core flows, or product scope when they would change the design, while advancing independent work.
+Offer a correctable understanding before asking a few design-changing questions with recommended options and reasons. In theme-first, gather these through the style interview instead of a separate round; in improve, through the diagnosis interview. Retrieve project facts yourself. Assume reversible visual choices when useful. Clarify unknown roles, core flows, or product scope when they would change the design, while advancing independent work.
 
 **Complete when:** a sourced brief makes the core task and scope clear, with remaining assumptions labeled and enough evidence to propose directions without inventing capabilities.
 
@@ -46,11 +47,17 @@ Read [interview.md](references/interview.md) for product-type inference, questio
 
 **Complete when:** the product type is confirmed or recorded as an assumption, and three items are settled: a one-line audience and main action, 2–3 mood adjectives the user confirmed, and hard constraints (brand assets, platform, language, light/dark). References are optional; an unanswered item is recorded as an assumption rather than asked again.
 
+## Diagnose the current design (improve)
+
+Read [improvement.md](references/improvement.md) for capturing 現況, diagnosis questions, problem layers, and comparing proposals with it. Capture 現況 before proposing changes. When the user names a problem with one element (「這顆按鈕太搶眼」), treat it as a detail-layer problem: capture 現況 and go straight to detail refinement on an isolated copy of it, with that one problem as the whole problem list; a user who dictates the fix itself (「按鈕改成灰色」) wants an isolated CSS fix, outside this skill. Interview in the same numbered rounds as the style interview, and review the representative task yourself; keep the user's reports and your own review findings labeled by source. Then follow each problem's layer: detail refinement, visual treatments on the current structure, or structural directions and flow prototypes compared with 現況.
+
+**Complete when:** 現況 is captured or its gap recorded, and a problem list ranked by impact on the main task gives each problem its layer, source, and evidence, alongside the items that must stay and the improvement scope, each confirmed or recorded as an assumption.
+
 ## Propose comparable directions
 
 Usually offer 2–3 structurally distinct directions; deepen the selected direction when requirements have converged. Vary entry points, information hierarchy, interaction, or content rhythm so trade-offs are visible. Recoloring one layout does not count.
 
-Give each direction a stable letter ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website.
+Give each direction a stable letter ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website. In improve, show 現況 beside the directions and name the problems each one addresses.
 
 **Complete when:** the user can select a direction or parts to combine and understand the trade-offs.
 
@@ -82,9 +89,9 @@ If the browser is unavailable or a tool refuses an operation, retain deliverable
 
 ## Develop the visual language
 
-Treat visual language as its own design question: in feature-first after a structure is selected, in theme-first right after the interview and before structural directions. Start from the project's visual source (brand, tokens, design system); when it fixes the visuals, say so and move on. Ad-hoc styles of an existing interface do not fix the visuals.
+Treat visual language as its own design question: in feature-first after a structure is selected, in theme-first right after the interview and before structural directions, in improve when diagnosis places problems in the visual layer. Start from the project's visual source (brand, tokens, design system); when it fixes the visuals, say so and move on. Ad-hoc styles of an existing interface do not fix the visuals.
 
-Otherwise build visual treatments numbered 1/2/3 — three in theme-first, 2–3 in feature-first — keeping content, data, and states identical. Present each as a **style tile**: the representative screen's real content (hero, one representative component, type scale, color roles, icon style) on the selected structure, or in theme-first on one shared provisional layout that is not a structural proposal. Give each a one-line visual concept (such as "dense ledger" or "calm editorial") that decides typography, density, color roles, surface depth, and icon stroke and fill. Treatments sharing type scale and spacing with only a palette change count as one. Numbers stay stable across rounds: a new or combined treatment takes the next unused number. Read [collaboration.md](references/collaboration.md) to choose a visual skill for this step.
+Otherwise build visual treatments numbered 1/2/3 — three in theme-first, 2–3 otherwise — keeping content, data, and states identical. Present each as a **style tile**: the representative screen's real content (hero, one representative component, type scale, color roles, icon style) on the selected or current structure, or in theme-first on one shared provisional layout that is not a structural proposal. Give each a one-line visual concept (such as "dense ledger" or "calm editorial") that decides typography, density, color roles, surface depth, and icon stroke and fill. Treatments sharing type scale and spacing with only a palette change count as one. Numbers stay stable across rounds: a new or combined treatment takes the next unused number. Read [collaboration.md](references/collaboration.md) to choose a visual skill for this step.
 
 Review each treatment as rendered screenshots at relevant sizes and revise until its concept is visible on screen before presenting it. Without screenshots, present treatments as visually unreviewed.
 
@@ -101,6 +108,7 @@ Interpret short replies in the current stage rather than repeating the interview
 | 太普通／像模板 | Treat as visual-language feedback: keep the accepted structure and propose treatments with stronger stated concepts, compared as screenshots. |
 | A 的導覽配 C 的內容 | Record the chosen parts, build one combined direction, and check the original task and hierarchy remain coherent. |
 | 這顆按鈕太搶眼／標題換個字體 | Detail refinement: change only the named element or issue, saving a new version when the current one was chosen or accepted, deliver before/after screenshots of the affected area (without a browser, link both versions and mark the screenshots not produced), and add one line to the SESSION refinement log. Everything else stays as it was; mention other issues you notice as proposals for a later round. |
+| 還是不好用／比原本差 | In improve, compare the version with 現況 on the problem list, name which problems remain or regressed, and revert or rework only those parts. |
 | 太複雜／看不懂 | Identify likely concrete issues and test the smallest change first; ask about consequential ambiguity. |
 | 定稿 | Freeze the accepted version and scope and produce a handoff, retaining unverified items accurately. |
 | 下一步？ | Explain the next step from the original goal, current stage, and unresolved items. This is a question, not authorization to start production implementation. |

@@ -25,7 +25,8 @@ Use concise Markdown and meaningful fields rather than empty templates. Early ex
 
 - **Task and goal:** project location, original request, entry mode and the evidence for it, primary users, core task, scope constraints, and source documents.
 - **Interview (theme-first):** inferred product type and its evidence, settled answers, design assumptions, and scope questions left to the planning entry point.
-- **Current stage:** understanding/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
+- **Diagnosis (improve):** 現況 location, version, and screenshots; the problem list with IDs, layers, sources, and severity; items that must stay; improvement scope.
+- **Current stage:** understanding/diagnosis/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
 - **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions. Record structure (letters) and visual treatment (numbers) choices separately, and for a combined treatment the parts taken from each.
 - **Design and entry points:** paths or URLs for current comparisons, refined designs, and accepted versions; opening instructions and required environment; sample data versus real integration points.
 - **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence. Record what the user likes apart from where they got stuck on the main action.
@@ -43,6 +44,7 @@ Add enough information to the same SESSION for another agent to begin. Link exis
 | Visuals and components | Accepted visual treatment and its token source, reusable components, copy and interaction rules, responsive intent |
 | Data and boundaries | Existing contract-backed content versus sample data; required new read/write or permission capabilities |
 | Acceptance scenarios | User actions and observable results; keyboard and relevant screen-size checks |
+| Changes from 現況 (improve) | Problem IDs resolved and left open, what changed versus what stayed, and the relearning impact on existing users |
 | Implementation order | First steps for the smallest complete flow, dependencies, and choices that must precede work |
 
 A complete handoff can contain unresolved decisions. State their impact, who must decide, and work that can proceed. If essential data or permission contracts remain unsettled, explicitly identify dependent implementation that cannot yet start.
