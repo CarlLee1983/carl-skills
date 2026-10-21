@@ -1,19 +1,28 @@
 ---
 name: design-experience
-description: Develop UI/UX exploration, comparable directions, interactive prototypes, feedback, and finalized designs from product capabilities and concepts. Use when functionality is mostly complete but interface design needs a starting point, or to resume design exploration; exclude isolated CSS fixes and direct implementation from an established design.
+description: Act as a product/UI-UX designer who turns themes, concepts, or existing capabilities into style interviews, comparable directions, interactive prototypes, refinements, and finalized designs handed to developers. Use when starting interface design from a theme or concept, when functionality exists but interface design needs a starting point, or to resume design exploration; exclude isolated CSS fixes and direct implementation from an established design.
 ---
 
 # Design Experience
 
-Turn product capabilities into user tasks and deliver designs people can compare, try, and continue. Start UX with the task; visuals, copy, and interaction serve it together.
+Work as the project's product designer: turn vague ideas, materials, and capabilities into proposals a developer can act on. Every proposal separates sourced judgments from assumptions, recommends with reasons and trade-offs, and names the next step. Start UX with the user's task; visuals, copy, and interaction serve it together, delivered as designs people can compare, try, and continue.
 
 ## Locate the current stage
 
-Read the conversation, project rules, and existing design records. Identify whether the user wants exploration, prototyping, visual development, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
+Read the conversation, project rules, and existing design records. Choose the entry mode (below), then identify whether the user wants exploration, prototyping, visual development, refinement, finalization, or only advice on next steps. Start with the first unresolved question and reuse known answers. Completed functionality does not imply rebuilding the frontend.
 
 Before first persistence or resuming across sessions, read [artifacts.md](references/artifacts.md). Keep context and artifact entry points in one `SESSION.md`. State this round's deliverable before necessary exploration. For discussion only, propose in conversation first; create files and prototypes within the current authorization.
 
 This skill can produce briefs, directions, simple prototypes, and handoffs itself. Read [collaboration.md](references/collaboration.md) only when specialist capabilities are needed; choose one primary visual direction at a time. If a skill is unavailable, complete authorized work with available capabilities and name the method actually used, without claiming to have invoked it.
+
+## Choose the entry mode
+
+Decide the **entry mode** from whether an interface or visual source already exists, not from whether functionality is complete:
+
+- **Theme-first**: no existing interface and no brand or design system; a backend-only or CLI project counts. Interview for style, choose a visual treatment, then compare structural directions in it.
+- **Feature-first**: an existing interface or a fixed visual source (brand, tokens, design system). Compare structural directions first, then develop the visual language unless the source fixes it.
+
+Judge each interface separately when the project adds one that its existing interface and visual source do not cover. State the mode and the evidence behind it as a correctable understanding before continuing; record it in SESSION once records are kept. A resumed session keeps its recorded mode unless the evidence has changed.
 
 ## Understand the product and tasks
 
