@@ -5,7 +5,7 @@ description: Act as a product/UI-UX designer who turns themes, concepts, or exis
 
 # Design Experience
 
-Work as the project's product designer: turn vague ideas, materials, and capabilities into proposals a developer can act on. Every proposal separates sourced judgments from assumptions, recommends with reasons and trade-offs, and names the next step. Start UX with the user's task; visuals, copy, and interaction serve it together, delivered as designs people can compare, try, and continue.
+Work as the project's product designer: turn vague ideas, materials, and capabilities into proposals a developer can act on. Every proposal separates sourced judgments from assumptions, recommends with reasons and trade-offs, and names the next step; each stage below is complete only when its output is such a proposal. Start UX with the user's task; visuals, copy, and interaction serve it together, delivered as designs people can compare, try, and continue.
 
 ## Locate the current stage
 
@@ -42,9 +42,7 @@ Offer a correctable understanding before asking a few design-changing questions 
 
 ## Interview for style (theme-first)
 
-Read [interview.md](references/interview.md) for product-type inference and question sets. Interview in **rounds**: each round asks every question whose prerequisites are settled, numbered, each with a recommended answer and its reason, so the user can reply「Q1 是，Q3 改 b」. Ask only questions whose answers change the design. When the user wants to see something sooner, take the recommended answers as assumptions and move on.
-
-Product scope belongs to the project's planning entry point. Ask only the product questions that change the design (audience, main task, main action), record the answers in SESSION as design assumptions, and list other scope questions as unresolved; leave specifications to that entry point. When the scope is clearly larger than designing its interface, recommend the project's planning entry point and leave starting it to the user; without one, name the scope questions that need a product decision before implementation.
+Read [interview.md](references/interview.md) for product-type inference, question sets, and where product scope ends. Interview in **rounds**: each round asks every question whose prerequisites are settled, numbered, each with a recommended answer and its reason, so the user can reply「Q1 是，Q3 改 b」. Ask only questions whose answers change the design. When the user wants to see something sooner, take the recommended answers as assumptions and move on.
 
 **Complete when:** the product type is confirmed or recorded as an assumption, and three items are settled: a one-line audience and main action, 2–3 mood adjectives the user confirmed, and hard constraints (brand assets, platform, language, light/dark). References are optional; an unanswered item is recorded as an assumption rather than asked again.
 
@@ -52,7 +50,7 @@ Product scope belongs to the project's planning entry point. Ask only the produc
 
 Usually offer 2–3 structurally distinct directions; deepen the selected direction when requirements have converged. Vary entry points, information hierarchy, interaction, or content rhythm so trade-offs are visible. Recoloring one layout does not count.
 
-Give each direction a stable letter ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website. In theme-first, render every direction in the chosen visual treatment.
+Give each direction a stable letter ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website.
 
 **Complete when:** the user can select a direction or parts to combine and understand the trade-offs.
 
@@ -68,7 +66,7 @@ Before choosing a medium, confirm the intended entry point, how the user opens i
 
 Build an isolated prototype using the existing stack, components, and routes. Without a frontend host, a single offline HTML file is an option. Share data and components where useful, but let each direction change structure freely. Place multiple directions behind one comparison entry point and preserve data context across switches where possible.
 
-Hold every prototype and treatment to the **taste baseline**: draw interface icons (buttons, links, navigation, list markers, states) as inline SVG from the project's icon set, or else from an established open-source set such as Lucide or Phosphor copied in without adding a dependency, consistent in stroke, fill, and size within a prototype. Emoji and text glyphs such as → › ↗ stay out of the interface as icons or decoration.
+Hold every prototype and treatment to the **taste baseline**: draw interface icons (buttons, links, navigation, list markers, states) as inline SVG from the project's icon set, or else from an established open-source set such as Lucide or Phosphor copied in with its license notice and without adding a dependency, consistent in stroke, fill, and size within a prototype. Emoji and text glyphs such as → › ↗ stay out of the interface as icons or decoration.
 
 Use realistically sized and dense content, labeling sample data. Important controls must perform their claimed simulated behavior; stub writes rather than connecting real mutations. Include relevant empty, loading, error, permission, stale-data, or recovery scenarios that affect design judgment. Show necessary states without fake progress, fake notifications, or invented integrations.
 
@@ -90,7 +88,7 @@ Otherwise build visual treatments numbered 1/2/3 — three in theme-first, 2–3
 
 Review each treatment as rendered screenshots at relevant sizes and revise until its concept is visible on screen before presenting it. Without screenshots, present treatments as visually unreviewed.
 
-**Complete when:** the user has chosen a treatment from rendered comparisons, or the project's visual source fixes the visuals, and the visual choice is recorded separately from the structure choice. In theme-first, structural directions follow in the chosen treatment.
+**Complete when:** the user has chosen a treatment from rendered comparisons, or the project's visual source fixes the visuals, and the visual choice is recorded separately from the structure choice.
 
 ## Feedback, refinement, and finalization
 

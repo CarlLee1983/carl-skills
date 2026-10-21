@@ -1,8 +1,12 @@
 # Theme-first design interview
 
-Read when the entry mode is theme-first. Ask only questions whose answers change the design; take facts the project materials already state as settled.
+Read when the entry mode is theme-first. Ask only questions whose answers change the design; take facts the project materials already state as settled. Items marked *(inferred)* are synthesised from the sources rather than stated by them; treat them as defaults the user can correct.
 
-## Infer the product type
+## Where product scope ends
+
+Product scope belongs to the project's planning entry point. Ask only the product questions that change the design (audience, main task, main action), record the answers in SESSION as design assumptions, and list other scope questions as unresolved; leave specifications to that entry point. When the scope is clearly larger than designing its interface, recommend the project's planning entry point and leave starting it to the user; without one, name the scope questions that need a product decision before implementation.
+
+## Infer the product type *(inferred)*
 
 Before the first round, read available materials (README, spec, data model, routes, copy) and propose the product type with its evidence as a correctable understanding; the user's own description of the product counts as evidence. When evidence is weak, make the type the first question, with a recommended answer.
 
@@ -13,9 +17,9 @@ Before the first round, read available materials (README, spec, data model, rout
 | `admin`, `dashboard`, `role`, `permission`, CRUD forms, reports, batch operations | Functional product / back office |
 | `post`, `article`, `author`, `tag`, Markdown/CMS, RSS | Content / editorial |
 
-When one project holds two interfaces (a storefront and its merchant back office), interview each separately: their mood and density answers usually point in opposite directions. Make「which interface first」the first question, and keep one SESSION with a section per interface.
+When one project holds two interfaces (a storefront and its merchant back office), interview each separately: their mood and density answers usually point in opposite directions. Make "which interface first" the first question, and keep one SESSION with a section per interface.
 
-## Round order
+## Round order *(inferred)*
 
 The order is a dependency order: a later item waits for the answers it builds on, and settled items are skipped.
 
@@ -23,7 +27,7 @@ The order is a dependency order: a later item waits for the answers it builds on
 2. Hard constraints: existing brand assets (and which may change), platform, language, light/dark needs.
 3. Mood trade-offs: 3–5 opposing word pairs, each end paired with an example site (label sites not checked this session as recalled), recommended position stated. Include tone axes when copy matters: formal↔casual, serious↔playful, respectful↔irreverent, matter-of-fact↔enthusiastic. Derive 2–3 mood adjectives (plus one to avoid) and ask the user to confirm them. When a mood word could read either way, such as "sophisticated", state your reading and let one visual treatment test the stronger reading.
 4. Type-specific questions: pick the 2–4 from the type's set below that would change this design.
-5. Optional references and anti-references: for each site named, ask which attribute (type, spacing, colour, imagery) is liked or disliked, and record the attribute rather than the site.
+5. Optional references and anti-references: for each site named, ask which attribute (type, spacing, color, imagery) is liked or disliked, and record the attribute rather than the site.
 
 Combine rounds when answers are already known. Record answers taken from project materials as sourced and the rest as design assumptions. Record conflicting answers from different stakeholders as a stated conflict to resolve, rather than averaging them.
 
@@ -34,9 +38,9 @@ Combine rounds when answers are already known. Record answers taken from project
 Priorities: finding products (categories, search, curated paths), judging them, and checking out.
 
 - How broad is the catalogue, and do shoppers usually know what they want or browse? Broad → visible category navigation and search; small curated range → narrative curation.
-- Are products chosen by look or by specification (apparel versus electronics)? Look → large imagery, loose grid; specification → comparison and higher density.
-- Is there own product photography, cut-out or in context? Weak photography → build quality through type and colour blocks.
-- Price band and positioning (discount versus premium)? Discount → high-contrast promotion colour; premium → low saturation, more whitespace.
+- Are products chosen by look or by specification (apparel versus electronics)? Look → large imagery, loose grid; specification → comparison and higher density. *(inferred; Baymard's per-category detail is paywalled and was not read)*
+- Is there own product photography, cut-out or in context? Weak photography → build quality through type and color blocks.
+- Price band and positioning (discount versus premium)? Discount → high-contrast promotion color; premium → low saturation, more whitespace. *(inferred)*
 - How much promotion space is required? Default to promotion that never displaces category navigation.
 - Share of mobile traffic? Default to mobile-first.
 
@@ -46,13 +50,13 @@ Pitfalls: visuals that outrank the search box; a home page that reads as a brand
 
 Priorities: say who this is, what they do, and why to trust them at first glance, then lead to one conversion.
 
-- What is the one thing a visitor should do after reading? Sets CTA hierarchy and repetition.
-- Which brand assets exist (logo, type, colours, photography), and which may change? Extend an existing brand or establish one.
+- What is the one thing a visitor should do after reading? Sets CTA hierarchy and repetition. *(inferred)*
+- Which brand assets exist (logo, type, colors, photography), and which may change? Extend an existing brand or establish one.
 - Who are three competitors or peers, and should this look like them or unlike them?
 - If the brand were a vehicle, person, or shop, which and why? Mine the "why" for mood words.
-- What builds trust here: work samples, client list, the person, data, awards? Sets first-screen content and imagery.
-- For a personal site, is the lead the person or the work?
-- Is there own photography or imagery, and what is its character (colour, black and white, film)? Sets base and text colours and how much the layout leans on images.
+- What builds trust here: work samples, client list, the person, data, awards? Sets first-screen content and imagery. *(inferred)*
+- For a personal site, is the lead the person or the work? *(inferred)*
+- Is there own photography or imagery, and what is its character (color, black and white, film)? Sets base and text colors and how much the layout leans on images. *(inferred)*
 - For SaaS marketing, are prices public and is there a trial?
 
 Pitfalls: atmosphere without a message; "high-end" taken at face value before word pairs break it down.
@@ -64,9 +68,9 @@ Priorities: efficiency, scannability, consistency, predictability; visual expres
 - After seeing the data, do users act immediately or analyse later? Operational versus analytical: alert strength and refresh cadence.
 - How long do they work in it each day? Sets default density; raise density only for large lists, tables, and long forms, keeping dialogs and alerts at default spacing.
 - Are the main screens tables, lists, long forms, or charts?
-- Which outliers or thresholds must be visible at a glance? Colour roles as category cues paired with shape, not as quantities.
+- Which outliers or thresholds must be visible at a glance? Color roles as category cues paired with shape, not as quantities.
 - Is it embedded in a host system? Then follow the host design system and minimise brand expression.
-- Are users daily experts or occasional customers? Sets label explicitness and guidance.
+- Are users daily experts or occasional customers? Sets label explicitness and guidance. *(inferred)*
 
 Pitfalls: pie charts, gauges, and 3D charts; applying maximum density to the whole app.
 
@@ -75,12 +79,12 @@ Pitfalls: pie charts, gauges, and 3D charts; applying maximum density to the who
 Priorities: readability, scanning, hierarchy, long-reading comfort.
 
 - Do readers finish an article or find an answer and leave? Long-form layout versus scannable structure with front-loaded headings.
-- Typical article length and structure (subheadings, code, charts)? Sets type scale, line length, heading levels.
-- Publishing cadence and the home page's role (chronological stream versus curated)?
-- Are images content or decoration? Sets image ratios and grid.
-- Primary language? Long-form CJK text needs its own typeface and line-height check.
+- Typical article length and structure (subheadings, code, charts)? Sets type scale, line length, heading levels. *(inferred)*
+- Publishing cadence and the home page's role (chronological stream versus curated)? *(inferred)*
+- Are images content or decoration? Sets image ratios and grid. *(inferred)*
+- Primary language? Long-form CJK text needs its own typeface and line-height check. *(inferred)*
 - Where does the author's voice sit on the tone axes? Sets heading personality and ornament.
 
 ## Sources and limits
 
-Distilled from published practice: Samantha Warren's style tiles (styletil.es; A List Apart, "Style Tiles and How They Work"), NN/g on tone of voice, stakeholder interviews, dashboards, F-shaped reading and the inverted pyramid, Baymard Institute homepage and e-commerce research, Material Design density guidance (M2), Shopify app design guidelines, and Dan Mall's element collages. Product-type inference, the round order, and several per-type mappings are synthesised from these rather than stated by them; treat them as defaults the user can correct. Mobile apps have no question set here.
+Distilled from published practice: Samantha Warren's style tiles (styletil.es; A List Apart, "Style Tiles and How They Work"), NN/g on tone of voice, stakeholder interviews, dashboards, F-shaped reading and the inverted pyramid, Baymard Institute homepage and e-commerce research, Material Design density guidance (M2), Shopify app design guidelines, and Dan Mall's element collages. Baymard's per-category product-page research is paywalled and was not read; Material density was checked against M2 only. Mobile apps have no question set here.
