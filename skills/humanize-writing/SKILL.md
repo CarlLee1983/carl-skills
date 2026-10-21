@@ -38,6 +38,8 @@ Apply in order; a lower priority never justifies breaking a higher one.
 - Never add claims the source doesn't make. Humanizing removes; it does not embellish.
 - When rewording or moving a scope limit, keep its scope exactly: "not run in the reader's environment" does not become "never run".
 - When a heading or sentence carries two halves (a concession and its limit), the edit keeps both halves' information.
+- Before changing a heading in a published page, search the site for links to its anchor; update those links in the same change, or keep the heading.
+- Metadata such as a title or description gets the same rules as the body, so the page stays consistent (no 異步 in the title with 非同步 in the body).
 - If the source is already clean, say so and make minimal edits rather than manufacturing changes.
 - Traditional Chinese uses Taiwan usage and vocabulary (軟體/程式/資料/伺服器, not 軟件/代碼/數據/服務器).
 
