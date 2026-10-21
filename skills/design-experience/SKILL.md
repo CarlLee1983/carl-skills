@@ -52,7 +52,7 @@ Product scope belongs to the project's planning entry point. Ask only the produc
 
 Usually offer 2–3 structurally distinct directions; deepen the selected direction when requirements have converged. Vary entry points, information hierarchy, interaction, or content rhythm so trade-offs are visible. Recoloring one layout does not count.
 
-Give each direction a stable ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website.
+Give each direction a stable letter ID (A/B/C), one-sentence concept, representative screen/wireframe, suitable context, costs, and recommendation rationale. Compare using the same task, data, and scenario. Emphasize operations and states for data-heavy products; audience, message, evidence, and conversion tasks for marketing pages. Scale to the question rather than requiring a full website. In theme-first, render every direction in the chosen visual treatment.
 
 **Complete when:** the user can select a direction or parts to combine and understand the trade-offs.
 
@@ -68,6 +68,8 @@ Before choosing a medium, confirm the intended entry point, how the user opens i
 
 Build an isolated prototype using the existing stack, components, and routes. Without a frontend host, a single offline HTML file is an option. Share data and components where useful, but let each direction change structure freely. Place multiple directions behind one comparison entry point and preserve data context across switches where possible.
 
+Hold every prototype and treatment to the **taste baseline**: draw interface icons (buttons, links, navigation, list markers, states) as inline SVG from the project's icon set, or else from an established open-source set such as Lucide or Phosphor copied in without adding a dependency, consistent in stroke, fill, and size within a prototype. Emoji and text glyphs such as → › ↗ stay out of the interface as icons or decoration.
+
 Use realistically sized and dense content, labeling sample data. Important controls must perform their claimed simulated behavior; stub writes rather than connecting real mutations. Include relevant empty, loading, error, permission, stale-data, or recovery scenarios that affect design judgment. Show necessary states without fake progress, fake notifications, or invented integrations.
 
 Give concrete trial tasks, such as「找出為何不能核准，並找到恢復路徑」. Keep evidence levels distinct:
@@ -82,13 +84,13 @@ If the browser is unavailable or a tool refuses an operation, retain deliverable
 
 ## Develop the visual language
 
-After a structure is selected, treat visual language as its own design question. Start from the project's visual source (brand, tokens, design system); when it fixes the visuals, say so and move to refinement.
+Treat visual language as its own design question: in feature-first after a structure is selected, in theme-first right after the interview and before structural directions. Start from the project's visual source (brand, tokens, design system); when it fixes the visuals, say so and move on. Ad-hoc styles of an existing interface do not fix the visuals.
 
-Otherwise build 2–3 visual treatments of the selected representative screen, keeping structure, data, and states identical. Give each a one-line visual concept (such as "dense ledger" or "calm editorial") that decides typography, density, color roles, and surface depth. Treatments sharing type scale and spacing with only a palette change count as one. Read [collaboration.md](references/collaboration.md) to choose a visual skill for this step.
+Otherwise build visual treatments numbered 1/2/3 — three in theme-first, 2–3 in feature-first — keeping content, data, and states identical. Present each as a **style tile**: the representative screen's real content (hero, one representative component, type scale, color roles, icon style) on the selected structure, or in theme-first on one shared provisional layout that is not a structural proposal. Give each a one-line visual concept (such as "dense ledger" or "calm editorial") that decides typography, density, color roles, surface depth, and icon stroke and fill. Treatments sharing type scale and spacing with only a palette change count as one. Numbers stay stable across rounds: a new or combined treatment takes the next unused number. Read [collaboration.md](references/collaboration.md) to choose a visual skill for this step.
 
 Review each treatment as rendered screenshots at relevant sizes and revise until its concept is visible on screen before presenting it. Without screenshots, present treatments as visually unreviewed.
 
-**Complete when:** the user has chosen a treatment from rendered comparisons, or the project's visual source fixes the visuals, and the visual choice is recorded separately from the structure choice.
+**Complete when:** the user has chosen a treatment from rendered comparisons, or the project's visual source fixes the visuals, and the visual choice is recorded separately from the structure choice. In theme-first, structural directions follow in the chosen treatment.
 
 ## Feedback, refinement, and finalization
 
@@ -96,7 +98,8 @@ Interpret short replies in the current stage rather than repeating the interview
 
 | User reply | Next action |
 | --- | --- |
-| `C`／選 B | Match the current direction IDs and record the choice. Apply structural changes the user requested first, then develop the visual language unless the project fixes it. Clarify only if multiple ID sets exist. Selection does not finalize the design. |
+| `C`／選 B／選 2 | Letters name structural directions and numbers name visual treatments; record the choice against the matching set. For a structure, apply requested structural changes first, then develop the visual language unless the project fixes it or a treatment is already chosen. Selection does not finalize the design. |
+| 1 的字體配 3 的色彩 | Record which parts come from which treatment, build one combined treatment, and screenshot it to check its concept still reads as one. Dimensions the user did not name follow the treatment supplying typography and spacing, stated as an assumption. |
 | 太普通／像模板 | Treat as visual-language feedback: keep the accepted structure and propose treatments with stronger stated concepts, compared as screenshots. |
 | A 的導覽配 C 的內容 | Record the chosen parts, build one combined direction, and check the original task and hierarchy remain coherent. |
 | 太複雜／看不懂 | Identify likely concrete issues and test the smallest change first; ask about consequential ambiguity. |

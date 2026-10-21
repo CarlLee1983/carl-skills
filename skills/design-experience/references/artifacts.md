@@ -26,7 +26,7 @@ Use concise Markdown and meaningful fields rather than empty templates. Early ex
 - **Task and goal:** project location, original request, entry mode and the evidence for it, primary users, core task, scope constraints, and source documents.
 - **Interview (theme-first):** inferred product type and its evidence, settled answers, design assumptions, and scope questions left to the planning entry point.
 - **Current stage:** understanding/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
-- **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions. Record structure and visual choices separately.
+- **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions. Record structure (letters) and visual treatment (numbers) choices separately, and for a combined treatment the parts taken from each.
 - **Design and entry points:** paths or URLs for current comparisons, refined designs, and accepted versions; opening instructions and required environment; sample data versus real integration points.
 - **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence.
 - **Open items and handoff:** consequential questions, work that can proceed independently, and whether production implementation is authorized.
