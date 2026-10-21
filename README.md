@@ -170,6 +170,7 @@ design-experience 是入口與流程：訪談、方向編號與比較、紀錄�
 | 互動細節、行動網頁行為、動效 | `emil-design-eng`、`mobile-native`、`animate`、`animate-expo` | [emilkowalski/skills](https://github.com/emilkowalski/skills) |
 | UI 元件庫選擇 | `pick-ui-library`（需使用者親自啟動） | [emilkowalski/skills](https://github.com/emilkowalski/skills) |
 | 設計審查 | `impeccable`（選用，`critique`、`audit`） | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) |
+| 設計參考資料 | `ui-ux-pro-max`（查色盤、字型搭配與 UI 模式，結果只當候選） | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) |
 
 安裝方式與本集合相同，指定來源與技能名稱，例如：
 
