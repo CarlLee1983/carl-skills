@@ -1,8 +1,9 @@
 # 02 主題起手的設計訪談
 
 Status: ready-for-agent
-State: open
+State: closed
 Blocked by: 01
+Owner: claude-code (feat/design-experience-theme-first)
 
 規格：[spec.md](../spec.md)；題庫來源：[設計訪談研究](../research/style-interview.md)。
 
@@ -23,3 +24,5 @@ Blocked by: 01
 5. 提案品質判定與封裝檢查同 01，結果附加到同一份驗證紀錄。
 
 ## Comments
+
+2026-10-21：完成。情境 S1–S3 通過，封裝檢查通過；見 [驗證紀錄](../validation/theme-first.md)。

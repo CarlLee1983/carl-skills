@@ -36,9 +36,17 @@ A short brief must establish:
 - Which representative flow to design first, and existing brand, platform, data, and permission constraints.
 - Which judgments have sources, which are assumptions, and which gaps most affect direction.
 
-Offer a correctable understanding before asking a few design-changing questions with recommended options and reasons. Retrieve project facts yourself. Assume reversible visual choices when useful. Clarify unknown roles, core flows, or product scope when they would change the design, while advancing independent work.
+Offer a correctable understanding before asking a few design-changing questions with recommended options and reasons. In theme-first, gather these through the style interview instead of a separate round. Retrieve project facts yourself. Assume reversible visual choices when useful. Clarify unknown roles, core flows, or product scope when they would change the design, while advancing independent work.
 
 **Complete when:** a sourced brief makes the core task and scope clear, with remaining assumptions labeled and enough evidence to propose directions without inventing capabilities.
+
+## Interview for style (theme-first)
+
+Read [interview.md](references/interview.md) for product-type inference and question sets. Interview in **rounds**: each round asks every question whose prerequisites are settled, numbered, each with a recommended answer and its reason, so the user can reply「Q1 是，Q3 改 b」. Ask only questions whose answers change the design. When the user wants to see something sooner, take the recommended answers as assumptions and move on.
+
+Product scope belongs to the project's planning entry point. Ask only the product questions that change the design (audience, main task, main action), record the answers in SESSION as design assumptions, and list other scope questions as unresolved; leave specifications to that entry point. When the scope is clearly larger than designing its interface, recommend the project's planning entry point and leave starting it to the user; without one, name the scope questions that need a product decision before implementation.
+
+**Complete when:** the product type is confirmed or recorded as an assumption, and three items are settled: a one-line audience and main action, 2–3 mood adjectives the user confirmed, and hard constraints (brand assets, platform, language, light/dark). References are optional; an unanswered item is recorded as an assumption rather than asked again.
 
 ## Propose comparable directions
 
