@@ -145,7 +145,42 @@ $design-experience 我對目前訂單頁的 UI／UX 不滿意，請先問我哪�
 
 Claude Code 使用 `/design-experience`。沒有既有介面或視覺來源時從主題起手：先訪談風格、選定視覺處理，再比較結構方向；已有介面時先比較結構，再發展視覺；對現有介面不滿意時，先截下現況、以問答診斷問題並分層，再提出與現況並排比較的改善方案與原型。技能會沿用既有設計紀錄，使用相同任務與資料比較方向，並以 `SESSION.md` 保存選擇、原型入口與交接。定稿代表接受指定設計版本，正式實作與新增產品介面仍依實際授權範圍決定。
 
-不需預先安裝其他設計技能；有專項需求且工具可用時才選用協作能力。瀏覽器無法檢查時會交付可定位的產物並列明缺口；語法與模擬流程通過不代表視覺或真人可用性驗證通過。[維護驗收](docs/design-experience/acceptance.md) 列出檢查情境。
+瀏覽器無法檢查時會交付可定位的產物並列明缺口；語法與模擬流程通過不代表視覺或真人可用性驗證通過。[維護驗收](docs/design-experience/acceptance.md) 列出檢查情境。
+
+#### 協作技能
+
+design-experience 是入口與流程：訪談、方向編號與比較、紀錄、完成條件、選擇與交接都由它主導。協作技能以**能力**定義而非技能名稱，例如「原型比較」「視覺方向」「動效」：遇到需要專項能力的步驟時，技能會看本機已安裝的技能中有哪個能勝任，沒有就以自身步驟完成並說明實際採用的方法。協作技能只提升該步驟的做法，產出會轉回本流程的 A／B／C 方向與 1／2／3 視覺處理編號，原型保持隔離，不推翻已接受的 brief。完整能力清單與選用條件見 [collaboration.md](skills/design-experience/references/collaboration.md)。
+
+| 情況 | 行為 |
+| --- | --- |
+| 未安裝任何協作技能 | 完整流程照常運作，以內建步驟與品質基準完成，並說明實際採用的方法 |
+| 已安裝能勝任的技能 | 依描述與指示判斷是否符合該能力，不看名稱；不保證每次都用到 |
+| 想指定或偏好某個技能 | 在對話中點名，例如「視覺處理這步用 hallmark」；你的指定優先於技能自行挑選 |
+
+協作技能不需預先安裝，技能也不會自動安裝或新增依賴；需要使用者親自啟動的技能只會提示入口。
+
+##### 建議清單
+
+以下是維護者實際使用的組合，可換成你偏好的同類技能。來源為第三方 repo，內容與名稱依上游為準：
+
+| 能力 | 建議技能 | 來源 |
+| --- | --- | --- |
+| 原型比較 | `prototype` | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| 視覺方向 | `hallmark`；品牌與行銷頁可用 `design-taste-frontend` | [nutlope/hallmark](https://github.com/nutlope/hallmark)、[Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) |
+| 互動細節、行動網頁行為、動效 | `emil-design-eng`、`mobile-native`、`animate`、`animate-expo` | [emilkowalski/skills](https://github.com/emilkowalski/skills) |
+| UI 元件庫選擇 | `pick-ui-library`（需使用者親自啟動） | [emilkowalski/skills](https://github.com/emilkowalski/skills) |
+| 設計審查 | `impeccable`（選用，`critique`、`audit`） | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) |
+
+安裝方式與本集合相同，指定來源與技能名稱，例如：
+
+```sh
+npx skills add mattpocock/skills --skill prototype -g -a codex claude-code
+npx skills add nutlope/hallmark --skill hallmark -g -a codex claude-code
+```
+
+選用時留意三點：`emilkowalski/skills` 也有同名的 `prototype`，它只能手動啟動，且選定後會整合進正式程式碼，兩者擇一安裝以免入口衝突；Impeccable 另有 Claude Code plugin 版本，會加裝在所有專案生效的 hook 與 subagent，只需要協作用途時以 Skills CLI 安裝 skill 即可；安裝範圍廣泛的設計技能可能直接接走設計需求而未進入本流程，需要完整流程時請明確使用 `$design-experience` 或 `/design-experience`。
+
+瀏覽器操作與截圖工具對驗證程度的影響大於協作技能的數量；沒有這些工具時，原型與視覺處理只能標示為未經畫面檢查。
 
 ### 專案管理與專案入口交接
 
