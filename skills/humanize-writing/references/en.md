@@ -29,6 +29,7 @@ Apply when the body text is predominantly English. Each item says why it's cut, 
 - ✅ This release cuts batch processing from 3s to 0.4s.
 
 If two real facts hide behind the contrast, keep the facts, drop the frame:
+
 - ❌ The point isn't the feature, it's the philosophy behind it.
 - ✅ We only shipped the retry logic this time; the UI is unchanged.
 
