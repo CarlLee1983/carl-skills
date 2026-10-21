@@ -7,7 +7,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | Skill | 適用工具 | 用途 |
 | --- | --- | --- |
 | [devops](skills/devops/SKILL.md) | Codex、Claude Code 等 | 軟體交付與維運的統一入口：環境、CI、發布評估與套件發布、部署與回復、監控告警、事故、備份還原、容量與成本；先取得證據，在明確授權內執行並核驗。取代原 release-assessment。[規格](docs/devops/SPEC.md) |
-| [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；不限定模型。 |
+| [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；敘事段落（事故經過、個人經驗、小說）另有保留情節與節奏的規則；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
 | [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發：訪談釐清風格或診斷問題、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
 | [pm](skills/pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 八項專案經理能力：範圍與計畫稽核（scope、plan）、進度與依賴檢查（check）、下一步建議與交接（next-step）、風險與假設（risk）、變更影響（change）、進度報告（report）、結案（close）；依專案規則查找各自的專案入口，接受明確提案後交接，或在已授權的 Goal 中持續推進。 |
