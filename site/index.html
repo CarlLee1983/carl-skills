@@ -1,0 +1,107 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>carl-skills｜可以單獨安裝的 agent 技能</title>
+  <meta name="description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 的實際案例。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="carl-skills｜可以單獨安裝的 agent 技能">
+  <meta property="og:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 的實際案例。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="carl-skills：可以單獨裝的 agent 技能">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="carl-skills｜可以單獨安裝的 agent 技能">
+  <meta name="twitter:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 的實際案例。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="bar">
+    <a class="wordmark" href="./">carl-skills</a>
+    <nav aria-label="主要">
+      <ul>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="design-experience/">設計案例</a></li>
+        <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub<svg class="ico" aria-hidden="true"><use href="#i-up-right"/></svg></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <h1><span>可以單獨裝的</span><span>agent 技能</span></h1>
+    <p class="lede">Carl 維護的開源 agent skills，提供可重複使用的工作流程。每個技能是一個自足的目錄，Codex 與 Claude Code 都能裝，只裝需要的那一個。</p>
+    <pre class="rv" style="margin:40px 0 0;padding:18px 20px;background:var(--panel);overflow-x:auto;font-size:15px;max-width:44em"><code style="background:none;padding:0">npx skills add CarlLee1983/carl-skills --list</code></pre>
+    <p class="note" style="margin-top:12px">列出可安裝的技能，不會安裝。需要 Node.js 與 npm；完整安裝方式見 <a href="https://github.com/CarlLee1983/carl-skills#readme">README</a>。</p>
+  </div>
+</header>
+
+<main id="main">
+  <section class="band wrap f-surface ledger" id="skills" aria-labelledby="skills-h">
+    <div class="ledger-col" style="margin-left:0;width:min(100%,960px)">
+      <h2 id="skills-h" class="h2 rv" style="font-weight:900;margin-bottom:48px">五個技能</h2>
+      <ol class="skill-list">
+        <li class="rv"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/design-experience"><strong>design-experience</strong><span>以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發：訪談、比較設計方向、建立互動原型，依回饋收斂到定稿與交接。</span><em>Codex、Claude Code 等</em></a></li>
+        <li class="rv" style="--d:1"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/devops"><strong>devops</strong><span>軟體交付與維運的統一入口：環境、CI、發布評估、部署與回復、監控、事故、備份還原。先取得證據，在明確授權內執行並核驗。</span><em>Codex、Claude Code 等</em></a></li>
+        <li class="rv" style="--d:2"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/humanize-writing"><strong>humanize-writing</strong><span>潤飾繁體中文與英文，減少制式語句，保留原文的事實、立場與語氣；敘事段落另有保留情節與節奏的規則。</span><em>Codex、Claude Code 等</em></a></li>
+        <li class="rv" style="--d:3"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/pm"><strong>pm</strong><span>專案經理能力：範圍與計畫稽核、進度與依賴、下一步、風險與假設、變更影響、進度報告與結案。</span><em>Codex、Claude Code 等</em></a></li>
+        <li class="rv" style="--d:4"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/calibrate-codex"><strong>calibrate-codex</strong><span>把明確回饋或重複出現的問題，轉成範圍適當的指引、技能、hook、規則或驗證措施。</span><em>Codex 專用</em></a></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band wrap f-flame" aria-labelledby="cases-h">
+    <div class="round-head">
+      <h2 id="cases-h" class="h2 rv">看它實際交出什麼</h2>
+      <div class="stack rv" style="--d:1">
+        <p>design-experience 是這裡的設計技能。說得再好，不如看成品：三個案例一回合一回合攤開：使用者說了什麼、技能怎麼判斷、原型長什麼樣，以及哪些驗證做了、哪些沒做。其中一個案例記錄了技能本身被改過一次。</p>
+        <p><a class="btn" href="design-experience/">看案例<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a></p>
+      </div>
+    </div>
+    <div class="pair" style="margin-top:72px">
+      <figure class="rv"><a class="zoom" href="design-experience/order-admin/"><img src="design-experience/order-admin/img/genkuang.webp" width="1440" height="900" loading="lazy" alt="訂單頁現況：灰階表格與側欄篩選的後台訂單列表"></a><figcaption>訂單頁現況，改善模式的起點。</figcaption></figure>
+      <figure class="rv" style="--d:1"><a class="zoom" href="design-experience/order-admin/"><img src="design-experience/order-admin/img/run2-final.webp" width="1440" height="900" loading="lazy" alt="訂單頁第二輪定稿：深色佇列軌道與白色工作卡，橘色出貨按鈕"></a><figcaption>第二輪定稿：處理佇列加調度台。</figcaption></figure>
+      <figure class="rv"><a class="zoom" href="design-experience/dbcli/"><img src="design-experience/dbcli/img/final-1440.webp" width="1440" height="900" loading="lazy" alt="dbcli 稽核審查介面：左側依類型分組的待審清單，右側是 prod 寫入被權限拒絕那一件的詳情"></a><figcaption>dbcli 稽核審查，功能起手的實際試跑。</figcaption></figure>
+      <figure class="rv" style="--d:1"><a class="zoom" href="design-experience/personal-site/"><img src="design-experience/personal-site/img/treatment-2.webp" width="1440" height="900" loading="lazy" alt="插畫家官網的工作室筆記處理：米白紙面、紙膠帶貼著的水彩佔位圖與赭紅按鈕"></a><figcaption>插畫家官網的工作室筆記，主題起手。</figcaption></figure>
+    </div>
+  </section>
+</main>
+
+<footer class="close f-black">
+  <div class="top">
+    <p>MIT 授權，Copyright (c) 2026 CarlLee1983。每個技能目錄附相同授權文字。</p>
+    <a href="#top">回到頂端<svg class="ico" aria-hidden="true"><use href="#i-up"/></svg></a>
+  </div>
+  <div></div>
+  <a class="big" href="https://github.com/CarlLee1983/carl-skills"><span>在 GitHub</span><span>看原始碼</span></a>
+  <div class="meta muted">
+    <a href="design-experience/">design-experience 案例</a>
+    <span>圖示：Lucide，ISC 授權</span>
+    <span>台北・2026</span>
+  </div>
+</footer>
+</body>
+</html>

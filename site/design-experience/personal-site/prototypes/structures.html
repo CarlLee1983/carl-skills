@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>結構方向比較 v1（處理 2）</title>
+<!--
+Interface icons: Lucide (lucide-static v1.61.0), copied inline as SVG.
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+- --
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-->
+<style>
+
+:root{--bg:#f3ecdf;--surface:#fbf7ef;--ink:#2b2622;--muted:#6e6359;--accent:#b5562f;--accent-ink:#9a4626;--link:#3d5a73;--rule:#d8cbb5;--danger:#a3322a;--ok:#4f7a4a;
+--radius:4px;--shadow:0 1px 2px rgba(60,40,20,.12);--gutter:40px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");color:var(--ink);font-family:"PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased}
+a{color:var(--link)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--link);outline-offset:3px}
+.i{stroke-width:1.5;flex:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3{font-weight:600;letter-spacing:.01em;line-height:1.4;margin:0}
+h1{font-size:38px}h2{font-size:22px}h3{font-size:16px}
+h1:focus{outline:none}
+.mark{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8 C40 3 90 10 130 6 S185 4 198 7' fill='none' stroke='%23b5562f' stroke-width='4' stroke-linecap='round' opacity='.85'/%3E%3C/svg%3E") no-repeat 0 100%/100% .38em;padding-bottom:.12em}
+.eyebrow{font-size:12px;letter-spacing:.2em;color:var(--muted);margin:0 0 10px}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:6px;font:inherit;font-size:14px;font-weight:600;line-height:1.4;text-decoration:none;cursor:pointer;border:1.5px solid transparent;white-space:nowrap}
+.btn-primary{background:var(--accent);color:#fffaf2;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.btn-quiet{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn-link{color:var(--ink);padding:8px 0;border-bottom:1px solid var(--ink);border-radius:0;font-weight:500}
+.btn[disabled]{opacity:.7;cursor:progress}
+.plate{position:relative;background:var(--surface);padding:10px 10px 12px;border-radius:var(--radius);box-shadow:var(--shadow)}
+.plate .art{display:block;width:100%;height:auto;border-radius:2px}
+.tape::before,.tape::after{content:"";position:absolute;width:58px;height:18px;background:rgba(232,214,170,.75);z-index:1;top:-8px}
+.tape::before{left:16px;transform:rotate(-6deg)}.tape::after{right:16px;transform:rotate(5deg)}
+.tilt-l{transform:rotate(-1.2deg)}.tilt-r{transform:rotate(.8deg)}
+.cap{font-size:12px;color:var(--muted);margin-top:8px}
+.rule{border:0;border-top:1px dashed var(--rule);margin:0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;border:1px dashed var(--rule);border-radius:999px;padding:2px 10px;color:var(--muted)}
+/* 頁首 */
+.site-head{border-bottom:1px dashed var(--rule)}
+.site-head .wrap{display:flex;align-items:center;gap:24px;min-height:72px}
+.logo{font-weight:600;font-size:18px;text-decoration:none;color:var(--ink);margin-right:auto;line-height:1.3}
+.logo small{display:block;font-weight:400;font-size:10px;letter-spacing:.2em;color:var(--muted)}
+.nav{display:flex;gap:22px}
+.nav a{color:var(--ink);text-decoration:none;font-size:14px}
+.nav a:hover{color:var(--accent-ink)}
+.menu-btn{display:none;background:none;border:0;padding:8px;color:var(--ink);cursor:pointer}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--ink);text-decoration:none;font-size:14px}
+.drawer{display:none}
+.site-foot{padding:32px 0 48px;font-size:13px;color:var(--muted)}
+.site-foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;border-top:1px dashed var(--rule);padding-top:20px}
+@media (max-width:720px){
+  :root{--gutter:20px}
+  h1{font-size:28px}h2{font-size:20px}
+  .nav{display:none}
+  .menu-btn{display:inline-flex}
+  .site-head .wrap{gap:8px;min-height:60px}
+  .site-head .btn{padding:8px 14px}
+  .drawer.open{display:block;border-bottom:1px dashed var(--rule)}
+  .drawer a{display:block;padding:12px var(--gutter);color:var(--ink);text-decoration:none;border-top:1px dashed var(--rule)}
+}
+
+.a-intro{padding:28px 0 20px}
+.a-intro .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;align-items:end}
+.a-intro h1{font-size:26px}
+.a-intro p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.a-filter{display:flex;flex-wrap:wrap;gap:8px}
+.a-filter button{font:inherit;font-size:13px;padding:5px 14px;border-radius:999px;border:1px dashed var(--rule);background:transparent;color:var(--ink);cursor:pointer}
+.a-filter button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-style:solid;border-color:var(--ink)}
+.a-wall{columns:3;column-gap:20px;padding:12px 0 40px}
+.a-wall figure{break-inside:avoid;margin:0 0 20px}
+.a-wall figure[hidden]{display:none}
+.a-wall p{margin:6px 0 0;font-size:13px}
+.a-about{padding:40px 0;border-top:1px dashed var(--rule)}
+.a-about .wrap{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.a-about p{margin:0;color:var(--muted);max-width:40em}
+@media (max-width:720px){.a-wall{columns:2;column-gap:12px}.a-about .wrap{grid-template-columns:1fr}}
+.b-hero{padding:64px 0 56px}
+.b-hero .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:center}
+.b-hero .portrait{max-width:380px}
+.b-hero p.lead{font-size:17px;margin:18px 0 0;max-width:34em}
+.b-hero .actions{display:flex;flex-wrap:wrap;gap:14px 24px;margin-top:28px;align-items:center}
+.b-sec{padding:56px 0}
+.b-sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:28px}
+.b-kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.b-kinds div{border-top:1px dashed var(--rule);padding-top:16px}
+.b-kinds .i{color:var(--accent)}
+.b-kinds p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.b-case{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px;align-items:center;padding:28px 0}
+.b-case:nth-child(even) .plate{order:2}
+.b-case h3{font-size:20px;margin:4px 0 8px}
+.b-case p{margin:0 0 14px;color:var(--muted)}
+.b-case a.read{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none}
+.b-case a.read::after{content:"";position:absolute;inset:0}
+.b-case{position:relative}
+.b-case:hover h3{color:var(--accent-ink)}
+.b-more{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.b-more p{margin:6px 0 0;font-size:13px}
+.b-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s;padding:0;margin:0;list-style:none}
+.b-steps li{counter-increment:s;border-top:1px dashed var(--rule);padding-top:14px;font-size:14px;color:var(--muted)}
+.b-steps li::before{content:"0" counter(s);display:block;font-size:12px;letter-spacing:.2em;color:var(--accent-ink);font-weight:600}
+.b-steps b{display:block;color:var(--ink);font-size:15px}
+.b-contact{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.b-contact p{margin:6px 0 0;color:var(--muted)}
+.b-contact ul{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px;color:var(--muted)}
+.b-contact li{display:inline-flex;align-items:center;gap:6px}
+@media (max-width:720px){
+  .b-hero{padding:32px 0}
+  .b-hero .wrap,.b-case,.b-contact{grid-template-columns:1fr;gap:24px}
+  .b-hero .portrait{max-width:none}
+  .b-case:nth-child(even) .plate{order:0}
+  .b-kinds,.b-more{grid-template-columns:1fr;gap:16px}
+  .b-steps{grid-template-columns:1fr 1fr}
+  .b-sec{padding:40px 0}
+  .b-contact{padding:24px}
+}
+.c-hero{padding:48px 0 32px}
+.c-hero h1{max-width:18em}
+.c-hero p{color:var(--muted);margin:12px 0 22px;max-width:36em}
+.c-hero .actions{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.c-cases{display:grid;gap:28px;padding:24px 0 48px}
+.c-case{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow)}
+.c-case .art{display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--radius) 0 0 var(--radius)}
+.c-case div.txt{padding:28px}
+.c-case dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13px;margin:14px 0 0}
+.c-case dt{color:var(--muted)}.c-case dd{margin:0}
+.c-case p{margin:6px 0 0;color:var(--muted);font-size:14px}
+.c-form{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;padding:48px 0;border-top:1px dashed var(--rule)}
+.c-form ul{list-style:none;padding:0;margin:14px 0 0;font-size:14px;color:var(--muted);display:grid;gap:6px}
+.c-form li{display:flex;align-items:center;gap:8px}
+.c-form form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.c-form label{display:grid;gap:4px;font-size:13px;font-weight:600}
+.c-form .full{grid-column:1/-1}
+.c-form input,.c-form select,.c-form textarea{font:inherit;font-weight:400;font-size:14px;padding:9px 12px;border:1px solid var(--rule);border-radius:4px;background:#fffdf8;color:var(--ink)}
+@media (max-width:720px){.c-case,.c-form,.c-form form{grid-template-columns:1fr}.c-case .art{border-radius:var(--radius) var(--radius) 0 0}}
+.bar{position:sticky;top:0;z-index:10;background:#2b2622;color:#f5f0e6;padding:12px 24px;display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;font-size:13px;line-height:1.5}
+.bar h1{font-size:15px;margin:0}
+.bar p{margin:0;color:#cfc5b5;flex:1 1 320px}
+[role=tablist]{display:flex;flex-wrap:wrap;gap:6px}
+[role=tab]{font:inherit;font-size:13px;padding:7px 12px;border-radius:6px;border:1px solid #6a6056;background:transparent;color:#f5f0e6;cursor:pointer}
+[role=tab][aria-selected=true]{background:#f5f0e6;color:#2b2622}
+[role=tab]:focus-visible{outline:2px solid #f2c46b;outline-offset:2px}
+.dir:not(.on){display:none}
+.dir-meta{background:#fffdf8;border-bottom:1px solid var(--rule);padding:16px 24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:8px 32px;font-size:13px;line-height:1.7}
+.dir-meta b{font-size:15px}.dir-meta p{margin:2px 0 0;color:var(--muted)}
+.dir-meta dl{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:0}
+.dir-meta dt{font-weight:600}.dir-meta dd{margin:0;color:var(--muted)}
+.rec{background:#fffdf8;padding:16px 24px 24px;font-size:14px;border-top:1px solid var(--rule)}
+@media (max-width:720px){.bar{position:static;padding:10px 16px}.dir-meta{grid-template-columns:1fr;padding:14px 16px}.rec{padding:14px 16px}}
+</style>
+</head>
+<body>
+<div class="bar"><h1>結構方向比較 v1</h1><p>三個方向都套用視覺處理 2「工作室筆記」，同一批示例作品與文案，差在入口與資訊層級。畫面中的連結在這頁只是示意；可點的流程在 site-b 原型。</p>
+<div role="tablist" aria-label="切換結構方向"><button role="tab" id="tab-A" aria-controls="dir-A" data-d="A">A・作品牆先行</button><button role="tab" id="tab-B" aria-controls="dir-B" data-d="B">B・自介敘事</button><button role="tab" id="tab-C" aria-controls="dir-C" data-d="C">C・精選案例＋聯絡</button></div></div>
+
+<section class="dir" id="dir-A" data-d="A" role="tabpanel" aria-labelledby="tab-A">
+  <div class="dir-meta"><div><b>方向 A・作品牆先行</b><p>一打開就是作品牆，畫風先說話，自介與聯絡退到最後。</p></div><dl><dt>適合</dt><dd>已經有知名度、客戶是看圖來挑人的情況。</dd><dt>代價</dt><dd>「人」幾乎不見，和訪談答案「人和作品並重」衝突；聯絡入口只在頁尾，案例沒有脈絡。</dd></dl></div>
+  <div class="frame site"><header class="site-head"><div class="wrap">
+<a class="logo" href="#/">沈若禾<small>WATERCOLOUR</small></a>
+<nav class="nav" aria-label="主要導覽"><a href="#/" data-section="works">作品</a><a href="#/" data-section="about">關於我</a><a href="#/" data-section="process">合作方式</a></nav>
+<a class="btn btn-primary btn-contact" href="#"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>聯絡我</a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer-A" aria-label="開啟選單"><svg class="i" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" /></svg></button>
+</div>
+<nav class="drawer" id="drawer-A" aria-label="行動版導覽"><a href="#/" data-section="works">作品</a><a href="#/" data-section="about">關於我</a><a href="#/" data-section="process">合作方式</a></nav>
+</header><main>
+<section class="a-intro"><div class="wrap">
+  <div><h1 tabindex="-1">沈若禾・水彩插畫</h1><p>書籍封面、繪本、品牌包裝與雜誌插畫，台南。</p></div>
+  <div class="a-filter" role="group" aria-label="篩選作品">
+    <button type="button" aria-pressed="true" data-k="all">全部</button><button type="button" aria-pressed="false" data-k="book">書籍與繪本</button><button type="button" aria-pressed="false" data-k="brand">品牌與商品</button><button type="button" aria-pressed="false" data-k="mag">雜誌</button><button type="button" aria-pressed="false" data-k="own">個人創作</button>
+  </div>
+</div></section>
+<div class="wrap"><div class="a-wall"><figure data-kind="brand"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 5" role="img" aria-label="示例作品圖：山嵐茶室・四季禮盒"><defs><filter id="wc25" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="25"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc25b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc25p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f1efe6"/><g filter="url(#wc25b)" opacity=".55"><rect x="-20" y="-20" width="440" height="340" fill="#dfe6dc" fill-opacity="0.6"/><path d="M-20 220 L90 90 L200 200 L300 70 L430 210 L430 320 L-20 320 Z" fill="#6f8f6a" fill-opacity="0.55"/><path d="M-20 260 L120 160 L240 250 L330 170 L430 250 L430 320 L-20 320 Z" fill="#3f6a55" fill-opacity="0.65"/><rect x="-20" y="150" width="440" height="40" fill="#ffffff" fill-opacity="0.55"/><ellipse cx="90" cy="60" rx="26" ry="26" fill="#c9a24a" fill-opacity="0.6"/></g><g filter="url(#wc25)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="340" fill="#dfe6dc" fill-opacity="0.6"/><path d="M-20 220 L90 90 L200 200 L300 70 L430 210 L430 320 L-20 320 Z" fill="#6f8f6a" fill-opacity="0.55"/><path d="M-20 260 L120 160 L240 250 L330 170 L430 250 L430 320 L-20 320 Z" fill="#3f6a55" fill-opacity="0.65"/><rect x="-20" y="150" width="440" height="40" fill="#ffffff" fill-opacity="0.55"/><ellipse cx="90" cy="60" rx="26" ry="26" fill="#c9a24a" fill-opacity="0.6"/></g><rect width="400" height="300" filter="url(#wc25p)"/></svg></div><p><b>山嵐茶室・四季禮盒</b><br><span class="muted">品牌包裝・山嵐茶室</span></p></figure><figure data-kind="book"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：《海邊的郵差》"><defs><filter id="wc26" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="26"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc26b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc26p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f3f1ea"/><g filter="url(#wc26b)" opacity=".55"><rect x="-20" y="-20" width="440" height="150" fill="#a9cbd6" fill-opacity="0.6"/><rect x="-20" y="120" width="440" height="90" fill="#2f7f8a" fill-opacity="0.65"/><rect x="-20" y="200" width="440" height="120" fill="#e3cf9f" fill-opacity="0.7"/><ellipse cx="300" cy="55" rx="34" ry="34" fill="#f0b24a" fill-opacity="0.75"/><rect x="150" y="190" width="16" height="40" fill="#c23d34" fill-opacity="0.85"/><ellipse cx="158" cy="182" rx="10" ry="10" fill="#5a3a2a" fill-opacity="0.8"/><rect x="170" y="205" width="22" height="15" fill="#7a5a3a" fill-opacity="0.75"/></g><g filter="url(#wc26)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="150" fill="#a9cbd6" fill-opacity="0.6"/><rect x="-20" y="120" width="440" height="90" fill="#2f7f8a" fill-opacity="0.65"/><rect x="-20" y="200" width="440" height="120" fill="#e3cf9f" fill-opacity="0.7"/><ellipse cx="300" cy="55" rx="34" ry="34" fill="#f0b24a" fill-opacity="0.75"/><rect x="150" y="190" width="16" height="40" fill="#c23d34" fill-opacity="0.85"/><ellipse cx="158" cy="182" rx="10" ry="10" fill="#5a3a2a" fill-opacity="0.8"/><rect x="170" y="205" width="22" height="15" fill="#7a5a3a" fill-opacity="0.75"/></g><rect width="400" height="300" filter="url(#wc26p)"/></svg></div><p><b>《海邊的郵差》</b><br><span class="muted">繪本・32 頁・青田出版</span></p></figure><figure data-kind="mag"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:1 / 1" role="img" aria-label="示例作品圖：雨季市場"><defs><filter id="wc27" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="27"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc27b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc27p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#eef0ee"/><g filter="url(#wc27b)" opacity=".55"><rect x="-20" y="-20" width="440" height="340" fill="#8fa3b3" fill-opacity="0.45"/><path d="M20 170 Q90 90 160 170 Z" fill="#c4473a" fill-opacity="0.75"/><path d="M140 190 Q215 110 290 190 Z" fill="#2f6b7a" fill-opacity="0.75"/><path d="M260 160 Q330 90 400 160 Z" fill="#e0a43b" fill-opacity="0.75"/><rect x="-20" y="205" width="440" height="110" fill="#4c5a63" fill-opacity="0.45"/><ellipse cx="110" cy="240" rx="40" ry="18" fill="#d8763c" fill-opacity="0.7"/><ellipse cx="250" cy="250" rx="50" ry="16" fill="#6f9a4f" fill-opacity="0.7"/></g><g filter="url(#wc27)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="340" fill="#8fa3b3" fill-opacity="0.45"/><path d="M20 170 Q90 90 160 170 Z" fill="#c4473a" fill-opacity="0.75"/><path d="M140 190 Q215 110 290 190 Z" fill="#2f6b7a" fill-opacity="0.75"/><path d="M260 160 Q330 90 400 160 Z" fill="#e0a43b" fill-opacity="0.75"/><rect x="-20" y="205" width="440" height="110" fill="#4c5a63" fill-opacity="0.45"/><ellipse cx="110" cy="240" rx="40" ry="18" fill="#d8763c" fill-opacity="0.7"/><ellipse cx="250" cy="250" rx="50" ry="16" fill="#6f9a4f" fill-opacity="0.7"/></g><rect width="400" height="300" filter="url(#wc27p)"/></svg></div><p><b>雨季市場</b><br><span class="muted">雜誌內頁・《城南生活》</span></p></figure><figure data-kind="book"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:3 / 4" role="img" aria-label="示例作品圖：老屋的午後"><defs><filter id="wc28" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="28"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc28b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc28p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f6efe3"/><g filter="url(#wc28b)" opacity=".55"><rect x="-20" y="-20" width="440" height="170" fill="#f2c46b" fill-opacity="0.55"/><rect x="120" y="120" width="170" height="140" fill="#c8673f" fill-opacity="0.75"/><path d="M100 130 L205 60 L310 130 Z" fill="#5b3b2e" fill-opacity="0.7"/><rect x="150" y="160" width="40" height="46" fill="#3f6f8f" fill-opacity="0.75"/><rect x="220" y="175" width="38" height="85" fill="#3b2a22" fill-opacity="0.6"/><ellipse cx="335" cy="170" rx="70" ry="85" fill="#5f8a4a" fill-opacity="0.65"/><ellipse cx="60" cy="210" rx="60" ry="55" fill="#7fa35a" fill-opacity="0.55"/><rect x="-20" y="255" width="440" height="70" fill="#b9a27e" fill-opacity="0.5"/></g><g filter="url(#wc28)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="170" fill="#f2c46b" fill-opacity="0.55"/><rect x="120" y="120" width="170" height="140" fill="#c8673f" fill-opacity="0.75"/><path d="M100 130 L205 60 L310 130 Z" fill="#5b3b2e" fill-opacity="0.7"/><rect x="150" y="160" width="40" height="46" fill="#3f6f8f" fill-opacity="0.75"/><rect x="220" y="175" width="38" height="85" fill="#3b2a22" fill-opacity="0.6"/><ellipse cx="335" cy="170" rx="70" ry="85" fill="#5f8a4a" fill-opacity="0.65"/><ellipse cx="60" cy="210" rx="60" ry="55" fill="#7fa35a" fill-opacity="0.55"/><rect x="-20" y="255" width="440" height="70" fill="#b9a27e" fill-opacity="0.5"/></g><rect width="400" height="300" filter="url(#wc28p)"/></svg></div><p><b>老屋的午後</b><br><span class="muted">書籍封面・青田出版</span></p></figure><figure data-kind="own"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：窗台植物小誌"><defs><filter id="wc29" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="29"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc29b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc29p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f5f2e9"/><g filter="url(#wc29b)" opacity=".55"><ellipse cx="140" cy="120" rx="30" ry="80" fill="#5d8a4c" fill-opacity="0.65" transform="rotate(-25 140 120)"/><ellipse cx="210" cy="140" rx="28" ry="90" fill="#7aa860" fill-opacity="0.6" transform="rotate(15 210 140)"/><ellipse cx="280" cy="160" rx="24" ry="70" fill="#3d6e4a" fill-opacity="0.6" transform="rotate(40 280 160)"/><ellipse cx="240" cy="70" rx="22" ry="22" fill="#d4685a" fill-opacity="0.7"/><rect x="205" y="160" width="6" height="120" fill="#4b5d3a" fill-opacity="0.7"/></g><g filter="url(#wc29)" style="mix-blend-mode:multiply" opacity=".9"><ellipse cx="140" cy="120" rx="30" ry="80" fill="#5d8a4c" fill-opacity="0.65" transform="rotate(-25 140 120)"/><ellipse cx="210" cy="140" rx="28" ry="90" fill="#7aa860" fill-opacity="0.6" transform="rotate(15 210 140)"/><ellipse cx="280" cy="160" rx="24" ry="70" fill="#3d6e4a" fill-opacity="0.6" transform="rotate(40 280 160)"/><ellipse cx="240" cy="70" rx="22" ry="22" fill="#d4685a" fill-opacity="0.7"/><rect x="205" y="160" width="6" height="120" fill="#4b5d3a" fill-opacity="0.7"/></g><rect width="400" height="300" filter="url(#wc29p)"/></svg></div><p><b>窗台植物小誌</b><br><span class="muted">個人創作・自主出版</span></p></figure><figure data-kind="brand"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 5" role="img" aria-label="示例作品圖：2026 節氣月曆"><defs><filter id="wc30" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="30"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc30b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc30p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f7f0e2"/><g filter="url(#wc30b)" opacity=".55"><rect x="-20" y="-20" width="440" height="200" fill="#f3d9a8" fill-opacity="0.6"/><ellipse cx="200" cy="120" rx="55" ry="55" fill="#e07b3c" fill-opacity="0.7"/><rect x="-20" y="180" width="440" height="40" fill="#9cb35a" fill-opacity="0.6"/><rect x="-20" y="215" width="440" height="40" fill="#c9b04f" fill-opacity="0.6"/><rect x="-20" y="250" width="440" height="80" fill="#7d8f45" fill-opacity="0.6"/></g><g filter="url(#wc30)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="200" fill="#f3d9a8" fill-opacity="0.6"/><ellipse cx="200" cy="120" rx="55" ry="55" fill="#e07b3c" fill-opacity="0.7"/><rect x="-20" y="180" width="440" height="40" fill="#9cb35a" fill-opacity="0.6"/><rect x="-20" y="215" width="440" height="40" fill="#c9b04f" fill-opacity="0.6"/><rect x="-20" y="250" width="440" height="80" fill="#7d8f45" fill-opacity="0.6"/></g><rect width="400" height="300" filter="url(#wc30p)"/></svg></div><p><b>2026 節氣月曆</b><br><span class="muted">周邊商品・禾田選物</span></p></figure></div></div>
+<section class="a-about"><div class="wrap"><p>我是沈若禾，在台南畫水彩第十一年。接書籍、包裝與雜誌委託，兩個工作天內回信。</p><a class="btn btn-primary" href="#"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>寫信給我</a></div></section></main><footer class="site-foot"><div class="wrap"><span>© 2026 沈若禾（示例）</span><span>台南・hello@ruohe-studio.example</span></div></footer></div>
+</section>
+<section class="dir" id="dir-B" data-d="B" role="tabpanel" aria-labelledby="tab-B">
+  <div class="dir-meta"><div><b>方向 B・自介敘事</b><p>先認識畫畫的人，再讀她挑出的三個案子，最後才是聯絡。</p></div><dl><dt>適合</dt><dd>客戶要先信任人再委託，例如出版社挑長期合作的繪者。</dd><dt>代價</dt><dd>首頁較長，看圖的人要多捲一段；聯絡放在敘事末端，案例頁需要自己的聯絡入口。</dd></dl></div>
+  <div class="frame site"><header class="site-head"><div class="wrap">
+<a class="logo" href="#/">沈若禾<small>WATERCOLOUR</small></a>
+<nav class="nav" aria-label="主要導覽"><a href="#/" data-section="works">作品</a><a href="#/" data-section="about">關於我</a><a href="#/" data-section="process">合作方式</a></nav>
+<a class="btn btn-primary btn-contact" href="#"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>聯絡我</a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer-B" aria-label="開啟選單"><svg class="i" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" /></svg></button>
+</div>
+<nav class="drawer" id="drawer-B" aria-label="行動版導覽"><a href="#/" data-section="works">作品</a><a href="#/" data-section="about">關於我</a><a href="#/" data-section="process">合作方式</a></nav>
+</header><main>
+<section class="b-hero" id="B-about"><div class="wrap">
+  <figure class="portrait" style="margin:0"><div class="plate tape tilt-l"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 5" role="img" aria-label="示例作品圖：畫家自畫像"><defs><filter id="wc37" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="37"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc37b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc37p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f4ede2"/><g filter="url(#wc37b)" opacity=".55"><rect x="-20" y="-20" width="440" height="340" fill="#e7d2b4" fill-opacity="0.5"/><ellipse cx="200" cy="130" rx="62" ry="74" fill="#e3b48f" fill-opacity="0.75"/><path d="M130 120 Q140 40 205 45 Q270 45 275 130 Q250 80 200 85 Q150 85 130 120 Z" fill="#3a2b26" fill-opacity="0.8"/><path d="M90 320 Q100 220 200 210 Q300 220 310 320 Z" fill="#5c7a8a" fill-opacity="0.7"/><ellipse cx="330" cy="70" rx="40" ry="40" fill="#c98a5a" fill-opacity="0.35"/></g><g filter="url(#wc37)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="340" fill="#e7d2b4" fill-opacity="0.5"/><ellipse cx="200" cy="130" rx="62" ry="74" fill="#e3b48f" fill-opacity="0.75"/><path d="M130 120 Q140 40 205 45 Q270 45 275 130 Q250 80 200 85 Q150 85 130 120 Z" fill="#3a2b26" fill-opacity="0.8"/><path d="M90 320 Q100 220 200 210 Q300 220 310 320 Z" fill="#5c7a8a" fill-opacity="0.7"/><ellipse cx="330" cy="70" rx="40" ry="40" fill="#c98a5a" fill-opacity="0.35"/></g><rect width="400" height="300" filter="url(#wc37p)"/></svg></div><figcaption class="cap">自畫像，2026（示例圖）</figcaption></figure>
+  <div>
+    <p class="eyebrow">台南・水彩插畫家</p>
+    <h1 tabindex="-1">我是沈若禾，<br>在台南畫<span class="mark">水彩</span>的第十一年。</h1>
+    <p class="lead">我替出版社、品牌和雜誌畫封面、包裝與內頁。喜歡慢慢觀察，畫之前會先到現場坐一會兒；也在意準時，十一年來沒有拖過一次稿。</p>
+    <div class="actions"><a class="btn btn-quiet" href="#/" data-section="works"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v16" /><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" /></svg>先看三個案子</a></div>
+  </div>
+</div></section>
+<hr class="rule">
+<section class="b-sec"><div class="wrap">
+  <div class="b-sec-head"><h2>我畫什麼</h2></div>
+  <div class="b-kinds">
+    <div><svg class="i" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v16" /><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" /></svg><h3>書籍封面與繪本</h3><p>從角色設定到全書跨頁，配合印刷打樣。</p></div>
+    <div><svg class="i" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" /><circle cx="13.5" cy="6.5" r=".5" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".5" fill="currentColor" /><circle cx="6.5" cy="12.5" r=".5" fill="currentColor" /><circle cx="8.5" cy="7.5" r=".5" fill="currentColor" /></svg><h3>品牌包裝</h3><p>禮盒、提袋、標籤，一套插畫延伸成系列。</p></div>
+    <div><svg class="i" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m11 10 3 3" /><path d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z" /><path d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031" /></svg><h3>雜誌與編輯插畫</h3><p>專題主圖與內頁，可配合三週內的短檔期。</p></div>
+  </div>
+</div></section>
+<section class="b-sec" id="B-works"><div class="wrap">
+  <div class="b-sec-head"><h2>最近的三個案子</h2><span class="chip"><svg class="i" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></svg>共 6 件作品</span></div>
+  <article class="b-case">
+  <div class="plate tape tilt-l"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：山嵐茶室・四季禮盒"><defs><filter id="wc31" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="31"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc31b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc31p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f1efe6"/><g filter="url(#wc31b)" opacity=".55"><rect x="-20" y="-20" width="440" height="340" fill="#dfe6dc" fill-opacity="0.6"/><path d="M-20 220 L90 90 L200 200 L300 70 L430 210 L430 320 L-20 320 Z" fill="#6f8f6a" fill-opacity="0.55"/><path d="M-20 260 L120 160 L240 250 L330 170 L430 250 L430 320 L-20 320 Z" fill="#3f6a55" fill-opacity="0.65"/><rect x="-20" y="150" width="440" height="40" fill="#ffffff" fill-opacity="0.55"/><ellipse cx="90" cy="60" rx="26" ry="26" fill="#c9a24a" fill-opacity="0.6"/></g><g filter="url(#wc31)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="340" fill="#dfe6dc" fill-opacity="0.6"/><path d="M-20 220 L90 90 L200 200 L300 70 L430 210 L430 320 L-20 320 Z" fill="#6f8f6a" fill-opacity="0.55"/><path d="M-20 260 L120 160 L240 250 L330 170 L430 250 L430 320 L-20 320 Z" fill="#3f6a55" fill-opacity="0.65"/><rect x="-20" y="150" width="440" height="40" fill="#ffffff" fill-opacity="0.55"/><ellipse cx="90" cy="60" rx="26" ry="26" fill="#c9a24a" fill-opacity="0.6"/></g><rect width="400" height="300" filter="url(#wc31p)"/></svg></div>
+  <div><p class="eyebrow">品牌包裝・山嵐茶室・2026</p><h3>山嵐茶室・四季禮盒</h3><p>一間做了三十年高山茶的茶行，想讓年輕客人在送禮時也會拿起它。</p>
+  <a class="read" href="#/case/teahouse">讀這個案子<svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></a></div>
+</article><article class="b-case">
+  <div class="plate tape tilt-r"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：《海邊的郵差》"><defs><filter id="wc32" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="32"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc32b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc32p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f3f1ea"/><g filter="url(#wc32b)" opacity=".55"><rect x="-20" y="-20" width="440" height="150" fill="#a9cbd6" fill-opacity="0.6"/><rect x="-20" y="120" width="440" height="90" fill="#2f7f8a" fill-opacity="0.65"/><rect x="-20" y="200" width="440" height="120" fill="#e3cf9f" fill-opacity="0.7"/><ellipse cx="300" cy="55" rx="34" ry="34" fill="#f0b24a" fill-opacity="0.75"/><rect x="150" y="190" width="16" height="40" fill="#c23d34" fill-opacity="0.85"/><ellipse cx="158" cy="182" rx="10" ry="10" fill="#5a3a2a" fill-opacity="0.8"/><rect x="170" y="205" width="22" height="15" fill="#7a5a3a" fill-opacity="0.75"/></g><g filter="url(#wc32)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="150" fill="#a9cbd6" fill-opacity="0.6"/><rect x="-20" y="120" width="440" height="90" fill="#2f7f8a" fill-opacity="0.65"/><rect x="-20" y="200" width="440" height="120" fill="#e3cf9f" fill-opacity="0.7"/><ellipse cx="300" cy="55" rx="34" ry="34" fill="#f0b24a" fill-opacity="0.75"/><rect x="150" y="190" width="16" height="40" fill="#c23d34" fill-opacity="0.85"/><ellipse cx="158" cy="182" rx="10" ry="10" fill="#5a3a2a" fill-opacity="0.8"/><rect x="170" y="205" width="22" height="15" fill="#7a5a3a" fill-opacity="0.75"/></g><rect width="400" height="300" filter="url(#wc32p)"/></svg></div>
+  <div><p class="eyebrow">繪本・32 頁・青田出版・2025</p><h3>《海邊的郵差》</h3><p>一本關於等待的繪本：小鎮郵差每天把信送到海邊，直到有一天信寄給了他自己。</p>
+  <a class="read" href="#/case/postman">讀這個案子<svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></a></div>
+</article><article class="b-case">
+  <div class="plate tape tilt-l"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：雨季市場"><defs><filter id="wc33" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="33"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc33b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc33p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#eef0ee"/><g filter="url(#wc33b)" opacity=".55"><rect x="-20" y="-20" width="440" height="340" fill="#8fa3b3" fill-opacity="0.45"/><path d="M20 170 Q90 90 160 170 Z" fill="#c4473a" fill-opacity="0.75"/><path d="M140 190 Q215 110 290 190 Z" fill="#2f6b7a" fill-opacity="0.75"/><path d="M260 160 Q330 90 400 160 Z" fill="#e0a43b" fill-opacity="0.75"/><rect x="-20" y="205" width="440" height="110" fill="#4c5a63" fill-opacity="0.45"/><ellipse cx="110" cy="240" rx="40" ry="18" fill="#d8763c" fill-opacity="0.7"/><ellipse cx="250" cy="250" rx="50" ry="16" fill="#6f9a4f" fill-opacity="0.7"/></g><g filter="url(#wc33)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="340" fill="#8fa3b3" fill-opacity="0.45"/><path d="M20 170 Q90 90 160 170 Z" fill="#c4473a" fill-opacity="0.75"/><path d="M140 190 Q215 110 290 190 Z" fill="#2f6b7a" fill-opacity="0.75"/><path d="M260 160 Q330 90 400 160 Z" fill="#e0a43b" fill-opacity="0.75"/><rect x="-20" y="205" width="440" height="110" fill="#4c5a63" fill-opacity="0.45"/><ellipse cx="110" cy="240" rx="40" ry="18" fill="#d8763c" fill-opacity="0.7"/><ellipse cx="250" cy="250" rx="50" ry="16" fill="#6f9a4f" fill-opacity="0.7"/></g><rect width="400" height="300" filter="url(#wc33p)"/></svg></div>
+  <div><p class="eyebrow">雜誌內頁・《城南生活》・2025</p><h3>雨季市場</h3><p>雜誌的雨季專題，需要六張插畫把一座傳統市場的潮濕與熱鬧畫出來。</p>
+  <a class="read" href="#/case/market">讀這個案子<svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></a></div>
+</article>
+  <div class="b-sec-head" style="margin-top:36px"><h3>其他作品</h3></div>
+  <div class="b-more"><figure style="margin:0"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：老屋的午後"><defs><filter id="wc34" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="34"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc34b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc34p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f6efe3"/><g filter="url(#wc34b)" opacity=".55"><rect x="-20" y="-20" width="440" height="170" fill="#f2c46b" fill-opacity="0.55"/><rect x="120" y="120" width="170" height="140" fill="#c8673f" fill-opacity="0.75"/><path d="M100 130 L205 60 L310 130 Z" fill="#5b3b2e" fill-opacity="0.7"/><rect x="150" y="160" width="40" height="46" fill="#3f6f8f" fill-opacity="0.75"/><rect x="220" y="175" width="38" height="85" fill="#3b2a22" fill-opacity="0.6"/><ellipse cx="335" cy="170" rx="70" ry="85" fill="#5f8a4a" fill-opacity="0.65"/><ellipse cx="60" cy="210" rx="60" ry="55" fill="#7fa35a" fill-opacity="0.55"/><rect x="-20" y="255" width="440" height="70" fill="#b9a27e" fill-opacity="0.5"/></g><g filter="url(#wc34)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="170" fill="#f2c46b" fill-opacity="0.55"/><rect x="120" y="120" width="170" height="140" fill="#c8673f" fill-opacity="0.75"/><path d="M100 130 L205 60 L310 130 Z" fill="#5b3b2e" fill-opacity="0.7"/><rect x="150" y="160" width="40" height="46" fill="#3f6f8f" fill-opacity="0.75"/><rect x="220" y="175" width="38" height="85" fill="#3b2a22" fill-opacity="0.6"/><ellipse cx="335" cy="170" rx="70" ry="85" fill="#5f8a4a" fill-opacity="0.65"/><ellipse cx="60" cy="210" rx="60" ry="55" fill="#7fa35a" fill-opacity="0.55"/><rect x="-20" y="255" width="440" height="70" fill="#b9a27e" fill-opacity="0.5"/></g><rect width="400" height="300" filter="url(#wc34p)"/></svg></div><p><b>老屋的午後</b><br><span class="muted">書籍封面・2024</span></p></figure><figure style="margin:0"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：窗台植物小誌"><defs><filter id="wc35" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="35"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc35b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc35p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f5f2e9"/><g filter="url(#wc35b)" opacity=".55"><ellipse cx="140" cy="120" rx="30" ry="80" fill="#5d8a4c" fill-opacity="0.65" transform="rotate(-25 140 120)"/><ellipse cx="210" cy="140" rx="28" ry="90" fill="#7aa860" fill-opacity="0.6" transform="rotate(15 210 140)"/><ellipse cx="280" cy="160" rx="24" ry="70" fill="#3d6e4a" fill-opacity="0.6" transform="rotate(40 280 160)"/><ellipse cx="240" cy="70" rx="22" ry="22" fill="#d4685a" fill-opacity="0.7"/><rect x="205" y="160" width="6" height="120" fill="#4b5d3a" fill-opacity="0.7"/></g><g filter="url(#wc35)" style="mix-blend-mode:multiply" opacity=".9"><ellipse cx="140" cy="120" rx="30" ry="80" fill="#5d8a4c" fill-opacity="0.65" transform="rotate(-25 140 120)"/><ellipse cx="210" cy="140" rx="28" ry="90" fill="#7aa860" fill-opacity="0.6" transform="rotate(15 210 140)"/><ellipse cx="280" cy="160" rx="24" ry="70" fill="#3d6e4a" fill-opacity="0.6" transform="rotate(40 280 160)"/><ellipse cx="240" cy="70" rx="22" ry="22" fill="#d4685a" fill-opacity="0.7"/><rect x="205" y="160" width="6" height="120" fill="#4b5d3a" fill-opacity="0.7"/></g><rect width="400" height="300" filter="url(#wc35p)"/></svg></div><p><b>窗台植物小誌</b><br><span class="muted">個人創作・2024</span></p></figure><figure style="margin:0"><div class="plate"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：2026 節氣月曆"><defs><filter id="wc36" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="36"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc36b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc36p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f7f0e2"/><g filter="url(#wc36b)" opacity=".55"><rect x="-20" y="-20" width="440" height="200" fill="#f3d9a8" fill-opacity="0.6"/><ellipse cx="200" cy="120" rx="55" ry="55" fill="#e07b3c" fill-opacity="0.7"/><rect x="-20" y="180" width="440" height="40" fill="#9cb35a" fill-opacity="0.6"/><rect x="-20" y="215" width="440" height="40" fill="#c9b04f" fill-opacity="0.6"/><rect x="-20" y="250" width="440" height="80" fill="#7d8f45" fill-opacity="0.6"/></g><g filter="url(#wc36)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="200" fill="#f3d9a8" fill-opacity="0.6"/><ellipse cx="200" cy="120" rx="55" ry="55" fill="#e07b3c" fill-opacity="0.7"/><rect x="-20" y="180" width="440" height="40" fill="#9cb35a" fill-opacity="0.6"/><rect x="-20" y="215" width="440" height="40" fill="#c9b04f" fill-opacity="0.6"/><rect x="-20" y="250" width="440" height="80" fill="#7d8f45" fill-opacity="0.6"/></g><rect width="400" height="300" filter="url(#wc36p)"/></svg></div><p><b>2026 節氣月曆</b><br><span class="muted">周邊商品・2025</span></p></figure></div>
+</div></section>
+<section class="b-sec" id="B-process"><div class="wrap">
+  <div class="b-sec-head"><h2>合作方式</h2></div>
+  <ol class="b-steps">
+    <li><b>來信聊聊</b>告訴我用途、尺寸與時程，兩個工作天內回覆。</li>
+    <li><b>報價與檔期</b>確認範圍後給報價，訂金 30% 後排入檔期。</li>
+    <li><b>草稿兩輪</b>黑白草稿確認構圖，最多兩輪修改。</li>
+    <li><b>上色與交件</b>交付高解析檔與原畫掃描，可協助打樣。</li>
+  </ol>
+</div></section>
+<section class="b-sec" id="B-contact"><div class="wrap">
+  <div class="b-contact">
+    <div><h2>有想畫的東西嗎？</h2><p>寫信給我，說說用途、尺寸和希望的時間。</p>
+    <ul><li><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>兩個工作天內回覆</li><li><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /></svg>2027 年 1 月起有檔期</li><li><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg>台南，可遠端合作</li></ul></div>
+    <a class="btn btn-primary" href="#/contact"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></svg>填寫詢問表單</a>
+  </div>
+</div></section></main><footer class="site-foot"><div class="wrap"><span>© 2026 沈若禾（示例）</span><span>台南・hello@ruohe-studio.example</span></div></footer></div>
+</section>
+<section class="dir" id="dir-C" data-d="C" role="tabpanel" aria-labelledby="tab-C">
+  <div class="dir-meta"><div><b>方向 C・精選案例＋聯絡</b><p>首頁就是三個帶成果的案例，加一張直接詢問檔期的表單。</p></div><dl><dt>適合</dt><dd>轉換優先、客戶是品牌行銷窗口，習慣先看成果數字。</dd><dt>代價</dt><dd>語氣偏業務，和「安靜、手作感」有落差；成果數字需要真實資料才撐得住。</dd></dl></div>
+  <div class="frame site"><header class="site-head"><div class="wrap">
+<a class="logo" href="#/">沈若禾<small>WATERCOLOUR</small></a>
+<nav class="nav" aria-label="主要導覽"><a href="#/" data-section="works">作品</a><a href="#/" data-section="about">關於我</a><a href="#/" data-section="process">合作方式</a></nav>
+<a class="btn btn-primary btn-contact" href="#"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg>聯絡我</a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer-C" aria-label="開啟選單"><svg class="i" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" /></svg></button>
+</div>
+<nav class="drawer" id="drawer-C" aria-label="行動版導覽"><a href="#/" data-section="works">作品</a><a href="#/" data-section="about">關於我</a><a href="#/" data-section="process">合作方式</a></nav>
+</header><main>
+<section class="c-hero"><div class="wrap">
+  <p class="eyebrow">台南・水彩插畫家</p>
+  <h1 tabindex="-1">替出版社與品牌畫<span class="mark">水彩</span>：封面、包裝、繪本。</h1>
+  <p>十一年、四十多個委託，沒有拖過一次稿。下面是最近三個案子，以及直接寫信給我的表單。</p>
+  <div class="actions"><a class="btn btn-primary" href="#c-form"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></svg>直接詢問檔期</a><a class="btn-link btn" href="#c-cases">看案例<svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></a></div>
+</div></section>
+<div class="wrap"><div class="c-cases" id="c-cases"><article class="c-case"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：山嵐茶室・四季禮盒"><defs><filter id="wc38" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="38"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc38b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc38p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f1efe6"/><g filter="url(#wc38b)" opacity=".55"><rect x="-20" y="-20" width="440" height="340" fill="#dfe6dc" fill-opacity="0.6"/><path d="M-20 220 L90 90 L200 200 L300 70 L430 210 L430 320 L-20 320 Z" fill="#6f8f6a" fill-opacity="0.55"/><path d="M-20 260 L120 160 L240 250 L330 170 L430 250 L430 320 L-20 320 Z" fill="#3f6a55" fill-opacity="0.65"/><rect x="-20" y="150" width="440" height="40" fill="#ffffff" fill-opacity="0.55"/><ellipse cx="90" cy="60" rx="26" ry="26" fill="#c9a24a" fill-opacity="0.6"/></g><g filter="url(#wc38)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="340" fill="#dfe6dc" fill-opacity="0.6"/><path d="M-20 220 L90 90 L200 200 L300 70 L430 210 L430 320 L-20 320 Z" fill="#6f8f6a" fill-opacity="0.55"/><path d="M-20 260 L120 160 L240 250 L330 170 L430 250 L430 320 L-20 320 Z" fill="#3f6a55" fill-opacity="0.65"/><rect x="-20" y="150" width="440" height="40" fill="#ffffff" fill-opacity="0.55"/><ellipse cx="90" cy="60" rx="26" ry="26" fill="#c9a24a" fill-opacity="0.6"/></g><rect width="400" height="300" filter="url(#wc38p)"/></svg><div class="txt"><p class="eyebrow">品牌包裝</p><h2>山嵐茶室・四季禮盒</h2><p>一間做了三十年高山茶的茶行，想讓年輕客人在送禮時也會拿起它。</p>
+<dl><dt>客戶</dt><dd>山嵐茶室（虛構）</dd><dt>時程</dt><dd>2026 年 2 月至 4 月，共 9 週</dd><dt>成果</dt><dd>門市反映年輕客人主動拍照；插畫延伸到網站與提袋</dd></dl></div></article><article class="c-case"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：《海邊的郵差》"><defs><filter id="wc39" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="39"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc39b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc39p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#f3f1ea"/><g filter="url(#wc39b)" opacity=".55"><rect x="-20" y="-20" width="440" height="150" fill="#a9cbd6" fill-opacity="0.6"/><rect x="-20" y="120" width="440" height="90" fill="#2f7f8a" fill-opacity="0.65"/><rect x="-20" y="200" width="440" height="120" fill="#e3cf9f" fill-opacity="0.7"/><ellipse cx="300" cy="55" rx="34" ry="34" fill="#f0b24a" fill-opacity="0.75"/><rect x="150" y="190" width="16" height="40" fill="#c23d34" fill-opacity="0.85"/><ellipse cx="158" cy="182" rx="10" ry="10" fill="#5a3a2a" fill-opacity="0.8"/><rect x="170" y="205" width="22" height="15" fill="#7a5a3a" fill-opacity="0.75"/></g><g filter="url(#wc39)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="150" fill="#a9cbd6" fill-opacity="0.6"/><rect x="-20" y="120" width="440" height="90" fill="#2f7f8a" fill-opacity="0.65"/><rect x="-20" y="200" width="440" height="120" fill="#e3cf9f" fill-opacity="0.7"/><ellipse cx="300" cy="55" rx="34" ry="34" fill="#f0b24a" fill-opacity="0.75"/><rect x="150" y="190" width="16" height="40" fill="#c23d34" fill-opacity="0.85"/><ellipse cx="158" cy="182" rx="10" ry="10" fill="#5a3a2a" fill-opacity="0.8"/><rect x="170" y="205" width="22" height="15" fill="#7a5a3a" fill-opacity="0.75"/></g><rect width="400" height="300" filter="url(#wc39p)"/></svg><div class="txt"><p class="eyebrow">繪本・32 頁</p><h2>《海邊的郵差》</h2><p>一本關於等待的繪本：小鎮郵差每天把信送到海邊，直到有一天信寄給了他自己。</p>
+<dl><dt>客戶</dt><dd>青田出版（虛構）</dd><dt>時程</dt><dd>2025 年 3 月至 9 月，共 6 個月</dd><dt>成果</dt><dd>首刷 3,000 本；打樣三次控制印刷色差</dd></dl></div></article><article class="c-case"><svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="aspect-ratio:4 / 3" role="img" aria-label="示例作品圖：雨季市場"><defs><filter id="wc40" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="40"/><feDisplacementMap in="SourceGraphic" scale="18"/><feGaussianBlur stdDeviation="0.8"/></filter><filter id="wc40b" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter><filter id="wc40p"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0.10 0"/></filter></defs><rect width="400" height="300" fill="#eef0ee"/><g filter="url(#wc40b)" opacity=".55"><rect x="-20" y="-20" width="440" height="340" fill="#8fa3b3" fill-opacity="0.45"/><path d="M20 170 Q90 90 160 170 Z" fill="#c4473a" fill-opacity="0.75"/><path d="M140 190 Q215 110 290 190 Z" fill="#2f6b7a" fill-opacity="0.75"/><path d="M260 160 Q330 90 400 160 Z" fill="#e0a43b" fill-opacity="0.75"/><rect x="-20" y="205" width="440" height="110" fill="#4c5a63" fill-opacity="0.45"/><ellipse cx="110" cy="240" rx="40" ry="18" fill="#d8763c" fill-opacity="0.7"/><ellipse cx="250" cy="250" rx="50" ry="16" fill="#6f9a4f" fill-opacity="0.7"/></g><g filter="url(#wc40)" style="mix-blend-mode:multiply" opacity=".9"><rect x="-20" y="-20" width="440" height="340" fill="#8fa3b3" fill-opacity="0.45"/><path d="M20 170 Q90 90 160 170 Z" fill="#c4473a" fill-opacity="0.75"/><path d="M140 190 Q215 110 290 190 Z" fill="#2f6b7a" fill-opacity="0.75"/><path d="M260 160 Q330 90 400 160 Z" fill="#e0a43b" fill-opacity="0.75"/><rect x="-20" y="205" width="440" height="110" fill="#4c5a63" fill-opacity="0.45"/><ellipse cx="110" cy="240" rx="40" ry="18" fill="#d8763c" fill-opacity="0.7"/><ellipse cx="250" cy="250" rx="50" ry="16" fill="#6f9a4f" fill-opacity="0.7"/></g><rect width="400" height="300" filter="url(#wc40p)"/></svg><div class="txt"><p class="eyebrow">雜誌內頁</p><h2>雨季市場</h2><p>雜誌的雨季專題，需要六張插畫把一座傳統市場的潮濕與熱鬧畫出來。</p>
+<dl><dt>客戶</dt><dd>《城南生活》雜誌（虛構）</dd><dt>時程</dt><dd>2025 年 5 月，共 3 週</dd><dt>成果</dt><dd>比截稿早兩天交出；原圖被做成攤位海報</dd></dl></div></article></div>
+<section class="c-form" id="c-form"><div><h2>詢問檔期</h2><p class="muted" style="margin:6px 0 0">填完送出就好，不必先寄信。</p><ul><li><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>兩個工作天內回覆</li><li><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 2v3" /><path d="M16 2v3" /><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18" /></svg>2027 年 1 月起有檔期</li></ul></div>
+<form onsubmit="return false"><label>名字<input autocomplete="name"></label><label>Email<input type="email" autocomplete="email"></label><label class="full">案件類型<select><option>書籍封面</option><option>繪本</option><option>品牌包裝</option><option>雜誌插畫</option></select></label><label class="full">想畫什麼<textarea rows="4"></textarea></label><div class="full"><button class="btn btn-primary" type="button"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /><path d="m21.854 2.147-10.94 10.939" /></svg>送出詢問（示意）</button></div></form>
+</section></div></main><footer class="site-foot"><div class="wrap"><span>© 2026 沈若禾（示例）</span><span>台南・hello@ruohe-studio.example</span></div></footer></div>
+</section>
+<section class="rec"><b>設計師建議：B。</b>訪談答案是「人和作品並重」、氣質是「安靜、手作感、可信」；B 讓人先被認識，再用三個有脈絡的案子建立可信度。C 的轉換最直接，但語氣偏業務，可借用它「案例後就有聯絡入口」的做法。A 最快看到畫風，但把人藏起來了。</section>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  function show(d){
+    if(!/^[ABC]$/.test(d))d='A';
+    tabs.forEach(function(t){var on=t.dataset.d===d;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1});
+    document.querySelectorAll('.dir').forEach(function(s){s.classList.toggle('on',s.dataset.d===d)});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){history.replaceState(null,'','#'+t.dataset.d);show(t.dataset.d)});
+    t.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(!d)return;var n=tabs[(i+d+tabs.length)%tabs.length];n.focus();n.click()});
+  });
+  // 比較頁只示意結構：連結不跳轉，但 A 的篩選與選單可操作
+  document.querySelectorAll('.frame a').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault()})});
+  document.querySelectorAll('.a-filter').forEach(function(g){
+    g.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+      g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+      g.closest('.frame').querySelectorAll('.a-wall figure').forEach(function(f){f.hidden=b.dataset.k!=='all'&&f.dataset.kind!==b.dataset.k});
+    });
+  });
+  document.querySelectorAll('.menu-btn').forEach(function(b){b.addEventListener('click',function(){var d=document.getElementById(b.getAttribute('aria-controls'));var o=d.classList.toggle('open');b.setAttribute('aria-expanded',o)})});
+  show(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>
