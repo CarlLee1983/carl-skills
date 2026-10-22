@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向 B 待審清單｜dbcli 稽核審查原型</title>
+<style>
+/* 結構比較用的中性樣式：灰階加一個強調色，視覺語言留到選定結構之後。 */
+:root {
+  --bg: #f4f4f5; --surface: #ffffff; --surface-2: #fafafa; --ink: #18181b; --muted: #5f5f68; --faint: #8b8b94;
+  --line: #e4e4e7; --line-2: #d4d4d8; --accent: #2b59c3; --accent-soft: #eef2fc; --accent-ink: #ffffff;
+  --warn: #9a5b00; --warn-soft: #fff5e1; --bad: #b42318; --bad-soft: #fdecea; --ok: #1f7a4d; --ok-soft: #e7f5ee;
+  --info: #3d5a80; --info-soft: #edf2f8;
+  --font: system-ui, -apple-system, 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  --mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --fs: 14px; --lh: 1.5; --radius: 6px; --gap: 12px; --shadow: none; --ic-stroke: 2;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: var(--font); font-size: var(--fs); line-height: var(--lh); color: var(--ink); background: var(--bg); overflow-x: hidden; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ic { width: 16px; height: 16px; flex: none; stroke-width: var(--ic-stroke); vertical-align: -3px; }
+.ic.lg { width: 20px; height: 20px; }
+.ic.sm { width: 14px; height: 14px; }
+.mono { font-family: var(--mono); font-size: .92em; }
+.muted { color: var(--muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sample { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); border: 1px solid #f0d9a8; white-space: nowrap; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-2); background: var(--surface); padding: 6px 12px; border-radius: var(--radius); min-height: 34px; }
+.btn:hover { background: var(--surface-2); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(.95); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 1px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); background: var(--surface); white-space: nowrap; }
+.k-write { color: var(--warn); } .k-gate { color: var(--info); } .k-fail { color: var(--bad); } .k-protect { color: var(--ok); } .k-export { color: var(--info); } .k-read, .k-dryrun { color: var(--faint); }
+.conn { font-family: var(--mono); font-size: 12px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line-2); white-space: nowrap; }
+.conn.prod { border-color: #c9b2e8; background: #f6f0fd; color: #5b2b97; }
+.conn.staging { border-color: var(--line-2); background: var(--surface-2); color: var(--muted); }
+pre.sql { margin: 0; padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius); font-family: var(--mono); font-size: 12.5px; white-space: pre-wrap; word-break: break-word; }
+dl.facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; }
+dl.facts dt { color: var(--muted); }
+dl.facts dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 8px; font-size: 13px; z-index: 50; max-width: calc(100vw - 32px); }
+.toast[hidden] { display: none; }
+
+/* 結構 B：待審清單。版面只寫一次；body[data-t] 切換視覺處理。 */
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 12px 20px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { display: none; }
+.top h1 { font-size: 16px; margin: 0; }
+.top .meta { color: var(--muted); font-size: 13px; }
+.top .spacer { flex: 1; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 18px 20px 48px; }
+.summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-bottom: 14px; }
+.summary p { margin: 0; font-size: 15px; flex: 1 1 420px; }
+.counts { display: flex; flex-wrap: wrap; gap: 6px; }
+.banner { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border-radius: var(--radius); border: 1px solid; margin-bottom: 14px; }
+.banner.warn { background: var(--warn-soft); border-color: #ecd29b; }
+.banner.info { background: var(--info-soft); border-color: #c9d6e6; }
+.banner p { margin: 0; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.tab { border: 0; background: transparent; padding: 8px 12px; border-bottom: 2px solid transparent; margin-bottom: -1px; color: var(--muted); display: inline-flex; gap: 6px; align-items: center; }
+.tab[aria-selected=true] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 18px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.queue-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.queue-head h2 { font-size: 14px; margin: 0; }
+.progress { margin-left: auto; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.bar { width: 80px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.group-h { font-size: 12px; color: var(--muted); padding: 10px 14px 4px; font-weight: 600; display: flex; gap: 6px; align-items: center; }
+.item { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 4px 10px; width: 100%; text-align: left; padding: 10px 14px; border: 0; border-top: 1px solid var(--line); background: transparent; }
+.item:hover { background: var(--surface-2); }
+.item[aria-current=true] { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.item .ttl { font-weight: 600; min-width: 0; }
+.item .sub { grid-column: 2 / 3; color: var(--muted); font-size: 13px; min-width: 0; overflow-wrap: anywhere; }
+.item .why { display: none; grid-column: 2 / 4; font-size: 13px; }
+.item .st { font-size: 12px; white-space: nowrap; display: inline-flex; gap: 4px; align-items: center; color: var(--faint); }
+.item .st.done { color: var(--ok); }
+.item.done .ttl { color: var(--muted); }
+.item .where { grid-column: 2 / 4; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--muted); }
+.reads { padding: 0 0 6px; }
+.reads summary { cursor: pointer; padding: 12px 14px; display: flex; gap: 8px; align-items: center; list-style: none; }
+.reads summary::-webkit-details-marker { display: none; }
+.reads[open] summary .chev { transform: rotate(90deg); }
+.reads ul { list-style: none; margin: 0; padding: 0 14px 8px 36px; }
+.reads li { display: flex; gap: 8px; align-items: center; padding: 3px 0; font-size: 13px; }
+.reads li .n { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+.detail { padding: 18px; position: sticky; top: 14px; }
+.detail .eyebrow { font-size: 12px; font-weight: 600; display: inline-flex; gap: 6px; align-items: center; }
+.detail h2 { font-size: 18px; margin: 4px 0 6px; }
+.detail .whybox { margin: 0 0 14px; color: var(--ink); }
+.detail section { margin-top: 16px; }
+.detail h3 { font-size: 12px; color: var(--muted); margin: 0 0 6px; font-weight: 600; }
+.members { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); }
+.members li { display: grid; grid-template-columns: 70px minmax(0, 1fr) auto; gap: 8px; padding: 6px 10px; border-top: 1px solid var(--line); font-size: 13px; align-items: center; }
+.members li:first-child { border-top: 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.cmdline { display: flex; gap: 6px; align-items: stretch; }
+.cmdline pre { flex: 1; min-width: 0; }
+.note { width: 100%; min-height: 64px; padding: 8px 10px; border: 1px solid var(--line-2); border-radius: var(--radius); background: var(--surface); resize: vertical; }
+.backbtn { display: none; }
+table.all { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.all th, table.all td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.all th { font-size: 12px; color: var(--muted); font-weight: 600; background: var(--surface-2); position: sticky; top: 0; }
+table.all td.t { font-family: var(--mono); font-size: 12px; white-space: nowrap; color: var(--muted); }
+table.all tr.hot td { background: #fffdf6; }
+.tablebar { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--line); align-items: center; }
+.tablebar input, .tablebar select { padding: 6px 8px; border: 1px solid var(--line-2); border-radius: var(--radius); background: var(--surface); min-height: 34px; }
+.tablescroll { overflow-x: auto; }
+.state { text-align: center; padding: 56px 24px; }
+.state > .ic { width: 32px; height: 32px; color: var(--faint); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.state h2 { font-size: 17px; margin: 10px 0 6px; }
+.state p { margin: 0 auto 12px; max-width: 520px; color: var(--muted); }
+.state pre { display: inline-block; text-align: left; }
+dialog { border: 1px solid var(--line); border-radius: 10px; padding: 0; width: min(640px, calc(100vw - 32px)); background: var(--surface); color: var(--ink); }
+dialog::backdrop { background: rgba(15, 23, 42, .35); }
+dialog .dh { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+dialog .dh h2 { font-size: 15px; margin: 0; flex: 1; }
+dialog .db { padding: 14px 16px; max-height: 60vh; overflow: auto; }
+dialog .df { display: flex; gap: 8px; justify-content: flex-end; padding: 12px 16px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.demo { font-size: 12px; color: var(--warn); display: inline-flex; gap: 4px; align-items: center; }
+.scen { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); }
+.scen select { padding: 4px 6px; border: 1px solid var(--line-2); border-radius: 6px; background: var(--surface); }
+
+/* 處理 1：報表同源（沿用 src/ui-template 的 Tailwind 設定與 .card／.btn-primary） */
+body[data-t="1"] {
+  --bg: #f8fafc; --surface: #ffffff; --surface-2: #f8fafc; --ink: #1e293b; --muted: #64748b; --faint: #94a3b8;
+  --line: #e2e8f0; --line-2: #cbd5e1; --accent: #2563eb; --accent-soft: #eff6ff;
+  --warn: #b45309; --warn-soft: #fffbeb; --bad: #dc2626; --bad-soft: #fef2f2; --ok: #059669; --ok-soft: #ecfdf5; --info: #0369a1; --info-soft: #f0f9ff;
+  --font: Inter, system-ui, -apple-system, 'PingFang TC', 'Noto Sans TC', sans-serif;
+  --fs: 14px; --lh: 1.5; --radius: 12px; --ic-stroke: 2;
+  --shadow: 0 2px 15px -3px rgba(0,0,0,.07), 0 4px 6px -2px rgba(0,0,0,.05);
+}
+body[data-t="1"] .top { background: rgba(255,255,255,.85); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 5; }
+body[data-t="1"] .brand-mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: var(--accent); color: #fff; }
+body[data-t="1"] .top h1 { font-weight: 700; letter-spacing: -.01em; }
+body[data-t="1"] .btn { border-radius: 8px; font-weight: 500; }
+body[data-t="1"] .btn.primary { background: #2563eb; }
+body[data-t="1"] .btn.primary:hover { background: #1d4ed8; filter: none; }
+body[data-t="1"] .group-h, body[data-t="1"] .detail h3 { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); font-weight: 700; }
+body[data-t="1"] .item .sub, body[data-t="1"] .members .n { font-variant-numeric: tabular-nums; }
+body[data-t="1"] .chip { border-radius: 999px; background: #f1f5f9; border-color: transparent; color: #475569; font-weight: 500; }
+body[data-t="1"] .chip.hot { background: #fffbeb; color: #b45309; }
+body[data-t="1"] .chip.bad { background: #fef2f2; color: #dc2626; }
+body[data-t="1"] .banner { border-radius: 12px; }
+body[data-t="1"] .banner.warn { border-color: #fcd34d; }
+body[data-t="1"] .banner.info { background: #f0f9ff; border-color: #bae6fd; }
+body[data-t="1"] .detail { border-left: 4px solid var(--accent); }
+body[data-t="1"] .detail.k-fail-edge { border-left-color: #dc2626; }
+body[data-t="1"] .detail.k-gate-edge { border-left-color: #0369a1; }
+body[data-t="1"] .detail.k-protect-edge { border-left-color: #059669; }
+body[data-t="1"] .detail.k-write-edge { border-left-color: #d97706; }
+body[data-t="1"] pre.sql { background: #0f172a; color: #e2e8f0; border-color: #0f172a; border-radius: 8px; }
+body[data-t="1"] .item .ttl { font-weight: 600; color: #0f172a; }
+body[data-t="1"] table.all tr.hot td { background: #fffbeb; }
+
+/* 處理 2：指南紙本（沿用 docs/assets/dbcli-guides.css 的變數與按鈕） */
+body[data-t="2"] {
+  --bg: #fffaf3; --surface: #ffffff; --surface-2: #fffaf3; --ink: #28231f; --muted: #716a63; --faint: #a39a90;
+  --line: #e9dfd3; --line-2: #dccfbf; --accent: #a94322; --accent-soft: #fff0df;
+  --warn: #a94322; --warn-soft: #fff0df; --bad: #a3261b; --bad-soft: #fde9e4; --ok: #28745a; --ok-soft: #e4f3ec; --info: #45649d; --info-soft: #edf3ff;
+  --font: Inter, 'Noto Sans TC', 'PingFang TC', system-ui, sans-serif;
+  --fs: 15px; --lh: 1.7; --radius: 14px; --ic-stroke: 1.75; --shadow: none;
+}
+body[data-t="2"] .top { background: rgba(255,250,243,.94); padding: 14px 24px; min-height: 64px; }
+body[data-t="2"] .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; background: var(--accent); color: #fff; }
+body[data-t="2"] .top h1 { font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
+body[data-t="2"] .wrap { max-width: 1180px; padding: 28px 24px 64px; }
+body[data-t="2"] .summary p { font-size: 20px; font-weight: 700; letter-spacing: -.02em; line-height: 1.45; }
+body[data-t="2"] .btn { border-radius: 999px; padding: 8px 18px; min-height: 42px; font-weight: 750; box-shadow: 0 4px 0 rgba(40,35,31,.07); }
+body[data-t="2"] .btn.primary { background: var(--accent); border-color: var(--accent); box-shadow: 0 4px 0 rgba(117,47,26,.2); }
+body[data-t="2"] .btn.primary:hover { background: #8d351b; filter: none; }
+body[data-t="2"] .btn.ghost { box-shadow: none; }
+body[data-t="2"] .group-h, body[data-t="2"] .detail .eyebrow { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .11em; }
+body[data-t="2"] .item { padding: 16px 18px; gap: 6px 12px; }
+body[data-t="2"] .item .ttl { font-size: 16px; font-weight: 750; }
+body[data-t="2"] .item .why { display: block; color: var(--muted); }
+body[data-t="2"] .item[aria-current=true] { box-shadow: inset 4px 0 0 var(--accent); }
+body[data-t="2"] .detail { padding: 24px 26px; }
+body[data-t="2"] .detail h2 { font-size: 24px; font-weight: 800; letter-spacing: -.025em; line-height: 1.25; }
+body[data-t="2"] .detail .whybox { font-size: 16px; }
+body[data-t="2"] .detail h3 { font-size: 13px; font-weight: 800; color: var(--ink); }
+body[data-t="2"] .chip { background: var(--surface); border-color: var(--line); }
+body[data-t="2"] .chip.hot { background: var(--accent-soft); color: var(--accent); border-color: #f1d3b6; }
+body[data-t="2"] .chip.bad { background: var(--bad-soft); color: var(--bad); border-color: #f2c7bd; }
+body[data-t="2"] pre.sql { background: #fffaf3; border-color: var(--line); border-radius: 10px; }
+body[data-t="2"] .tab[aria-selected=true] { border-bottom-width: 3px; }
+body[data-t="2"] .conn.prod { background: #edf3ff; color: #45649d; border-color: #c8d6f0; }
+
+@media (max-width: 960px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .detail { position: static; }
+}
+@media (max-width: 720px) {
+  .wrap, body[data-t="2"] .wrap { padding: 14px 16px 40px; }
+  .top, body[data-t="2"] .top { padding: 10px 16px; }
+  .top .meta { flex-basis: 100%; }
+  .summary p { flex-basis: 100%; }
+  body[data-t="2"] .summary p { font-size: 17px; }
+  body.has-sheet .grid > .queue, body.has-sheet #summary, body.has-sheet #tabs, body.has-sheet #banners { display: none; }
+  body:not(.has-sheet) .grid > .detail.sheet { display: none; }
+  .backbtn { display: inline-flex; margin: -4px 0 10px -6px; }
+  .members li { grid-template-columns: 60px minmax(0, 1fr); }
+  .members li .n { grid-column: 2; }
+  .detail, body[data-t="2"] .detail { padding: 16px; }
+}
+
+</style>
+</head>
+<body data-t="0">
+<header class="top">
+  <div class="brand"><span class="brand-mark" id="mark"></span><h1>稽核審查</h1></div>
+  <span class="sample">示例資料</span>
+  <span class="meta" id="meta"></span>
+</header>
+<div class="wrap">
+  <div id="banners"></div>
+  <div class="summary" id="summary"></div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div id="panel" role="tabpanel"></div>
+</div>
+<script>
+/* Icons: Lucide (lucide-static 1.16.0, the version line of the project's lucide-react ^1.16.0)
+ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+---
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+var ICONS = {"shield-check":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"m9 12 2 2 4-4\" />","shield-alert":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"M12 8v4\" /> <path d=\"M12 16h.01\" />","pencil-line":"<path d=\"M13 21h8\" /> <path d=\"m15 5 4 4\" /> <path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" />","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />","triangle-alert":"<path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" /> <path d=\"M12 9v4\" /> <path d=\"M12 17h.01\" />","circle-x":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m15 9-6 6\" /> <path d=\"m9 9 6 6\" />","circle-check":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m9 12 2 2 4-4\" />","search":"<path d=\"m21 21-4.34-4.34\" /> <circle cx=\"11\" cy=\"11\" r=\"8\" />","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 6v6l4 2\" />","database":"<ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" /> <path d=\"M3 5V19A9 3 0 0 0 21 19V5\" /> <path d=\"M3 12A9 3 0 0 0 21 12\" />","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" /> <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","list-checks":"<path d=\"M13 5h8\" /> <path d=\"M13 12h8\" /> <path d=\"M13 19h8\" /> <path d=\"m3 17 2 2 4-4\" /> <path d=\"m3 7 2 2 4-4\" />","inbox":"<polyline points=\"22 12 16 12 14 15 10 15 8 12 2 12\" /> <path d=\"M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z\" />","history":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /> <path d=\"M3 3v5h5\" /> <path d=\"M12 7v5l4 2\" />","file-text":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M10 9H8\" /> <path d=\"M16 13H8\" /> <path d=\"M16 17H8\" />","x":"<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />","chevron-down":"<path d=\"m6 9 6 6 6-6\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","chevron-left":"<path d=\"m15 18-6-6 6-6\" />","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />","ban":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M4.929 4.929 19.07 19.071\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 16v-4\" /> <path d=\"M12 8h.01\" />","layers-2":"<path d=\"M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74z\" /> <path d=\"m20 14.285 1.5.845a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74l1.5-.845\" />","terminal":"<path d=\"M12 19h8\" /> <path d=\"m4 17 6-6-6-6\" />","sticky-note":"<path d=\"M21 9a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z\" /> <path d=\"M15 3v5a1 1 0 0 0 1 1h5\" />","download":"<path d=\"M12 15V3\" /> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\" /> <path d=\"m7 10 5 5 5-5\" />","file-output":"<path d=\"M4.226 20.925A2 2 0 0 0 6 22h12a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v3.127\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"m5 11-3 3\" /> <path d=\"m5 17-3-3h10\" />","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\" /> <path d=\"M6.453 15h11.094\" /> <path d=\"M8.5 2h7\" />","eye-off":"<path d=\"M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49\" /> <path d=\"M14.084 14.158a3 3 0 0 1-4.242-4.242\" /> <path d=\"M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143\" /> <path d=\"m2 2 20 20\" />","table-2":"<path d=\"M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18\" />","rows-3":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /> <path d=\"M21 9H3\" /> <path d=\"M21 15H3\" />","grid-3x3":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /> <path d=\"M3 9h18\" /> <path d=\"M3 15h18\" /> <path d=\"M9 3v18\" /> <path d=\"M15 3v18\" />","git-commit-vertical":"<path d=\"M12 3v6\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" /> <path d=\"M12 15v6\" />","circle-dashed":"<path d=\"M10.1 2.182a10 10 0 0 1 3.8 0\" /> <path d=\"M13.9 21.818a10 10 0 0 1-3.8 0\" /> <path d=\"M17.609 3.721a10 10 0 0 1 2.69 2.7\" /> <path d=\"M2.182 13.9a10 10 0 0 1 0-3.8\" /> <path d=\"M20.279 17.609a10 10 0 0 1-2.7 2.69\" /> <path d=\"M21.818 10.1a10 10 0 0 1 0 3.8\" /> <path d=\"M3.721 6.391a10 10 0 0 1 2.7-2.69\" /> <path d=\"M6.391 20.279a10 10 0 0 1-2.69-2.7\" />","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\" /> <path d=\"M21 3v5h-5\" /> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\" /> <path d=\"M8 16H3v5\" />","settings-2":"<path d=\"M14 17H5\" /> <path d=\"M19 7h-9\" /> <circle cx=\"17\" cy=\"17\" r=\"3\" /> <circle cx=\"7\" cy=\"7\" r=\"3\" />","file-warning":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M12 9v4\" /> <path d=\"M12 17h.01\" />","filter":"<path d=\"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z\" />","arrow-left":"<path d=\"m12 19-7-7 7-7\" /> <path d=\"M19 12H5\" />"};
+function ic(n, cls) { return '<svg class="ic ' + (cls || '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[n] || '') + '</svg>'; }
+
+/* 示例資料：欄位形狀依 dbcli origin/main 的 AuditEntry（src/core/audit/types.ts）；
+   內容（專案、表、時間、列數）全部虛構。時間以台北時間呈現，原始值是 ISO-8601 UTC。 */
+var META = {
+  project: '示例商店',
+  range: { from: '2026-10-21T06:02:00Z', to: '2026-10-21T06:48:59Z' },
+  generatedAt: '2026-10-21T06:52:10Z',
+  connections: [
+    { name: 'staging', permission: 'read-write', engine: 'postgresql' },
+    { name: 'prod', permission: 'query-only', engine: 'postgresql' }
+  ],
+  agentBrief: '把 orders 新增的 shipping_region 從 addresses 回填，再查結帳 API 為什麼變慢'
+};
+
+var ENTRIES = (function () {
+  var rows = [
+    // t, conn, command, tier, target, ok, redacted_query, redacted_sql, extra
+    ['14:02:11', 'staging', 'inspect', 'readonly', '', true, 'dbcli inspect --for-agent', null, { execution_ms: 210 }],
+    ['14:02:19', 'staging', 'list', 'readonly', '', true, 'dbcli list --format json', null, { execution_ms: 64 }],
+    ['14:02:31', 'staging', 'schema', 'readonly', 'orders', true, 'dbcli schema orders --format json', null, { execution_ms: 38 }],
+    ['14:02:38', 'staging', 'schema', 'readonly', 'addresses', true, 'dbcli schema addresses --format json', null, { execution_ms: 35 }],
+    ['14:03:05', 'staging', 'query', 'readonly', 'orders', true, 'dbcli query <redacted> --format json', 'SELECT count(*) FROM orders WHERE shipping_region IS NULL', { statement: 'SELECT', rows: 1, execution_ms: 41 }],
+    ['14:03:40', 'staging', 'migrate', 'dry-run', 'orders', true, 'dbcli migrate add-column orders shipping_region varchar(32)', 'ALTER TABLE orders ADD COLUMN shipping_region varchar(32)', { execution_ms: 3 }],
+    ['14:04:02', 'staging', 'migrate', 'db-write', 'orders', true, 'dbcli migrate add-column orders shipping_region varchar(32) --execute', 'ALTER TABLE orders ADD COLUMN shipping_region varchar(32)', { execution_ms: 120 }],
+    ['14:04:30', 'staging', 'schema', 'readonly', 'orders', true, 'dbcli schema orders --format json', null, { execution_ms: 33 }],
+    ['14:05:12', 'staging', 'query', 'db-write', 'orders', false, 'dbcli query <redacted>', "UPDATE orders SET shipping_region = '?'", { write_gate_tier: 'two', write_gate_outcome: 'refused', write_gate_reason: 'no_where' }, '寫入閘門拒絕：UPDATE 會影響整張表，且沒有人在終端機確認'],
+    ['14:05:44', 'staging', 'query', 'dry-run', 'orders', true, 'dbcli query <redacted> --dry-run', 'UPDATE orders SET shipping_region = a.region FROM addresses a WHERE orders.address_id = a.id AND orders.id BETWEEN ? AND ?', { statement: 'UPDATE', execution_ms: 2 }],
+    ['14:06:10', 'staging', 'query', 'db-write', 'orders', true, 'dbcli query <redacted>', 'UPDATE orders SET shipping_region = a.region FROM addresses a WHERE orders.address_id = a.id AND orders.id BETWEEN ? AND ?', { rows_affected: 5000, execution_ms: 1840 }],
+    ['14:06:52', 'staging', 'query', 'db-write', 'orders', true, 'dbcli query <redacted>', 'UPDATE orders SET shipping_region = a.region FROM addresses a WHERE orders.address_id = a.id AND orders.id BETWEEN ? AND ?', { rows_affected: 5000, execution_ms: 1712 }],
+    ['14:07:31', 'staging', 'query', 'db-write', 'orders', true, 'dbcli query <redacted>', 'UPDATE orders SET shipping_region = a.region FROM addresses a WHERE orders.address_id = a.id AND orders.id BETWEEN ? AND ?', { rows_affected: 5000, execution_ms: 1795 }],
+    ['14:08:15', 'staging', 'query', 'db-write', 'orders', true, 'dbcli query <redacted>', 'UPDATE orders SET shipping_region = a.region FROM addresses a WHERE orders.address_id = a.id AND orders.id BETWEEN ? AND ?', { rows_affected: 3412, execution_ms: 1266 }],
+    ['14:08:40', 'staging', 'query', 'readonly', 'orders', true, 'dbcli query <redacted> --format json', 'SELECT count(*) FROM orders WHERE shipping_region IS NULL', { statement: 'SELECT', rows: 1, execution_ms: 52 }],
+    ['14:09:30', 'staging', 'q', 'readonly', 'orders', true, 'dbcli q @checks/region-coverage --format json', null, { rows: 6, execution_ms: 88 }],
+    ['14:12:02', 'prod', 'inspect', 'readonly', '', true, 'dbcli --use prod inspect --for-agent', null, { execution_ms: 260 }],
+    ['14:12:20', 'prod', 'schema', 'readonly', 'orders', true, 'dbcli schema orders --use prod --format json', null, { execution_ms: 41 }],
+    ['14:13:05', 'prod', 'query', 'readonly', 'customers', true, 'dbcli query <redacted> --use prod --format json', "SELECT id, email, tier FROM customers WHERE created_at > '?' LIMIT 50", { statement: 'SELECT', rows: 50, execution_ms: 73, securityNotification: '已依黑名單隱藏 1 個欄位：customers.email' }],
+    ['14:14:10', 'prod', 'insert', 'db-write', 'orders', false, 'dbcli insert orders --use prod --data <redacted> --recovery', "INSERT INTO orders (customer_id, total, shipping_region) VALUES ('?', '?', '?')", { execution_ms: 4 }, '權限不足：連線 prod 是 query-only，不允許 INSERT', 'PERMISSION_DENIED', '4c1d9e2a-7b35-4f6e-9a02-5d8e1c3b7f40'],
+    ['14:15:02', 'prod', 'report', 'readonly', '', true, 'dbcli --use prod report --section perf --format json', null, { snippets: 6, execution_ms: 3120 }],
+    ['14:16:20', 'prod', 'guide', 'readonly', '', true, 'dbcli --use prod guide slow-query --format json', null, { execution_ms: 12 }],
+    ['14:16:55', 'prod', 'q', 'readonly', 'pg_stat_statements', true, 'dbcli q @diag/top-statements --use prod --format json', null, { rows: 20, execution_ms: 145 }],
+    ['14:17:30', 'prod', 'explain', 'readonly', 'orders', false, 'dbcli --use prod explain <redacted> --analyze', "SELECT o.id FROM orders o JOIN order_items i ON i.order_id = o.id WHERE o.customer_id = '?'", { execution_ms: 30000 }, '查詢逾時（30000 ms）', 'CONN_TIMEOUT'],
+    ['14:18:44', 'prod', 'explain', 'readonly', 'orders', true, 'dbcli --use prod explain <redacted>', "SELECT o.id FROM orders o JOIN order_items i ON i.order_id = o.id WHERE o.customer_id = '?'", { execution_ms: 18 }],
+    ['14:19:20', 'prod', 'q', 'readonly', 'order_items', true, 'dbcli q @diag/index-usage --use prod --format json', null, { rows: 14, execution_ms: 96 }],
+    ['14:20:05', 'prod', 'schema', 'readonly', 'order_items', true, 'dbcli schema order_items --use prod --format json', null, { execution_ms: 37 }],
+    ['14:21:10', 'prod', 'query', 'readonly', 'order_items', true, 'dbcli query <redacted> --use prod --format json', "SELECT count(*) FROM order_items WHERE order_id = '?'", { statement: 'SELECT', rows: 1, execution_ms: 2210 }],
+    ['14:23:00', 'staging', 'query', 'readonly', 'cart_items', true, 'dbcli query <redacted> --format json', "SELECT count(*) FROM cart_items WHERE updated_at < '?'", { statement: 'SELECT', rows: 1, execution_ms: 61 }],
+    ['14:23:40', 'staging', 'delete', 'db-write', 'cart_items', true, 'dbcli delete cart_items --where <redacted>', "DELETE FROM cart_items WHERE updated_at < '?'", { write_gate_tier: 'two', write_gate_outcome: 'allowed', write_gate_reason: 'non_unique_where' }],
+    ['14:23:41', 'staging', 'delete', 'db-write', 'cart_items', true, 'dbcli delete cart_items --where <redacted>', "DELETE FROM cart_items WHERE updated_at < '?'", { rows_affected: 312, execution_ms: 95 }],
+    ['14:25:15', 'staging', 'query', 'readonly', 'cart_items', true, 'dbcli query <redacted> --format json', "SELECT count(*) FROM cart_items WHERE updated_at < '?'", { statement: 'SELECT', rows: 1, execution_ms: 44 }],
+    ['14:27:48', 'prod', 'query', 'readonly', 'orders', true, 'dbcli query <redacted> --use prod --format json', "SELECT status, count(*) FROM orders WHERE created_at > '?' GROUP BY status", { statement: 'SELECT', rows: 5, execution_ms: 690 }],
+    ['14:30:02', 'prod', 'export', 'readonly', 'orders', true, 'dbcli export <redacted> --use prod --format csv --output <redacted>', "SELECT id, customer_id, total, status, created_at FROM orders WHERE created_at > '?'", { rows: 2000, execution_ms: 1340 }],
+    ['14:33:10', 'staging', 'shell', 'interactive', 'orders', true, 'dbcli shell', "SELECT shipping_region, count(*) FROM orders GROUP BY shipping_region", { shell_phase: 'attempt' }],
+    ['14:33:11', 'staging', 'shell', 'interactive', 'orders', true, 'dbcli shell', "SELECT shipping_region, count(*) FROM orders GROUP BY shipping_region", { shell_phase: 'outcome', rows: 7, execution_ms: 230 }],
+    ['14:36:20', 'prod', 'q', 'readonly', '', true, 'dbcli q @diag/locks --use prod --format json', null, { rows: 0, execution_ms: 54 }],
+    ['14:38:02', 'prod', 'inspect', 'readonly', '', true, 'dbcli --use prod inspect --for-agent', null, { execution_ms: 241 }],
+    ['14:40:15', 'staging', 'check', 'readonly', 'orders', true, 'dbcli check orders --format json', null, { execution_ms: 410 }],
+    ['14:41:30', 'staging', 'schema', 'readonly', 'orders', true, 'dbcli schema orders --format json', null, { execution_ms: 36 }],
+    ['14:44:05', 'prod', 'query', 'readonly', 'orders', true, 'dbcli query <redacted> --use prod --format json', "SELECT o.id FROM orders o JOIN order_items i ON i.order_id = o.id WHERE o.customer_id = '?' LIMIT 20", { statement: 'SELECT', rows: 20, execution_ms: 1980 }],
+    ['14:46:12', 'staging', 'query', 'readonly', 'orders', true, 'dbcli query <redacted> --format json', 'SELECT shipping_region, count(*) FROM orders GROUP BY shipping_region', { statement: 'SELECT', rows: 7, execution_ms: 210 }],
+    ['14:48:40', 'staging', 'list', 'readonly', '', true, 'dbcli list --format json', null, { execution_ms: 59 }]
+  ];
+  var seed = 20261021;
+  function rnd() { seed = (seed + 0x6D2B79F5) | 0; var t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0); }
+  function hx(n) { var out = ''; while (out.length < n) out += rnd().toString(16).padStart(8, '0'); return out.slice(0, n); }
+  return rows.map(function (r, i) {
+    var parts = r[0].split(':');
+    var utcH = String(Number(parts[0]) - 8).padStart(2, '0');
+    var ts = '2026-10-21T' + utcH + ':' + parts[1] + ':' + parts[2] + '.' + String(100 + i * 7).slice(-3) + 'Z';
+    var pid = 41200 + i * 13;
+    var e = {
+      id: hx(8) + '-' + hx(4) + '-4' + hx(3) + '-a' + hx(3) + '-' + hx(12),
+      ts: ts,
+      session_id: pid + '-' + (Date.parse(ts) - 180) + '-' + hx(6),
+      engine: 'postgresql',
+      connection: r[1],
+      command: r[2],
+      side_effect_tier: r[3],
+      target: r[4],
+      success: r[5],
+      redacted_query: r[6] + (r[7] ? ' | SQL: ' + r[7] : ''),
+      metadata: r[8]
+    };
+    if (r[7]) e.redacted_sql = r[7];
+    if (r[9]) e.error = r[9];
+    if (r[10]) e.error_code = r[10];
+    if (r[11]) e.recovery_ref = r[11];
+    return e;
+  });
+})();
+
+var TIER_LABEL = { readonly: '唯讀', 'dry-run': '預演', 'db-write': '資料庫寫入', 'local-write': '本機寫入', interactive: '互動', none: '無' };
+var REASON_LABEL = {
+  no_where: 'UPDATE／DELETE 沒有 WHERE，會影響整張表',
+  ddl_destruction: 'DROP 或 TRUNCATE',
+  unparseable: '無法解析，視為最壞情況',
+  multiple_statements: '一次送出多個敘述',
+  non_unique_where: 'WHERE 不保證只命中單列',
+  multi_table: '寫入牽涉第二張表',
+  nested_write: '巢狀寫入'
+};
+var OUTCOME_LABEL = { allowed: '已放行', declined: '操作者拒絕', refused: '閘門拒絕' };
+
+function hhmm(ts, sec) {
+  var d = new Date(ts);
+  var h = (d.getUTCHours() + 8) % 24, m = d.getUTCMinutes(), s = d.getUTCSeconds();
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + (sec ? ':' + String(s).padStart(2, '0') : '');
+}
+function kindOf(e) {
+  var m = e.metadata || {};
+  if (m.write_gate_outcome) return 'gate';
+  if (!e.success) return 'fail';
+  if (e.side_effect_tier === 'db-write') return 'write';
+  if (e.side_effect_tier === 'dry-run') return 'dryrun';
+  if (m.securityNotification) return 'protect';
+  if (e.command === 'export') return 'export';
+  return 'read';
+}
+var KIND_LABEL = { write: '寫入資料', gate: '閘門決定', fail: '失敗', protect: '保護生效', export: '匯出到檔案', dryrun: '預演', read: '讀取' };
+function fmtN(n) { return Number(n).toLocaleString('en-US'); }
+function targetLabel(e) { return e.target || '（無特定對象）'; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function connOf(name) { return META.connections.filter(function (c) { return c.name === name; })[0]; }
+function shortId(e) { return e.id.slice(0, 8); }
+
+/* 「需要你看」的件：同連線、同對象、同一段遮罩 SQL、時間相連的寫入合成一件。 */
+function buildItems(entries) {
+  var items = [];
+  var order = { fail: 0, gate: 1, write: 2, protect: 3, export: 4 };
+  entries.forEach(function (e) {
+    var k = kindOf(e);
+    if (!(k in order)) return;
+    var last = items[items.length - 1];
+    if (k === 'write' && last && last.kind === 'write' && last.entries[0].redacted_sql === e.redacted_sql && last.entries[0].connection === e.connection && !(last.entries[0].metadata || {}).write_gate_outcome) {
+      last.entries.push(e);
+      return;
+    }
+    items.push({ id: 'it-' + e.id.slice(0, 8), kind: k, entries: [e] });
+  });
+  items.forEach(function (it) {
+    var e = it.entries[0], m = e.metadata || {};
+    var n = it.entries.length;
+    var rows = it.entries.reduce(function (s, x) { return s + ((x.metadata || {}).rows_affected || 0); }, 0);
+    it.conn = e.connection;
+    it.target = targetLabel(e);
+    it.when = n > 1 ? hhmm(e.ts) + '–' + hhmm(it.entries[n - 1].ts) : hhmm(e.ts, true);
+    if (it.kind === 'write') {
+      var verb = (e.redacted_sql || '').split(' ')[0];
+      it.title = n > 1 ? n + ' 次批次 ' + verb : (e.command === 'migrate' ? '結構變更 ' + verb + ' TABLE' : verb + ' 已執行');
+      it.sub = rows ? '共影響 ' + fmtN(rows) + ' 列' : '結構變更，無列數';
+      it.why = n > 1 ? '同一段遮罩後的 SQL 在 ' + it.when + ' 執行了 ' + n + ' 次，合起來看才看得出總影響。' : (e.command === 'migrate' ? '這筆改了資料表結構；同一個指令先預演、再加 --execute 執行。' : '這筆確實改了資料。');
+    } else if (it.kind === 'gate') {
+      it.title = (m.write_gate_outcome === 'refused' ? '寫入被閘門擋下' : '寫入經確認後放行');
+      it.sub = REASON_LABEL[m.write_gate_reason] || m.write_gate_reason;
+      it.why = m.write_gate_outcome === 'refused' ? '代理送出一筆會影響整張表的 UPDATE，沒有人可以確認，所以閘門拒絕；資料沒有被改。' : '閘門判定這筆屬第二層風險，有人在終端機確認後才執行。確認的是誰，紀錄裡沒有。';
+    } else if (it.kind === 'fail') {
+      it.title = e.error_code === 'PERMISSION_DENIED' ? '寫入被權限拒絕' : '指令失敗';
+      it.sub = e.error;
+      it.why = e.error_code === 'PERMISSION_DENIED' ? '代理試著寫入唯讀的 prod。權限擋下了，資料沒有被改；但代理為何嘗試，值得問一句。' : '這筆失敗沒有改動資料；下一筆同類指令是否成功，見下方「之後」。';
+    } else if (it.kind === 'protect') {
+      it.title = '黑名單欄位已隱藏';
+      it.sub = m.securityNotification;
+      it.why = '查詢碰到受保護欄位，結果交給代理前已經移除。這是保護生效，不是問題；列在這裡讓你確認範圍符合預期。';
+    } else if (it.kind === 'export') {
+      it.title = '查詢結果匯出到檔案';
+      it.sub = fmtN(m.rows) + ' 列，CSV';
+      it.why = '資料離開資料庫、落到檔案。紀錄看得到列數與格式，看不到檔案路徑（已遮罩）。';
+    }
+    // 失敗之後，同指令同對象的下一筆
+    if (it.kind === 'fail') {
+      var idx = entries.indexOf(e);
+      var next = entries.slice(idx + 1).filter(function (x) { return x.command === e.command && x.target === e.target && x.connection === e.connection; })[0];
+      it.after = next || null;
+    }
+  });
+  return items;
+}
+
+function readSummary(entries) {
+  var map = {};
+  entries.forEach(function (e) {
+    if (kindOf(e) !== 'read') return;
+    var key = e.connection + '\u0000' + targetLabel(e);
+    if (!map[key]) map[key] = { conn: e.connection, target: targetLabel(e), count: 0, commands: {} };
+    map[key].count++;
+    map[key].commands[e.command] = true;
+  });
+  return Object.keys(map).map(function (k) { var v = map[k]; v.commands = Object.keys(v.commands); return v; })
+    .sort(function (a, b) { return b.count - a.count; });
+}
+
+function countKinds(entries) {
+  var c = { read: 0, dryrun: 0, write: 0, gate: 0, fail: 0, protect: 0, export: 0 };
+  entries.forEach(function (e) { c[kindOf(e)]++; });
+  return c;
+}
+
+var CFG = { final: false, theme: Number(new URLSearchParams(location.search).get('t')) || 0 };
+document.getElementById('mark').innerHTML = ic('database', 'lg');
+/* 結構 B 的行為。CFG.final 開啟定稿才有的註記、匯出、示範情境。 */
+var KIND_ICON = { write: 'pencil-line', gate: 'shield-alert', fail: 'circle-x', protect: 'eye-off', export: 'file-output', dryrun: 'flask-conical', read: 'eye' };
+var GROUPS = [
+  { k: 'fail', label: '失敗' },
+  { k: 'gate', label: '閘門決定' },
+  { k: 'write', label: '改了資料' },
+  { k: 'protect', label: '保護生效' },
+  { k: 'export', label: '資料離開資料庫' }
+];
+var ITEMS = buildItems(ENTRIES);
+// 閘門放行後緊接著的寫入，互相連結
+ITEMS.forEach(function (it, i) {
+  var g = ITEMS[i - 1];
+  if (it.kind === 'write' && g && g.kind === 'gate' && g.target === it.target && new Date(it.entries[0].ts) - new Date(g.entries[0].ts) < 10000) { it.gate = g; g.followed = it; }
+});
+var S = {
+  sel: null, tab: 'queue', reviewed: {}, notes: {}, scen: 'normal', q: '', kind: '', conn: ''
+};
+function itemById(id) { return ITEMS.filter(function (x) { return x.id === id; })[0]; }
+function orderedItems() { var out = []; GROUPS.forEach(function (g) { ITEMS.forEach(function (it) { if (it.kind === g.k) out.push(it); }); }); return out; }
+function firstItem() { return orderedItems()[0]; }
+function nReviewed() { return ITEMS.filter(function (x) { return S.reviewed[x.id]; }).length; }
+function toast(msg) {
+  var t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(toast.timer); toast.timer = setTimeout(function () { t.hidden = true; }, 2200);
+}
+function copyText(text, label) {
+  var done = function () { toast('已複製' + (label ? '：' + label : '')); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, function () { toast('瀏覽器不允許複製，請手動選取文字'); });
+  else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { toast('瀏覽器不允許複製，請手動選取文字'); } ta.remove(); }
+}
+
+function renderHeader() {
+  var conns = META.connections.map(function (c) { return c.name; }).join('、');
+  document.getElementById('meta').textContent = META.project + '・10/21 ' + hhmm(META.range.from) + '–' + hhmm(META.range.to) + '・' + conns;
+}
+function renderSummary() {
+  var el = document.getElementById('summary');
+  if (S.scen === 'disabled' || S.scen === 'empty') { el.innerHTML = ''; return; }
+  var c = countKinds(ENTRIES);
+  var byKind = {}; ITEMS.forEach(function (it) { byKind[it.kind] = (byKind[it.kind] || 0) + 1; });
+  el.innerHTML = '<p>代理在這段期間執行了 ' + ENTRIES.length + ' 筆指令；其中 <b>' + ITEMS.length + ' 件需要你看</b>，' + byKind.write + ' 件改了資料。</p>' +
+    '<div class="counts" aria-label="依類型統計（筆）">' +
+    '<span class="chip">' + ic('eye', 'sm') + '讀取 ' + c.read + '</span>' +
+    '<span class="chip">' + ic('flask-conical', 'sm') + '預演 ' + c.dryrun + '</span>' +
+    '<span class="chip hot">' + ic('pencil-line', 'sm') + '寫入 ' + c.write + '</span>' +
+    '<span class="chip">' + ic('shield-alert', 'sm') + '閘門 ' + c.gate + '</span>' +
+    '<span class="chip bad">' + ic('circle-x', 'sm') + '失敗 ' + c.fail + '</span></div>';
+}
+function renderBanners() {
+  var h = '';
+  if (CFG.final && S.scen === 'partial') h += '<div class="banner warn" role="status">' + ic('file-warning', 'lg k-write') + '<div><p><b>有 2 行紀錄無法解析，已略過。</b>下面的清單可能少了東西，「全部審過」不代表這段期間全部看過。</p><p class="muted">在終端機用 <span class="mono">dbcli audit health</span> 看紀錄檔狀態。</p></div></div>';
+  if (CFG.final && (S.scen === 'normal' || S.scen === 'partial')) h += '<div class="banner info">' + ic('clock', 'lg') + '<p>這頁是 10/21 ' + hhmm(META.generatedAt) + ' 產生的快照；之後的紀錄不會出現在這裡，要看就重新產生。</p></div>';
+  document.getElementById('banners').innerHTML = h;
+}
+function renderTabs() {
+  var off = S.scen === 'disabled' || S.scen === 'empty';
+  document.getElementById('tabs').innerHTML = off ? '' :
+    '<button class="tab" role="tab" id="tab-queue" aria-controls="panel" data-tab="queue" aria-selected="' + (S.tab === 'queue') + '">' + ic('list-checks', 'sm') + '需要你看 <span class="muted">' + nReviewed() + '/' + ITEMS.length + '</span></button>' +
+    '<button class="tab" role="tab" id="tab-all" aria-controls="panel" data-tab="all" aria-selected="' + (S.tab === 'all') + '">' + ic('rows-3', 'sm') + '全部紀錄 <span class="muted">' + ENTRIES.length + '</span></button>';
+}
+function itemButton(it) {
+  var done = !!S.reviewed[it.id];
+  return '<button class="item' + (done ? ' done' : '') + '" data-item="' + it.id + '" aria-current="' + (it.id === S.sel) + '">' +
+    '<span class="k-' + it.kind + '">' + ic(KIND_ICON[it.kind]) + '</span>' +
+    '<span class="ttl">' + esc(it.title) + '</span>' +
+    '<span class="st' + (done ? ' done' : '') + '">' + (done ? ic('circle-check', 'sm') + '已審' : ic('circle-dashed', 'sm') + '未審') + '</span>' +
+    '<span class="where"><span class="conn ' + it.conn + '">' + it.conn + '</span><span>' + esc(it.target) + '</span><span class="mono">' + it.when + '</span></span>' +
+    '<span class="sub">' + esc(it.sub) + '</span>' +
+    '<span class="why">' + esc(it.why) + '</span></button>';
+}
+function renderQueue() {
+  var r = nReviewed(), pct = Math.round(r / ITEMS.length * 100);
+  var h = '<div class="queue-head"><h2>需要你看</h2><span class="progress">已審 ' + r + ' / ' + ITEMS.length + '<span class="bar" aria-hidden="true"><i style="width:' + pct + '%"></i></span></span></div>';
+  if (CFG.final && r === ITEMS.length) h += '<div class="state" style="padding:28px 20px">' + ic('circle-check') + '<h2>' + ITEMS.length + ' 件都審過了</h2><p>可以匯出審查摘要，貼到 PR 或交接紀錄裡。</p><button class="btn primary" data-act="export">' + ic('download', 'sm') + '匯出審查摘要</button></div>';
+  GROUPS.forEach(function (g) {
+    var its = ITEMS.filter(function (x) { return x.kind === g.k; });
+    if (!its.length) return;
+    h += '<div class="group-h k-' + g.k + '">' + ic(KIND_ICON[g.k], 'sm') + '<span>' + g.label + '・' + its.length + '</span></div>';
+    h += its.map(itemButton).join('');
+  });
+  var reads = readSummary(ENTRIES);
+  var totalReads = reads.reduce(function (s, x) { return s + x.count; }, 0);
+  h += '<details class="reads"><summary>' + ic('chevron-right', 'sm chev') + '<span>其餘 ' + totalReads + ' 筆唯讀，分布在 ' + reads.length + ' 個對象</span></summary><ul>' +
+    reads.map(function (x) { return '<li><span class="conn ' + x.conn + '">' + x.conn + '</span>' + esc(x.target) + '<span class="muted">' + x.commands.join('、') + '</span><span class="n">' + x.count + '</span></li>'; }).join('') + '</ul></details>';
+  return '<div class="card queue" role="region" aria-label="需要你看的清單">' + h + '</div>';
+}
+function cmdBlock(text, label) {
+  return '<div class="cmdline"><pre class="sql">' + esc(text) + '</pre><button class="btn" data-copy="' + esc(text) + '" data-label="' + esc(label || '') + '" aria-label="複製 ' + esc(label || '指令') + '">' + ic('copy', 'sm') + '</button></div>';
+}
+function renderDetail() {
+  var it = itemById(S.sel);
+  if (!it) return '<div class="card detail sheet"><p class="muted">從清單選一件。</p></div>';
+  var e = it.entries[0], m = e.metadata || {}, done = !!S.reviewed[it.id];
+  var h = '<button class="btn ghost backbtn" data-act="back">' + ic('chevron-left', 'sm') + '回到清單</button>' +
+    '<div class="eyebrow k-' + it.kind + '">' + ic(KIND_ICON[it.kind], 'sm') + KIND_LABEL[it.kind] + '</div>' +
+    '<h2 id="dtitle" tabindex="-1">' + esc(it.title) + '</h2>' +
+    '<div class="where muted" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px"><span class="conn ' + it.conn + '">' + it.conn + '</span><span>' + connOf(it.conn).permission + '</span><span>' + esc(it.target) + '</span><span class="mono">' + it.when + '</span></div>' +
+    '<p class="whybox">' + esc(it.why) + '</p>';
+  if (it.entries.length > 1) {
+    var tot = it.entries.reduce(function (s, x) { return s + ((x.metadata || {}).rows_affected || 0); }, 0);
+    h += '<section><h3>這 ' + it.entries.length + ' 筆紀錄</h3><ul class="members">' + it.entries.map(function (x) { return '<li><span class="mono muted">' + hhmm(x.ts, true) + '</span><span class="mono">' + shortId(x) + '</span><span class="n">' + fmtN(x.metadata.rows_affected) + ' 列・' + fmtN(x.metadata.execution_ms) + ' ms</span></li>'; }).join('') +
+      '<li><span></span><b>合計</b><b class="n">' + fmtN(tot) + ' 列</b></li></ul></section>';
+  } else {
+    h += '<section><h3>紀錄</h3><dl class="facts"><dt>指令</dt><dd>' + esc(e.command) + '</dd><dt>層級</dt><dd>' + TIER_LABEL[e.side_effect_tier] + '</dd><dt>結果</dt><dd>' + (e.success ? '成功' : '<span class="k-fail">' + esc(e.error) + '</span>') + '</dd>' +
+      (m.write_gate_outcome ? '<dt>閘門</dt><dd>第二層・' + OUTCOME_LABEL[m.write_gate_outcome] + '</dd><dt>原因</dt><dd>' + REASON_LABEL[m.write_gate_reason] + '</dd>' : '') +
+      (m.rows_affected != null ? '<dt>影響列數</dt><dd>' + fmtN(m.rows_affected) + '</dd>' : '') +
+      (m.rows != null ? '<dt>回傳列數</dt><dd>' + fmtN(m.rows) + '</dd>' : '') +
+      (m.securityNotification ? '<dt>保護</dt><dd>' + esc(m.securityNotification) + '</dd>' : '') +
+      '<dt>紀錄 ID</dt><dd class="mono">' + shortId(e) + '</dd></dl></section>';
+  }
+  if (it.gate) h += '<section><h3>之前</h3><p style="margin:0">' + hhmm(it.gate.entries[0].ts, true) + ' 閘門判定為第二層風險，' + OUTCOME_LABEL[it.gate.entries[0].metadata.write_gate_outcome] + '。<button class="btn ghost" data-item="' + it.gate.id + '">' + ic('chevron-right', 'sm') + '看那一件</button></p></section>';
+  if (it.followed) h += '<section><h3>之後</h3><p style="margin:0">' + hhmm(it.followed.entries[0].ts, true) + ' 執行，影響 ' + fmtN(it.followed.entries[0].metadata.rows_affected) + ' 列。<button class="btn ghost" data-item="' + it.followed.id + '">' + ic('chevron-right', 'sm') + '看那一件</button></p></section>';
+  if (it.kind === 'fail') h += '<section><h3>之後</h3><p style="margin:0">' + (it.after ? hhmm(it.after.ts, true) + ' 同一個指令' + (it.after.success ? '成功了' + (it.after.redacted_query.indexOf('--analyze') < 0 && e.redacted_query.indexOf('--analyze') >= 0 ? '（拿掉了 --analyze）' : '') : '仍然失敗') + '。' : '之後沒有再對 ' + esc(it.target) + ' 執行同一個指令；' + (ENTRIES.slice(ENTRIES.indexOf(e) + 1).some(function (x) { return x.connection === e.connection && x.side_effect_tier === 'db-write'; }) ? '但 ' + e.connection + ' 上之後還有其他寫入。' : e.connection + ' 上之後也沒有其他寫入嘗試。')) + '</p></section>';
+  if (e.redacted_sql) h += '<section><h3>遮罩後的 SQL</h3><pre class="sql">' + esc(e.redacted_sql) + '</pre></section>';
+  h += '<section><h3>在終端機查這筆</h3>' + cmdBlock('dbcli audit show ' + shortId(e) + ' --all', '查詢指令') +
+    (e.recovery_ref ? '<div style="height:6px"></div>' + cmdBlock('dbcli audit show --recovery-ref ' + e.recovery_ref + ' --all', '復原參照查詢') : '') +
+    '<p class="muted" style="margin:6px 0 0;font-size:12px">紀錄裡的指令與 SQL 已遮罩（值換成 ?），不能直接重跑。</p></section>';
+  if (CFG.final) h += '<section><h3><label for="note">註記</label></h3><textarea id="note" class="note" placeholder="例如：已和代理確認，prod 寫入是誤判連線">' + esc(S.notes[it.id] || '') + '</textarea></section>';
+  h += '<div class="actions">' + (done ? '<button class="btn" data-act="unreview">' + ic('x', 'sm') + '取消已審</button>' : '<button class="btn primary" data-act="review">' + ic('check', 'sm') + '標記已審並看下一件</button>') +
+    (CFG.final ? '<span class="demo">' + ic('info', 'sm') + '示範：已審與註記只存在這個頁面</span>' : '') + '</div>';
+  var edge = { fail: 'k-fail-edge', gate: 'k-gate-edge', protect: 'k-protect-edge', write: 'k-write-edge', export: 'k-gate-edge' }[it.kind];
+  return '<div class="card detail sheet ' + edge + '" role="region" aria-labelledby="dtitle">' + h + '</div>';
+}
+function renderAll() {
+  var list = ENTRIES.filter(function (e) {
+    var k = kindOf(e);
+    return (!S.kind || k === S.kind) && (!S.conn || e.connection === S.conn) && (!S.q || (e.command + ' ' + targetLabel(e)).toLowerCase().indexOf(S.q.toLowerCase()) >= 0);
+  });
+  var h = '<div class="tablebar"><label class="sr" for="fq">搜尋指令或對象</label><input id="fq" type="search" placeholder="搜尋指令或對象" value="' + esc(S.q) + '">' +
+    '<label class="sr" for="fk">類型</label><select id="fk"><option value="">所有類型</option>' + ['read', 'dryrun', 'write', 'gate', 'fail', 'protect', 'export'].map(function (k) { return '<option value="' + k + '"' + (S.kind === k ? ' selected' : '') + '>' + KIND_LABEL[k] + '</option>'; }).join('') + '</select>' +
+    '<label class="sr" for="fc">連線</label><select id="fc"><option value="">所有連線</option>' + META.connections.map(function (c) { return '<option' + (S.conn === c.name ? ' selected' : '') + '>' + c.name + '</option>'; }).join('') + '</select>' +
+    '<span class="muted" style="margin-left:auto">' + list.length + ' 筆</span></div>';
+  if (!list.length) return '<div class="card">' + h + '<div class="state">' + ic('search') + '<h2>沒有符合的紀錄</h2><button class="btn" data-act="clearf">清除條件</button></div></div>';
+  h += '<div class="tablescroll"><table class="all"><thead><tr><th>時間</th><th>連線</th><th>指令</th><th>對象</th><th>類型</th><th>結果</th><th>ID</th></tr></thead><tbody>' +
+    list.map(function (e) {
+      var k = kindOf(e), m = e.metadata || {};
+      return '<tr class="' + (k === 'read' || k === 'dryrun' ? '' : 'hot') + '"><td class="t">' + hhmm(e.ts, true) + '</td><td><span class="conn ' + e.connection + '">' + e.connection + '</span></td><td>' + esc(e.command) + (m.shell_phase ? ' <span class="muted">' + m.shell_phase + '</span>' : '') + '</td><td>' + esc(targetLabel(e)) + '</td><td class="k-' + k + '">' + KIND_LABEL[k] + '</td><td>' + (e.success ? (m.rows_affected != null ? fmtN(m.rows_affected) + ' 列' : m.write_gate_outcome ? OUTCOME_LABEL[m.write_gate_outcome] : '成功') : '<span class="k-fail">' + (m.write_gate_outcome ? OUTCOME_LABEL[m.write_gate_outcome] : '失敗') + '</span>') + '</td><td class="mono">' + shortId(e) + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+  return '<div class="card">' + h + '</div>';
+}
+function renderState() {
+  if (S.scen === 'disabled') return '<div class="card state" role="status">' + ic('settings-2') + '<h2>這兩條連線都沒有開啟稽核紀錄</h2><p>連線設定裡 <span class="mono">audit.enabled</span> 是 false，dbcli 不會留下紀錄，所以代理這段期間做了什麼無從審查。之後的工作要能審查，先把它改回 true（或移除這個設定）。</p>' + cmdBlock('dbcli audit health', '健康檢查指令') + '</div>';
+  if (S.scen === 'empty') return '<div class="card state" role="status">' + ic('inbox') + '<h2>10/21 14:02–14:48 之間沒有紀錄</h2><p>稽核是開著的，只是這段期間沒有任何 dbcli 指令。代理可能用了其他連線，或時間範圍選錯了。</p><button class="btn" data-act="widen">' + ic('history', 'sm') + '改看最近 24 小時</button></div>';
+  return null;
+}
+function render() {
+  if (!S.sel) S.sel = firstItem().id;
+  document.body.dataset.t = String(CFG.theme);
+  renderHeader(); renderBanners(); renderSummary(); renderTabs();
+  var panel = document.getElementById('panel');
+  var st = renderState();
+  if (st) { panel.innerHTML = st; document.body.classList.remove('has-sheet'); }
+  else panel.innerHTML = S.tab === 'queue' ? '<div class="grid">' + renderQueue() + renderDetail() + '</div>' : renderAll();
+  var exp = document.getElementById('exportbtn');
+  if (exp) exp.disabled = !!st;
+}
+function select(id, focusDetail) {
+  S.sel = id; render();
+  var sheet = innerWidth <= 720;
+  if (sheet) { document.body.classList.add('has-sheet'); window.scrollTo(0, 0); }
+  var t = (focusDetail || sheet) ? document.getElementById('dtitle') : document.querySelector('.item[data-item="' + id + '"]');
+  if (t) t.focus({ preventScroll: !sheet && !focusDetail });
+}
+function nextUnreviewed(fromId) {
+  var list = orderedItems(), i = list.findIndex(function (x) { return x.id === fromId; });
+  for (var j = 1; j <= list.length; j++) { var c = list[(i + j) % list.length]; if (!S.reviewed[c.id]) return c; }
+  return null;
+}
+function summaryMarkdown() {
+  var lines = ['# 稽核審查摘要（示例資料）', '', '- 期間：2026-10-21 ' + hhmm(META.range.from) + '–' + hhmm(META.range.to) + '（台北時間）',
+    '- 連線：' + META.connections.map(function (c) { return c.name + '（' + c.permission + '）'; }).join('、'),
+    '- 紀錄：' + ENTRIES.length + ' 筆；需要審查 ' + ITEMS.length + ' 件，已審 ' + nReviewed() + ' 件'];
+  if (S.scen === 'partial') lines.push('- 注意：有 2 行紀錄無法解析，已略過');
+  GROUPS.forEach(function (g) {
+    var its = ITEMS.filter(function (x) { return x.kind === g.k; });
+    if (!its.length) return;
+    lines.push('', '## ' + g.label);
+    its.forEach(function (it) {
+      lines.push('- [' + (S.reviewed[it.id] ? 'x' : ' ') + '] ' + it.when + ' ' + it.conn + ' ' + it.target + '：' + it.title + '（' + it.sub + '）；紀錄 ' + it.entries.map(shortId).join(', '));
+      if (S.notes[it.id]) lines.push('  - 註記：' + S.notes[it.id]);
+    });
+  });
+  return lines.join('\n');
+}
+document.addEventListener('click', function (ev) {
+  var t = ev.target.closest('[data-item],[data-tab],[data-act],[data-copy]');
+  if (!t) return;
+  if (t.dataset.copy) return copyText(t.dataset.copy, t.dataset.label);
+  if (t.dataset.item) return select(t.dataset.item, t.classList.contains('ghost'));
+  if (t.dataset.tab) { S.tab = t.dataset.tab; render(); document.getElementById('tab-' + S.tab).focus(); return; }
+  var a = t.dataset.act;
+  if (a === 'review') {
+    S.reviewed[S.sel] = true;
+    var n = nextUnreviewed(S.sel);
+    if (n) { toast('已標記；換下一件'); select(n.id, true); }
+    else { toast('全部審過了'); document.body.classList.remove('has-sheet'); render(); }
+  }
+  if (a === 'unreview') { delete S.reviewed[S.sel]; render(); }
+  if (a === 'back') { document.body.classList.remove('has-sheet'); render(); var b = document.querySelector('[data-item="' + S.sel + '"]'); if (b) b.focus(); }
+  if (a === 'clearf') { S.q = ''; S.kind = ''; S.conn = ''; render(); }
+  if (a === 'widen') { S.scen = 'normal'; var sc = document.getElementById('scen'); if (sc) sc.value = 'normal'; toast('示範：改用原本的示例資料'); render(); }
+  if (a === 'export') openExport();
+});
+document.addEventListener('input', function (ev) {
+  if (ev.target.id === 'fq') { S.q = ev.target.value; var pos = ev.target.selectionStart; render(); var f = document.getElementById('fq'); f.focus(); f.setSelectionRange(pos, pos); }
+  if (ev.target.id === 'note') { S.notes[S.sel] = ev.target.value; }
+});
+document.addEventListener('change', function (ev) {
+  if (ev.target.id === 'fk') { S.kind = ev.target.value; render(); document.getElementById('fk').focus(); }
+  if (ev.target.id === 'fc') { S.conn = ev.target.value; render(); document.getElementById('fc').focus(); }
+  if (ev.target.id === 'scen') { S.scen = ev.target.value; S.tab = 'queue'; render(); }
+});
+document.addEventListener('keydown', function (ev) {
+  var cur = ev.target.closest && ev.target.closest('.item');
+  if (!cur || (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp')) return;
+  var all = Array.prototype.slice.call(document.querySelectorAll('.item'));
+  var i = all.indexOf(cur), n = all[i + (ev.key === 'ArrowDown' ? 1 : -1)];
+  if (n) { ev.preventDefault(); n.focus(); }
+});
+function openExport() {
+  var d = document.getElementById('exportdlg');
+  if (!d) return;
+  document.getElementById('md').textContent = summaryMarkdown();
+  d.showModal();
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>訂單列表 A・處理 1・v2</title>
+<style>
+/* 共用頁首與左側導覽：沿用現況，改善範圍不含這一塊 */
+.lg-top { position: fixed; inset: 0 0 auto 0; height: 46px; display: flex; align-items: center; gap: 12px; padding: 0 14px; background: linear-gradient(#3b5f93, #2a4775); color: #fff; font: 13px Arial, "PingFang TC", "Microsoft JhengHei", sans-serif; z-index: 30; border-bottom: 1px solid #1d3354; }
+.lg-logo { font-weight: bold; font-size: 15px; letter-spacing: 1px; }
+.lg-logo small { font-weight: normal; font-size: 12px; margin-left: 8px; opacity: .8; }
+.lg-sample { font-size: 11px; background: #f6d860; color: #4a3b00; padding: 1px 6px; border-radius: 2px; }
+.lg-user { margin-left: auto; font-size: 12px; }
+.lg-user a { color: #cfe0ff; }
+.lg-menu { display: none; background: none; border: 0; color: #fff; padding: 6px; cursor: pointer; }
+.lg-nav { position: fixed; top: 46px; bottom: 0; left: 0; width: 168px; background: #e9edf3; border-right: 1px solid #c3cad6; padding-top: 8px; font: 13px Arial, "PingFang TC", "Microsoft JhengHei", sans-serif; z-index: 25; }
+.lg-nav a { display: flex; align-items: center; gap: 8px; padding: 9px 14px; color: #2b3a52; text-decoration: none; border-bottom: 1px solid #d8dee8; }
+.lg-nav a.on { background: #fff; font-weight: bold; color: #1d4f91; border-left: 4px solid #1d4f91; padding-left: 10px; }
+.lg-nav a:hover { background: #f7f9fc; }
+.lg-glyph { width: 16px; text-align: center; font-size: 12px; }
+.lg-main { margin-left: 168px; padding-top: 46px; min-height: 100vh; }
+@media (max-width: 800px) {
+  .lg-menu { display: block; }
+  .lg-logo small, .lg-user { display: none; }
+  .lg-nav { transform: translateX(-100%); transition: transform .2s; }
+  .lg-nav-open .lg-nav { transform: none; box-shadow: 2px 0 8px rgba(0,0,0,.2); }
+  .lg-main { margin-left: 0; }
+}
+
+/* 改善提案：訂單頁內容區。頁首與左側導覽沿用現況（shell.css） */
+:root {
+  --font: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --bg: #f4f5f7; --surface: #fff; --line: #d9dde3; --line-soft: #eceef1;
+  --ink: #1f2933; --ink-2: #4b5563; --ink-3: #6b7280;
+  --accent: #2f5d8a; --accent-ink: #fff; --accent-soft: #e8eff6;
+  --danger: #b42318; --focus: #2563eb;
+  --fs: 14px; --row: 44px; --radius: 6px; --shadow: none;
+}
+/* 處理 1「清晰帳本」：密、平、等寬數字，狀態用色彩加形狀 */
+.t1 { --bg: #f6f6f4; --line: #dcdcd6; --line-soft: #ebebe6; --ink: #1c1f23; --accent: #1f3a5f; --accent-soft: #e7ecf3; --fs: 13px; --row: 38px; --radius: 3px; }
+/* 處理 2「標籤看板」：寬鬆、卡片有層次，狀態用標籤加圖示 */
+.t2 { --bg: #eef1f4; --line: #dfe3e8; --line-soft: #edf0f3; --accent: #0f6b66; --accent-soft: #e3f2f0; --fs: 14px; --row: 52px; --radius: 10px; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08); }
+
+body { margin: 0; background: var(--bg); color: var(--ink); font: var(--fs)/1.5 var(--font); }
+.t1 body, body.t1 { font-variant-numeric: tabular-nums; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
+.t2 .ic { stroke-width: 2; }
+.t1 .ic, .t0 .ic { stroke-width: 1.75; }
+
+.pg { padding: 16px 16px 48px; max-width: 1400px; }
+.pg-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.crumb { display: flex; align-items: center; gap: 4px; color: var(--ink-3); font-size: 12px; }
+.crumb a { color: var(--ink-3); text-decoration: none; }
+.crumb .ic { width: 12px; height: 12px; }
+.pg-head h1 { margin: 2px 0 0; font-size: 20px; font-weight: 600; letter-spacing: .01em; }
+.t1 .pg-head h1 { font-size: 18px; }
+.ver { font-size: 12px; color: var(--ink-3); border: 1px dashed var(--line); border-radius: 4px; padding: 2px 8px; background: var(--surface); }
+
+.layout { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 14px; align-items: start; }
+.side, .main { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.t2 .side, .t2 .main { border-color: transparent; }
+.side { padding: 4px 0 12px; }
+.side-toggle { display: none; }
+.side h2 { font-size: 12px; font-weight: 600; color: var(--ink-3); margin: 12px 14px 6px; letter-spacing: .04em; }
+.fld { padding: 0 14px; margin-bottom: 10px; }
+.fld label.lb { display: block; font-size: 12px; color: var(--ink-2); margin-bottom: 4px; }
+.fld input[type=text], .fld input[type=date], .fld select { width: 100%; box-sizing: border-box; height: 34px; border: 1px solid var(--line); border-radius: calc(var(--radius) - 1px); padding: 0 8px; background: #fff; }
+.t1 .fld input, .t1 .fld select { height: 30px; }
+.chk { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
+.side-actions { display: flex; gap: 8px; padding: 4px 14px 0; }
+
+.btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border: 1px solid var(--line); border-radius: calc(var(--radius) - 1px); background: var(--surface); cursor: pointer; white-space: nowrap; }
+.t1 .btn { height: 28px; padding: 0 10px; }
+.t2 .btn { height: 36px; padding: 0 14px; }
+.btn:hover { background: var(--accent-soft); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.1); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.sm { height: 28px; padding: 0 10px; }
+.t2 .btn.sm { height: 32px; }
+
+/* 結構 A：表格上方的狀態分頁 */
+.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); padding: 0 8px; overflow-x: auto; }
+.tab { display: inline-flex; align-items: center; gap: 6px; padding: 12px 12px 10px; border: 0; background: none; border-bottom: 2px solid transparent; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.tab:hover { color: var(--ink); }
+.tab .oldest { display: none; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.m-search { display: none; }
+.tab[aria-selected=true] { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
+.tab .n { font-size: 12px; color: var(--ink-3); background: var(--line-soft); border-radius: 10px; padding: 0 7px; font-weight: 400; }
+.tab[aria-selected=true] .n { background: var(--accent-soft); color: var(--accent); }
+
+/* 結構 B：側欄的已存篩選 */
+.saved { list-style: none; margin: 0; padding: 0 6px; }
+.saved button { width: 100%; display: flex; align-items: center; gap: 8px; padding: 7px 8px; border: 0; background: none; border-radius: calc(var(--radius) - 1px); cursor: pointer; text-align: left; }
+.saved button:hover { background: var(--line-soft); }
+.saved button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.saved .n { margin-left: auto; font-size: 12px; color: var(--ink-3); }
+.saved-add { margin: 4px 14px 0; }
+.chips { display: none; }
+.active-filter { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 13px; flex-wrap: wrap; }
+.active-filter b { color: var(--ink); }
+
+.batch { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.batch .count { color: var(--ink-3); margin-right: 4px; font-size: 13px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 980px; }
+th { text-align: left; font-size: 12px; font-weight: 600; color: var(--ink-3); padding: 8px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface); }
+td { padding: 0 8px; height: var(--row); border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+tbody tr:hover td { background: #fafbfc; }
+td.op { white-space: nowrap; }
+td.op a { color: var(--accent); margin-left: 6px; font-size: 13px; }
+td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.nowrap { white-space: nowrap; }
+td.items { color: var(--ink-2); min-width: 120px; }
+.t2 td { padding: 0 7px; }
+.t2 td.op .btn { padding: 0 8px; height: 32px; }
+td.op .btn { padding: 0 8px; }
+.empty { padding: 40px 16px; text-align: center; color: var(--ink-3); }
+.pager { padding: 10px 12px; color: var(--ink-3); font-size: 12px; }
+
+/* 狀態呈現：處理 0（中性，P3 尚未處理）、1（色彩加形狀）、2（標籤加圖示） */
+.st { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.mk { width: 10px; height: 10px; flex: none; }
+.t1 .st { font-weight: 500; }
+.t1 .s-待付款 { color: #526070; } .t1 .s-待出貨 { color: #a3470b; } .t1 .s-退款中 { color: #b4183c; }
+.t1 .s-已出貨 { color: #1d4fbf; } .t1 .s-已完成 { color: #166c39; } .t1 .s-已取消 { color: #6b7280; }
+.t1 tr.row-退款中 td:first-child { box-shadow: inset 3px 0 0 #b4183c; }
+.t2 .st { padding: 2px 10px 2px 8px; border-radius: 999px; font-size: 13px; font-weight: 500; }
+.t2 .st .ic { width: 14px; height: 14px; }
+.t2 .s-待付款 { background: #eef2f6; color: #44505e; } .t2 .s-待出貨 { background: #fff1e0; color: #8f3a07; }
+.t2 .s-退款中 { background: #ffe9ec; color: #a8122f; } .t2 .s-已出貨 { background: #e6efff; color: #1d4fbf; }
+.t2 .s-已完成 { background: #e3f6ea; color: #146333; } .t2 .s-已取消 { background: #f0f1f3; color: #5f6672; }
+
+/* 出貨側邊面板（P2） */
+.scrim { position: fixed; inset: 0; background: rgba(15,23,42,.28); z-index: 70; opacity: 0; pointer-events: none; transition: opacity .15s; }
+.scrim.show { opacity: 1; pointer-events: auto; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 440px; max-width: 100%; background: var(--surface); z-index: 80; display: flex; flex-direction: column; box-shadow: -8px 0 24px rgba(15,23,42,.14); transform: translateX(100%); transition: transform .2s ease-out; visibility: hidden; }
+.drawer.show { transform: none; visibility: visible; }
+.dr-head { display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.dr-head h2 { margin: 0; font-size: 16px; font-weight: 600; }
+.dr-head .sub { color: var(--ink-3); font-size: 12px; }
+.dr-head .x { margin-left: auto; }
+.dr-body { flex: 1; overflow-y: auto; padding: 16px; }
+.dr-sec { margin-bottom: 18px; }
+.dr-sec h3 { font-size: 12px; color: var(--ink-3); font-weight: 600; margin: 0 0 6px; letter-spacing: .04em; }
+.kv { display: grid; grid-template-columns: 72px 1fr; gap: 4px 10px; font-size: 13px; }
+.kv dt { color: var(--ink-3); } .kv dd { margin: 0; }
+.dr-body .fld { padding: 0; }
+.hint { font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+.err { font-size: 12px; color: var(--danger); margin-top: 4px; display: none; align-items: center; gap: 4px; }
+.err.show { display: flex; }
+input.invalid { border-color: var(--danger) !important; }
+.dr-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.bl { list-style: none; margin: 0; padding: 0; }
+.bl li { border: 1px solid var(--line); border-radius: calc(var(--radius) - 1px); padding: 10px; margin-bottom: 8px; }
+.bl .top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; margin-bottom: 6px; }
+.bl .skip { color: var(--ink-3); font-size: 13px; }
+.sim { display: flex; gap: 6px; align-items: flex-start; font-size: 12px; color: var(--ink-3); background: var(--line-soft); border-radius: 4px; padding: 6px 8px; }
+
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: #1f2933; color: #fff; border-radius: 8px; padding: 10px 12px 10px 14px; display: flex; align-items: center; gap: 12px; font-size: 13px; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 90; max-width: calc(100vw - 32px); box-sizing: border-box; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.toast .btn { height: 28px; background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
+
+@media (prefers-reduced-motion: reduce) { .drawer, .scrim, .toast { transition: none; } }
+
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .side { margin-bottom: 12px; padding: 0; }
+  .side-toggle { display: flex; align-items: center; gap: 8px; width: 100%; height: 44px; padding: 0 14px; border: 0; background: none; cursor: pointer; font-weight: 600; }
+  .side-toggle .ic:last-child { margin-left: auto; }
+  .side-body { display: none; padding-bottom: 12px; }
+  .side.open .side-body { display: block; }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .chips button { flex: none; height: 32px; padding: 0 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); cursor: pointer; }
+  .chips button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); font-weight: 600; }
+}
+@media (max-width: 640px) {
+  .pg { padding: 12px 12px 40px; }
+  .ver { display: none; }
+  .drawer { width: 100%; }
+  /* 窄螢幕把關鍵字搜尋放在最上面，其餘條件收在「篩選條件」 */
+  .m-search { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px; margin-bottom: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); color: var(--ink-3); }
+  .m-search input { flex: 1; border: 0; height: 40px; background: none; color: var(--ink); min-width: 0; }
+  .m-search input:focus-visible { outline: none; }
+  .m-search:focus-within { outline: 2px solid var(--focus); outline-offset: 1px; }
+  /* 窄螢幕的分頁：mt-stack（a-v1 以前）直列成清單；mt-scroll（a-v2）收成單列橫向捲動 */
+  .mt-stack .tabs { flex-direction: column; padding: 4px 0; gap: 0; }
+  .mt-stack .tab { justify-content: space-between; min-height: 56px; padding: 0 16px; border-bottom: 1px solid var(--line-soft); border-left: 3px solid transparent; }
+  .mt-stack .tab[aria-selected=true] { border-bottom-color: var(--line-soft); border-left-color: var(--accent); background: var(--accent-soft); }
+  .mt-stack .tab { min-height: 72px; }
+  .mt-stack .tab .lbl { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; }
+  .mt-stack .tab .oldest { display: block; font-size: 12px; color: var(--ink-3); font-weight: 400; }
+  .mt-scroll .tabs { overflow-x: auto; scroll-snap-type: x proximity; padding: 0 4px; scrollbar-width: none; }
+  .mt-scroll .tabs::-webkit-scrollbar { display: none; }
+  .mt-scroll .tab { scroll-snap-align: start; padding: 10px 10px 8px; }
+  .mt-scroll .tabs-wrap { position: relative; }
+  .mt-scroll .tabs-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 1px; width: 28px; background: linear-gradient(to right, rgba(255,255,255,0), var(--surface)); pointer-events: none; }
+}
+
+
+</style>
+</head>
+<body>
+<header class="lg-top">
+  <button class="lg-menu" type="button" aria-label="選單" onclick="document.body.classList.toggle('lg-nav-open')">
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect y="3" width="18" height="2.4" fill="currentColor"/><rect y="8" width="18" height="2.4" fill="currentColor"/><rect y="13" width="18" height="2.4" fill="currentColor"/></svg>
+  </button>
+  <span class="lg-logo">小巷選物<small>商家管理後台</small></span>
+  <span class="lg-sample">示例資料</span>
+  <span class="lg-user">客服 小周 ｜ <a href="#/logout">登出</a></span>
+</header>
+<nav class="lg-nav" aria-label="後台導覽">
+  <a href="#/dashboard"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1 0.5 7.5H2.5V15H6.5V10.5H9.5V15H13.5V7.5H15.5Z" fill="currentColor"/></svg>首頁</a>
+  <a href="#/orders" class="on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>訂單管理</a>
+  <a href="#/products"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0.5 15 4v8l-7 3.5L1 12V4Z" fill="currentColor"/><path d="M1 4l7 3.5L15 4M8 7.5V15.5" stroke="#fff" stroke-width="1" fill="none"/></svg>商品管理</a>
+  <a href="#/customers"><span class="lg-glyph" aria-hidden="true">▸</span>顧客名單</a>
+  <a href="#/reports"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 21h18M6 17V10M11 17V5M16 17v-8M21 17v-4"/></svg>報表</a>
+  <a href="#/settings"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><circle cx="8" cy="8" r="2.6" fill="#e9edf3"/></svg>系統設定</a>
+</nav>
+
+<main class="lg-main"><div id="app"></div></main>
+<script>
+/* Icons from Lucide (lucide-static 1.61.0), ISC License, Copyright (c) 2026 Lucide Icons and Contributors. https://lucide.dev/license */
+var ICONS = {"search":"<path d=\"m21 21-4.34-4.34\" /><circle cx=\"11\" cy=\"11\" r=\"8\" />","calendar":"<path d=\"M8 2v3\" /><path d=\"M16 2v3\" /><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" /><path d=\"M3 9h18\" />","truck":"<path d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\" /><path d=\"M15 18H9\" /><path d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14\" /><circle cx=\"17\" cy=\"18\" r=\"2\" /><circle cx=\"7\" cy=\"18\" r=\"2\" />","package":"<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /><path d=\"M12 22V12\" /><polyline points=\"3.29 7 12 12 20.71 7\" /><path d=\"m7.5 4.27 9 5.15\" />","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /><path d=\"M3 3v5h5\" />","hourglass":"<path d=\"M5 22h14\" /><path d=\"M5 2h14\" /><path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /><path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />","circle-check":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><path d=\"m16 9-5.5 5.5L8 12\" />","circle-x":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><path d=\"m15 9-6 6\" /><path d=\"m9 9 6 6\" />","x":"<path d=\"M18 6 6 18\" /><path d=\"m6 6 12 12\" />","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\" /><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\" /><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\" />","download":"<path d=\"M12 15V3\" /><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\" /><path d=\"m7 10 5 5 5-5\" />","bookmark":"<path d=\"M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z\" />","bookmark-plus":"<path d=\"M12 7v6\" /><path d=\"M15 10H9\" /><path d=\"M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z\" />","funnel":"<path d=\"M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z\" />","sliders-horizontal":"<path d=\"M10 5H3\" /><path d=\"M12 19H3\" /><path d=\"M14 3v4\" /><path d=\"M16 17v4\" /><path d=\"M21 12h-9\" /><path d=\"M21 19h-5\" /><path d=\"M21 5h-7\" /><path d=\"M8 10v4\" /><path d=\"M8 12H3\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /><path d=\"M12 16v-4\" /><path d=\"M12 8h.01\" />","triangle-alert":"<path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\" /><path d=\"M12 9v4\" /><path d=\"M12 17h.01\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","undo-2":"<path d=\"M9 14 4 9l5-5\" /><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\" />","chevron-down":"<path d=\"m6 9 6 6 6-6\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","columns-2":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /><path d=\"M12 3v18\" />","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" />","external-link":"<path d=\"M15 3h6v6\" /><path d=\"M10 14 21 3\" /><path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\" />"};
+// 示例資料：虛構商家「小巷選物」的 25 筆訂單，所有頁面共用同一批
+var ORDERS_SEED = [
+  ["SO-261022-0125","2026-10-22 09:41","林怡君","手沖濾杯組 ×1、濾紙 100 入 ×2",1280,"信用卡","宅配（黑貓）","台北市大安區復興南路一段 120 號 5 樓","待出貨"],
+  ["SO-261022-0124","2026-10-22 08:17","陳柏翰","亞麻餐墊 ×4",960,"LINE Pay","超商取貨（7-ELEVEN）","7-ELEVEN 新莊幸福門市","待出貨"],
+  ["SO-261021-0123","2026-10-21 22:05","張雅婷","陶瓷馬克杯 ×2",1100,"ATM 轉帳","宅配（黑貓）","新北市板橋區文化路二段 58 號","待付款"],
+  ["SO-261021-0122","2026-10-21 20:33","王志明","木質托盤 ×1",890,"信用卡","超商取貨（全家）","全家 台中公益店","退款中"],
+  ["SO-261021-0121","2026-10-21 18:12","黃郁婷","香氛蠟燭 ×3",1650,"信用卡","宅配（黑貓）","台中市西區公益路 210 號","待出貨"],
+  ["SO-261021-0120","2026-10-21 15:48","李承恩","帆布托特包 ×1",780,"貨到付款","宅配（新竹物流）","桃園市中壢區中央西路 33 號","待出貨"],
+  ["SO-261021-0119","2026-10-21 11:02","吳佳穎","手沖濾杯組 ×1",980,"LINE Pay","超商取貨（7-ELEVEN）","7-ELEVEN 高雄文化門市","已出貨"],
+  ["SO-261020-0118","2026-10-20 23:40","劉冠廷","亞麻餐墊 ×2、木質托盤 ×1",1370,"信用卡","宅配（黑貓）","高雄市苓雅區四維三路 6 號","已出貨"],
+  ["SO-261020-0117","2026-10-20 19:26","蔡宜蓁","陶瓷馬克杯 ×1",550,"ATM 轉帳","超商取貨（全家）","全家 新竹光復店","待付款"],
+  ["SO-261020-0116","2026-10-20 16:09","楊家豪","香氛蠟燭 ×1、火柴 ×1",620,"信用卡","超商取貨（7-ELEVEN）","7-ELEVEN 台南成大門市","退款中"],
+  ["SO-261020-0115","2026-10-20 10:55","許雅雯","帆布托特包 ×2",1560,"信用卡","宅配（黑貓）","台北市中山區南京東路二段 98 號","待出貨"],
+  ["SO-261019-0114","2026-10-19 21:14","鄭宇軒","手沖濾杯組 ×2",1960,"LINE Pay","宅配（新竹物流）","新北市三重區重新路三段 11 號","已出貨"],
+  ["SO-261019-0113","2026-10-19 17:37","謝欣怡","木質托盤 ×2",1780,"信用卡","超商取貨（全家）","全家 宜蘭神農店","已完成"],
+  ["SO-261019-0112","2026-10-19 13:20","郭俊宏","亞麻餐墊 ×6",1440,"ATM 轉帳","宅配（黑貓）","彰化縣彰化市中山路二段 160 號","待出貨"],
+  ["SO-261019-0111","2026-10-19 09:03","洪詩涵","陶瓷馬克杯 ×4",2200,"信用卡","宅配（黑貓）","台北市信義區松仁路 100 號","已取消"],
+  ["SO-261018-0110","2026-10-18 22:48","邱彥廷","香氛蠟燭 ×2",1100,"貨到付款","超商取貨（7-ELEVEN）","7-ELEVEN 嘉義興業門市","已出貨"],
+  ["SO-261018-0109","2026-10-18 18:31","曾怡萱","帆布托特包 ×1、亞麻餐墊 ×2",1260,"LINE Pay","超商取貨（全家）","全家 花蓮中華店","已完成"],
+  ["SO-261018-0108","2026-10-18 14:15","廖哲維","手沖濾杯組 ×1",980,"信用卡","宅配（黑貓）","台中市北屯區崇德路三段 52 號","待付款"],
+  ["SO-261017-0107","2026-10-17 20:02","賴佩珊","木質托盤 ×1、陶瓷馬克杯 ×2",1990,"信用卡","宅配（新竹物流）","新竹市東區關新路 27 號","退款中"],
+  ["SO-261017-0106","2026-10-17 15:44","周冠宇","香氛蠟燭 ×4",2200,"ATM 轉帳","宅配（黑貓）","台南市東區東門路二段 89 號","已完成"],
+  ["SO-261017-0105","2026-10-17 11:27","徐靜宜","亞麻餐墊 ×2",480,"信用卡","超商取貨（7-ELEVEN）","7-ELEVEN 基隆仁愛門市","已出貨"],
+  ["SO-261016-0104","2026-10-16 21:56","孫偉倫","帆布托特包 ×1",780,"LINE Pay","超商取貨（全家）","全家 屏東民生店","待出貨"],
+  ["SO-261016-0103","2026-10-16 16:38","馬欣妤","手沖濾杯組 ×1、濾紙 100 入 ×4",1580,"信用卡","宅配（黑貓）","台北市士林區中正路 250 號","已完成"],
+  ["SO-261015-0102","2026-10-15 19:20","朱信宏","陶瓷馬克杯 ×1",550,"貨到付款","宅配（黑貓）","苗栗縣頭份市中華路 78 號","已取消"],
+  ["SO-261015-0101","2026-10-15 10:07","胡雅筑","香氛蠟燭 ×1",550,"信用卡","超商取貨（7-ELEVEN）","7-ELEVEN 雲林斗六門市","待出貨"]
+].map(function (r) {
+  return { id: r[0], time: r[1], customer: r[2], items: r[3], amount: r[4], pay: r[5], ship: r[6], address: r[7], status: r[8], tracking: "" };
+});
+function cloneOrders() { return ORDERS_SEED.map(function (o) { return Object.assign({}, o); }); }
+function money(n) { return "NT$ " + n.toLocaleString("en-US"); }
+function escHtml(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+// 改善提案的訂單頁。設定：s = 結構（A 狀態分頁／B 已存篩選）、t = 視覺處理（0 中性／1／2）、mt = 窄螢幕分頁（stack／scroll）
+function ic(name, cls) { return '<svg class="ic ' + (cls || "") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[name] + "</svg>"; }
+var STATUSES = ["待付款", "待出貨", "退款中", "已出貨", "已完成", "已取消"];
+var ST_ICON = { "待付款": "hourglass", "待出貨": "package", "退款中": "rotate-ccw", "已出貨": "truck", "已完成": "circle-check", "已取消": "circle-x" };
+// 處理 1 的形狀：同色系之外再用形狀區分，色覺差異者也分得出來
+var ST_SHAPE = {
+  "待付款": '<circle cx="5" cy="5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/>',
+  "待出貨": '<circle cx="5" cy="5" r="4.5" fill="currentColor"/>',
+  "退款中": '<path d="M5 0.3 9.7 5 5 9.7 0.3 5Z" fill="currentColor"/>',
+  "已出貨": '<path d="M1 0.8 9.6 5 1 9.2Z" fill="currentColor"/>',
+  "已完成": '<rect x="0.8" y="0.8" width="8.4" height="8.4" rx="1" fill="currentColor"/>',
+  "已取消": '<rect x="0.5" y="4" width="9" height="2" fill="currentColor"/>'
+};
+var SAVED_SEED = [
+  { name: "待出貨", f: { st: ["待出貨"] } },
+  { name: "退款中", f: { st: ["退款中"] } },
+  { name: "今天的新訂單", f: { from: "2026-10-22", to: "2026-10-22" } },
+  { name: "超過 3 天未出貨", f: { st: ["待出貨"], to: "2026-10-19" } }
+];
+var NAMES = { A: "A 狀態分頁", B: "B 已存篩選" }, TNAMES = { 0: "中性線框", 1: "處理 1 清晰帳本", 2: "處理 2 標籤看板" };
+
+function startApp(cfg) {
+  var orders = cloneOrders(), state = { tab: "全部", saved: null, side: { st: [], pay: "", from: "", to: "", kw: "" }, sel: {} }, saved = SAVED_SEED.slice(), lastFocus = null, undoFn = null;
+  document.body.className = "t" + cfg.t + " mt-" + cfg.mt + " s-" + cfg.s;
+  var root = document.getElementById("app");
+  var stBlock = cfg.s === "B" ? '<div class="fld"><span class="lb" style="display:block;font-size:12px;color:var(--ink-2);margin-bottom:4px">訂單狀態</span>' + STATUSES.map(function (s) { return '<label class="chk"><input type="checkbox" name="st" value="' + s + '"> ' + stLabel(s) + "</label>"; }).join("") + "</div>" : "";
+  var savedBlock = cfg.s === "B" ? '<h2>已存篩選</h2><ul class="saved" id="saved"></ul><button class="btn ghost sm saved-add" type="button" id="saveCur">' + ic("bookmark-plus") + "儲存目前篩選</button>" : "";
+  root.innerHTML =
+    '<div class="pg">' +
+      '<div class="pg-head"><div><nav class="crumb" aria-label="麵包屑"><a href="#/dashboard">首頁</a>' + ic("chevron-right") + '<a href="#/orders">訂單管理</a>' + ic("chevron-right") + '<span>訂單列表</span></nav><h1>訂單列表</h1></div>' +
+      '<span class="ver">' + NAMES[cfg.s] + "・" + TNAMES[cfg.t] + (cfg.label ? "・" + cfg.label : "") + "・示例資料</span></div>" +
+      '<form class="m-search" id="mSearch" role="search"><label class="vh" for="mKw">搜尋訂單</label>' + ic("search") + '<input type="search" id="mKw" placeholder="搜尋訂單編號或顧客姓名"></form>' +
+      '<div class="layout">' +
+        '<aside class="side" id="side"><button class="side-toggle" type="button" aria-expanded="false" aria-controls="sideBody">' + ic("sliders-horizontal") + "篩選條件" + ic("chevron-down") + "</button>" +
+        '<form class="side-body" id="sideBody">' + savedBlock + "<h2>篩選條件</h2>" + stBlock +
+          '<div class="fld"><label class="lb" for="fPay">付款方式</label><select id="fPay" name="pay"><option value="">全部</option><option>信用卡</option><option>ATM 轉帳</option><option>LINE Pay</option><option>貨到付款</option></select></div>' +
+          '<div class="fld"><label class="lb" for="fFrom">下單日期（起）</label><input type="date" id="fFrom" name="from"></div>' +
+          '<div class="fld"><label class="lb" for="fTo">下單日期（迄）</label><input type="date" id="fTo" name="to"></div>' +
+          '<div class="fld"><label class="lb" for="fKw">關鍵字</label><input type="text" id="fKw" name="kw" placeholder="訂單編號或顧客姓名"></div>' +
+          '<div class="side-actions"><button class="btn primary sm" type="submit">' + ic("search") + '查詢</button><button class="btn sm" type="button" id="clr">清除</button></div>' +
+        "</form></aside>" +
+        '<section class="main" aria-label="訂單">' +
+          (cfg.s === "A" ? '<div class="tabs-wrap"><div class="tabs" role="tablist" aria-label="訂單狀態" id="tabs"></div></div>' : '<div class="chips" id="chips" aria-label="已存篩選"></div><div class="active-filter" id="af"></div>') +
+          '<div class="batch"><span class="count" id="selCount"></span><button class="btn sm" type="button" id="bShip">' + ic("truck") + '批次出貨</button><button class="btn sm" type="button" data-stub="列印揀貨單">' + ic("printer") + '列印揀貨單</button><button class="btn sm" type="button" data-stub="匯出 CSV">' + ic("download") + "匯出 CSV</button></div>" +
+          '<div class="scroll"><table><thead><tr><th><input type="checkbox" id="all" aria-label="全選目前清單"></th><th>操作</th><th>訂單編號</th><th>下單時間</th><th>顧客</th><th>商品</th><th>金額</th><th>付款方式</th><th>配送方式</th><th>狀態</th></tr></thead><tbody id="rows"></tbody></table></div>' +
+          '<div class="pager" id="pager"></div>' +
+        "</section>" +
+      "</div>" +
+    "</div>" +
+    '<div class="scrim" id="scrim"></div>' +
+    '<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drTitle"></aside>' +
+    '<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn sm" type="button" id="toastUndo">' + ic("undo-2") + "復原</button></div>";
+
+  function $(id) { return document.getElementById(id); }
+  function stLabel(s) {
+    if (cfg.t === 1) return '<span class="st s-' + s + '"><svg class="mk" viewBox="0 0 10 10" aria-hidden="true">' + ST_SHAPE[s] + "</svg>" + s + "</span>";
+    if (cfg.t === 2) return '<span class="st s-' + s + '">' + ic(ST_ICON[s]) + s + "</span>";
+    return '<span class="st">' + s + "</span>";
+  }
+  function match(o, f) {
+    if (f.st && f.st.length && f.st.indexOf(o.status) < 0) return false;
+    if (f.pay && o.pay !== f.pay) return false;
+    if (f.from && o.time.slice(0, 10) < f.from) return false;
+    if (f.to && o.time.slice(0, 10) > f.to) return false;
+    if (f.kw && (o.id + o.customer).indexOf(f.kw) < 0) return false;
+    return true;
+  }
+  function baseFilter() { return { pay: state.side.pay, from: state.side.from, to: state.side.to, kw: state.side.kw }; }
+  function visible() {
+    if (cfg.s === "A") {
+      var f = baseFilter(); if (state.tab !== "全部") f.st = [state.tab];
+      return orders.filter(function (o) { return match(o, f); });
+    }
+    return orders.filter(function (o) { return match(o, state.side); });
+  }
+  function render() {
+    var list = visible();
+    $("rows").innerHTML = list.length ? list.map(function (o) {
+      var op = (o.status === "待出貨" ? '<button class="btn sm" type="button" data-ship="' + o.id + '">' + ic("truck") + "出貨</button>" : "") + '<a href="#/orders/' + o.id + '">明細</a>';
+      return '<tr class="row-' + o.status + '"><td><input type="checkbox" data-sel="' + o.id + '" aria-label="選取 ' + o.id + '"' + (state.sel[o.id] ? " checked" : "") + '></td><td class="op">' + op + '</td><td class="nowrap">' + o.id + '</td><td class="nowrap">' + o.time + '</td><td class="nowrap">' + escHtml(o.customer) + '</td><td class="items">' + escHtml(o.items) + '</td><td class="num">' + money(o.amount) + '</td><td class="nowrap">' + o.pay + '</td><td class="nowrap">' + o.ship + "</td><td>" + stLabel(o.status) + "</td></tr>";
+    }).join("") : '<tr><td colspan="10"><div class="empty">沒有符合條件的訂單。<button class="btn sm" type="button" id="emptyClr">清除篩選</button></div></td></tr>';
+    $("pager").textContent = "共 " + list.length + " 筆";
+    var n = Object.keys(state.sel).filter(function (k) { return state.sel[k]; }).length;
+    $("selCount").textContent = "已選取 " + n + " 筆";
+    if (cfg.s === "A") renderTabs(); else renderSaved();
+  }
+  function count(f) { return orders.filter(function (o) { return match(o, f); }).length; }
+  function renderTabs() {
+    var tabs = ["全部"].concat(STATUSES), base = baseFilter();
+    $("tabs").innerHTML = tabs.map(function (t) {
+      var f = Object.assign({}, base); if (t !== "全部") f.st = [t];
+      var lbl = t === "全部" ? "全部" : (cfg.t ? stLabel(t) : t);
+      var hit = orders.filter(function (o) { return match(o, f); }), oldest = hit.length ? hit[hit.length - 1].time.slice(5, 10) : "";
+      return '<button class="tab" role="tab" type="button" data-tab="' + t + '" aria-selected="' + (state.tab === t) + '" tabindex="' + (state.tab === t ? 0 : -1) + '"><span class="lbl">' + lbl + '<span class="oldest">' + (oldest ? "最早 " + oldest : "沒有訂單") + '</span></span><span class="n">' + hit.length + "</span></button>";
+    }).join("");
+  }
+  function renderSaved() {
+    var items = saved.map(function (s, i) { return { i: i, name: s.name, n: count(s.f), on: state.saved === i }; });
+    $("saved").innerHTML = items.map(function (s) { return '<li><button type="button" data-saved="' + s.i + '" aria-pressed="' + s.on + '">' + ic("bookmark") + escHtml(s.name) + '<span class="n">' + s.n + "</span></button></li>"; }).join("");
+    $("chips").innerHTML = items.map(function (s) { return '<button type="button" data-saved="' + s.i + '" aria-pressed="' + s.on + '">' + escHtml(s.name) + " " + s.n + "</button>"; }).join("");
+    var desc = [];
+    if (state.side.st.length) desc.push("狀態：" + state.side.st.join("、"));
+    if (state.side.pay) desc.push("付款：" + state.side.pay);
+    if (state.side.from || state.side.to) desc.push("日期：" + (state.side.from || "不限") + " 至 " + (state.side.to || "不限"));
+    if (state.side.kw) desc.push("關鍵字：" + escHtml(state.side.kw));
+    $("af").innerHTML = ic("funnel") + (state.saved != null ? "<b>" + escHtml(saved[state.saved].name) + "</b>" : "") + (desc.length ? desc.join("　") : "顯示全部訂單");
+  }
+  function syncForm() {
+    var f = $("sideBody");
+    f.pay.value = state.side.pay; f.from.value = state.side.from; f.to.value = state.side.to; f.kw.value = state.side.kw; $("mKw").value = state.side.kw;
+    [].forEach.call(f.querySelectorAll("input[name=st]"), function (c) { c.checked = state.side.st.indexOf(c.value) >= 0; });
+  }
+  function readForm() {
+    var f = $("sideBody");
+    return { st: [].slice.call(f.querySelectorAll("input[name=st]:checked")).map(function (c) { return c.value; }), pay: f.pay.value, from: f.from.value, to: f.to.value, kw: f.kw.value.trim() };
+  }
+  function clearAll() { state.side = { st: [], pay: "", from: "", to: "", kw: "" }; state.saved = null; state.tab = "全部"; syncForm(); render(); }
+
+  $("sideBody").addEventListener("submit", function (e) { e.preventDefault(); state.side = readForm(); state.saved = null; render(); });
+  $("clr").addEventListener("click", clearAll);
+  $("mSearch").addEventListener("submit", function (e) { e.preventDefault(); state.side.kw = $("mKw").value.trim(); syncForm(); render(); });
+  $("side").querySelector(".side-toggle").addEventListener("click", function () { var o = $("side").classList.toggle("open"); this.setAttribute("aria-expanded", o); });
+  if (cfg.s === "B") {
+    $("saveCur").addEventListener("click", function () {
+      var f = readForm(), name = prompt("為目前的篩選取個名稱（示範：只存在這個分頁）", "我的篩選");
+      if (!name) return;
+      saved.push({ name: name.trim().slice(0, 20), f: f }); state.side = f; state.saved = saved.length - 1; render();
+    });
+  }
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-tab],[data-saved],[data-ship],[data-sel],[data-stub],#emptyClr,#all,#bShip");
+    if (!t) return;
+    if (t.dataset.tab) { state.tab = t.dataset.tab; render(); var b = document.querySelector('[data-tab="' + state.tab + '"]'); b.focus(); if (cfg.mt === "scroll") b.scrollIntoView({ block: "nearest", inline: "nearest" }); }
+    else if (t.dataset.saved != null) { var i = +t.dataset.saved; state.saved = i; state.side = Object.assign({ st: [], pay: "", from: "", to: "", kw: "" }, saved[i].f); syncForm(); render(); }
+    else if (t.dataset.ship) openShip([t.dataset.ship], t);
+    else if (t.dataset.sel) { state.sel[t.dataset.sel] = t.checked; render(); }
+    else if (t.dataset.stub) toast(t.dataset.stub + "：示範按鈕，未產生任何檔案", null);
+    else if (t.id === "emptyClr") clearAll();
+    else if (t.id === "all") { visible().forEach(function (o) { state.sel[o.id] = t.checked; }); render(); }
+    else if (t.id === "bShip") {
+      var ids = Object.keys(state.sel).filter(function (k) { return state.sel[k]; });
+      if (!ids.length) toast("請先勾選要出貨的訂單", null); else openShip(ids, t);
+    }
+  });
+  $("tabs") && $("tabs").addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    var tabs = ["全部"].concat(STATUSES), i = tabs.indexOf(state.tab) + (e.key === "ArrowRight" ? 1 : -1);
+    state.tab = tabs[(i + tabs.length) % tabs.length]; render(); document.querySelector('[data-tab="' + state.tab + '"]').focus();
+  });
+
+  // 出貨：一個側邊面板取代三層對話框。物流商依訂單既有的配送方式預選
+  function carrierOf(o) { return o.ship.indexOf("7-ELEVEN") >= 0 ? "7-ELEVEN 交貨便" : o.ship.indexOf("全家") >= 0 ? "全家店到店" : o.ship.indexOf("新竹") >= 0 ? "新竹物流" : "黑貓宅急便"; }
+  function carrierSelect(o, idx) {
+    return '<select id="car' + idx + '" aria-label="物流商">' + ["黑貓宅急便", "新竹物流", "7-ELEVEN 交貨便", "全家店到店"].map(function (c) { return "<option" + (c === carrierOf(o) ? " selected" : "") + ">" + c + "</option>"; }).join("") + "</select>";
+  }
+  function openShip(ids, trigger) {
+    lastFocus = trigger || null;
+    var list = ids.map(function (id) { return orders.filter(function (o) { return o.id === id; })[0]; });
+    var ship = list.filter(function (o) { return o.status === "待出貨"; }), skip = list.filter(function (o) { return o.status !== "待出貨"; });
+    var single = ids.length === 1 && ship.length === 1, o = ship[0], d = $("drawer"), body;
+    if (single) {
+      body = '<div class="dr-sec"><h3>訂單</h3><dl class="kv"><dt>顧客</dt><dd>' + escHtml(o.customer) + "</dd><dt>商品</dt><dd>" + escHtml(o.items) + "</dd><dt>金額</dt><dd>" + money(o.amount) + "（" + o.pay + "）</dd><dt>配送</dt><dd>" + o.ship + "</dd><dt>收件</dt><dd>" + escHtml(o.address) + "</dd></dl></div>" +
+        '<div class="dr-sec"><h3>物流</h3><div class="fld"><label class="lb" for="car0">物流商</label>' + carrierSelect(o, 0) + '<div class="hint">依顧客選的配送方式預選</div></div>' +
+        '<div class="fld"><label class="lb" for="trk0">物流單號</label><input type="text" id="trk0" data-trk="' + o.id + '" autocomplete="off" placeholder="掃描或輸入單號">' +
+        '<div class="err" id="err0">' + ic("triangle-alert") + "請輸入物流單號</div></div>" +
+        '<label class="chk"><input type="checkbox" id="prt" checked> 同時列印出貨單</label></div>';
+    } else {
+      body = '<div class="dr-sec"><h3>要出貨的訂單（' + ship.length + "）</h3>" + (ship.length ? '<ul class="bl">' + ship.map(function (x, i) {
+        return '<li><div class="top"><b>' + x.id + "</b><span>" + escHtml(x.customer) + "・" + x.ship + '</span></div><div class="fld"><label class="lb" for="trk' + i + '">物流單號（' + carrierOf(x) + '）</label><input type="text" id="trk' + i + '" data-trk="' + x.id + '" autocomplete="off"><div class="err" id="err' + i + '">' + ic("triangle-alert") + "請輸入物流單號</div></div></li>";
+      }).join("") + "</ul>" : '<p class="bl skip">勾選的訂單都不是待出貨。</p>') + "</div>" +
+        (skip.length ? '<div class="dr-sec"><h3>略過（不是待出貨）</h3><p class="bl skip">' + skip.map(function (x) { return x.id + "（" + x.status + "）"; }).join("、") + "</p></div>" : "");
+    }
+    d.innerHTML = '<div class="dr-head">' + ic("truck") + '<div><h2 id="drTitle">' + (single ? "出貨 " + o.id : "批次出貨") + '</h2><div class="sub">確認後訂單改為「已出貨」</div></div><button class="btn ghost sm x" type="button" id="drX" aria-label="關閉">' + ic("x") + "</button></div>" +
+      '<form class="dr-body" id="drForm" novalidate>' + body + '<div class="sim">' + ic("info") + "<span>原型示範：確認後只更新這個頁面上的示例資料，不會通知顧客或呼叫物流系統。</span></div></form>" +
+      '<div class="dr-foot"><button class="btn" type="button" id="drCancel">取消</button><button class="btn primary" type="submit" form="drForm" id="drOk"' + (ship.length ? "" : " disabled") + ">" + ic("check") + (single ? "確認出貨" : "確認出貨 " + ship.length + " 筆") + "</button></div>";
+    d.classList.add("show"); $("scrim").classList.add("show");
+    $("drX").onclick = $("drCancel").onclick = closeShip; $("scrim").onclick = closeShip;
+    $("drForm").onsubmit = function (e) {
+      e.preventDefault();
+      var ok = true, inputs = [].slice.call(d.querySelectorAll("[data-trk]"));
+      inputs.forEach(function (inp, i) { var bad = !inp.value.trim(); inp.classList.toggle("invalid", bad); inp.setAttribute("aria-invalid", bad); $("err" + i).classList.toggle("show", bad); if (bad && ok) { inp.focus(); ok = false; } });
+      if (!ok) return;
+      var before = inputs.map(function (inp) { var x = orders.filter(function (y) { return y.id === inp.dataset.trk; })[0]; var prev = { o: x, status: x.status, tracking: x.tracking }; x.status = "已出貨"; x.tracking = inp.value.trim(); delete state.sel[x.id]; return prev; });
+      closeShip(); render();
+      toast((before.length === 1 ? before[0].o.id + " 已標記為已出貨" : before.length + " 筆訂單已標記為已出貨") + "（示範，未寫入任何系統）", function () { before.forEach(function (p) { p.o.status = p.status; p.o.tracking = p.tracking; }); render(); });
+    };
+    var first = d.querySelector("[data-trk]") || $("drOk"); setTimeout(function () { first.focus(); }, 30);
+  }
+  function closeShip() { $("drawer").classList.remove("show"); $("scrim").classList.remove("show"); if (lastFocus && document.body.contains(lastFocus)) lastFocus.focus(); }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && $("drawer").classList.contains("show")) closeShip();
+    if (e.key === "Tab" && $("drawer").classList.contains("show")) {
+      var f = [].slice.call($("drawer").querySelectorAll("button:not([disabled]),input,select")), a = document.activeElement;
+      if (e.shiftKey && a === f[0]) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && a === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  var toastTimer;
+  function toast(msg, undo) {
+    $("toastMsg").textContent = msg; undoFn = undo; $("toastUndo").style.display = undo ? "" : "none";
+    $("toast").classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(function () { $("toast").classList.remove("show"); }, 6000);
+  }
+  $("toastUndo").addEventListener("click", function () { if (undoFn) undoFn(); undoFn = null; $("toast").classList.remove("show"); });
+
+  render();
+  if (cfg.tab) { state.tab = cfg.tab; render(); }
+  if (cfg.ship) openShip([cfg.ship], null);
+  window.__app = { state: state, orders: orders };
+}
+function appConfig(defaults) {
+  var q = new URLSearchParams(location.search), c = Object.assign({ s: "A", t: 0, mt: "stack" }, defaults);
+  if (q.get("s")) c.s = q.get("s"); if (q.get("t")) c.t = +q.get("t"); if (q.get("mt")) c.mt = q.get("mt");
+  if (q.get("ship")) c.ship = q.get("ship"); if (q.get("tab")) c.tab = q.get("tab"); if (q.get("label")) c.label = q.get("label");
+  return c;
+}
+
+
+startApp(appConfig({"s":"A","t":1,"mt":"scroll","label":"v2"}));
+</script>
+</body>
+</html>

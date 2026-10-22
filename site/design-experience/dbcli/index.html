@@ -1,0 +1,231 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dbcli 的稽核紀錄審查：功能起手的實際試跑｜design-experience 案例</title>
+  <meta name="description" content="功能起手的案例，在公開 repo dbcli 上實際試跑：挑出還沒有介面的稽核紀錄審查，用同一批 43 筆紀錄比較三個結構，兩個視覺處理各取自一個既有來源，深化成可試用的原型。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/design-experience/dbcli/">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="dbcli 的稽核紀錄審查：功能起手的實際試跑｜design-experience 案例">
+  <meta property="og:description" content="功能起手的案例，在公開 repo dbcli 上實際試跑：挑出還沒有介面的稽核紀錄審查，用同一批 43 筆紀錄比較三個結構，兩個視覺處理各取自一個既有來源，深化成可試用的原型。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/design-experience/dbcli/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/dbcli.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="dbcli 的稽核紀錄審查">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="dbcli 的稽核紀錄審查：功能起手的實際試跑｜design-experience 案例">
+  <meta name="twitter:description" content="功能起手的案例，在公開 repo dbcli 上實際試跑：挑出還沒有介面的稽核紀錄審查，用同一批 43 筆紀錄比較三個結構，兩個視覺處理各取自一個既有來源，深化成可試用的原型。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/dbcli.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="bar">
+    <a class="wordmark" href="../../">carl-skills</a>
+    <nav aria-label="主要">
+      <ul>
+        <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部案例</a></li>
+        <li><a href="#directions">三個結構</a></li>
+        <li><a href="#visual">兩個視覺來源</a></li>
+        <li><a href="#verify">驗證</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <h1><span>dbcli 的</span><span>稽核紀錄審查</span></h1>
+    <p class="lede">功能起手的案例，在公開 repo dbcli 上實際試跑。dbcli 是讓 AI 代理安全存取資料庫的 CLI，已經有查詢報表與指南網站兩個介面。技能挑出一項還沒有介面的能力，比較結構與視覺，深化成可試用的原型。沒有改動 dbcli 的任何程式碼。</p>
+    <dl class="facts">
+      <div><dt>進入模式</dt><dd>功能起手</dd></div>
+      <div><dt>試跑性質</dt><dd>實際試跑，公開 repo</dd></div>
+      <div><dt>版本</dt><dd>origin/main 11b0f7b</dd></div>
+      <div><dt>使用者回覆</dt><dd>每個選擇點接受建議</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="honest f-flame">
+  <p><strong>這是在真實專案上的實際試跑，但使用者這一輪不在場。</strong>agent 依技能執行，在每個選擇點都接受了代理人的建議，所以選擇不代表真人偏好，也不是可用性證據。稽核紀錄全部是依原始碼型別手寫的示例資料；畫面上的 <code>audit review --ui</code> 指令目前不存在。</p>
+</div>
+
+<main id="main">
+  <section class="round wrap f-black" aria-labelledby="r-read">
+    <div class="round-head">
+      <h2 id="r-read" class="rv"><span class="nw">已經有介面，</span><span class="nw">所以是功能起手</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote><p>這個專案已有介面，請先理解它，找出一項還沒有介面的能力與主要使用流程，提出幾個方向並建立比較原型。</p></blockquote>
+        <p>技能從 <code>origin/main</code> 的 commit 11b0f7b 匯出一份乾淨副本來讀，沒有動本機 clone。dbcli 本身是 CLI，但已經有兩個介面與視覺來源：<code>query --ui</code> 產生的 HTML 報表模板，以及使用情境指南網站的 <code>dbcli-guides.css</code>。這次要設計的是兩者都沒涵蓋的新能力，使用者也沒有抱怨既有畫面，所以是功能起手，不是改善。</p>
+        <p>技能把指令整理成八項使用者任務，大多數輸出是給代理讀的 JSON 或文字。只有一項的讀者是人，卻只有終端機表格：事後審查代理做了什麼。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" aria-labelledby="r-pick">
+    <div class="round-head">
+      <h2 id="r-pick" class="rv"><span class="nw">為什麼挑</span><span class="nw">稽核紀錄審查</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>這一輪原型要回答的問題：操作者能不能在三分鐘內，從 43 筆紀錄裡找出所有實際改動資料與被擋下的操作，說出 prod 那筆失敗是什麼、要不要追？</p>
+        <p class="muted">沒選的候選：黑名單設定的規則本身很短，CLI 就夠；證據包的使用者還很少，先做介面風險高。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <ol class="rules">
+        <li class="rv"><h3>讀者是人</h3><p>稽核紀錄的價值只在人回頭讀它時才兌現。ADR-0016 要紀錄能回答「這條連線被讀了什麼」；原始碼的註解也說，一個得靠人手寫 jq 才拿得到的量測，六個月後不會有人去做。</p></li>
+        <li class="rv"><h3>資料契約已經完整</h3><p><code>AuditEntry</code> 有時間、連線、指令、副作用等級、對象、成敗、遮罩後的 SQL；閘門決定寫在 metadata，<code>audit health</code> 有啟用狀態。介面不需要發明能力就能做出主要流程。</p></li>
+        <li class="rv"><h3>終端機不適合</h3><p>一段代理工作常有幾十筆指令。<code>audit tail</code> 一次只看一條連線的最後幾筆，寫入與閘門決定夾在大量讀取之間。</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" id="directions" aria-labelledby="r-dir">
+    <div class="round-head">
+      <h2 id="r-dir" class="rv"><span class="nw">同一批 43 筆，</span><span class="nw">三個結構</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>三個方向用同一套中性樣式、同一批 43 筆示例紀錄、同一個任務，差在入口與資訊層級。</p>
+        <div class="table-scroll">
+          <table class="dtable">
+            <thead><tr><th scope="col">方向</th><th scope="col">適合</th><th scope="col">代價</th></tr></thead>
+            <tbody>
+              <tr><td>A 時間軸重播</td><td>想知道代理怎麼一步步做到這裡</td><td>9 件要看的事混在讀取之間，要靠篩選；最接近 <code>audit tail</code></td></tr>
+              <tr><td>B 待審清單</td><td>發 PR 或交接前，幾分鐘內確認沒有意外的寫入</td><td>「哪些算需要看」是新的產品規則；已審狀態沒有地方存</td></tr>
+              <tr><td>C 影響地圖</td><td>回答「這次動到了哪些表」</td><td>失去時間順序，看不出閘門拒絕後代理改了什麼做法</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>技能建議 B：這份工作是從大量讀取裡找出少數該追的事，B 一打開就給出這 9 件，並把 4 次同 SQL 的批次 UPDATE 合成一件，算出共 18,412 列。</p>
+        <blockquote><p>B。</p></blockquote>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="trio">
+        <figure class="rv"><a class="zoom" href="img/a-1440.webp"><img src="img/a-1440.webp" width="1440" height="900" loading="lazy" alt="方向 A 時間軸重播：左側依連線與類型篩選，中間依時間逐筆列出指令並分段，右側是單筆詳情與前後文"></a><figcaption>A 時間軸重播。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/b-1440.webp"><img src="img/b-1440.webp" width="1440" height="900" loading="lazy" alt="方向 B 待審清單：頂部一句摘要「43 筆指令，其中 9 件需要你看」，左側依失敗、閘門決定、改了資料分組，右側是選取那件的詳情"></a><figcaption>B 待審清單，使用者選定。</figcaption></figure>
+        <figure class="rv" style="--d:2"><a class="zoom" href="img/c-1440.webp"><img src="img/c-1440.webp" width="1440" height="900" loading="lazy" alt="方向 C 影響地圖：連線與對象為列、操作類型為欄的矩陣，格子內是筆數，點格子在右側看那些紀錄"></a><figcaption>C 影響地圖。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" id="visual" aria-labelledby="r-vis">
+    <div class="round-head">
+      <h2 id="r-vis" class="rv"><span class="nw">兩個視覺來源</span><span class="nw">互相矛盾</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>報表是冷色的石板灰加藍，指南是暖色紙面加橘，而且兩者都只是單一介面的樣式，不是品牌規範或設計系統。所以視覺沒有被既有來源定下來，但也不該發明新品牌：兩個處理各取自一個既有來源。</p>
+        <div class="table-scroll">
+          <table class="dtable">
+            <thead><tr><th scope="col">處理</th><th scope="col">取自</th><th scope="col">決定了什麼</th></tr></thead>
+            <tbody>
+              <tr><td>1 報表同源</td><td>報表模板的 Tailwind 設定與 <code>.card</code>、<code>.btn-primary</code></td><td>14px 基準、白卡片、詳情卡左緣色條標類型、深色 SQL 區塊；藍色只給主要動作</td></tr>
+              <tr><td>2 指南紙本</td><td><code>dbcli-guides.css</code> 的變數與膠囊按鈕</td><td>奶油色紙面、墨色粗標題，每件多寫一句「為什麼列在這裡」，一屏約 4 件</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>技能建議 1：這個畫面會走和報表同一條管線，共用元件，使用者一看就知道是 dbcli 產生的；2 讀起來舒服，但這個任務要一眼看完 9 件。</p>
+        <blockquote><p>1。</p></blockquote>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="pair">
+        <figure class="rv"><a class="zoom" href="img/b-t1-1440.webp"><img src="img/b-t1-1440.webp" width="1440" height="900" loading="lazy" alt="處理 1 報表同源：淡石板底上的白卡片，藍色主要按鈕，SQL 放在深色等寬區塊"></a><figcaption>處理 1 報表同源，使用者選定。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/b-t2-1440.webp"><img src="img/b-t2-1440.webp" width="1440" height="900" loading="lazy" alt="處理 2 指南紙本：奶油色紙面、墨色粗標題與橘色分組標籤，清單每件多一句理由"></a><figcaption>處理 2 指南紙本。結構選擇與視覺選擇分開記錄，視覺是看過截圖才選的。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" aria-labelledby="r-final">
+    <div class="round-head">
+      <h2 id="r-final" class="rv"><span class="nw">深化成</span><span class="nw">可以試用的原型</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>結構 B 加處理 1。試用任務是：找出代理在 prod 上被拒絕的那筆操作，說明原因，確認之後有沒有改走別的寫入路徑，加一句註記；再把 9 件都標成已審，匯出審查摘要。</p>
+        <p>已審、註記與匯出都只在頁面記憶體裡模擬，頁頂的黃色列寫明這一點。「在終端機查這筆」複製的是現有指令 <code>dbcli audit show &lt;id&gt; --all</code>。</p>
+        <p>使用者還沒有試用，也沒有說定稿；SESSION 停在交接，正式實作沒有授權。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <figure class="rv big-fig"><a class="zoom" href="img/final-1440.webp"><img src="img/final-1440.webp" width="1440" height="900" loading="lazy" alt="定稿原型 v1：頂部快照時間提示與摘要，左側 9 件待審分組清單，右側 prod 寫入被權限拒絕的詳情、遮罩 SQL 與查詢指令"></a><figcaption>定稿原型 v1：一打開就是「需要你看」的 9 件，預設選中清單最上面的失敗。</figcaption></figure>
+      <div class="trio">
+        <figure class="rv"><a class="zoom" href="img/final-batch-1440.webp"><img src="img/final-batch-1440.webp" width="1440" height="900" loading="lazy" alt="批次寫入詳情：4 次同 SQL 的 UPDATE 合成一件，逐筆列出影響列數，合計 18,412 列"></a><figcaption>4 次批次 UPDATE 合成一件，合計 18,412 列。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/final-done-1440.webp"><img src="img/final-done-1440.webp" width="1440" height="900" loading="lazy" alt="9 件都標成已審：每件旁有已審記號，詳情下方有註記欄與取消已審"></a><figcaption>9 件都標成已審，註記只存在頁面記憶體。</figcaption></figure>
+        <figure class="rv" style="--d:2"><a class="zoom" href="img/final-export-1440.webp"><img src="img/final-export-1440.webp" width="1440" height="900" loading="lazy" alt="匯出審查摘要對話框：產生的 Markdown 列出期間、連線、筆數與各類事件，附複製按鈕"></a><figcaption>匯出審查摘要：產生 Markdown，不寫任何檔案。</figcaption></figure>
+      </div>
+      <div class="trio">
+        <figure class="rv"><a class="zoom" href="img/final-partial-1440.webp"><img src="img/final-partial-1440.webp" width="1440" height="900" loading="lazy" alt="部分紀錄無法解析：頂部黃色警示，提醒全部審過不代表全部看過"></a><figcaption>部分紀錄無法解析：提醒「全部審過」不等於全部看過。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/final-empty-1440.webp"><img src="img/final-empty-1440.webp" width="1440" height="900" loading="lazy" alt="期間內沒有紀錄：說明沒有任何 dbcli 指令，提供改看最近 24 小時"></a><figcaption>期間內沒有紀錄，可改看最近 24 小時。</figcaption></figure>
+        <figure class="rv" style="--d:2"><a class="zoom" href="img/final-disabled-1440.webp"><img src="img/final-disabled-1440.webp" width="1440" height="900" loading="lazy" alt="稽核未開啟：說明 audit.enabled 為 false 所以無從審查，附 dbcli audit health 指令"></a><figcaption>稽核未開啟：說明為何無從審查、怎麼開。</figcaption></figure>
+      </div>
+      <div class="pair">
+        <figure class="rv phone"><img src="img/final-390.webp" width="390" height="844" loading="lazy" alt="定稿在 390 寬：摘要、分頁與待審清單直向排列"><figcaption>390 寬：清單與詳情分成兩頁。</figcaption></figure>
+        <figure class="rv phone" style="--d:1"><img src="img/final-detail-390.webp" width="390" height="844" loading="lazy" alt="定稿在 390 寬的詳情頁：頂端有回到清單，下方是失敗原因與紀錄欄位"><figcaption>詳情頁頂端有「回到清單」。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wrap f-panel" id="verify" aria-labelledby="v-h">
+    <h2 id="v-h" class="h2 rv">驗證到哪裡</h2>
+    <p class="lede rv" style="--d:1;margin-top:20px;color:var(--body)">2026-10-22 用 Playwright 1.64.1 與 Chromium（headless）完成，下面摘自 SESSION 的驗證段落。</p>
+    <div class="checks" style="margin-top:56px">
+      <div class="rv">
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>做過的檢查</h3>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>32 張截圖逐張看過，修了七處，例如示例 ID 每 8 筆重複造成兩件同時選取、C 的導言說錯了寫入範圍、點選後焦點掉到 body。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>程式化操作：A 去掉讀取與預演後剩 12 列；定稿有 9 件待審、批次合計 18,412 列；連按 9 次「標記已審並看下一件」後顯示 9／9；註記出現在匯出的 Markdown 裡。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>鍵盤：聚焦第一件後按兩次向下鍵再按 Enter，選到「寫入被閘門擋下」，焦點環是 2px 藍色實線。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>每個頁面、每個情境在 1440 與 390 都沒有頁面層級的橫向捲動。</li>
+        </ul>
+      </div>
+      <div class="rv" style="--d:1">
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>沒有做的檢查</h3>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>真人試用，所以「三分鐘內找出」的問題還沒有答案。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>螢幕報讀器與鍵盤以外的輔助技術；Safari 與 Firefox。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>複製到剪貼簿只在 headless Chromium 確認沒有錯誤，沒有確認真的貼得出來。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>沒有用 dbcli 實際產生的稽核檔驗證欄位。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="stack rv" style="margin-top:72px;max-width:44em">
+      <h3>交接時還沒決定的事</h3>
+      <p>dbcli 要不要有這個介面、指令叫什麼；「需要你看」的分類規則，尤其 <code>export</code> 與黑名單提示算不算；已審與註記存在哪裡；一段代理工作用時間範圍還是 <code>DBCLI_SESSION_ID</code> 來框。這些都要專案擁有者決定，設計被接受也不等於授權變更範圍。</p>
+    </div>
+
+    <h3 class="rv" style="margin-top:96px">打開原型</h3>
+    <p class="note rv">單檔離線 HTML，原樣複製自試跑產物，不連 CDN。所有動作只在頁面記憶體裡模擬。</p>
+    <div class="protos rv">
+      <a href="prototypes/final.html"><strong>定稿原型 v1</strong><span>結構 B 加處理 1，頁頂可切換示範情境</span><em>開啟原型</em></a>
+      <a href="prototypes/compare.html"><strong>結構比較</strong><span>A、B、C 與說明欄</span><em>開啟原型</em></a>
+      <a href="prototypes/treatments.html"><strong>視覺處理比較</strong><span>中性對照、報表同源、指南紙本</span><em>開啟原型</em></a>
+      <a href="prototypes/a.html"><strong>A 時間軸重播</strong><span>中性樣式</span><em>開啟原型</em></a>
+      <a href="prototypes/b.html"><strong>B 待審清單</strong><span>中性樣式</span><em>開啟原型</em></a>
+      <a href="prototypes/c.html"><strong>C 影響地圖</strong><span>中性樣式</span><em>開啟原型</em></a>
+    </div>
+  </section>
+</main>
+
+<footer class="band wrap f-flame">
+  <div class="next-case">
+    <p>下一個案例：主題起手與短回覆，腳本試跑</p>
+    <a class="big" href="../personal-site/">插畫家官網<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </div>
+</footer>
+</body>
+</html>

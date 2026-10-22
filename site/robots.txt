@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://carllee1983.github.io/carl-skills/sitemap.xml

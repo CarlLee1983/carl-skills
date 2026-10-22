@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>現況｜訂單列表（示例重建）</title>
+<style>
+/* 共用頁首與左側導覽：沿用現況，改善範圍不含這一塊 */
+.lg-top { position: fixed; inset: 0 0 auto 0; height: 46px; display: flex; align-items: center; gap: 12px; padding: 0 14px; background: linear-gradient(#3b5f93, #2a4775); color: #fff; font: 13px Arial, "PingFang TC", "Microsoft JhengHei", sans-serif; z-index: 30; border-bottom: 1px solid #1d3354; }
+.lg-logo { font-weight: bold; font-size: 15px; letter-spacing: 1px; }
+.lg-logo small { font-weight: normal; font-size: 12px; margin-left: 8px; opacity: .8; }
+.lg-sample { font-size: 11px; background: #f6d860; color: #4a3b00; padding: 1px 6px; border-radius: 2px; }
+.lg-user { margin-left: auto; font-size: 12px; }
+.lg-user a { color: #cfe0ff; }
+.lg-menu { display: none; background: none; border: 0; color: #fff; padding: 6px; cursor: pointer; }
+.lg-nav { position: fixed; top: 46px; bottom: 0; left: 0; width: 168px; background: #e9edf3; border-right: 1px solid #c3cad6; padding-top: 8px; font: 13px Arial, "PingFang TC", "Microsoft JhengHei", sans-serif; z-index: 25; }
+.lg-nav a { display: flex; align-items: center; gap: 8px; padding: 9px 14px; color: #2b3a52; text-decoration: none; border-bottom: 1px solid #d8dee8; }
+.lg-nav a.on { background: #fff; font-weight: bold; color: #1d4f91; border-left: 4px solid #1d4f91; padding-left: 10px; }
+.lg-nav a:hover { background: #f7f9fc; }
+.lg-glyph { width: 16px; text-align: center; font-size: 12px; }
+.lg-main { margin-left: 168px; padding-top: 46px; min-height: 100vh; }
+@media (max-width: 800px) {
+  .lg-menu { display: block; }
+  .lg-logo small, .lg-user { display: none; }
+  .lg-nav { transform: translateX(-100%); transition: transform .2s; }
+  .lg-nav-open .lg-nav { transform: none; box-shadow: 2px 0 8px rgba(0,0,0,.2); }
+  .lg-main { margin-left: 0; }
+}
+
+body { margin: 0; background: #f2f4f7; color: #333; font: 12px Arial, "PingFang TC", "Microsoft JhengHei", sans-serif; }
+.gk-wrap { padding: 12px 16px 40px; }
+.gk-crumb { color: #777; margin-bottom: 6px; }
+.gk-crumb a { color: #2a5ba8; }
+h1 { font-size: 18px; margin: 0 0 10px; color: #2b3a52; font-weight: bold; border-bottom: 2px solid #c9d3e2; padding-bottom: 6px; }
+.gk-msg { display: none; background: #fff8c4; border: 1px solid #e5cf5a; color: #6b5900; padding: 6px 10px; margin-bottom: 10px; }
+.gk-msg.show { display: block; }
+.gk-cols { display: flex; gap: 12px; align-items: flex-start; }
+.gk-filter { width: 210px; flex: none; background: #fff; border: 1px solid #c9d0db; }
+.gk-filter h2 { margin: 0; font-size: 12px; background: linear-gradient(#f4f6f9, #dde3ec); border-bottom: 1px solid #c9d0db; padding: 6px 8px; color: #2b3a52; }
+.gk-toggle { display: none; }
+.gk-fbody { padding: 8px; }
+.gk-fbody fieldset { border: 1px solid #dde2ea; margin: 0 0 8px; padding: 4px 8px 6px; }
+.gk-fbody legend { color: #555; padding: 0 3px; }
+.gk-fbody label { display: block; margin: 3px 0; }
+.gk-fbody input[type=text], .gk-fbody select { width: 100%; box-sizing: border-box; font-size: 12px; padding: 2px 3px; border: 1px solid #aab3c0; }
+.gk-btn { font: 12px Arial, "PingFang TC", "Microsoft JhengHei", sans-serif; padding: 3px 10px; border: 1px solid #8f9bad; border-radius: 3px; background: linear-gradient(#ffffff, #dfe4eb); color: #222; cursor: pointer; }
+.gk-btn:hover { background: linear-gradient(#ffffff, #cfd7e2); }
+.gk-btn.primary { background: linear-gradient(#5d87c4, #3a649f); color: #fff; border-color: #2d5088; }
+.gk-btn.sm { padding: 1px 6px; }
+.gk-table-area { flex: 1; min-width: 0; background: #fff; border: 1px solid #c9d0db; }
+.gk-batch { display: flex; align-items: center; gap: 6px; padding: 6px 8px; background: #f7f8fa; border-bottom: 1px solid #c9d0db; flex-wrap: wrap; }
+.gk-batch .count { color: #555; margin-right: 6px; }
+.gk-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 1000px; }
+th { background: linear-gradient(#f4f6f9, #e1e6ee); border: 1px solid #c9d0db; padding: 5px 6px; text-align: left; font-weight: bold; color: #2b3a52; white-space: nowrap; }
+td { border: 1px solid #e1e5eb; padding: 5px 6px; vertical-align: top; }
+tr:nth-child(even) td { background: #f8f9fb; }
+td.op { white-space: nowrap; }
+td.op a { color: #2a5ba8; margin-left: 4px; }
+td.num { text-align: right; white-space: nowrap; }
+td.nowrap { white-space: nowrap; }
+/* P3：狀態只靠灰階深淺區分 */
+.st-待付款 { color: #9a9a9a; }
+.st-待出貨 { color: #5a5a5a; }
+.st-已出貨 { color: #6e6e6e; }
+.st-已完成 { color: #333; }
+.st-已取消 { color: #b8b8b8; }
+.st-退款中 { color: #808080; }
+.gk-pager { padding: 6px 8px; color: #555; border-top: 1px solid #c9d0db; }
+/* P2：三層巢狀對話框 */
+.gk-overlay { position: fixed; inset: 0; background: rgba(40,50,70,.35); z-index: 50; display: none; }
+.gk-overlay.show { display: block; }
+.gk-dlg { position: fixed; z-index: 60; width: 380px; max-width: calc(100vw - 40px); background: #fff; border: 1px solid #5d6b80; box-shadow: 2px 3px 10px rgba(0,0,0,.35); display: none; }
+.gk-dlg.show { display: block; }
+.gk-dlg .t { background: linear-gradient(#5d87c4, #3a649f); color: #fff; padding: 5px 8px; font-weight: bold; display: flex; justify-content: space-between; }
+.gk-dlg .t button { background: none; border: 0; color: #fff; cursor: pointer; font-size: 13px; }
+.gk-dlg .b { padding: 10px; line-height: 1.7; }
+.gk-dlg .f { padding: 8px 10px; border-top: 1px solid #ddd; text-align: right; background: #f4f6f9; }
+.gk-dlg .err { color: #c00; display: none; }
+.gk-dlg .err.show { display: block; }
+.gk-dlg input[type=text] { width: 100%; box-sizing: border-box; padding: 3px; border: 1px solid #aab3c0; font-size: 12px; }
+#dlg1 { left: calc(50% - 190px); top: 120px; }
+#dlg2 { left: calc(50% - 160px); top: 160px; }
+#dlg3 { left: calc(50% - 130px); top: 200px; }
+@media (max-width: 800px) {
+  .gk-wrap { padding: 10px 10px 40px; }
+  .gk-cols { display: block; }
+  .gk-filter { width: auto; margin-bottom: 10px; }
+  .gk-toggle { display: block; width: 100%; text-align: left; border: 0; background: linear-gradient(#f4f6f9, #dde3ec); padding: 7px 8px; font: bold 12px Arial, "PingFang TC", sans-serif; color: #2b3a52; cursor: pointer; }
+  .gk-filter h2 { display: none; }
+  .gk-fbody { display: none; }
+  .gk-filter.open .gk-fbody { display: block; }
+  #dlg1, #dlg2, #dlg3 { left: 20px; }
+}
+</style>
+</head>
+<body>
+<header class="lg-top">
+  <button class="lg-menu" type="button" aria-label="選單" onclick="document.body.classList.toggle('lg-nav-open')">
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect y="3" width="18" height="2.4" fill="currentColor"/><rect y="8" width="18" height="2.4" fill="currentColor"/><rect y="13" width="18" height="2.4" fill="currentColor"/></svg>
+  </button>
+  <span class="lg-logo">小巷選物<small>商家管理後台</small></span>
+  <span class="lg-sample">示例資料</span>
+  <span class="lg-user">客服 小周 ｜ <a href="#/logout">登出</a></span>
+</header>
+<nav class="lg-nav" aria-label="後台導覽">
+  <a href="#/dashboard"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1 0.5 7.5H2.5V15H6.5V10.5H9.5V15H13.5V7.5H15.5Z" fill="currentColor"/></svg>首頁</a>
+  <a href="#/orders" class="on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>訂單管理</a>
+  <a href="#/products"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0.5 15 4v8l-7 3.5L1 12V4Z" fill="currentColor"/><path d="M1 4l7 3.5L15 4M8 7.5V15.5" stroke="#fff" stroke-width="1" fill="none"/></svg>商品管理</a>
+  <a href="#/customers"><span class="lg-glyph" aria-hidden="true">▸</span>顧客名單</a>
+  <a href="#/reports"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M3 21h18M6 17V10M11 17V5M16 17v-8M21 17v-4"/></svg>報表</a>
+  <a href="#/settings"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor"/><circle cx="8" cy="8" r="2.6" fill="#e9edf3"/></svg>系統設定</a>
+</nav>
+
+<main class="lg-main">
+<div class="gk-wrap">
+  <div class="gk-crumb"><a href="#/dashboard">首頁</a> &gt; <a href="#/orders">訂單管理</a> &gt; 訂單列表</div>
+  <h1>訂單列表</h1>
+  <div class="gk-msg" id="msg" role="status"></div>
+  <div class="gk-cols">
+    <aside class="gk-filter" id="filter">
+      <h2>篩選條件</h2>
+      <button class="gk-toggle" type="button" onclick="this.parentNode.classList.toggle('open')">篩選條件 ▼</button>
+      <form class="gk-fbody" id="ff" onsubmit="applyFilter(event)">
+        <fieldset><legend>訂單狀態</legend>
+          <label><input type="checkbox" name="st" value="待付款"> 待付款</label>
+          <label><input type="checkbox" name="st" value="待出貨"> 待出貨</label>
+          <label><input type="checkbox" name="st" value="已出貨"> 已出貨</label>
+          <label><input type="checkbox" name="st" value="已完成"> 已完成</label>
+          <label><input type="checkbox" name="st" value="已取消"> 已取消</label>
+        </fieldset>
+        <fieldset><legend>付款方式</legend>
+          <select name="pay"><option value="">-- 全部 --</option><option>信用卡</option><option>ATM 轉帳</option><option>LINE Pay</option><option>貨到付款</option></select>
+        </fieldset>
+        <fieldset><legend>下單日期</legend>
+          <input type="text" name="from" placeholder="YYYY-MM-DD"> 至<br><input type="text" name="to" placeholder="YYYY-MM-DD">
+        </fieldset>
+        <fieldset><legend>關鍵字</legend>
+          <input type="text" name="kw" placeholder="訂單編號／顧客姓名">
+        </fieldset>
+        <button class="gk-btn primary" type="submit">查詢</button>
+        <button class="gk-btn" type="button" onclick="clearFilter()">清除</button>
+      </form>
+    </aside>
+    <section class="gk-table-area">
+      <div class="gk-batch" id="batch">
+        <span class="count" id="selCount">已選取 0 筆</span>
+        <button class="gk-btn" type="button" onclick="batchShip()">批次出貨</button>
+        <button class="gk-btn" type="button" onclick="flash('列印揀貨單：示範，未產生任何檔案')">列印揀貨單</button>
+        <button class="gk-btn" type="button" onclick="flash('匯出 CSV：示範，未產生任何檔案')">匯出 CSV</button>
+      </div>
+      <div class="gk-scroll">
+        <table>
+          <thead><tr><th><input type="checkbox" aria-label="全選" onclick="selAll(this)"></th><th>操作</th><th>訂單編號</th><th>下單時間</th><th>顧客</th><th>商品</th><th>金額</th><th>付款方式</th><th>配送方式</th><th>狀態</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <div class="gk-pager" id="pager"></div>
+    </section>
+  </div>
+</div>
+</main>
+<div class="gk-overlay" id="ov"></div>
+<div class="gk-dlg" id="dlg1" role="dialog" aria-modal="true" aria-labelledby="d1t">
+  <div class="t"><span id="d1t">出貨確認</span><button type="button" aria-label="關閉" onclick="closeAll()">X</button></div>
+  <div class="b" id="d1b"></div>
+  <div class="f"><button class="gk-btn" type="button" onclick="closeAll()">取消</button> <button class="gk-btn primary" type="button" id="d1next" onclick="openDlg(2)">下一步</button></div>
+</div>
+<div class="gk-dlg" id="dlg2" role="dialog" aria-modal="true" aria-labelledby="d2t">
+  <div class="t"><span id="d2t">選擇物流公司</span><button type="button" aria-label="關閉" onclick="closeAll()">X</button></div>
+  <div class="b">
+    請選擇本筆訂單的物流公司：
+    <label><input type="radio" name="carrier" value="黑貓宅急便"> 黑貓宅急便</label>
+    <label><input type="radio" name="carrier" value="新竹物流"> 新竹物流</label>
+    <label><input type="radio" name="carrier" value="7-ELEVEN 交貨便"> 7-ELEVEN 交貨便</label>
+    <label><input type="radio" name="carrier" value="全家店到店"> 全家店到店</label>
+    <div class="err" id="d2err">請選擇物流公司</div>
+  </div>
+  <div class="f"><button class="gk-btn" type="button" onclick="backTo(1)">上一步</button> <button class="gk-btn primary" type="button" id="d2next" onclick="toStep3()">下一步</button></div>
+</div>
+<div class="gk-dlg" id="dlg3" role="dialog" aria-modal="true" aria-labelledby="d3t">
+  <div class="t"><span id="d3t">填寫物流單號</span><button type="button" aria-label="關閉" onclick="closeAll()">X</button></div>
+  <div class="b">
+    物流公司：<b id="d3c"></b><br>
+    物流單號：<input type="text" id="trk">
+    <div class="err" id="d3err">請輸入物流單號</div>
+  </div>
+  <div class="f"><button class="gk-btn" type="button" onclick="backTo(2)">上一步</button> <button class="gk-btn primary" type="button" id="d3ok" onclick="doShip()">確定出貨</button></div>
+</div>
+<script>
+// 示例資料：虛構商家「小巷選物」的 25 筆訂單，所有頁面共用同一批
+var ORDERS_SEED = [
+  ["SO-261022-0125","2026-10-22 09:41","林怡君","手沖濾杯組 ×1、濾紙 100 入 ×2",1280,"信用卡","宅配（黑貓）","台北市大安區復興南路一段 120 號 5 樓","待出貨"],
+  ["SO-261022-0124","2026-10-22 08:17","陳柏翰","亞麻餐墊 ×4",960,"LINE Pay","超商取貨（7-ELEVEN）","7-ELEVEN 新莊幸福門市","待出貨"],
+  ["SO-261021-0123","2026-10-21 22:05","張雅婷","陶瓷馬克杯 ×2",1100,"ATM 轉帳","宅配（黑貓）","新北市板橋區文化路二段 58 號","待付款"],
+  ["SO-261021-0122","2026-10-21 20:33","王志明","木質托盤 ×1",890,"信用卡","超商取貨（全家）","全家 台中公益店","退款中"],
+  ["SO-261021-0121","2026-10-21 18:12","黃郁婷","香氛蠟燭 ×3",1650,"信用卡","宅配（黑貓）","台中市西區公益路 210 號","待出貨"],
+  ["SO-261021-0120","2026-10-21 15:48","李承恩","帆布托特包 ×1",780,"貨到付款","宅配（新竹物流）","桃園市中壢區中央西路 33 號","待出貨"],
+  ["SO-261021-0119","2026-10-21 11:02","吳佳穎","手沖濾杯組 ×1",980,"LINE Pay","超商取貨（7-ELEVEN）","7-ELEVEN 高雄文化門市","已出貨"],
+  ["SO-261020-0118","2026-10-20 23:40","劉冠廷","亞麻餐墊 ×2、木質托盤 ×1",1370,"信用卡","宅配（黑貓）","高雄市苓雅區四維三路 6 號","已出貨"],
+  ["SO-261020-0117","2026-10-20 19:26","蔡宜蓁","陶瓷馬克杯 ×1",550,"ATM 轉帳","超商取貨（全家）","全家 新竹光復店","待付款"],
+  ["SO-261020-0116","2026-10-20 16:09","楊家豪","香氛蠟燭 ×1、火柴 ×1",620,"信用卡","超商取貨（7-ELEVEN）","7-ELEVEN 台南成大門市","退款中"],
+  ["SO-261020-0115","2026-10-20 10:55","許雅雯","帆布托特包 ×2",1560,"信用卡","宅配（黑貓）","台北市中山區南京東路二段 98 號","待出貨"],
+  ["SO-261019-0114","2026-10-19 21:14","鄭宇軒","手沖濾杯組 ×2",1960,"LINE Pay","宅配（新竹物流）","新北市三重區重新路三段 11 號","已出貨"],
+  ["SO-261019-0113","2026-10-19 17:37","謝欣怡","木質托盤 ×2",1780,"信用卡","超商取貨（全家）","全家 宜蘭神農店","已完成"],
+  ["SO-261019-0112","2026-10-19 13:20","郭俊宏","亞麻餐墊 ×6",1440,"ATM 轉帳","宅配（黑貓）","彰化縣彰化市中山路二段 160 號","待出貨"],
+  ["SO-261019-0111","2026-10-19 09:03","洪詩涵","陶瓷馬克杯 ×4",2200,"信用卡","宅配（黑貓）","台北市信義區松仁路 100 號","已取消"],
+  ["SO-261018-0110","2026-10-18 22:48","邱彥廷","香氛蠟燭 ×2",1100,"貨到付款","超商取貨（7-ELEVEN）","7-ELEVEN 嘉義興業門市","已出貨"],
+  ["SO-261018-0109","2026-10-18 18:31","曾怡萱","帆布托特包 ×1、亞麻餐墊 ×2",1260,"LINE Pay","超商取貨（全家）","全家 花蓮中華店","已完成"],
+  ["SO-261018-0108","2026-10-18 14:15","廖哲維","手沖濾杯組 ×1",980,"信用卡","宅配（黑貓）","台中市北屯區崇德路三段 52 號","待付款"],
+  ["SO-261017-0107","2026-10-17 20:02","賴佩珊","木質托盤 ×1、陶瓷馬克杯 ×2",1990,"信用卡","宅配（新竹物流）","新竹市東區關新路 27 號","退款中"],
+  ["SO-261017-0106","2026-10-17 15:44","周冠宇","香氛蠟燭 ×4",2200,"ATM 轉帳","宅配（黑貓）","台南市東區東門路二段 89 號","已完成"],
+  ["SO-261017-0105","2026-10-17 11:27","徐靜宜","亞麻餐墊 ×2",480,"信用卡","超商取貨（7-ELEVEN）","7-ELEVEN 基隆仁愛門市","已出貨"],
+  ["SO-261016-0104","2026-10-16 21:56","孫偉倫","帆布托特包 ×1",780,"LINE Pay","超商取貨（全家）","全家 屏東民生店","待出貨"],
+  ["SO-261016-0103","2026-10-16 16:38","馬欣妤","手沖濾杯組 ×1、濾紙 100 入 ×4",1580,"信用卡","宅配（黑貓）","台北市士林區中正路 250 號","已完成"],
+  ["SO-261015-0102","2026-10-15 19:20","朱信宏","陶瓷馬克杯 ×1",550,"貨到付款","宅配（黑貓）","苗栗縣頭份市中華路 78 號","已取消"],
+  ["SO-261015-0101","2026-10-15 10:07","胡雅筑","香氛蠟燭 ×1",550,"信用卡","超商取貨（7-ELEVEN）","7-ELEVEN 雲林斗六門市","待出貨"]
+].map(function (r) {
+  return { id: r[0], time: r[1], customer: r[2], items: r[3], amount: r[4], pay: r[5], ship: r[6], address: r[7], status: r[8], tracking: "" };
+});
+function cloneOrders() { return ORDERS_SEED.map(function (o) { return Object.assign({}, o); }); }
+function money(n) { return "NT$ " + n.toLocaleString("en-US"); }
+function escHtml(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+var orders = cloneOrders(), view = orders.slice(), current = null, selected = {};
+function render() {
+  document.getElementById("rows").innerHTML = view.map(function (o) {
+    var op = (o.status === "待出貨" ? '<button class="gk-btn sm" type="button" data-ship="' + o.id + '">出貨</button>' : "") + '<a href="#/orders/' + o.id + '">明細</a>';
+    return '<tr><td><input type="checkbox" aria-label="選取 ' + o.id + '" data-sel="' + o.id + '"' + (selected[o.id] ? " checked" : "") + '></td><td class="op">' + op + '</td><td class="nowrap">' + o.id + '</td><td class="nowrap">' + o.time + '</td><td class="nowrap">' + escHtml(o.customer) + '</td><td>' + escHtml(o.items) + '</td><td class="num">' + money(o.amount) + '</td><td class="nowrap">' + o.pay + '</td><td class="nowrap">' + o.ship + '</td><td class="nowrap st-' + o.status + '">' + o.status + '</td></tr>';
+  }).join("");
+  document.getElementById("pager").textContent = "共 " + view.length + " 筆　第 1 / 1 頁　每頁 50 筆";
+  updateSel();
+}
+function updateSel() { document.getElementById("selCount").textContent = "已選取 " + Object.keys(selected).filter(function (k) { return selected[k]; }).length + " 筆"; }
+document.getElementById("rows").addEventListener("click", function (e) {
+  var s = e.target.getAttribute("data-ship"); if (s) startShip(s);
+  var c = e.target.getAttribute("data-sel"); if (c) { selected[c] = e.target.checked; updateSel(); }
+});
+function selAll(cb) { view.forEach(function (o) { selected[o.id] = cb.checked; }); render(); }
+function applyFilter(e) {
+  if (e) e.preventDefault();
+  var f = document.getElementById("ff"), sts = [].slice.call(f.querySelectorAll("input[name=st]:checked")).map(function (i) { return i.value; });
+  var pay = f.pay.value, from = f.from.value.trim(), to = f.to.value.trim(), kw = f.kw.value.trim();
+  view = orders.filter(function (o) {
+    if (sts.length && sts.indexOf(o.status) < 0) return false;
+    if (pay && o.pay !== pay) return false;
+    if (from && o.time.slice(0, 10) < from) return false;
+    if (to && o.time.slice(0, 10) > to) return false;
+    if (kw && (o.id + o.customer).indexOf(kw) < 0) return false;
+    return true;
+  });
+  render();
+}
+function clearFilter() { document.getElementById("ff").reset(); view = orders.slice(); render(); }
+function flash(t) { var m = document.getElementById("msg"); m.textContent = t; m.classList.add("show"); window.scrollTo(0, 0); }
+function batchShip() {
+  var n = Object.keys(selected).filter(function (k) { return selected[k]; }).length;
+  flash(n ? "批次出貨：已選 " + n + " 筆，請逐筆開啟出貨視窗填寫物流單號（示範）" : "請先勾選訂單");
+}
+function startShip(id) {
+  current = orders.filter(function (o) { return o.id === id; })[0];
+  document.getElementById("d1b").innerHTML = "訂單編號：" + current.id + "<br>顧客：" + escHtml(current.customer) + "<br>商品：" + escHtml(current.items) + "<br>配送方式：" + current.ship + "<br>收件地址：" + escHtml(current.address) + "<br><br>確定要將此訂單出貨嗎？";
+  [].forEach.call(document.querySelectorAll("input[name=carrier]"), function (r) { r.checked = false; });
+  document.getElementById("trk").value = "";
+  document.getElementById("ov").classList.add("show");
+  openDlg(1);
+}
+function openDlg(n) {
+  document.getElementById("dlg" + n).classList.add("show");
+  var b = document.querySelector("#dlg" + n + " .f .primary"); if (b) b.focus();
+}
+function backTo(n) { for (var i = n + 1; i <= 3; i++) document.getElementById("dlg" + i).classList.remove("show"); }
+function toStep3() {
+  var r = document.querySelector("input[name=carrier]:checked");
+  document.getElementById("d2err").classList.toggle("show", !r);
+  if (!r) return;
+  document.getElementById("d3c").textContent = r.value;
+  openDlg(3); document.getElementById("trk").focus();
+}
+function doShip() {
+  var t = document.getElementById("trk").value.trim();
+  document.getElementById("d3err").classList.toggle("show", !t);
+  if (!t) return;
+  current.status = "已出貨"; current.tracking = t;
+  closeAll(); applyFilter();
+  flash("訂單 " + current.id + " 已出貨（示範：未寫入任何系統）");
+}
+function closeAll() { [1, 2, 3].forEach(function (n) { document.getElementById("dlg" + n).classList.remove("show"); }); document.getElementById("ov").classList.remove("show"); document.getElementById("d2err").classList.remove("show"); document.getElementById("d3err").classList.remove("show"); }
+document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll(); });
+render();
+var q = new URLSearchParams(location.search);
+if (q.get("ship")) { startShip(q.get("ship")); if (q.get("step") >= 2) { document.querySelector("input[name=carrier][value='黑貓宅急便']").checked = true; openDlg(2); } if (q.get("step") >= 3) toStep3(); }
+</script>
+</body>
+</html>

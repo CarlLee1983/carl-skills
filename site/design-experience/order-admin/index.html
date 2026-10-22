@@ -1,0 +1,275 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>商家後台的訂單頁：改善模式跑兩輪｜design-experience 案例</title>
+  <meta name="description" content="改善模式的案例：第一輪的方案修好每個問題，整頁卻和現況差不多。維護者追到三條規則上的原因，改了技能再重跑，第二輪改成處理佇列。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/design-experience/order-admin/">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="商家後台的訂單頁：改善模式跑兩輪｜design-experience 案例">
+  <meta property="og:description" content="改善模式的案例：第一輪的方案修好每個問題，整頁卻和現況差不多。維護者追到三條規則上的原因，改了技能再重跑，第二輪改成處理佇列。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/design-experience/order-admin/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/order-admin.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="訂單頁跑兩輪，中間改的是技能">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="商家後台的訂單頁：改善模式跑兩輪｜design-experience 案例">
+  <meta name="twitter:description" content="改善模式的案例：第一輪的方案修好每個問題，整頁卻和現況差不多。維護者追到三條規則上的原因，改了技能再重跑，第二輪改成處理佇列。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/order-admin.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="bar">
+    <a class="wordmark" href="../../">carl-skills</a>
+    <nav aria-label="主要">
+      <ul>
+        <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部案例</a></li>
+        <li><a href="#stages">三個時間點</a></li>
+        <li><a href="#rules">改了哪些規則</a></li>
+        <li><a href="#verify">驗證</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <h1><span>訂單頁跑兩輪，</span><span>中間改的是技能</span></h1>
+    <p class="lede">改善模式的案例。第一輪交出的方案修好了每個問題，整頁卻和現況差不多。維護者判定平庸，追到三條規則上的原因，改了技能再重跑。這頁並排兩輪的結果。</p>
+    <dl class="facts">
+      <div><dt>進入模式</dt><dd>改善</dd></div>
+      <div><dt>試跑性質</dt><dd>腳本試跑，兩輪</dd></div>
+      <div><dt>日期</dt><dd>2026-10-22</dd></div>
+      <div><dt>使用者回覆</dt><dd>取自腳本，沒有真人</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="honest f-flame">
+  <p><strong>這是腳本試跑。</strong>後台是依腳本重建的虛構頁面，訂單、顧客與退款申請都是示例資料。使用者每一句回覆都取自 <a href="https://github.com/CarlLee1983/carl-skills/blob/main/docs/design-experience/examples.md">使用故事三</a>，客服的「還是不好用」和每次選擇都不算可用性證據。</p>
+</div>
+
+<main id="main">
+  <section class="band wrap f-panel stages" id="stages" aria-labelledby="stages-h">
+    <h2 id="stages-h" class="h2 rv">同一個任務，三個時間點</h2>
+    <p class="lede rv" style="--d:1;margin-top:20px;color:var(--body)">客服每天在這頁花約四小時，做的是同一件事：把待出貨清到零。切換看看出貨這個動作在三個版本裡長什麼樣子。</p>
+    <div style="margin-top:48px">
+      <fieldset>
+        <legend class="sr-only">選擇版本</legend>
+        <label><input type="radio" name="stage" id="st-now" checked><span>現況</span></label>
+        <label><input type="radio" name="stage" id="st-r1"><span>第一輪定稿</span></label>
+        <label><input type="radio" name="stage" id="st-r2"><span>第二輪定稿</span></label>
+      </fieldset>
+      <div class="stage-views">
+        <div class="stage s-now">
+          <figure><img src="img/genkuang-ship-dialog.webp" width="1440" height="900" loading="lazy" alt="現況的出貨流程：表格上疊了三層藍色標題的對話框，最上層只有一個物流單號欄，下面的訂單內容被蓋住"></figure>
+          <div><p class="count">5<small>出貨一筆要點 5 次，再輸入單號。三層對話框疊在一起，填單號時看不到收件資訊；物流商每次都要手選。</small></p></div>
+        </div>
+        <div class="stage s-r1">
+          <figure><img src="img/run1-ship-panel.webp" width="1440" height="900" loading="lazy" alt="第一輪的出貨側邊面板：右側面板列出顧客、商品、金額與收件地址，物流商已預選，焦點在單號欄"></figure>
+          <div><p class="count">2<small>出貨一筆降到 2 次點擊加輸入單號，物流商依配送方式預選。清空 8 筆仍要逐筆打開、關上面板，表格本身和現況幾乎一樣。</small></p></div>
+        </div>
+        <div class="stage s-r2">
+          <figure><img src="img/run2-final.webp" width="1440" height="900" loading="lazy" alt="第二輪定稿：左側深色佇列依等待時間列出 8 筆待出貨，右側工作卡顯示目前這筆的配送資訊、單號欄與橘色「出貨，下一筆」按鈕"></figure>
+          <div><p class="count">2<small>清空 8 筆待出貨，全程共 2 次點擊（其中一次是「稍後處理」），加 8 次 Enter。出貨後自動換下一筆，焦點回到單號欄。</small></p></div>
+        </div>
+      </div>
+    </div>
+    <p class="note rv" style="margin-top:32px">次數來自兩輪 SESSION 的腳本化互動斷言。第二輪的最小修補方向 A 清空同樣 8 筆要 8 次點擊加 8 次 Enter。</p>
+  </section>
+
+  <section class="round wrap f-black" aria-labelledby="r-diag">
+    <div class="round-head">
+      <h2 id="r-diag" class="rv">先問哪裡不好</h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote><p>我對目前訂單頁的 UI／UX 不滿意，請先問我哪裡不好，再提出改善方案與原型。</p></blockquote>
+        <p>有既有介面、請求是讓它變好，所以判定為改善模式。技能先把現在的畫面截下來叫做「現況」，再用一輪編號題問：在哪個任務覺得不對、不滿的類型、依據是誰、什麼必須保留、範圍多大。</p>
+        <p>使用者說「整體看起來很舊」。這句太含糊，技能從現況截圖提出三種解讀讓使用者選：灰階過多、字級太平、圖示混雜。使用者選了第一種。</p>
+        <p>技能也自己在 1440 與 390 寬走了一次出貨，找到兩個客服沒說的問題，標成「專家檢視，待確認」。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <figure class="rv"><a class="zoom" href="img/genkuang.webp"><img src="img/genkuang.webp" width="1440" height="900" loading="lazy" alt="現況的訂單列表：深藍頁首、左側導覽與篩選側欄，右側是 25 列灰階表格，狀態欄只用深淺不同的灰字"></a><figcaption>現況，1440 寬。虛構重建的後台：側欄勾選篩選，表格 25 列，狀態只靠灰階深淺區分。</figcaption></figure>
+      <div class="table-scroll rv">
+        <table class="dtable">
+          <caption class="sr-only">問題清單</caption>
+          <thead><tr><th scope="col">ID</th><th scope="col">問題</th><th scope="col">層級</th><th scope="col">來源</th><th scope="col">嚴重度</th></tr></thead>
+          <tbody>
+            <tr><td>P1</td><td>退款中的訂單沒有篩選入口</td><td>結構</td><td>客服回報</td><td>高</td></tr>
+            <tr><td>P2</td><td>出貨要開三層對話框，物流每次手選，上層蓋住訂單內容</td><td>流程</td><td>客服回報</td><td>高</td></tr>
+            <tr><td>P3</td><td>狀態只靠灰階深淺區分</td><td>視覺</td><td>使用者確認的解讀</td><td>中</td></tr>
+            <tr><td>P4</td><td>批次操作按鈕捲動後消失</td><td>流程</td><td>專家檢視，待確認</td><td>中（暫定）</td></tr>
+            <tr><td>P5</td><td>390 寬時狀態欄在最右側，要橫向捲動</td><td>結構</td><td>專家檢視，待確認</td><td>低（暫定）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pair">
+        <figure class="rv detail"><img src="img/status-genkuang.webp" width="590" height="740" loading="lazy" alt="現況狀態欄特寫：待出貨、待付款、退款中、已出貨都是灰色文字，只差深淺"><figcaption>P3 的證據：狀態欄特寫。</figcaption></figure>
+        <figure class="rv phone" style="--d:1"><img src="img/genkuang-390.webp" width="390" height="844" loading="lazy" alt="現況在 390 寬：表格擠在手機畫面裡，狀態欄落在右側畫面外"><figcaption>P5 的證據：390 寬時狀態欄在畫面外。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" aria-labelledby="r-one">
+    <div class="round-head">
+      <h2 id="r-one" class="rv"><span class="nw">第一輪：</span><span class="nw">逐題修好</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>兩個結構方向：A 在表格上方放狀態分頁與筆數，B 在側欄頂端放已存篩選。出貨流程兩者共用：三層對話框收成一個側邊面板。使用者選了 A。</p>
+        <p>視覺處理兩個：1 清晰帳本（密而平、色彩加形狀標狀態），2 標籤看板（寬鬆、卡片陰影、底色標籤）。使用者看過截圖後選了 1。</p>
+        <blockquote><p>還是不好用。</p></blockquote>
+        <p>技能把 v1 拿回去對照問題清單，發現手機版退步了：分頁直列成 7 列，第一顆出貨鈕被推到首屏外。v2 只改這一處，分頁收成單列橫向捲動。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="pair">
+        <figure class="rv"><a class="zoom" href="img/run1-a.webp"><img src="img/run1-a.webp" width="1440" height="900" loading="lazy" alt="第一輪方向 A：表格上方多了一排狀態分頁，其餘版面與現況相同"></a><figcaption>方向 A 狀態分頁。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/run1-b.webp"><img src="img/run1-b.webp" width="1440" height="900" loading="lazy" alt="第一輪方向 B：側欄頂端多了已存篩選清單，表格與現況相同"></a><figcaption>方向 B 已存篩選。和 A 共用同一副骨架，差在一個控制項。</figcaption></figure>
+      </div>
+      <div class="pair">
+        <figure class="rv"><a class="zoom" href="img/run1-a-t1.webp"><img src="img/run1-a-t1.webp" width="1440" height="900" loading="lazy" alt="視覺處理 1 清晰帳本：白底密集表格，狀態以彩色小圓點、菱形、三角加文字標示"></a><figcaption>處理 1 清晰帳本，使用者選定。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/run1-a-t2.webp"><img src="img/run1-a-t2.webp" width="1440" height="900" loading="lazy" alt="視覺處理 2 標籤看板：較寬鬆的表格，狀態用帶圖示的彩色底色標籤"></a><figcaption>處理 2 標籤看板。</figcaption></figure>
+      </div>
+      <div class="pair">
+        <figure class="rv phone"><img src="img/run1-a-v1-390.webp" width="390" height="844" loading="lazy" alt="v1 在 390 寬：狀態分頁直列成七列清單，佔滿首屏，看不到出貨按鈕"><figcaption>v1，390 寬：第一顆出貨鈕底部在 y=902，超出 844 的畫面。</figcaption></figure>
+        <figure class="rv phone" style="--d:1"><img src="img/run1-a-v2-390.webp" width="390" height="844" loading="lazy" alt="v2 在 390 寬：狀態分頁收成一列可橫向捲動，表格與出貨按鈕回到首屏"><figcaption>v2：分頁改成單列橫捲，出貨鈕回到 y=430。這是第一輪接受的版本。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" aria-labelledby="r-why">
+    <div class="round-head">
+      <h2 id="r-why" class="rv">為什麼是平庸</h2>
+      <div class="stack rv" style="--d:1">
+        <p>每個問題都有解法，驗收情境也都通過，但把第一輪定稿放在現況旁邊，看起來幾乎一樣：還是那張表，加了分頁和彩色圓點。維護者判定它平庸，並把原因追到技能的三條規則上，而不是怪這一次的執行。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="pair">
+        <figure class="rv"><a class="zoom" href="img/genkuang.webp"><img src="img/genkuang.webp" width="1440" height="900" loading="lazy" alt="現況的訂單列表，灰階表格"></a><figcaption>現況。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/run1-a-v2.webp"><img src="img/run1-a-v2.webp" width="1440" height="900" loading="lazy" alt="第一輪定稿：同一張表格，多了狀態分頁與彩色狀態符號，版面骨架與現況相同"></a><figcaption>第一輪定稿。全螢幕看，處理 1 和現況分不太出來。</figcaption></figure>
+      </div>
+      <ol class="rules f-surface rv" style="padding-inline:var(--m);margin-inline:calc(var(--m) * -1)">
+        <li><h3>逐題打補丁</h3><p>規則讓技能對每個問題找「干擾最小」的修法，一題一層疊上去，從來沒有問這一頁在替客服做什麼工作。補丁加總起來，就是現況加上修正。</p></li>
+        <li><h3>方向只差一個控制項</h3><p>A 和 B 共用同一副骨架，差別只在狀態篩選放分頁還是放側欄。使用者其實沒有真的在比兩種做法。</p></li>
+        <li><h3>處理 1 和現況分不出來</h3><p>處理 1 在狀態欄特寫裡差很多，放到全螢幕就看不出差別。技能只要求截圖審看，沒有要求和現況比。</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" id="rules" aria-labelledby="r-rules">
+    <div class="round-head">
+      <h2 id="r-rules" class="rv">改了哪些規則</h2>
+      <div class="stack rv" style="--d:1">
+        <p>修改落在技能本文與改善模式的參考檔。原文是英文，下面是摘要；連結指向 GitHub 上的檔案。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <ol class="rules">
+        <li class="rv"><h3>提方案前先重新框定</h3><div class="stack"><p>問題是症狀。提結構或流程方向之前，先把主要任務寫成一份工作：誰做、多常做、做完是什麼樣子，再問如果今天為這份工作設計，這頁會是什麼。方向要橫跨一段野心：一個是高嚴重度問題的最小修補，至少一個照工作重排流程，各自寫出重新學習的代價。</p><p class="muted"><a href="https://github.com/CarlLee1983/carl-skills/blob/main/skills/design-experience/references/improvement.md">improvement.md</a>「Reframe before proposing」</p></div></li>
+        <li class="rv"><h3>方向要在骨架上不同</h3><div class="stack"><p>換色不算不同方向；共用代表畫面的骨架、只差一個控制項的方向也不算。每個方向要用自己的方式回答主要任務。</p><p class="muted"><a href="https://github.com/CarlLee1983/carl-skills/blob/main/skills/design-experience/SKILL.md">SKILL.md</a>「Propose comparable directions」</p></div></li>
+        <li class="rv"><h3>處理要和現況分得出來</h3><div class="stack"><p>改善模式裡，視覺處理在範圍內的區域截圖要讀得出和現況不同，否則只算細節調整。</p><p class="muted"><a href="https://github.com/CarlLee1983/carl-skills/blob/main/skills/design-experience/SKILL.md">SKILL.md</a> 視覺處理段落</p></div></li>
+        <li class="rv"><h3>安靜是氣氛，不是沒設計</h3><div class="stack"><p>後台或資料密集的畫面一樣要有明確的概念、刻意的字級與密度，每一列或每張卡片要有一個帶頭的主要動作。</p><p class="muted"><a href="https://github.com/CarlLee1983/carl-skills/blob/main/skills/design-experience/SKILL.md">SKILL.md</a>「Calm is a mood」</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" aria-labelledby="r-two">
+    <div class="round-head">
+      <h2 id="r-two" class="rv"><span class="nw">第二輪：</span><span class="nw">先說這是什麼工作</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>沿用第一輪的現況、訪談答案與 P1–P5，不參考第一輪的方向。這次技能在提方案前先寫下：</p>
+        <blockquote><p>客服做的是把待出貨清到零，並讓每筆退款中的申請都有結論。完成的樣子是兩個數字歸零，而不是「找到某一筆訂單」。P1 和 P2 是同一個錯位的兩個症狀。</p></blockquote>
+        <p>三個方向因此橫跨三種野心：A 只修 P1、P2；B 留住表格，讓處理在表格裡完成；C 照著這份工作重排整頁。技能建議 C，使用者選了 C。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="trio">
+        <figure class="rv"><a class="zoom" href="img/run2-a-dialog.webp"><img src="img/run2-a-dialog.webp" width="1440" height="900" loading="lazy" alt="第二輪方向 A 最小修補：側欄多了退款中與筆數，出貨收成一個對話框，物流商已預選"></a><figcaption>A 最小修補。清空 8 筆：8 次點擊加 8 次 Enter。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/run2-b-inline.webp"><img src="img/run2-b-inline.webp" width="1440" height="900" loading="lazy" alt="第二輪方向 B 表格內就地處理：上方今日待辦顯示待出貨 8、退款中 3，出貨表單在表格列下方展開"></a><figcaption>B 表格內就地處理。清空 8 筆：2 次點擊加 8 次 Enter。</figcaption></figure>
+        <figure class="rv" style="--d:2"><a class="zoom" href="img/run2-c.webp"><img src="img/run2-c.webp" width="1440" height="900" loading="lazy" alt="第二輪方向 C 處理佇列：上方兩條佇列，左側依等待時間排列的清單，右側目前這筆的工作卡"></a><figcaption>C 處理佇列。清空 8 筆：2 次點擊加 8 次 Enter；表格退到「所有訂單」。</figcaption></figure>
+      </div>
+      <div class="pair">
+        <figure class="rv"><a class="zoom" href="img/run2-c-t1.webp"><img src="img/run2-c-t1.webp" width="1440" height="900" loading="lazy" alt="視覺處理 1 調度台：深藍黑佇列軌道像發車看板，右側明亮工作面，橘色只用在主要動作與目前這筆"></a><figcaption>處理 1 調度台，使用者選定。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/run2-c-t2.webp"><img src="img/run2-c-t2.webp" width="1440" height="900" loading="lazy" alt="視覺處理 2 出貨單：暖色紙面上的出貨標籤，襯線大字收件地、黑框、虛線撕口，螢光黃標出目前這筆"></a><figcaption>處理 2 出貨單。兩者在全螢幕都和現況明顯不同。</figcaption></figure>
+      </div>
+      <figure class="rv big-fig"><a class="zoom" href="img/run2-final.webp"><img src="img/run2-final.webp" width="1440" height="900" loading="lazy" alt="第二輪定稿全畫面：結構 C 加處理 1，深色佇列與白色工作卡，待出貨 8 筆、退款中 3 筆"></a><figcaption>定稿：結構 C 加處理 1。結構與視覺分開接受，兩者理由都未陳述。</figcaption></figure>
+      <div class="trio">
+        <figure class="rv"><a class="zoom" href="img/run2-final-refund.webp"><img src="img/run2-final-refund.webp" width="1440" height="900" loading="lazy" alt="退款卡：先列顧客的申請原因與希望的處理，下方是核准退款與婉拒按鈕"></a><figcaption>退款卡先列申請原因，婉拒時原因必填。</figcaption></figure>
+        <figure class="rv" style="--d:1"><a class="zoom" href="img/run2-final-empty.webp"><img src="img/run2-final-empty.webp" width="1440" height="900" loading="lazy" alt="佇列清空：待出貨 0，處理過的訂單劃掉，中央顯示待出貨已清空與切到退款中的按鈕"></a><figcaption>清空後的空狀態，提供切到另一條佇列。</figcaption></figure>
+        <figure class="rv" style="--d:2"><a class="zoom" href="img/run2-final-table.webp"><img src="img/run2-final-table.webp" width="1440" height="900" loading="lazy" alt="所有訂單：狀態篩選鈕含筆數，表格欄位順序與現況相同，每列有橘色外框的出貨或處理退款按鈕"></a><figcaption>所有訂單：欄位順序與現況相同。</figcaption></figure>
+      </div>
+      <div class="pair">
+        <figure class="rv phone"><img src="img/run2-final-390.webp" width="390" height="844" loading="lazy" alt="定稿在 390 寬：兩條佇列並排在上方，工作卡在下，全寬橘色出貨按鈕在首屏內"><figcaption>390 寬：出貨鈕底部 y=770，在首屏內。</figcaption></figure>
+        <figure class="rv phone" style="--d:1"><img src="img/run2-final-refund-390.webp" width="390" height="844" loading="lazy" alt="定稿在 390 寬的退款卡：申請原因、訂單資料與橘色核准退款按鈕"><figcaption>390 寬的退款卡。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wrap f-panel" id="verify" aria-labelledby="v-h">
+    <h2 id="v-h" class="h2 rv">驗證到哪裡</h2>
+    <p class="lede rv" style="--d:1;margin-top:20px;color:var(--body)">兩輪都在 2026-10-22 用 Playwright 1.64.1 與 Chromium（headless）完成，下面摘自兩份 SESSION 的驗證段落。</p>
+    <div class="checks" style="margin-top:56px">
+      <div class="rv">
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>做過的檢查</h3>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>第一輪：每頁在 1440×900 與 390×844 截圖，另加出貨流程與狀態欄特寫共 28 張，逐張看過後修了三處。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>第一輪：現況出貨 5 次點擊；a-v2 的退款中分頁剛好 3 筆、面板焦點在單號欄、出貨與復原改變筆數；9 個頁面或狀態在 390 寬沒有橫向溢出。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>第二輪：35 張截圖，看過後修了六處，包括處理 2 的出貨鈕落在首屏外、「明細」連結和主要動作搶眼。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>第二輪腳本化斷言：現況 2／2、A 7／7、B 11／11、C 22／22、定稿 22／22；所有頁面在兩種寬度都沒有 JavaScript 錯誤。</li>
+        </ul>
+      </div>
+      <div class="rv" style="--d:1">
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>沒有做的檢查</h3>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>真實客服試用。使用者在每個選擇點都接受了建議，這不是可用性證據。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>讀屏器、Safari 與 Firefox、實機手機、200% 縮放、色覺差異模擬。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>第二輪的「所有訂單」在 390 寬仍是表格橫捲，P5 只在佇列檢視解決。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>掃描槍輸入。單號欄假設掃描槍會送出 Enter，沒有實測。</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="rv" style="margin-top:96px">打開原型</h3>
+    <p class="note rv">單檔離線 HTML，原樣複製自試跑產物。出貨、退款只改寫頁面記憶體，不會寫入任何系統。</p>
+    <div class="protos rv">
+      <a href="prototypes/run2/final.html"><strong>第二輪定稿</strong><span>結構 C 加處理 1</span><em>開啟原型</em></a>
+      <a href="prototypes/run2/compare.html"><strong>第二輪結構比較</strong><span>現況、A、B、C 切換或並排</span><em>開啟原型</em></a>
+      <a href="prototypes/run2/treatments.html"><strong>第二輪視覺處理</strong><span>現況、調度台、出貨單</span><em>開啟原型</em></a>
+      <a href="prototypes/run1/a-v2.html"><strong>第一輪定稿</strong><span>結構 A 加處理 1，v2</span><em>開啟原型</em></a>
+      <a href="prototypes/run1/compare.html"><strong>第一輪結構比較</strong><span>現況、A、B 與出貨流程</span><em>開啟原型</em></a>
+      <a href="prototypes/run1/a-treatments.html"><strong>第一輪視覺處理</strong><span>清晰帳本、標籤看板與現況</span><em>開啟原型</em></a>
+      <a href="prototypes/run1/a-v1.html"><strong>第一輪 v1</strong><span>保留 390 寬的退步</span><em>開啟原型</em></a>
+      <a href="prototypes/run1/genkuang.html"><strong>現況</strong><span>虛構重建的訂單頁</span><em>開啟原型</em></a>
+    </div>
+  </section>
+</main>
+
+<footer class="band wrap f-flame">
+  <div class="next-case">
+    <p>下一個案例：功能起手，實際試跑</p>
+    <a class="big" href="../dbcli/">dbcli<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </div>
+</footer>
+</body>
+</html>
