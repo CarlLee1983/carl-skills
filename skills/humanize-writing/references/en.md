@@ -134,7 +134,7 @@ Every paragraph ends the same way: state the facts, then append "but you can't j
 
 ## 13. Repeated concessive antithesis
 
-"X is possible, but Y remains." "Give it A, hold back B." Each one alone is a real judgment; used in the opening, headings, body, and ending, the shape becomes a slogan. Keep the one that states the thesis; turn the rest into the concrete action. Headings especially should say what the section contains. Likewise, when every heading uses one shape (all questions, all balanced pairs), vary some; a single question heading with real content stays.
+"X is possible, but Y remains." "Give it A, hold back B." Each one alone is a real judgment; used in the opening, headings, body, and ending, the shape becomes a slogan. Keep the one that states the thesis; turn the rest into the concrete action. Article subheadings especially should say what the section contains: a slogan-style or signboard-style subheading inside an article gets rewritten to say the content too (❌ Make "done" expensive  ✅ Done needs three proofs: PR merged, deploy succeeded, ten clean minutes in monitoring), and "it is the author's voice" is not a reason to keep it. For interface headings see `interface-copy.md`. Likewise, when every heading uses one shape (all questions, all balanced pairs), vary some; a single question heading with real content stays.
 
 - ❌ (heading) Give it compute, not merge rights
 - ✅ (heading) Run it as a shadow job; tsc still gates PRs
@@ -262,7 +262,7 @@ After editing, scan once more:
 - [ ] Standalone negations only where they rule out a real misreading or draw a red line
 - [ ] No "this article" self-referential disclaimers
 - [ ] Paragraphs don't all close on a "but you can't just…" warning
-- [ ] Concessive antithesis kept only for the thesis; headings state content
+- [ ] Concessive antithesis kept only for the thesis; article subheadings state content (slogan subheadings too; interface headings are exempt, see `interface-copy.md`)
 - [ ] No three- or four-clause semicolon chains
 - [ ] Unverified scope gathered in the opening scope paragraph; paragraphs keep findings and red lines
 - [ ] No "marking / underscoring / a testament to" tail on plain facts, reworded or not

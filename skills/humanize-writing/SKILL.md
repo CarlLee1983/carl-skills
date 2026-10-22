@@ -23,6 +23,7 @@ Apply in order; a lower priority never justifies breaking a higher one.
    - Predominantly English → read `references/en.md`.
    - Mixed → read **both**. A text is mixed only when running prose appears in both languages; English terms inside Chinese sentences (Agent, LLM, token, API, eval, prompt…) do not count.
    - Either way, keep the existing zh/en term mixing. Do not translate terms the author left in English.
+   - Editing interface copy (landing pages, product pages, buttons, link text, interface headings, empty states, error messages, or copy embedded in HTML, code strings, or config files, or the user says it is interface copy) → also read `references/interface-copy.md`. It adds to the language files; it does not replace them.
 2. **Detect mode, per passage.** _Argument_ states claims, results, and instructions. _Narrative_ tells events in sequence: an incident story, a debugging journey, personal experience, fiction, dialogue. A tech post often mixes both; mark which passages are narrative.
    - Any narrative passage → also read the narrative file for the detected language (`references/narrative-zh-tw.md`, `references/narrative-en.md`; both when mixed). Inside narrative passages its rules take precedence over steps 3 to 5 below.
 3. **Extract the substance.** From the source, pull out: facts & numbers, the author's judgment/opinion, first-hand experience, and concrete actions. This is what survives.
@@ -51,3 +52,4 @@ Load the matching files. Each contains the full ban list with before/after examp
 
 - **Traditional Chinese**: `references/zh-tw.md`; narrative passages add `references/narrative-zh-tw.md`
 - **English**: `references/en.md`; narrative passages add `references/narrative-en.md`
+- **Interface copy** (either language): add `references/interface-copy.md`
