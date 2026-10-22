@@ -91,3 +91,26 @@ Status: ready-for-agent
 - 全域副本 9/24 版與 Codex 副本 7/7 版的實際內容以合併前的檔案為準；比對結果（衝突表、獨有規則清單、腳本行為）記在 merge-decisions.md 與本次 session 的比對報告摘要中，實作時應重新讀兩份副本確認，不憑摘要。
 - humanize-writing 目前的 description 已拿掉部分觸發詞；補回三個屬於觸發條件變更，依 ADR 0003 是 MAJOR 等級的合約變動，但因為這是第一個版號，直接以 1.0.0 發布。
 - 備份目錄位於 `~/.agents/` 下；`~/.agents` 本身是 git repo，其 `.gitignore` 已有 `skills.bak-*/`，備份不會進入版控（已確認）。
+
+## 結案回顧
+
+2026-10-22 結案。工單 01–10 全部關閉；交付見 PR #21（`43093e2`）、#22、#23、`humanize-writing/v1.0.0` Release，以及 CarlStack `05b2857`、`b789f55`。
+
+順利的地方：每張工單先重放驗收再 commit；盲測改稿與判定分給不同子代理，判定沒有由派工的代理改寫；全量重放從基準 9/26 到 26/26。
+
+出問題的地方：
+
+- H07 在基準與工單 07 第一輪都卡在同一個缺口：`zh-tw.md` §8 沒涵蓋沒有事實支撐的評價收尾，直到 07 才補上。補規則時第一版範例用了 fixture 原句，等於洩題，只好中止那輪重放、換句重跑。
+- `check_zh.py` 第一版「對齊規則檔」時刪掉 11 個舊詞，和 story 16「nothing lost」衝突；非 UTF-8、HTML 未收尾標籤、沒有結尾的 frontmatter 都不在 S01–S08 內，是 code-review 才抓到。
+- 工單 09 原訂先裝再搬，執行時因 Skills CLI 可能撞到舊目錄，改成先搬再裝。
+- CarlStack 的 `pnpm check` 被無關的未追蹤檔擋下，事後加進 `.gitignore`。
+- ADR 0003「暫不打版號」一句到打 tag 後才補記（PR #23）。
+
+尚待決定：H08 按鈕與 H12 殘句的判定從嚴可能改判；`check_zh.py` 已知誤報（句中說明冒號、閉環控制、遞進的「不只是…更是」、用語表常見詞）；`~/.agents/skills.bak-20261022/` 的保留期限。
+
+規則調整提案（未套用）：
+
+1. `docs/humanize-writing/acceptance.md` 的判定原則寫明「唯一的預期改寫沒做到」怎麼判。
+2. 重放方法加一條：規則檔的範例不得使用 fixture 原句。
+3. S 系列納入例外輸入（非 UTF-8、未收尾標籤、沒有結尾的 frontmatter），或指向 `.scratch/humanize-writing/validation/test_check_zh.py`。
+4. 規格範本寫明「對齊規則」與「不遺漏既有偵測」衝突時何者優先。
