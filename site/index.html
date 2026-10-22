@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>carl-skills｜可以單獨安裝的 agent 技能</title>
-  <meta name="description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 的實際案例。">
+  <meta name="description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 與 pm 的實際案例。">
   <meta name="theme-color" content="#0a111b">
   <link rel="canonical" href="https://carllee1983.github.io/carl-skills/">
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -16,7 +16,7 @@
   <meta property="og:site_name" content="carl-skills">
   <meta property="og:locale" content="zh_TW">
   <meta property="og:title" content="carl-skills｜可以單獨安裝的 agent 技能">
-  <meta property="og:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 的實際案例。">
+  <meta property="og:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 與 pm 的實際案例。">
   <meta property="og:url" content="https://carllee1983.github.io/carl-skills/">
   <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
   <meta property="og:image:alt" content="carl-skills：可以單獨裝的 agent 技能">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="carl-skills｜可以單獨安裝的 agent 技能">
-  <meta name="twitter:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 的實際案例。">
+  <meta name="twitter:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm。每個技能可獨立安裝，附 design-experience 與 pm 的實際案例。">
   <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +47,7 @@
       <ul>
         <li><a href="#skills">技能</a></li>
         <li><a href="design-experience/">設計案例</a></li>
+        <li><a href="pm/">PM 案例</a></li>
         <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub<svg class="ico" aria-hidden="true"><use href="#i-up-right"/></svg></a></li>
       </ul>
     </nav>
@@ -67,7 +68,7 @@
         <li class="rv"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/design-experience"><strong>design-experience</strong><span>以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發：訪談、比較設計方向、建立互動原型，依回饋收斂到定稿與交接。</span><em>Codex、Claude Code 等</em></a></li>
         <li class="rv" style="--d:1"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/devops"><strong>devops</strong><span>軟體交付與維運的統一入口：環境、CI、發布評估、部署與回復、監控、事故、備份還原。先取得證據，在明確授權內執行並核驗。</span><em>Codex、Claude Code 等</em></a></li>
         <li class="rv" style="--d:2"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/humanize-writing"><strong>humanize-writing</strong><span>潤飾繁體中文與英文，減少制式語句，保留原文的事實、立場與語氣；敘事段落另有保留情節與節奏的規則。</span><em>Codex、Claude Code 等</em></a></li>
-        <li class="rv" style="--d:3"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/pm"><strong>pm</strong><span>專案經理能力：範圍與計畫稽核、進度與依賴、下一步、風險與假設、變更影響、進度報告與結案。</span><em>Codex、Claude Code 等</em></a></li>
+        <li class="rv" style="--d:3"><a href="pm/"><strong>pm</strong><span>專案經理能力：範圍與計畫稽核、進度與依賴、下一步、風險與假設、變更影響、進度報告與結案。附實測邊界案例。</span><em>Codex、Claude Code 等</em></a></li>
         <li class="rv" style="--d:4"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/calibrate-codex"><strong>calibrate-codex</strong><span>把明確回饋或重複出現的問題，轉成範圍適當的指引、技能、hook、規則或驗證措施。</span><em>Codex 專用</em></a></li>
       </ol>
     </div>
@@ -88,6 +89,42 @@
       <figure class="rv" style="--d:1"><a class="zoom" href="design-experience/personal-site/"><img src="design-experience/personal-site/img/treatment-2.webp" width="1440" height="900" loading="lazy" alt="插畫家官網的工作室筆記處理：米白紙面、紙膠帶貼著的水彩佔位圖與赭紅按鈕"></a><figcaption>插畫家官網的工作室筆記，主題起手。</figcaption></figure>
     </div>
   </section>
+
+  <section class="band wrap f-panel" aria-labelledby="pm-cases-h">
+    <div class="round-head">
+      <h2 id="pm-cases-h" class="h2 rv">看它如何守住邊界</h2>
+      <div class="stack rv" style="--d:1">
+        <p>pm 是專案經理技能。一般 Agent 常把「看進度」誤當成「執行授權」，或者缺少資料時隨意捏造上線日期。pm 預設唯讀、以三級證據分級（verified、inferred、assumed）標明推論，交接嚴格遵循專案規則。三個案例，檢驗 35+ 個行為情境。</p>
+        <p><a class="btn" href="pm/">看 PM 案例<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a></p>
+      </div>
+    </div>
+    <div class="trio" style="margin-top:72px">
+      <div class="turn-box rv" style="background:var(--paper);padding:28px">
+        <div class="turn-head">
+          <strong style="font-size:16px">入口解耦與授權</strong>
+          <span class="badge badge-verified">s1–s12</span>
+        </div>
+        <p style="font-size:15px;color:var(--body);margin-top:12px">專案規則宣告的入口永遠優先於已安裝技能；使用者回覆「同意修改規則」，不被當成執行工單的授權。</p>
+        <p style="margin-top:16px"><a href="pm/entry-and-handoff/">讀案例：說執行才執行 →</a></p>
+      </div>
+      <div class="turn-box rv" style="--d:1;background:var(--paper);padding:28px">
+        <div class="turn-head">
+          <strong style="font-size:16px">變更衝擊與依賴</strong>
+          <span class="badge badge-verified">ch1–ch5</span>
+        </div>
+        <p style="font-size:15px;color:var(--body);margin-top:12px">前置工單取消時，下游任務絕不偷偷釋放；防護措施只寫入既有留言區，絕不私自改寫 spec 或濫建檔案。</p>
+        <p style="margin-top:16px"><a href="pm/change-and-dependency/">讀案例：取消前置不偷釋放 →</a></p>
+      </div>
+      <div class="turn-box rv" style="--d:2;background:var(--paper);padding:28px">
+        <div class="turn-head">
+          <strong style="font-size:16px">範圍稽核與拒絕編造</strong>
+          <span class="badge badge-verified">p1–p6</span>
+        </div>
+        <p style="font-size:15px;color:var(--body);margin-top:12px">缺少工期時拒絕估算完成日；抓出同一個人與共用檔案的偽平行鏈路；規格缺少成功標準時交回規劃流程。</p>
+        <p style="margin-top:16px"><a href="pm/scope-and-schedule/">讀案例：沒有工期不編造日期 →</a></p>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="close f-black">
@@ -99,6 +136,7 @@
   <a class="big" href="https://github.com/CarlLee1983/carl-skills"><span>在 GitHub</span><span>看原始碼</span></a>
   <div class="meta muted">
     <a href="design-experience/">design-experience 案例</a>
+    <a href="pm/">pm 案例</a>
     <span>圖示：Lucide，ISC 授權</span>
     <span>台北・2026</span>
   </div>

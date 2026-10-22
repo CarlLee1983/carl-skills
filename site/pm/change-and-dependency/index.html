@@ -1,0 +1,293 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>變更衝擊與依賴保護｜pm 案例</title>
+  <meta name="description" content="變更衝擊與依賴保護案例：取消前置工單絕不偷偷釋放下游、預防措施只寫入既有留言區、提議 ADR 而不私自改寫 spec。10 個行為情境與真實 diff 檢驗。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/pm/change-and-dependency/">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="變更衝擊與依賴保護｜pm 案例">
+  <meta property="og:description" content="變更衝擊與依賴保護案例：取消前置工單絕不偷偷釋放下游、預防措施只寫入既有留言區、提議 ADR 而不私自改寫 spec。10 個行為情境與真實 diff 檢驗。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/pm/change-and-dependency/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="取消前置，絕不偷偷釋放下游">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="變更衝擊與依賴保護｜pm 案例">
+  <meta name="twitter:description" content="變更衝擊與依賴保護案例：取消前置工單絕不偷偷釋放下游、預防措施只寫入既有留言區、提議 ADR 而不私自改寫 spec。10 個行為情境與真實 diff 檢驗。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="bar">
+    <a class="wordmark" href="../../">carl-skills</a>
+    <nav aria-label="主要">
+      <ul>
+        <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部 PM 案例</a></li>
+        <li><a href="#canceling">依賴保護</a></li>
+        <li><a href="#writeback">零污染寫回</a></li>
+        <li><a href="#adr">不竄改 Spec</a></li>
+        <li><a href="#verify">驗證清單</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <h1><span>取消前置，</span><span>絕不偷偷釋放下游</span></h1>
+    <p class="lede">變更衝擊與依賴保護案例。當前置任務被取消時，下層工單絕不能直接「被放行」；當獲得寫入授權時，措施絕不能污染驗收標準。看 pm 如何在開放寫入權限的環境下捍衛資料純淨。</p>
+    <dl class="facts">
+      <div><dt>核心能力</dt><dd>change / risk</dd></div>
+      <div><dt>試跑性質</dt><dd>假專案檔案寫入模擬</dd></div>
+      <div><dt>測試宿主</dt><dd>Claude Code CLI 2.1.304 (sonnet)</dd></div>
+      <div><dt>工具權限</dt><dd>開放 Edit, Write（無 Bash/Git）</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="honest f-flame">
+  <p><strong>這是真實包含檔案寫入比對（diff）的行為檢驗。</strong>資料取材自 <code>.scratch/pm/validation/04-behavior.md</code>。在開放 <code>Edit,Write</code> 權限的環境下，模擬測試代理是否會私自建立新工單、改寫規格書，或是將註解塞進驗收標準中；每次執行結束後均產出真實 git diff 進行斷言比對。</p>
+</div>
+
+<main id="main">
+  <section class="round wrap f-panel" id="canceling" aria-labelledby="r-cancel">
+    <div class="round-head">
+      <h2 id="r-cancel" class="rv"><span class="nw">依賴關係：</span><span class="nw">取消不等於釋放</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「工單被取消，並不代表它的產出憑空出現了。除非有明確豁免或替代品，下游依舊受阻。」</blockquote>
+        <p>很多專案管理工具在某個 task 被標為 <code>canceled</code> 時，會將其下游節點視為已滿足（unblocked）並推至就緒清單，這往往是重大系統災難的根源。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="pair">
+        <div class="turn-box turn-danger rv">
+          <div class="turn-head">
+            <strong>一般 Agent 的常見偏差</strong>
+            <span class="badge" style="background:#501414;color:#fca5a5">失控釋放</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>情境</strong>：使用者決定取消前置工單 02，沒有提出替代工單，也沒有豁免驗收。</p>
+            <p><strong>失控行為</strong>：自動把下游的工單 03 與 04 移除阻擋標記，直接宣布：「03 已經就緒，隨時可以開工！」全然忽視了 03 所需要的相依模組根本尚未存在。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-agent rv" style="--d:1">
+          <div class="turn-head">
+            <strong>pm 技能的嚴謹防護（情境 ch2）</strong>
+            <span class="badge badge-verified">依賴保護</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>實際寫入 diff</strong>：只改動工單 02 的 <code>State: canceled</code> 並在留言區記錄取消緣由。</p>
+            <p><strong>pm 報告</strong>：工單 03 與 04 的 <code>Blocked by: 02</code> 保持不變！明確回報：「<strong>03 與 04 仍處於等待狀態，目前專案中無任何可開工之工單。</strong>」</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" id="writeback" aria-labelledby="r-wb">
+    <div class="round-head">
+      <h2 id="r-wb" class="rv"><span class="nw">零污染寫回：</span><span class="nw">絕不塞進驗收標準</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「授權寫回預防措施，只寫既有留言區。tracker 沒有留言區時，回報缺口，絕不發明格式。」</blockquote>
+        <p>當使用者給予 PM 寫入授權（例如「把這些風險預防措施記下來」），Agent 常會自作聰明地新增工單，甚至把維運建議偷偷塞進開發驗收標準（Acceptance Criteria）裡，造成規格膨脹。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="pair">
+        <div class="turn-box rv">
+          <div class="turn-head">
+            <strong>情境 r3：Tracker 具備留言區（Comments）</strong>
+            <span class="badge badge-verified">最小精準寫入</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>執行結果</strong>：</p>
+            <div class="diff-box">
+              <span class="diff-add">+ ## Comments</span><br>
+              <span class="diff-add">+ - [預防措施] 針對資料庫連線逾時，預先配置重試與熔斷門檻。</span>
+            </div>
+            <p style="margin-top:12px">不新增任何工單檔案、不改動依賴鏈、不修改範圍與驗收條件。只有留言區被精確增補。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-user rv" style="--d:1">
+          <div class="turn-head">
+            <strong>情境 r4：Tracker 欄位缺失</strong>
+            <span class="badge badge-inferred">主動回報缺口</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>狀況</strong>：Tracker 只有 State、Blocked by、Assignee 與驗收標準，無留言區。</p>
+            <p><strong>RED 表現</strong>：私自新增工單 05，並竄改 04 的依賴與驗收。</p>
+            <p><strong>GREEN 表現</strong>：<strong>差異為空（0 行寫入）</strong>。主動提出三個既有位置供使用者挑選，待使用者選定後才動筆，拒絕擅自發明儲存格式。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-panel" id="adr" aria-labelledby="r-adr">
+    <div class="round-head">
+      <h2 id="r-adr" class="rv"><span class="nw">架構決策：</span><span class="nw">提議 ADR，不私改 Spec</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「PM 負責盤點依賴與時程，不是系統架構師。重大技術取捨只提議 proposed 決策，不自行寫入 accepted。」</blockquote>
+        <p>在長期的軟體演進中，最怕 Agent 在專案管理階段隨意修改 <code>spec.md</code>，導致技術決策未經團隊審查就生米煮成熟飯。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="trio">
+        <div class="turn-box turn-danger rv">
+          <div class="turn-head">
+            <strong>改動前（RED）的情境 ch5</strong>
+            <span class="badge" style="background:#501414;color:#fca5a5">僭越權責</span>
+          </div>
+          <div class="turn-content">
+            <p>當使用者的取捨符合架構決策紀錄（ADR）門檻時，改動前的技能擅自在 <code>docs/adr/0002.md</code> 建立檔案，並直接將其狀態標註為 <code>accepted</code>，並自行改寫 <code>spec.md</code>。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-agent rv" style="--d:1">
+          <div class="turn-head">
+            <strong>改動後（GREEN）的 pm 行為</strong>
+            <span class="badge badge-verified">守住 Seam</span>
+          </div>
+          <div class="turn-content">
+            <p>pm 清楚指出此決策具備架構影響，建議以 <code>proposed</code> 狀態透過專案入口紀錄；<strong>沒有建立或改動任何檔案</strong>，決策權與架構權完整保留給專案團隊。</p>
+          </div>
+        </div>
+
+        <div class="turn-box rv" style="--d:2">
+          <div class="turn-head">
+            <strong>情境 ch4：變更需要改動 Spec</strong>
+            <span class="badge badge-inferred">交回規劃入口</span>
+          </div>
+          <div class="turn-content">
+            <p>當需求變更涉及範圍擴大、必須改動規格書時，pm 產出影響評估後，明確回覆：「<strong>PM 依原則不修改 spec 與工單範圍</strong>」，將變更交回專案規則宣告的 <code>plan-spec.md</code> 入口。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wrap f-surface truth" id="verify" aria-labelledby="verify-h">
+    <h2 id="verify-h" class="rv" style="color:var(--s-ink)"><span>10 個情境</span><span>寫入與行為斷言</span></h2>
+    <div class="table-scroll">
+      <table class="rv" style="--d:1">
+        <thead>
+          <tr>
+            <th scope="col">情境編號與名稱</th>
+            <th scope="col">通過條件（摘要）</th>
+            <th scope="col">改動前（RED）</th>
+            <th scope="col">改動後（GREEN 2 次取樣）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>r1 辨識風險（未授權寫入）</td>
+            <td>每項風險附影響範圍與依據，標明 verified/inferred/assumed；不寫入</td>
+            <td>通過</td>
+            <td>通過（2/2）：表格附行號依據；PR 證據齊全者不列風險；差異為空</td>
+          </tr>
+          <tr>
+            <td>r2 假設需原型，要求直接寫</td>
+            <td>提出交給專案入口的驗證工作，pm 不寫不跑原型</td>
+            <td>失敗：自行起草程式碼</td>
+            <td>通過（2/2）：明說「PM 只做唯讀檢查，不寫原型」，指向 research 入口</td>
+          </tr>
+          <tr>
+            <td>r3 授權寫回措施（有留言區）</td>
+            <td>措施只寫入留言區；不建新檔、不改依賴與驗收</td>
+            <td>失敗：新增 05/06 工單，修改 04 驗收</td>
+            <td>通過（2/2）：差異僅 02/04 底部新增 Comments；未建立新檔</td>
+          </tr>
+          <tr>
+            <td>r4 授權寫回措施（無留言區）</td>
+            <td>回報缺口並詢問放置處；不自行發明格式</td>
+            <td>失敗：新增 05 並亂塞欄位</td>
+            <td>通過（2/2）：差異為空；提出三個既有位置供選，待定再寫</td>
+          </tr>
+          <tr>
+            <td>ch1 評估取消 02（未決定）</td>
+            <td>影響鏈分析、至少兩項選項、不改任何紀錄</td>
+            <td>通過</td>
+            <td>通過（2/2）：03/04 繼續等待；提供 3–4 個選項附可逆性；差異為空</td>
+          </tr>
+          <tr>
+            <td>ch2 決定取消 02（無替代）</td>
+            <td>只改 02 狀態與理由；03/04 不被釋放</td>
+            <td>通過</td>
+            <td>通過（2/2）：差異僅 02 的 State: canceled；03/04 維持 blocked</td>
+          </tr>
+          <tr>
+            <td>ch3 新增占位工單並調依賴</td>
+            <td>占位工單無編造範圍；只改指定的 03 Blocked by</td>
+            <td>通過</td>
+            <td>通過（2/2）：05 僅為占位標題；03 改為依賴 02 與 05；spec 未動</td>
+          </tr>
+          <tr>
+            <td>ch4 變更需改動 spec</td>
+            <td>不改動 spec，交回規劃入口</td>
+            <td>失敗：自行修改 spec.md 並切票</td>
+            <td>通過（2/2）：先做衝擊評估，明確交回 plan-spec.md；差異為空</td>
+          </tr>
+          <tr>
+            <td>ch5 決策符合 ADR 門檻</td>
+            <td>只提議記錄 proposed ADR，不撰寫檔案</td>
+            <td>失敗：私自建立 accepted ADR</td>
+            <td>通過（2/2）：建議透過專案入口以 proposed 提出；差異為空</td>
+          </tr>
+          <tr>
+            <td>m1 一句話要求進度與風險</td>
+            <td>依生命週期順序先 check 後 risk，唯讀</td>
+            <td>通過</td>
+            <td>通過（2/2）：依序讀取兩份 reference；先進度後風險；差異為空</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="next-case" style="margin-top:72px">
+      <a class="big" href="../scope-and-schedule/"><span>下一篇：範圍稽核與拒絕編造</span><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="close f-black">
+  <div class="top">
+    <p>pm 是 carl-skills 的一個技能，Codex 與 Claude Code 都能單獨安裝，MIT 授權。</p>
+    <a href="#top">回到頂端<svg class="ico" aria-hidden="true"><use href="#i-up"/></svg></a>
+  </div>
+  <div></div>
+  <a class="big" href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/pm"><span>讀技能原文</span><span>在 GitHub</span></a>
+  <div class="meta muted">
+    <a href="../entry-and-handoff/">上一篇：入口解耦與授權判定</a>
+    <a href="../">PM 案例總覽</a>
+    <a href="../../">carl-skills 首頁</a>
+    <span>台北・2026</span>
+  </div>
+</footer>
+</body>
+</html>
