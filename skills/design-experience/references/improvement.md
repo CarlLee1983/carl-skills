@@ -21,7 +21,7 @@ When a complaint is vague (「很醜」「不好用」), offer 2–3 concrete re
 
 ## Own review
 
-Walk the representative task on 現況 yourself. Check it against Nielsen's ten usability heuristics and the taste baseline (icons, type scale, spacing, density, consistency). Present findings as expert review, an evidence level below user trial, and ask the user which ones match their experience. A review made from static screenshots or code without walking the task on screen is partial; say so.
+Walk the representative task on 現況 yourself. Check it against Nielsen's ten usability heuristics and each section of the [taste baseline](taste-baseline.md). Present findings as expert review, an evidence level below user trial, and ask the user which ones match their experience. A review made from static screenshots or code without walking the task on screen is partial; say so.
 
 ## Problem list and layers
 
