@@ -18,6 +18,10 @@ Provide a concise handoff for the recommended work with these fields; Goal execu
 
 Find the entry point using “Find the project entry point” in the main skill. Offer one ticket or a clearly bounded unit by default; offer an entire spec only when the entry point declares it accepts one, the user wants the whole spec executed, and its external prerequisites are satisfied. Write the handoff in the form the project's rules or the host use to invoke that entry point. Read the entry point before the actual handoff; if it cannot be read, report the missing entry point without claiming execution has started. Once an entire spec is handed off, that entry point owns its internal selection and integration; PM must not dispatch its nodes again.
 
+### Continue in another session
+
+When the user wants to continue the work in a new session, find the project's handoff entry point using “Find the project entry point” in the main skill and pass it the handoff fields. Without one, deliver the handoff fields in the conversation, ready to paste into the new session, and offer to write them where the user names, following “Write-back” in the main skill.
+
 ## Closure exit
 
 When all in-scope work meets closure rules, provide closure evidence and explicitly state that nothing remains to continue. Query mode ends there; execution mode also checks the Goal's overall delivery conditions. Let the user introduce later objectives; do not add work to a completed plan merely to supply a “next step”. To close out the whole plan, use [close](close.md).
