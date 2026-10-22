@@ -1,6 +1,6 @@
 # English banned patterns
 
-Apply when the body text is predominantly English. Each item says why it's cut, then shows a before/after. Keep the author's own register — casual stays casual.
+Apply when the body text is predominantly English. Each item says why it's cut, then shows a before/after. Keep the author's own register: casual stays casual.
 
 ## Contents
 
@@ -39,7 +39,7 @@ If two real facts hide behind the contrast, keep the facts, drop the frame:
 "Let's dive in." "Buckle up." "In today's fast-paced world." "Let's unpack this." Throat-clearing that delays the first real sentence. Start at the first fact.
 
 - ❌ In today's rapidly evolving AI landscape, developers face unprecedented choices.
-- ✅ I wired up three LLM APIs last week — here's what differed.
+- ✅ I wired up three LLM APIs last week. Here's what differed.
 
 ## 3. Fake-insight markers
 
@@ -67,7 +67,7 @@ Using a colon to introduce a universal moral: "This taught me something importan
 "Faster, cleaner, smarter." "It's simple, powerful, and elegant." Real writing rarely lands in tidy triplets. Keep the points that are true; cut the one added for cadence.
 
 - ❌ It makes development simpler, deployment faster, and maintenance easier.
-- ✅ The real win is deployment — one command to ship. The rest is marginal.
+- ✅ The real win is deployment: one command to ship. The rest is marginal.
 
 ## 7. Transition and emphasis filler
 
@@ -81,7 +81,7 @@ Using a colon to introduce a universal moral: "This taught me something importan
 "In conclusion, this is something worth thinking about." "The possibilities are endless." A conclusion with no conclusion. Give a real judgment or stop at the last fact.
 
 - ❌ Ultimately, choosing the right tool matters, and every team should consider it carefully.
-- ✅ We picked B — lowest migration cost. That's it.
+- ✅ We picked B, the one with the lowest migration cost. That's it.
 
 ## 9. Slop vocabulary
 
@@ -101,7 +101,7 @@ Words that mark machine prose. Replace with plain equivalents or cut:
 
 Test: does the negation rule out a misreading a reader would **actually** have, or draw an operational red line? Then keep it (e.g. "don't use `--insecure` to force a connection"). If it only repeats the heading or anything said earlier, cut it. Keep each red line once in the body, usually the one the author bolded; the opening statement of the thesis doesn't count as a repeat.
 
-A kept negation may be recast as a positive statement, but keep its original role: if the source states a purpose, write the purpose — don't extend it into a diagnostic method or inference the source never gave.
+A kept negation may be recast as a positive statement, but keep its original role: if the source states a purpose, write the purpose, and don't extend it into a diagnostic method or inference the source never gave.
 
 - ❌ The cross-platform page went up on Oct 20. This should not be described as a vulnerability first found on Oct 20. (The heading already dates it to Oct 17.)
 - ✅ The cross-platform page published on Oct 20 collects each platform's response.
@@ -111,7 +111,7 @@ A kept negation may be recast as a positive statement, but keep its original rol
 "The fields this article suggests are not a completed audit." "This article has not run these in your environment." Talking about your own piece in the third person reads like compliance boilerplate. "This example", "this post", and "this series" count too. If the author writes as "I" elsewhere, switch to first person; if not, drop the subject, or use "here" when the sentence needs one. Don't let the replacement become a new tic: use any one substitute two or three times at most, and drop the subject or rephrase elsewhere. Keep the author's scope limits and hedges.
 
 - ❌ As of this article's check on Oct 21, public sources do not prove abuse; unknown does not mean it never happened.
-- ✅ When I checked on Oct 21, there was no public evidence of abuse — which only means none has surfaced yet.
+- ✅ When I checked on Oct 21, there was no public evidence of abuse, which only means none has surfaced yet.
 - ❌ Below are two examples from the incident page; this article has not executed them in the reader's environment.
 - ✅ Below are two examples from the incident page. I haven't run them in your environment. (Say it the way a person would, but keep the source's scope: "not in the reader's environment" must not become "never run at all".)
 

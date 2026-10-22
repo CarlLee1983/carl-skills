@@ -1,7 +1,7 @@
 # 02: 中文衝突裁決
 
 Status: ready-for-agent
-State: open
+State: closed
 Blocked by: 01
 
 規格：[spec](../spec.md)；裁決：[merge-decisions](../merge-decisions.md)；決策：[ADR 0004](../../../docs/adr/0004-skill-source-installed-and-vendored-copies.md)。
@@ -12,7 +12,11 @@ Blocked by: 01
 
 ## 驗收
 
-- [ ] 五項裁決寫入中文規則檔，與既有節合併，不另開平行規則
-- [ ] 來源目錄所有規則檔的行文不再出現破折號（反例引用除外）
-- [ ] 對應驗收案例重放通過，敘事模式案例仍通過
-- [ ] 重放紀錄寫入驗證資料夾
+- [x] 五項裁決寫入中文規則檔，與既有節合併，不另開平行規則
+- [x] 來源目錄所有規則檔的行文不再出現破折號（反例引用除外）
+- [x] 對應驗收案例重放通過，敘事模式案例仍通過
+- [x] 重放紀錄寫入驗證資料夾
+
+## Comments
+
+2026-10-22：五項裁決併入 `references/zh-tw.md`：§1 遞進與翻案區分、§4 提示性冒號與放行清單、§6 排比湊數、§15 破折號、§16 疊加保留語氣。來源目錄所有 `.md` 的行文去掉破折號，H10 自查只剩反例與破折號規則本身的示範。盲測改稿與獨立判定見 `.scratch/humanize-writing/validation/acceptance-02-drafts.md` 與 `.scratch/humanize-writing/validation/acceptance-02.md`：H01、H02、H03、H05、H06、H10 通過，H04、H09、H13 未退步。兩軸 code-review 後修正 §7 正例的提示性冒號與 `narrative-zh-tw.md` 的「。」，」標點；修正在重放之後，未重跑，交由 08 的完整重放確認。
