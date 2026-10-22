@@ -87,3 +87,88 @@
 - youtube：敘事（阿晴故事線 8 處）判定正確並保留；抓到 3 處對岸用語（接口、消息、協議）。
 
 作者試讀 magpie 集中版後同意：新增 zh-tw §14／en §15「查核範圍集中到開頭查核段」。
+
+## 實作：09-02 第一批（event-sourcing、linux-io、cpu-cache、distributed-queue、data-pipelines）
+
+- 五篇平行盲改後發布（CarlStack `064acac`），同步技能的批次教訓（carl-skills PR #14：圖表文字、URL 鍵、事實查核、台灣用語）。
+- stack-overflow 與麥當勞潤稿完成但暫緩發布，稿子存在 handoff 的 `drafts/`。stack-overflow 原文自相矛盾：description「數億 QPS」對內文 3,000–5,000；標題「微秒級」對內文毫秒；SVG「95%」對內文「超過 90%」；SVG 寫 .NET 9。
+- 已發布文章的局部事實疑點（未修）：linux-io 說 `FD_SETSIZE` 在核心標頭檔（實為 glibc）；ET 模式「資料永久遺失」（實為資料仍在緩衝區、只是不再通知）；Netty 預設 ET 只對 native epoll transport 成立。
+
+## 查核：麥當勞事件驅動架構（未通過）
+
+主架構與一手來源不符。麥當勞公開的 EDA 是 Amazon MSK（Kafka）＋ Schema Registry ＋ DynamoDB 備援，訂單平台跑 Kubernetes（medium.com/mcdonalds-technical-blog 的 “Behind the scenes: McDonald's event-driven architecture”、“…The data journey and how it works”、2026-08 “When a Missed Message Becomes a Missed Meal”；aws.amazon.com/solutions/case-studies/mcdonalds/）。文章的 API Gateway → Lambda → SQS → DynamoDB Streams → EventBridge、SQLite、Local WebSocket、us-east-1／us-west-2、30ms、10 秒切換全部查無出處，DLQ 與事件匯流排與來源矛盾；四個參考連結無一支撐正文（兩個首頁、一個 404、一個標題不符）。
+
+作者同意的原則：把虛構事實潤得更像人寫只會更可信。通用技術解說直接潤稿、局部疑點另記；公司案例文先查核，不通過者由作者逐篇選「依一手來源重寫」或「改標成參考設計並刪除歸給該公司的數字與元件」。
+
+## 查核：公司案例文 A 批（8 篇，2026-10-22）
+
+清點見 `company-case-inventory.md`；逐項報告在 `fact-check/<slug>.md`（SUPPORTED／CONTRADICTED／NOT FOUND ＋引文與 URL）。
+
+| slug | 總評 | S／C／NF | 要點 |
+| --- | --- | --- | --- |
+| stripe-payment-gateway-smart-routing | 未通過 | 11／3／7 | 狀態機非 Stripe PaymentIntent 狀態；智慧路由與 Stripe Orchestration（商家自訂規則）矛盾；超時補償數字無出處 |
+| tiktok-massive-frontend-monorepo-architecture | 未通過 | 9／5／14 | 官方工具鏈是 Rush＋PNPM＋Sparo／Cobuilds／Subspaces，文章全未提；Garfish、Rspack 與此 MonoRepo 無關聯證據；CI 與快取數字矛盾 |
+| youtube-video-upload-transcoding-pipeline | 未通過 | 9／2／21 | 骨架有 Argos VCU 論文支撐；熱度感知細節與上傳 API 形狀矛盾；元件與數字多無出處 |
+| serverless-cloud-native-database-neon-planetscale | 局部修正 | 21／9／3 | 主架構對得上官方；gh-ost／雙寫、Rust 版 PgBouncer、VTGate 連線池、CLI 指令等細節錯 |
+| system-design-interview-stack-overflow-architecture | 未通過 | 12／12／7 | 硬體骨架有出處；Fastly 快取 90–95%、Redis Tag 索引與來源矛盾；2013–2019 架構寫成現在式 |
+| airbnb-microservices-evolution-architecture | 未通過 | 14／8／15 | 三代年份全錯；DAG 分層時間因果顛倒；Viaduct 被寫成薄閘道（官方相反） |
+| netflix-hierarchical-caching-push-messaging | 局部修正 | 17／2／13 | 主架構有出處；XFetch 整段無出處；RENO 投遞流程矛盾；多數數字無出處 |
+| reddit-core-storage-high-concurrency-architecture | 未通過 | 22／13／15 | Thing2／兩張表、Redis 熱榜、Cassandra Materialized Path 留言樹與原始碼矛盾；hot 公式新舊版混用 |
+
+共同模式：8 篇沒有一篇的參考連結支撐正文。連結多指向部落格首頁或 ByteByteGo repo 首頁，標註的篇名常常不存在，另有 404 與署名錯誤。
+
+查核過程的事故：netflix 子代理查 SEC 財報時把使用者 email 放進 User-Agent 送出（子代理自行回報）；之後的查核 brief 要明寫禁止。
+
+## 處置：公司案例文 A 批（2026-10-22，已 stage 未發布）
+
+使用者同意的處置：youtube、stack-overflow 依一手來源重寫；tiktok、stripe、airbnb、reddit 改成「參考設計」，開頭交代該公司實際公開過什麼；neon-planetscale、netflix 局部修正。8 篇在事實修完後再去 AI 味，共用一份子代理 brief（三種模式、frontmatter 只改 title／description、禁止送出個資）。
+
+- 兩輪 code-reviewer 抓到的問題都退回原子代理修正：reddit 手機版圖解標題仍歸屬 Reddit；stripe `do_not_try_again` 的描述與連結不符；tiktok 結尾「並重」的立場被改反；多處對岸用語。
+- 主代理查證後修正：Stack Overflow 的 40:60 是資料庫磁碟存取的讀寫比（Craver 2013）；reddit ZADD 範例分數依 hot 公式重算。
+- gate：`content:policy` 8 篇通過、`check` 退出碼 0、`test` 117／117；1280 與 320 px 版面腳本量測，320 px 無溢出，桌面 5 處經截圖確認為誤判。
+- 回饋技能：對岸用語 8 個補進 `zh-tw.md` 對照表（PR #15）。三種處置模式屬於查核後的改寫流程，留在 brief，不進技能。
+- 待使用者決定：`repositoryUrl` 指向 ByteByteGo repo 首頁；airbnb、reddit 的 `series` 與參考設計定位衝突；airbnb `coverAlt`；封面圖文字未檢查；tiktok 啟示第 3 點的立場。
+
+## 查核：公司案例文 B／C 批（12 篇，2026-10-22）
+
+逐項報告在 `fact-check/<slug>.md`。B 批查整篇，C 批只查歸給公司的段落。
+
+| slug | 批 | 總評 | S／C／NF | 要點 |
+| --- | --- | --- | --- | --- |
+| discord-trillions-messages-scylladb-scaling | B | 局部修正 | 22／7／8 | 骨架對；「P99 數十秒→15ms」四處錯（原文讀取 40–125ms）；Cassandra、ScyllaDB 年份錯；Rust data services 時序顛倒 |
+| figma-postgres-scaling-architecture | B | 未通過 | 16／10／15 | 「零停機」與原文（30 秒部分不可用）矛盾；遷移流程是 Figma 明說沒採用的做法；128／16／8／4 分片數無出處；YouTube 連結失效 |
+| meta-scale-automated-bug-fixing-sapfix-infer | B | 未通過 | 15／14／7 | 骨架錯：觸發 SapFix 的是 Sapienz，不是 Infer；75% 是 Sapienz 人工修復率；修復策略漏 revert、虛構 ML 策略 |
+| shopify-resilient-payment-systems | B | 未通過 | 6／5／12 | 10 原則與原文（Bart de Water 2022 個人分享）只對上 5 項；等候室實作錯；寫成 AWS（實為 GCP） |
+| slack-message-pipeline-architecture | B | 未通過 | 6／5／19 | Vitess 分片鍵寫成 workspace（遷移後是 channel）；延遲 100ms（原文 500ms）；元件職責錯、虛構 Channel Router |
+| twitter-recommendation-algorithm-pipeline | B | 未通過 | 20／10／12 | 權重表錯（讚 0.5 寫成 +30）；TIP 結論是官方點名的誤讀；2023 快照寫成現在式（2026-01 已另開源 `xai-org/x-algorithm`，主代理已查證） |
+| uber-api-gateway-evolution-architecture | B | 未通過 | 7／7／9 | 原文只有三代，文章寫四代；Envoy／Protobuf 寫錯（實為 Zanzibar＋Thrift）；主要參考連結 404，slug 是 ByteByteGo 檔名 |
+| pinterest-git-clone-optimization-commit-graph | B | 未通過 | 16／6／7 | 那一行是 refspec 只抓 master，不是 commit-graph；根因與規模數字錯；成效數字多無出處 |
+| api-versioning-strategies-backward-compatibility | C | 局部修正 | 4／3／4 | 「數百個版本」實為 124；「零歷史包袱」與原文矛盾；請求方向轉換無出處；2024 起改月版＋半年 major 未提 |
+| zero-trust-architecture-beyondcorp | C | 局部修正 | 7／4／3 | 服務間 mTLS 屬 BeyondProd；代理是 GFE 不是 Envoy；無風險分數；「開創零信任」不成立 |
+| omarchy-dhh-omakase-linux-desktop | C | 局部修正 | 30／6／7 | 理念與沿革對；4.0 預設終端機是 Foot；Windows VM 無 GPU 直通；Agents 面板描述錯 |
+| tsdb-architecture-lsm-gorilla-compression | C | 局部修正 | 16／3／1 | 演算法與論文逐字相符；1.37 bytes 是整個資料點不是浮點值；「壓縮率 96%」是時間戳比例 |
+
+共同模式與 A 批相同：B 批雖然連到一手專文，正文仍大量超出來源，錯誤集中在 description、前言、圖解、總結表這些顯眼位置的數字與年份；多篇把某一時期的架構寫成現在式。B 批 7／8 未通過，C 批 4 篇都是局部修正。
+
+個資：12 個子代理都回報未送出 email 或個資，User-Agent 一律通用字串。omarchy 子代理用 `gh` 讀公開 repo 時帶了本機 GitHub 登入（工具預設），未放入個資內容。
+
+## 發布：公司案例文 A 批（2026-10-22）
+
+使用者試讀 reddit 後同意發布；決定刪除 8 篇指向 ByteByteGo repo 首頁的 `repositoryUrl`、airbnb／reddit 保留系列、tiktok 維持「值得評估」。CarlStack `6fe3c1c`（8 篇＋7 圖解）與 `c964c15`（技能對照表同步），rebase 到遠端新內容後重跑 `content:policy`、`check`（退出碼 0）、`test`（117／117），Cloudflare Workers 部署 run 39726635520 成功。正式網址抽查 4 篇皆 200、已無 ByteByteGo 連結、新內容（ZADD 重算分數、磁碟存取讀寫比、「值得評估」）在線。airbnb `coverAlt` 與封面圖文字仍未處理。
+
+## 處置：公司案例文 B／C 批（2026-10-22，已 stage 未發布）
+
+使用者同意：B 批 figma、meta、shopify、slack、twitter、uber、pinterest 依一手來源重寫；discord 局部修正＋全文去 AI 味；C 批 4 篇局部修正。8 篇 ByteByteGo `repositoryUrl` 刪除（使用者 A 批時定案）。主代理在改稿中途把 C 批擴為「事實修正後全文去 AI 味」（理由：09-02 文章本來就要去 AI 味，且 `updatedDate` 會讓它們排到最近更新），已告知使用者可在試讀時要求退回。
+
+- 兩個 code-reviewer：C 批與 discord 無 CRITICAL／HIGH；B 批 2 項 HIGH（uber 20% 手機 build 數字時期錯置、meta 合入比例自相矛盾）與數項 MEDIUM／LOW，全部退回原子代理修正。figma「10 秒部分不可用」經審查抓原文確認就是 2023-09 第一張分片表那次。
+- 主代理自修：zero-trust、figma 標題縮短；tsdb 刪 ByteByteGo 正文連結、論文改 https；api-versioning 表格移除 Stripe 歸屬、「雙向」與「HATEOAS」說法修正；zero-trust「NIST 歸納三原則」改成「800-207 列七項 tenets，常見濃縮為三點」、「上下文感知存取代理」改回論文的 Access Proxy；pinterest 刪掉案例欄指向通用 commit-graph 欄的因果箭頭；uber 第 1 代 tag 改中性樣式；discord 箭頭標籤縮短（實際渲染重疊卡片邊）。
+- gate：12 篇 `updatedDate: 2026-10-22T13:29:27+08:00`（omarchy 原有值被更新）；`content:policy` 12 篇通過、`check` 退出碼 0（標籤修正後重跑仍 0）、`test` 117／117。版面：320 px 只有 tsdb 一處 delta-of-delta 情況標籤超出 viewBox，屬 HEAD 既有、本次未改；桌面被腳本標出的新增標籤經截圖確認未溢出。
+- 未處理（brief 鎖定或範圍外）：多篇 `coverAlt` 仍帶舊主張（uber 多區域、slack、figma 智慧路由、pinterest commit-graph、zero-trust 微隔離、discord 數萬筆、meta、shopify 狀態機）；封面圖文字未檢查；`series`「復盤」為對岸用語；tsdb 既有 SVG 溢出；zero-trust §4「未授權微服務無法發起 TCP 連線」技術上不精確。
+
+## 發布：公司案例文 B／C 批（2026-10-22）
+
+使用者試讀 meta 後同意發布，並決定：只改帶錯誤主張的 coverAlt、順手修 tsdb 既有 SVG 溢出。封面圖逐張看過，都沒有文字。CarlStack `51ea05d`（12 篇＋11 圖解）與 `2a96e64`（8 篇 coverAlt：airbnb、discord、meta、shopify、slack、uber、pinterest、zero-trust；tsdb delta-of-delta 標籤縮短，版面量測 1280／320 皆 OK）。gate：`content:policy`、`check`（退出碼 0）、`test` 117／117。Cloudflare 部署 run 39729480856 成功；正式網址抽查 7 篇皆 200、無 ByteByteGo repo 連結、新內容在線。
+
+公司案例文 A、B、C 三批（20 篇）至此全部發布。仍未處理：麥當勞一文（查核未通過，待使用者決定）、`series`「復盤」用語、zero-trust §4「未授權微服務無法發起 TCP 連線」的技術精確度。
+
+使用者決定（2026-10-22）：麥當勞一文不處理；`series` 保留；zero-trust §4 改寫為「未授權微服務仍能建立 TCP 連線，但會在 TLS 握手時被拒絕；要在 TCP 層擋下需搭配網路政策」，CarlStack `b8fe0d5` 已部署（run 39730485302）並在正式網址確認。公司案例文工作結束。
