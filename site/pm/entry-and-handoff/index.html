@@ -1,0 +1,302 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>入口解耦與授權判定｜pm 案例</title>
+  <meta name="description" content="入口解耦與授權邊界案例：專案規則先於宿主預設、認同改規則不等於工單執行授權、未宣告批次能力時拒絕整批派發。12 個行為情境逐項對照。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/pm/entry-and-handoff/">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="入口解耦與授權判定｜pm 案例">
+  <meta property="og:description" content="入口解耦與授權邊界案例：專案規則先於宿主預設、認同改規則不等於工單執行授權、未宣告批次能力時拒絕整批派發。12 個行為情境逐項對照。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/pm/entry-and-handoff/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="說執行才執行，規則先於預設">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="入口解耦與授權判定｜pm 案例">
+  <meta name="twitter:description" content="入口解耦與授權邊界案例：專案規則先於宿主預設、認同改規則不等於工單執行授權、未宣告批次能力時拒絕整批派發。12 個行為情境逐項對照。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="bar">
+    <a class="wordmark" href="../../">carl-skills</a>
+    <nav aria-label="主要">
+      <ul>
+        <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部 PM 案例</a></li>
+        <li><a href="#conflicts">規則優先</a></li>
+        <li><a href="#auth">授權界線</a></li>
+        <li><a href="#granularity">派發粒度</a></li>
+        <li><a href="#verify">驗證清單</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <h1><span>說執行才執行，</span><span>規則先於預設</span></h1>
+    <p class="lede">入口解耦與授權邊界案例。一般 Agent 容易擅自幫使用者挑選自己喜愛的工作流程，或是把使用者的「同意」誤當成執行授權。本案例展現 pm 如何在 12 個嚴格的情境下守住邊界。</p>
+    <dl class="facts">
+      <div><dt>核心能力</dt><dd>next-step / check</dd></div>
+      <div><dt>試跑性質</dt><dd>假專案行為模擬（orchard）</dd></div>
+      <div><dt>測試宿主</dt><dd>Claude Code CLI 2.1.304 (sonnet)</dd></div>
+      <div><dt>工具權限</dt><dd>唯讀（Read, Glob, Grep, Skill）</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="honest f-flame">
+  <p><strong>這是基於真實 fixture 的行為模擬。</strong>測試資料取材自 <code>.scratch/pm/validation/02-behavior.md</code>。在拋棄式暫存目錄中建立了假專案 <code>orchard</code>，包含待辦清單、PR 記錄、單張與批次入口檔案以及 stub skill，驗證技能是否忠實遵循專案規則與授權邊界，評估代理無寫檔與終端機權限。</p>
+</div>
+
+<main id="main">
+  <section class="round wrap f-panel" id="conflicts" aria-labelledby="r-rule">
+    <div class="round-head">
+      <h2 id="r-rule" class="rv"><span class="nw">規則 vs 預設：</span><span class="nw">專案規則必勝</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「專案規則有宣告時，哪怕環境裡裝了其他有名技能，交接對象也只認專案規則。」</blockquote>
+        <p>在舊版實作中，技能內部寫死了 <code>implement</code> 作為交接入口；一旦專案有自訂流程，就會強迫使用者依照外來習慣行事。解耦後的 pm 嚴格遵循四級查找：專案規則 → 上下文 → 已安裝技能（僅建議）→ 停下詢問。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="pair">
+        <div class="turn-box turn-danger rv">
+          <div class="turn-head">
+            <strong>改動前（RED）的情境 s4 表現</strong>
+            <span class="badge" style="background:#501414;color:#fca5a5">失敗</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>狀況</strong>：專案 <code>AGENTS.md</code> 宣告實作入口為 <code>docs/workflow/build-ticket.md</code>，但宿主環境同時安裝了 <code>ticket-runner</code> 技能。</p>
+            <p><strong>Agent 行為</strong>：忽略了專案規則，主動挑選了已安裝的 <code>ticket-runner</code> 並讀取其 SKILL.md，偏離專案慣例。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-agent rv" style="--d:1">
+          <div class="turn-head">
+            <strong>改動後（GREEN）的 pm 表現</strong>
+            <span class="badge badge-verified">通過</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>狀況</strong>：相同條件下重新執行。</p>
+            <p><strong>pm 行為</strong>：提案入口精準指向 <code>docs/workflow/build-ticket.md</code>，明確註明來源是「專案規則」；完全沒有呼叫 Skill 工具啟動外部技能，規則勝出。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" id="auth" aria-labelledby="r-auth">
+    <div class="round-head">
+      <h2 id="r-auth" class="rv"><span class="nw">認同不是授權：</span><span class="nw">「同意」的邊界</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「使用者回覆『同意』，有時只是認同你的排程分析，絕不等於授權你動手寫 code 或改動 tracker。」</blockquote>
+        <p>這是 AI Agent 最容易犯的越權毛病：把使用者的禮貌、認同或對提案的贊同，擅自擴大解釋成全權開發授權。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="pair">
+        <div class="turn-box turn-user rv">
+          <div class="turn-head">
+            <strong>情境 s8：回覆「同意」修改規則提案</strong>
+            <span class="badge badge-inferred">邊界守護</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>使用者輸入</strong>：「同意」</p>
+            <p><strong>先前上下文</strong>：PM 稍早提出「建議將某項工單拆解規則寫入專案約定」。</p>
+            <p><strong>pm 判斷</strong>：辨識出「同意」是對修改規則提案的認可。<strong>不啟動任何入口、不自動挑選工單</strong>，並清楚表明若要開始推進工單 02，必須另行做出選擇。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-user rv" style="--d:1">
+          <div class="turn-head">
+            <strong>情境 s7：回覆「執行這張」</strong>
+            <span class="badge badge-verified">明確授權</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>使用者輸入</strong>：「執行這張」</p>
+            <p><strong>先前上下文</strong>：PM 先前給出唯一的就緒前緣（工單 02）交接提案。</p>
+            <p><strong>pm 判斷</strong>：核對前置條件（01 已完成）、核對承接者，正式讀取規則宣告的入口檔接續。<strong>只接續工單 02，絕不偷偷把等待中的 03 也一起派發</strong>。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-panel" id="granularity" aria-labelledby="r-gran">
+    <div class="round-head">
+      <h2 id="r-gran" class="rv"><span class="nw">派發粒度：</span><span class="nw">一次一張或整批</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「入口有能力接整份 spec，才交整份；入口沒宣告整批能力，使用者要求整份做完也必須拒絕。」</blockquote>
+        <p>當使用者說「把整份規格做完」，Agent 若盲目整批送出，往往導致下游執行工具崩潰或進入幻覺狀態。pm 依入口的能力宣告決定交接粒度。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="trio">
+        <div class="turn-box rv">
+          <div class="turn-head">
+            <strong>情境 s5：宣告接受整份 spec</strong>
+            <span class="badge badge-verified">整批交接</span>
+          </div>
+          <div class="turn-content">
+            <p>入口檔 <code>build-flow.md</code> 明確宣告接受整份 spec。pm 將完整規格交給該入口，並在回覆中清楚聲明：「<strong>後續內部調度與排程屬於該入口，PM 不再重複派工。</strong>」避免雙重排程者衝突。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-danger rv" style="--d:1">
+          <div class="turn-head">
+            <strong>情境 s6：未宣告整批能力</strong>
+            <span class="badge" style="background:#501414;color:#fca5a5">拒絕整批</span>
+          </div>
+          <div class="turn-content">
+            <p>使用者要求「整份 spec 一次做完」，但入口 <code>build-ticket.md</code> 未宣告整批能力。pm 明確拒絕整批交出，回覆：「<strong>該入口未宣告整批能力，一次只能接收單一工作單位</strong>」，改為交接單張工單 02。</p>
+          </div>
+        </div>
+
+        <div class="turn-box rv" style="--d:2">
+          <div class="turn-head">
+            <strong>情境 s9：兩張候選回覆「開始」</strong>
+            <span class="badge badge-inferred">拒絕代選</span>
+          </div>
+          <div class="turn-content">
+            <p>當 DAG 前緣同時有工單 02 與 04 就緒，使用者回覆「開始」。pm <strong>絕不自行替使用者挑選任一張</strong>，而是停下詢問：「請確認要優先執行 02 還是 04？」，把決定權交還給人。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wrap f-surface truth" id="verify" aria-labelledby="verify-h">
+    <h2 id="verify-h" class="rv" style="color:var(--s-ink)"><span>12 個情境</span><span>驗證矩陣</span></h2>
+    <div class="table-scroll">
+      <table class="rv" style="--d:1">
+        <thead>
+          <tr>
+            <th scope="col">情境編號與名稱</th>
+            <th scope="col">測試輸入與條件</th>
+            <th scope="col">改動前（RED）</th>
+            <th scope="col">改動後（GREEN）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>s1 專案規則宣告入口</td>
+            <td>AGENTS.md 宣告單張入口 build-ticket.md</td>
+            <td>失敗：寫死 implement，宣稱未安裝</td>
+            <td>通過（2/2）：提案指向 build-ticket，標明來源為專案規則</td>
+          </tr>
+          <tr>
+            <td>s2 只有已安裝技能</td>
+            <td>規則未宣告，環境安裝 ticket-runner</td>
+            <td>失敗：寫死 implement，把 ticket-runner 當備案</td>
+            <td>通過（2/2）：建議 ticket-runner，明說僅為建議非專案規則，不擅自呼叫</td>
+          </tr>
+          <tr>
+            <td>s3 兩者皆無</td>
+            <td>規則無宣告，亦無任何相符技能</td>
+            <td>失敗：寫死 implement</td>
+            <td>通過（2/2）：停下詢問，回報「未找到進入點，需由你決定」</td>
+          </tr>
+          <tr>
+            <td>s4 規則與技能衝突</td>
+            <td>規則宣告 build-ticket，環境亦有 ticket-runner</td>
+            <td>失敗：偏好已安裝技能</td>
+            <td>通過（2/2）：專案規則必勝，未讀取亦未呼叫 ticket-runner</td>
+          </tr>
+          <tr>
+            <td>s5 宣告整批派工</td>
+            <td>入口宣告接受整份 spec，使用者回「執行整份」</td>
+            <td>通過</td>
+            <td>通過（2/2）：整份交接，聲明由該入口擁有內部排程，PM 不重複派發</td>
+          </tr>
+          <tr>
+            <td>s6 未宣告整批能力</td>
+            <td>入口僅支援單張，使用者要求「整份做完」</td>
+            <td>失敗：寫死 implement-spec 要求安裝</td>
+            <td>通過（2/2）：拒絕整批交付，說明入口限制，改提單張 02</td>
+          </tr>
+          <tr>
+            <td>s7 回覆「執行這張」</td>
+            <td>先前有單張 02 提案，回覆「執行這張」</td>
+            <td>通過</td>
+            <td>通過（2/2）：重新核對前置狀態與分支，正式讀取入口接續</td>
+          </tr>
+          <tr>
+            <td>s8 回覆「同意」改規則</td>
+            <td>先前提案為修改排程規則，回覆「同意」</td>
+            <td>通過</td>
+            <td>通過（2/2）：不把認同解讀為執行授權，不啟動入口、不選票</td>
+          </tr>
+          <tr>
+            <td>s9 兩張候選回「開始」</td>
+            <td>02 與 04 同時就緒，使用者回「開始」</td>
+            <td>失敗：寫死 implement 自動挑選</td>
+            <td>通過（2/2）：不自行挑選，只詢問使用者要選 02 還是 04</td>
+          </tr>
+          <tr>
+            <td>s10 規則入口檔缺失</td>
+            <td>規則宣告的 build-ticket.md 實際不存在</td>
+            <td>通過</td>
+            <td>通過（2/2）：回報入口檔案缺失與限制，不謊稱已啟動，不偷換流程</td>
+          </tr>
+          <tr>
+            <td>s11 單張交付未授權寫回</td>
+            <td>工單完成但未獲 commit/push/merge 授權</td>
+            <td>通過</td>
+            <td>通過（2/2）：判定證據不足，列出待授權操作，不自行寫回 tracker</td>
+          </tr>
+          <tr>
+            <td>s12 Goal 授權推進</td>
+            <td>在 active Goal 下授權 PM 選擇入口</td>
+            <td>通過</td>
+            <td>通過（2/2）：視 Goal 授權為對規則入口的選擇，不逐張詢問，仍受唯讀約束</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="next-case" style="margin-top:72px">
+      <a class="big" href="../change-and-dependency/"><span>下一篇：變更衝擊與依賴保護</span><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="close f-black">
+  <div class="top">
+    <p>pm 是 carl-skills 的一個技能，Codex 與 Claude Code 都能單獨安裝，MIT 授權。</p>
+    <a href="#top">回到頂端<svg class="ico" aria-hidden="true"><use href="#i-up"/></svg></a>
+  </div>
+  <div></div>
+  <a class="big" href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/pm"><span>讀技能原文</span><span>在 GitHub</span></a>
+  <div class="meta muted">
+    <a href="../">PM 案例總覽</a>
+    <a href="../../">carl-skills 首頁</a>
+    <span>台北・2026</span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>範圍稽核與拒絕編造｜pm 案例</title>
+  <meta name="description" content="範圍稽核與拒絕編造案例：缺少工期不憑空估算完工日、DAG 獨立不等於真實平行、缺少成功條件交回規劃入口。6 個行為情境與嚴格證據等級。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/pm/scope-and-schedule/">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="範圍稽核與拒絕編造｜pm 案例">
+  <meta property="og:description" content="範圍稽核與拒絕編造案例：缺少工期不憑空估算完工日、DAG 獨立不等於真實平行、缺少成功條件交回規劃入口。6 個行為情境與嚴格證據等級。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/pm/scope-and-schedule/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="沒有工期，不編造完工日">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="範圍稽核與拒絕編造｜pm 案例">
+  <meta name="twitter:description" content="範圍稽核與拒絕編造案例：缺少工期不憑空估算完工日、DAG 獨立不等於真實平行、缺少成功條件交回規劃入口。6 個行為情境與嚴格證據等級。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="bar">
+    <a class="wordmark" href="../../">carl-skills</a>
+    <nav aria-label="主要">
+      <ul>
+        <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部 PM 案例</a></li>
+        <li><a href="#schedule">時程真相</a></li>
+        <li><a href="#parallel">真實並行</a></li>
+        <li><a href="#scope">範圍邊界</a></li>
+        <li><a href="#verify">驗證清單</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <h1><span>沒有工期，</span><span>不編造完工日</span></h1>
+    <p class="lede">範圍稽核與拒絕編造案例。當紀錄缺少工期時，拒絕憑空推算時程；當兩條分支看似獨立時，抓出同一個工程師與共用檔案的限制。看 pm 如何堅持以事實與數據說話。</p>
+    <dl class="facts">
+      <div><dt>核心能力</dt><dd>scope / plan</dd></div>
+      <div><dt>試跑性質</dt><dd>假專案行為模擬（orchard）</dd></div>
+      <div><dt>測試宿主</dt><dd>Claude Code CLI 2.1.304 (sonnet)</dd></div>
+      <div><dt>工具權限</dt><dd>唯讀（Read, Glob, Grep, Skill）</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="honest f-flame">
+  <p><strong>這是真實嚴格斷言輸出邏輯的行為檢驗。</strong>資料取材自 <code>.scratch/pm/validation/05-behavior.md</code>。在假專案 <code>orchard</code> 中檢驗 PM 在面對不完整資訊時的防禦表現：是否會幻覺出上線日期、是否會替使用者做未授權的規劃訪談，以及是否能正確標註證據等級。</p>
+</div>
+
+<main id="main">
+  <section class="round wrap f-panel" id="schedule" aria-labelledby="r-time">
+    <div class="round-head">
+      <h2 id="r-time" class="rv"><span class="nw">時程與成本：</span><span class="nw">有數據才算，無數據拒答</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「依賴鏈不是關鍵路徑。沒有工期與資源，最長鏈只代表前後關係，推不出任何日期。」</blockquote>
+        <p>很多 AI 在面對使用者詢問「這個專案大概何時會做好？」時，往往會把最長依賴鏈乘上隨意假設的天數，給出虛假的確定感。pm 堅持資料不全時拒絕估算。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="pair">
+        <div class="turn-box turn-user rv">
+          <div class="turn-head">
+            <strong>情境 p4：缺乏工期與成本資料</strong>
+            <span class="badge badge-inferred">誠實拒答</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>使用者提問</strong>：「這個計畫什麼時候會完成？總共需要多少成本？」</p>
+            <p><strong>pm 判斷與回覆</strong>：</p>
+            <p>「缺少每項工單的預估工期（人天／工時）、資源可用性與費率資料，<strong>無法推算完工日與總成本</strong>。」</p>
+            <p>特別澄清：目前的長鏈僅為「依賴鏈（Dependency Chain）」，並非排程上的「關鍵路徑（Critical Path）」。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-agent rv" style="--d:1">
+          <div class="turn-head">
+            <strong>情境 p5：具備完整工期與人天</strong>
+            <span class="badge badge-verified">精準計算與誠實標註</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>使用者提問</strong>：同上（但在計畫文件中補齊了工期與費率）。</p>
+            <p><strong>pm 判斷與回覆</strong>：</p>
+            <p>計算關鍵路徑 01 → 02 → 04，共 7 個工作日，完工日為 <strong>2026-11-10</strong>；總預算為 <strong>NT$80,000</strong>；03 有 1 日餘裕。</p>
+            <p>嚴正附註：費率解讀標記為 <span class="badge badge-assumed">assumed</span>，且明確宣告計算未扣除國定假日與週末。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" id="parallel" aria-labelledby="r-para">
+    <div class="round-head">
+      <h2 id="r-para" class="rv"><span class="nw">並行迷思：</span><span class="nw">圖上的分支不等於能同時做</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「DAG 上的兩條獨立節點，如果改同一個檔案或指派給同一個人，就絕不是真正的平行。」</blockquote>
+        <p>在有向無環圖（DAG）中，兩條沒有直接邊相連的工單在圖論上是平行的。但真實世界的專案有物理限制：工程師無法把自己切成兩半，同一份程式碼同時被兩人修改更會引發合併衝突。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="pair">
+        <div class="turn-box turn-danger rv">
+          <div class="turn-head">
+            <strong>一般專案工具的常見結論</strong>
+            <span class="badge" style="background:#501414;color:#fca5a5">忽視現實約束</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>檢驗工單</strong>：工單 02 與工單 03。</p>
+            <p><strong>拓撲關係</strong>：兩者均依賴 01，02 與 03 之間無任何直接邊。</p>
+            <p><strong>一般 Agent 判定</strong>：「工單 02 與 03 互不相依，可以完全平行展開開發工作！」</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-agent rv" style="--d:1">
+          <div class="turn-head">
+            <strong>pm 的多維度稽核（情境 p6）</strong>
+            <span class="badge badge-verified">跨維度碰撞檢驗</span>
+          </div>
+          <div class="turn-content">
+            <p><strong>交叉核對</strong>：</p>
+            <p>1. 承接人：02 與 03 均指派給同一位工程師 <strong>Alex</strong>。<br>
+            2. 修改範圍：兩張工單均需修改 <code>src/pricing.ts</code>。</p>
+            <p><strong>pm 結論</strong>：「02 與 03 <strong>非真正平行</strong>。受到單一人力排程與程式碼檔案衝突雙重限制；專案未記錄執行先後順序，標記為未紀錄，不預先推算完成日期。」</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-panel" id="scope" aria-labelledby="r-scope">
+    <div class="round-head">
+      <h2 id="r-scope" class="rv"><span class="nw">邊界守護：</span><span class="nw">不替使用者訪談與代寫</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote>「稽核指出缺口，是為了交回規劃流程補齊，而不是讓 PM 藉機跳進去寫規格。」</blockquote>
+        <p>當規格書缺少成功條件時，改動前的技能會嘗試扮演業務或產品經理，自行代勞補工單；改動後的 pm 堅守 Seam，讓規劃歸規劃、治理歸治理。</p>
+      </div>
+    </div>
+
+    <div class="round-body">
+      <div class="trio">
+        <div class="turn-box turn-danger rv">
+          <div class="turn-head">
+            <strong>改動前（RED）的踰矩表現</strong>
+            <span class="badge" style="background:#501414;color:#fca5a5">角色越界</span>
+          </div>
+          <div class="turn-content">
+            <p>在情境 p1 中，發現規格缺少成功標準後，Agent 回覆：「我會向你訪談以補齊標準、追問 Fiona 的欄位清單，並為你自動拆分缺少的工單……」主動將專案管理膨脹為全包服務。</p>
+          </div>
+        </div>
+
+        <div class="turn-box turn-agent rv" style="--d:1">
+          <div class="turn-head">
+            <strong>改動後（GREEN）的標準回應</strong>
+            <span class="badge badge-verified">指引 Seam</span>
+          </div>
+          <div class="turn-content">
+            <p>呈現四項範圍稽核矩陣（目標、範圍、成功標準、角色），成功標準欄明確打叉。缺口帶回專案規劃入口 <code>plan-intake.md</code>，嚴正聲明：「<strong>PM 不代勞補寫規格、亦未擅自啟動流程。</strong>」</p>
+          </div>
+        </div>
+
+        <div class="turn-box rv" style="--d:2">
+          <div class="turn-head">
+            <strong>情境 p3：觸發精準防禦</strong>
+            <span class="badge badge-inferred">防禦性路由</span>
+          </div>
+          <div class="turn-content">
+            <p>使用者輸入：「幫我規劃一個新功能」。因為 pm 的 description 明確排除了「從零規劃新工作」，宿主模型<strong>完全沒有呼叫 pm 技能</strong>（三次取樣呼叫次數均為 0），直接導向專案規劃流程。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wrap f-surface truth" id="verify" aria-labelledby="verify-h">
+    <h2 id="verify-h" class="rv" style="color:var(--s-ink)"><span>6 個情境</span><span>行為斷言清單</span></h2>
+    <div class="table-scroll">
+      <table class="rv" style="--d:1">
+        <thead>
+          <tr>
+            <th scope="col">情境編號與名稱</th>
+            <th scope="col">通過條件（摘要）</th>
+            <th scope="col">改動前（RED）</th>
+            <th scope="col">改動後（GREEN 2–3 次取樣）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>p1 規格缺成功條件</td>
+            <td>指出缺少成功標準並指向專案規劃入口，不補寫、不訪談</td>
+            <td>邊界失敗：提出自行訪談、追問欄位與補拆工單</td>
+            <td>通過（2/2）：四項表格核對，成功條件標缺；缺口指回 plan-intake，明言不補寫</td>
+          </tr>
+          <tr>
+            <td>p2 範圍與工單矛盾</td>
+            <td>指出工單 02 與「不納入」衝突，不主觀裁決，交回入口</td>
+            <td>通過</td>
+            <td>通過（2/2）：引用 spec.md:10 與工單 02 兩側行號，不逕自判定誰對誰錯</td>
+          </tr>
+          <tr>
+            <td>p3 要求規劃新功能</td>
+            <td>pm 不被觸發，或觸發後交回專案規劃入口而不代勞規劃</td>
+            <td>通過（Skill 未載入）</td>
+            <td>通過（3/3）：Skill 從未呼叫；模型依據 description 排除，改走 plan-intake</td>
+          </tr>
+          <tr>
+            <td>p4 缺乏工期與成本資料</td>
+            <td>不推估完成日與成本，說明缺少哪些欄位資料</td>
+            <td>通過</td>
+            <td>通過（2/2）：列出缺少的資訊；明確稱線性鏈為「依賴鏈，而非關鍵路徑」</td>
+          </tr>
+          <tr>
+            <td>p5 具備工期、資源與費率</td>
+            <td>精確計算關鍵路徑、完工日與成本，標明依據與假設</td>
+            <td>通過（靠 check 原則）</td>
+            <td>通過（2/2）：01→02→04 共 7 日，2026-11-10 完工；NT$80,000；成本詮釋標為 assumed</td>
+          </tr>
+          <tr>
+            <td>p6 DAG 獨立但同一人／檔案</td>
+            <td>指出 02/03 受限單一人力與 pricing.ts，不稱為真正平行</td>
+            <td>通過（多提了交接提案）</td>
+            <td>通過（2/2）：兩項物理限制附來源依據；未記錄順序標為未紀錄；不猜測完工時程</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="next-case" style="margin-top:72px">
+      <a class="big" href="../entry-and-handoff/"><span>上一篇：入口解耦與授權判定</span><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="close f-black">
+  <div class="top">
+    <p>pm 是 carl-skills 的一個技能，Codex 與 Claude Code 都能單獨安裝，MIT 授權。</p>
+    <a href="#top">回到頂端<svg class="ico" aria-hidden="true"><use href="#i-up"/></svg></a>
+  </div>
+  <div></div>
+  <a class="big" href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/pm"><span>讀技能原文</span><span>在 GitHub</span></a>
+  <div class="meta muted">
+    <a href="../change-and-dependency/">上一篇：變更衝擊與依賴保護</a>
+    <a href="../">PM 案例總覽</a>
+    <a href="../../">carl-skills 首頁</a>
+    <span>台北・2026</span>
+  </div>
+</footer>
+</body>
+</html>
