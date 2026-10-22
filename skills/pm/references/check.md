@@ -22,4 +22,6 @@ Lead with overall progress. When work can continue, identify the most valuable n
 
 For progress counts, state the denominator and treatment of canceled/out-of-scope work. A ticket completion ratio measures item count, not effort or percentage of functionality delivered. With incomplete data, report only known coverage and do not declare overall completion.
 
+A statement that work can run in parallel follows “Parallelism” in [plan](plan.md).
+
 Use a brief Mermaid DAG when it clarifies branches or joins; text suffices for a linear list.

@@ -29,5 +29,5 @@ When the retrospective suggests changing rules (project rules, workflow, skills,
 
 ## Boundaries
 
-- Do not clean up or delete branches or worktrees, and do not handle post-merge housekeeping; when relevant, say it is outside this capability.
+- Branch and worktree cleanup and other post-merge housekeeping belong to the project's closure entry point. When they remain, find that entry point using “Find the project entry point” in the main skill and offer it as a “單次交接” proposal (see [next-step](next-step.md)) naming the branches or worktrees it covers; PM does not delete them itself.
 - Do not merge, publish, or create tickets. Write steps follow existing authorization.
