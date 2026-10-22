@@ -6,7 +6,7 @@ status: accepted
 
 本集合不設共用版號，每個 skill 以 annotated tag `<skill>/vX.Y.Z` 各自打版號，並各自建立 GitHub Release。skill 是一個一個獨立安裝的，共用版號會讓沒有變更的 skill 也跟著升版，版號就看不出哪個 skill 真正變了。版號依 skill 對外的行為合約升級：改名、改觸發條件、移除能力、改固定輸出格式，或讓使用者原本的回覆方式失效時升 MAJOR；新增能力、模式或必須遵守的規則時升 MINOR；只改措辭、修漏洞或修連結、行為不變時升 PATCH。版號只記在 tag 與 Release notes，notes 連到該 skill 的驗收案例與 `.scratch/<skill>/validation/` 驗證紀錄。Skills CLI 安裝時一律取最新內容，不會依 tag 鎖定版本，所以 tag 的作用是標出變更點、對應驗證證據，而不是控制使用者裝到哪一版。
 
-首次打版號時，calibrate-codex、design-experience、devops、pm 從 `1.0.0` 起，四個 tag 都指向同一個 commit。humanize-writing 還在修改中，暫不打版號，等合約穩定後依同一規則打 `humanize-writing/v1.0.0`。1.0.0 的 notes 只寫「首次版本」、一句話能力說明，以及驗收與驗證紀錄的連結，不回推之前的變更紀錄。建立與推送 tag、發布 Release 都需要另外取得授權。
+首次打版號時，calibrate-codex、design-experience、devops、pm 從 `1.0.0` 起，四個 tag 都指向同一個 commit。humanize-writing 還在修改中，暫不打版號，等合約穩定後依同一規則打 `humanize-writing/v1.0.0`。2026-10-22 補記：三份副本合併、全量驗收通過後（PR #21），已打 `humanize-writing/v1.0.0`，指向合併 commit `43093e2`。1.0.0 的 notes 只寫「首次版本」、一句話能力說明，以及驗收與驗證紀錄的連結，不回推之前的變更紀錄。建立與推送 tag、發布 Release 都需要另外取得授權。
 
 ## Considered Options
 
