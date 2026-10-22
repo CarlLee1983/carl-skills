@@ -19,6 +19,16 @@ Apply when the body text is predominantly English. Each item says why it's cut, 
 13. Repeated concessive antithesis
 14. Semicolon chains
 15. Verification scope scattered across paragraphs
+16. Significance inflation and -ing tails
+17. Vague attribution
+18. Promotional tone
+19. Copula avoidance
+20. Challenges-and-outlook section
+21. Chatbot residue
+22. Hedge stacking
+23. False ranges
+24. Synonym cycling
+25. Formatting: bold, inline-header lists, emoji, Title Case
 
 ---
 
@@ -89,7 +99,7 @@ Words that mark machine prose. Replace with plain equivalents or cut:
 
 - delve → look at / dig into
 - tapestry, landscape, realm, ecosystem (as metaphor) → cut
-- "a testament to" → shows / proves
+- "a testament to" → see §16 (the tail is cut, not swapped for a synonym)
 - "navigate the complexities of" → deal with
 - "leverage" → use
 - "robust", "seamless", "cutting-edge", "game-changer" → say the specific property instead
@@ -149,6 +159,91 @@ Three or four clauses joined by semicolons leave the reader to sort fact from co
 
 Keep sentences that are themselves findings in place ("I can confirm the docs require the flag, not that this PR used it"). Keep the source's scope exactly when gathering; don't widen or narrow it.
 
+## 16. Significance inflation and -ing tails
+
+A plain fact gets a trailing clause about what it "represents": "marking a pivotal moment", "underscoring its importance", "reflecting a broader trend", "a testament to", "laying the groundwork for", "leaving an indelible mark". The tail adds no fact. If nobody claimed that significance, delete the tail.
+
+Rewording the same move still counts. "Serves as a testament to our commitment" changed to "shows how seriously we take quality" is the same inflation in a different coat; the layer of meaning behind the fact is still unclaimed, so it goes.
+
+- ❌ The v2 API launched in March, marking a pivotal moment and underscoring the team's commitment to quality.
+- ❌ The v2 API launched in March, which shows how seriously we take quality.
+- ✅ The v2 API launched in March; v1 endpoints shut down in June.
+
+If someone actually claimed the significance, quote them and name them.
+
+## 17. Vague attribution
+
+"Experts argue", "Industry reports suggest", "Observers note", "Many developers say". These borrow authority without giving a source. Name the source the author gave, or turn the line into the author's own judgment. Never supply a source the author didn't.
+
+- ❌ Experts believe this architecture scales better.
+- ✅ Shopify's 2023 engineering post says their modular monolith halved deploy time.
+- ✅ I think this architecture scales better, based on our load test. (Only when the source gave that basis.)
+
+## 18. Promotional tone
+
+"Nestled in", "vibrant", "rich heritage", "breathtaking", "must-visit", "renowned", "boasts". Travel-brochure adjectives in non-advertising text. Replace them with checkable facts: where, how big, what it does.
+
+- ❌ Nestled in the heart of Taipei, this vibrant startup boasts breathtaking engineering talent.
+- ✅ The startup is in Xinyi, twelve people, building logistics scheduling.
+
+## 19. Copula avoidance
+
+"Serves as", "stands as", "functions as", "features" where "is" or "has" would do. The fancy verb adds no meaning, only a register that reads as machine prose.
+
+- ❌ Redis serves as the caching layer and features three nodes.
+- ✅ Redis is the caching layer. It has three nodes.
+
+## 20. Challenges-and-outlook section
+
+"Despite its challenges, X continues to thrive." "Challenges and future outlook." A formula paragraph appended regardless of topic. If the source has real problems, write them as events (when, how bad, what was done) and drop the "despite… continues" frame. This is the section-level cousin of §8 (empty conclusions) and §13 (concessive antithesis); the test is the same: keep what states a fact, cut the frame.
+
+- ❌ Despite facing challenges such as staffing, the team continues to innovate, and the future looks bright.
+- ✅ Two people maintain fourteen integrations; the next one is scheduled for Q4.
+
+## 21. Chatbot residue
+
+Conversation scaffolding pasted into the deliverable: "Great question!", "You're absolutely right", "Here is an overview of…", "I hope this helps!", "Let me know if you'd like me to expand on any section", and knowledge-cutoff disclaimers ("As of my last update…", "While specific details are limited…"). Delete them and start at the first fact. Keep the author's own uncertainty if it was theirs.
+
+- ❌ Great question! Here is an overview of the three options. I hope this helps!
+- ✅ Option A costs the least to migrate; B has the better tooling.
+
+## 22. Hedge stacking
+
+Several hedges on one claim: "could potentially possibly be argued to have some effect". Cut to one layer, and make that layer carry the strength of the whole original sentence: no stronger (the hedge must not turn into an assertion) and no weaker (a firm "likely" must not become "might"). The author's uncertainty stays; only the repeats go.
+
+- ❌ This could potentially possibly be argued to have some effect on latency.
+- ✅ This may affect latency.
+- ❌ (source: "I think it probably helps, though I'm not sure") It helps.
+- ✅ It probably helps. (One hedge, still unsure; not "It helps" and not "It might help a little".)
+
+This sits under priority 2 of SKILL.md: when in doubt, keep the hedge.
+
+## 23. False ranges
+
+"From the Big Bang to dark matter, from team culture to deploy pipelines." X and Y sit on different scales and only fake breadth. List what is actually covered.
+
+- ❌ The talk ranges from team culture to deploy pipelines to the future of work.
+- ✅ The talk covers on-call rotation and how we cut deploys from 40 to 12 minutes.
+
+## 24. Synonym cycling
+
+"The protagonist… the main character… the central figure… the hero" for one referent. Repeat the same noun; readers take a new word as a new thing. Deliberate repetition in narrative passages is governed by `narrative-en.md` and is not affected.
+
+- ❌ The scheduler failed twice. The orchestrator then restarted, and the dispatcher lost its queue.
+- ✅ The scheduler failed twice. It restarted and lost its queue. (When all three names are the same component.)
+
+## 25. Formatting: bold, inline-header lists, emoji, Title Case
+
+Applies when prose has been chopped into slide format. Leave real docs (READMEs, specs, parameter lists) as they are.
+
+- Bold sprinkled across a paragraph: at most one, usually none.
+- `- **Performance:** Performance was improved by…` (header restated by the body): one plain sentence with the actual number.
+- Emoji decorating headings or bullets: remove, unless it is a social post and the author uses them.
+- Headings In Title Case: sentence case, unless the source's style guide says otherwise.
+
+- ❌ `- **Speed:** Speed was improved significantly.`
+- ✅ Builds now take 40s instead of 90s.
+
 ---
 
 ## Audit checklist
@@ -170,5 +265,14 @@ After editing, scan once more:
 - [ ] Concessive antithesis kept only for the thesis; headings state content
 - [ ] No three- or four-clause semicolon chains
 - [ ] Unverified scope gathered in the opening scope paragraph; paragraphs keep findings and red lines
+- [ ] No "marking / underscoring / a testament to" tail on plain facts, reworded or not
+- [ ] Every "experts say" has a named source, or became the author's own claim
+- [ ] No brochure adjectives (nestled, vibrant, breathtaking) in non-advertising text
+- [ ] "is / has" instead of "serves as / stands as / features"
+- [ ] No formula challenges-and-outlook paragraph
+- [ ] No chatbot residue or knowledge-cutoff disclaimer
+- [ ] One hedge, not three, at the original strength
+- [ ] No false ranges; one name per referent outside narrative
+- [ ] Prose not chopped into bold-header bullets; no emoji or bold confetti; sentence-case headings
 - [ ] Facts, numbers, terms, model names untouched
 - [ ] Author's hedges, tone, and stance preserved
