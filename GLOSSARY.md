@@ -65,7 +65,7 @@ _Avoid_: 問卷、表單
 _Avoid_: mood board、整頁設計稿
 
 **品味基線**（taste baseline）：
-所有原型與視覺處理共同遵守的最低品味要求：介面圖示用風格一致的 inline SVG（優先專案圖示集），不以 emoji 或文字符號充當圖示或裝飾。
+所有原型、視覺處理與現況檢視共用的工藝下限，每條規則都是截圖上看得出的缺陷而非美學偏好：字級、間距與對齊、色彩與對比、主次動作、表面、圖示、溢出。風格由視覺來源與視覺方向技能決定；品牌值不合基線時保留並列為發現。全文見 `skills/design-experience/references/taste-baseline.md`。
 _Avoid_: 風格規範、視覺規格
 
 **現況**（current state）：

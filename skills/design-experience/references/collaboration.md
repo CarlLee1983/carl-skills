@@ -35,7 +35,7 @@ A collaborating skill supplies the craft for one step; this skill owns the flow.
 - Map its variant names onto direction letters (A/B/C) or treatment numbers (1/2/3), keeping its names as concept labels.
 - Keep its prototypes isolated, and keep them after a selection; its promote-and-clean-up steps run only with current authorization for production changes.
 - Hand it the SESSION decisions and brief. Create its own product-context file only when it cannot run without one, filled from SESSION, which stays the source of product facts.
-- Hold its output to the taste baseline, and present it through this flow's comparisons, evidence levels, and completion criteria.
+- Hold its output to the [taste baseline](taste-baseline.md), and present it through this flow's comparisons, evidence levels, and completion criteria.
 
 ## Resolve conflicting rules
 

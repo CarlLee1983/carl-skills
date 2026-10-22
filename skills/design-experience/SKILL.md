@@ -73,7 +73,7 @@ Before choosing a medium, confirm the intended entry point, how the user opens i
 
 Build an isolated prototype using the existing stack, components, and routes. Without a frontend host, a single offline HTML file is an option. Share data and components where useful, but let each direction change structure freely. Place multiple directions behind one comparison entry point and preserve data context across switches where possible.
 
-Hold every prototype and treatment to the **taste baseline**: draw interface icons (buttons, links, navigation, list markers, states) as inline SVG from the project's icon set, or else from an established open-source set such as Lucide or Phosphor copied in with its license notice and without adding a dependency, consistent in stroke, fill, and size within a prototype. Emoji and text glyphs such as → › ↗ stay out of the interface as icons or decoration.
+Hold every prototype and treatment to the **taste baseline**: read [taste-baseline.md](references/taste-baseline.md) before building, and check each presented screen against it.
 
 Use realistically sized and dense content, labeling sample data. Important controls must perform their claimed simulated behavior; stub writes rather than connecting real mutations. Include relevant empty, loading, error, permission, stale-data, or recovery scenarios that affect design judgment. Show necessary states without fake progress, fake notifications, or invented integrations.
 
