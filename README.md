@@ -279,7 +279,7 @@ python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/p
 
 這項檢查不代替行為驗收。devops 先以 [發布驗收案例](skills/devops/references/release-acceptance.md) 驗證遷移行為，再以 [devops 驗收案例](skills/devops/references/acceptance.md) 驗證其他能力；[本次驗證紀錄](.scratch/devops/validation/SUMMARY.md) 與 release-assessment 的 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
 
-目前沒有統一版本或自動發布流程。集中管理原始碼，不預設所有 skills 共用相容性承諾與發布節奏。
+每個 skill 以 `<skill>/vX.Y.Z` tag 各自打版號並建立 GitHub Release，依行為合約決定升哪一位；規則與理由見 [ADR 0003](docs/adr/0003-per-skill-versioning.md)。尚未打過 tag 的 skill 沒有版號。沒有自動發布流程。
 
 ## 授權
 
