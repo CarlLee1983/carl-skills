@@ -19,3 +19,5 @@ Blocked by: 02, 03, 04, 05, 06, 07
 ## Comments
 
 2026-10-22：新的改稿與判定子代理對來源 commit `09e9432` 全量重放，26 案（H01–H14 含 H08b、H10、T01–T03、S01–S08）全數通過，見 `.scratch/humanize-writing/validation/acceptance-08.md`、`acceptance-08-drafts.md`、`acceptance-08-terminal.txt`。基準重放（`acceptance-01-baseline.md`）是 9 案通過。`git diff --check` 與新檔 `--no-index --check` 通過。使用者授權後 push 並開 PR，每張工單一個 commit。判定者的保留意見：H08 按鈕「看它怎麼運作」與 H12 殘句「我們全面最佳化了系統。」從嚴解讀可能改判。
+
+2026-10-22：PR #21 已合併（`43093e2`），全量重放紀錄見 `.scratch/humanize-writing/validation/acceptance-08.md`。
