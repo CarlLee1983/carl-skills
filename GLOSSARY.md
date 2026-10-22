@@ -75,3 +75,17 @@ _Avoid_: baseline、原版、before
 **問題層級**（problem layer）：
 改善模式中問題所在的層：細節、視覺語言、結構、流程、訊息（行銷頁的文案、圖像與轉換）。層級決定處理路徑；跨層時預設由深到淺處理。
 _Avoid_: 問題類型、嚴重度
+
+## 發佈與安裝
+
+**來源目錄**（source directory）：
+本 repo 的 `skills/<skill>/`，是該 skill 規則的唯一來源；規則只在這裡改，經 PR 合併。
+_Avoid_: 主版本、正本（指 repo 外的檔案時）
+
+**安裝副本**（installed copy）：
+由 Skills CLI 從本 repo 安裝到使用者機器上的 skill 目錄，只能重新安裝，不直接修改。
+_Avoid_: 全域版、手動副本
+
+**專案副本**（vendored copy）：
+另一個專案為了讓自己的 agent 在 repo 內讀到 skill，而納入版控、由來源目錄同步過去的 skill 目錄；只同步，不在專案裡改規則。
+_Avoid_: fork、專案版

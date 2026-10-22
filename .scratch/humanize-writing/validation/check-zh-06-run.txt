@@ -1,0 +1,87 @@
+# check_zh.py S01–S08 實跑輸出（cwd: skills/humanize-writing，2026-10-22 15:18 台北，基底 commit 33fa1e7 + 工單 06 工作區，code-review 修正後）
+
+## S01: python3 scripts/check_zh.py docs/humanize-writing/fixtures/h12-zh-new-rules.md
+
+=== ../../docs/humanize-writing/fixtures/h12-zh-new-rules.md ===
+  L1    [動詞名詞化] 進行了全面的優化
+         …續前進，未來可期。我們對系統進行了全面的優化，打通了資料閉環，賦能業務方…
+  L1    [商業與模型黑話] 閉環
+         …進行了全面的優化，打通了資料閉環，賦能業務方。這項改動標誌著…
+  L1    [商業與模型黑話] 賦能
+         …全面的優化，打通了資料閉環，賦能業務方。這項改動標誌著架構邁…
+  L1    [對岸用語] 優化 → 最佳化
+         …可期。我們對系統進行了全面的優化，打通了資料閉環，賦能業務方…
+  L1    [意義膨脹與尾巴分析] 標誌著
+         …料閉環，賦能業務方。這項改動標誌著架構邁入新階段，彰顯了團隊的…
+  L1    [意義膨脹與尾巴分析] 彰顯了
+         …項改動標誌著架構邁入新階段，彰顯了團隊的技術實力。
+  L1    [挑戰與展望段] 儘管面臨諸多挑戰
+         儘管面臨諸多挑戰，團隊仍然持續前進，未來可期…
+  L1    [挑戰與展望段] 未來可期
+         …諸多挑戰，團隊仍然持續前進，未來可期。我們對系統進行了全面的優化…
+  L3    [聊天殘留] 希望這篇文章對你有幫助
+         希望這篇文章對你有幫助！
+  ── 共 9 項：商業與模型黑話 2、意義膨脹與尾巴分析 2、挑戰與展望段 2、動詞名詞化 1、對岸用語 1、聊天殘留 1
+exit 1
+
+## S02: python3 scripts/check_zh.py docs/humanize-writing/fixtures/s02-skip-only.md
+
+=== ../../docs/humanize-writing/fixtures/s02-skip-only.md ===
+沒有機械命中。需要語境的項目（結構殼、假具體）還是要人自己看。
+exit 0
+
+## S05: python3 scripts/check_zh.py docs/humanize-writing/fixtures/s05-colon-mixed.md
+
+=== ../../docs/humanize-writing/fixtures/s05-colon-mixed.md ===
+  L9    [提示性冒號] ：
+         重點只有一個：別讓快取比資料庫活得久。
+  ── 共 1 項：提示性冒號 1
+exit 1
+
+## S06: python3 scripts/check_zh.py references/zh-tw.md
+  ── 共 181 項：對岸用語 45、二元對比殼 17、意義膨脹與尾巴分析 15、商業與模型黑話 15、假洞見標記 13、提示性冒號 12、宣傳腔 12、轉場與強調贅語 11、聊天殘留 11、動詞名詞化 8、挑戰與展望段 7、模糊歸因 7、空泛收尾 6、破折號 2
+exit 1（只列統計行）
+
+## S07: python3 scripts/check_zh.py docs/humanize-writing/fixtures/s07-html.html
+
+=== ../../docs/humanize-writing/fixtures/s07-html.html ===
+  L12   [商業與模型黑話] 賦能
+         第二段要賦能業務方。
+  ── 共 1 項：商業與模型黑話 1
+exit 1
+
+## S08: python3 scripts/check_zh.py docs/humanize-writing/fixtures/s08-dash-buzhi.md
+
+=== ../../docs/humanize-writing/fixtures/s08-dash-buzhi.md ===
+  L3    [二元對比殼] 不只是硬體問題，更是
+         這不只是硬體問題，更是架構問題。
+  L5    [破折號] —
+         切換後延遲升到 900ms——幾乎每個列表頁都受影響。
+  ── 共 2 項：二元對比殼 1、破折號 1
+exit 1
+
+## S03: 不給參數
+usage: check_zh.py [-h] paths [paths ...]
+check_zh.py: error: the following arguments are required: paths
+exit 2
+
+## S03: 不存在的路徑
+找不到檔案：nope.md
+exit 2
+
+## S04: 暫存副本的用語表加一列「探針詞｜測試詞」前後
+
+=== ../../docs/humanize-writing/fixtures/s04-term-probe.md ===
+沒有機械命中。需要語境的項目（結構殼、假具體）還是要人自己看。
+exit 0（加列前）
+
+=== ../../docs/humanize-writing/fixtures/s04-term-probe.md ===
+  L1    [對岸用語] 探針詞 → 測試詞
+         這次上線把探針詞測試看板放在首頁。
+  ── 共 1 項：對岸用語 1
+exit 1（加列後）
+
+## 黑箱測試 .scratch/humanize-writing/validation/test_check_zh.py
+Ran 23 tests in 1.327s
+
+OK

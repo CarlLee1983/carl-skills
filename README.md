@@ -7,7 +7,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | Skill | 適用工具 | 用途 |
 | --- | --- | --- |
 | [devops](skills/devops/SKILL.md) | Codex、Claude Code 等 | 軟體交付與維運的統一入口：環境、CI、發布評估與套件發布、部署與回復、監控告警、事故、備份還原、容量與成本；先取得證據，在明確授權內執行並核驗。取代原 release-assessment。[規格](docs/devops/SPEC.md) |
-| [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；敘事段落（事故經過、個人經驗、小說）另有保留情節與節奏的規則；不限定模型。 |
+| [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；程式碼、網址、路徑、引言與各類聲明逐字保留；敘事段落（事故經過、個人經驗、小說）另有保留情節與節奏的規則；介面文案另有規則；附繁中審閱腳本；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
 | [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發：訪談釐清風格或診斷問題、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
 | [pm](skills/pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 八項專案經理能力：範圍與計畫稽核（scope、plan）、進度與依賴檢查（check）、下一步建議與交接（next-step）、風險與假設（risk）、變更影響（change）、進度報告（report）、結案（close）；依專案規則查找各自的專案入口，接受明確提案後交接，或在已授權的 Goal 中持續推進。 |
@@ -127,7 +127,13 @@ npx skills add CarlLee1983/carl-skills --skill devops -g -a codex claude-code
 $humanize-writing 幫我潤飾下面的產品更新，保留數字、模型名稱、立場與不確定性：……
 ```
 
-Claude Code 使用 `/humanize-writing`。繁中、英文與混合語言會使用對應規則；原文已自然時只做必要修改。
+Claude Code 使用 `/humanize-writing`。也適用於「改得像本人寫的」、潤飾 X 貼文、修正過度修飾的稿子。繁中、英文與混合語言會使用對應規則；原文已自然時只做必要修改。回覆先給成稿，必要時才附修改清單。
+
+繁中稿可以另外在 skill 目錄跑審閱腳本，逐筆判斷命中，不要求清零；對岸用語取自 `references/zh-tw.md` 的台灣用語表，只需 `python3`：
+
+```sh
+python3 scripts/check_zh.py <稿件路徑>
+```
 
 ```text
 $calibrate-codex Codex 已連續兩次只改呼叫端，沒有修正共用函式。請依這兩次 diff 的證據，把修正原則記在目前 repo 的適當指引，先檢查既有規則，保留無關內容。
