@@ -23,4 +23,3 @@ Owner: claude-code (feat/ciso)
 ## Comments
 
 - 2026-10-23：完成於 `feat/ciso`。新增 `docs/ciso/SPEC.md`（定稿）、README 的 ciso 列與用法、AGENTS.md 的 ciso 驗證指令；版號計畫為 `ciso/v1.0.0` 與 `devops/v1.0.1`（未打 tag，需另行授權）。CWE Top 25 仍為部分查證（cwe.mitre.org 當日無法連線），已在 SPEC 註明。穩定度以至少 3 次樣本判定，規則與逐案決定見 `.scratch/ciso/validation/07-validation.md`：C05 放寬預期、C21／C22／C23／C34 修技能後 3/3、C35 對齊案例後 2/3（1 次漏提來源限制，接受為已知限制）、C37 4/4；嚴重度相鄰級波動與 CWE-639／862 並存列為已知限制。整條分支兩軸 review 的 HIGH 已修。
-
