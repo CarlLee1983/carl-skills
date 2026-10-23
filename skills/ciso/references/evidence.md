@@ -42,7 +42,7 @@ Only confirmed findings receive a severity: Critical, High, Medium, Low, or Info
 - **Low:** a real violation with minor consequence.
 - **Info:** confirmed but minimal on its own, useful mainly as part of a larger chain.
 
-Rate an exposure on the reach the evidence demonstrates: who can reach it, how strongly it is authenticated, and what it gives access to. Each unknown, such as the readers, the authentication strength, or the applied state, is stated beside the rating as a gap and neither raises nor lowers it, and a control the evidence does not show is not credited. A credential tied by the evidence to an action such as deploying to production is rated on that reach.
+Rate an exposure by what is reachable and what the evidence shows enforced: who can reach it, what it gives access to, and which controls are shown in force. A control or fact the evidence does not show, such as the authentication strength, the readers, or the applied state, is stated beside the rating as a gap; it neither lowers nor raises the rating, and it is not credited as a protection. An administrative function reachable by an unrestricted audience with no evidence of authentication is High. A credential tied by the evidence to an action such as deploying to production is rated on that reach.
 
 Classify each confirmed finding with the OWASP Top 10 category and a CWE identifier where one fits; see [sources](sources.md) for the editions used.
 

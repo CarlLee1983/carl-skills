@@ -1,43 +1,38 @@
-相依套件有一項已確認風險：`left-padx@2.3.1` 的使用路徑符合所附虛構 advisory 的程式碼執行條件；`express` 的漏洞狀態未驗證。
+相依套件 `left-padx@2.3.1` 有已確認的程式碼執行風險；此結論僅依模擬 advisory，不代表真實漏洞資料庫紀錄。
 
-### 1. 範圍
+**1. 範圍**
 
-評估 `ledger-api`，SHA `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`，限 `F-lockfile` 的 manifest、lockfile、呼叫點與 advisory。
+唯讀供應鏈評估；服務 `ledger-api`，SHA `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`。檢查 `package.json`、lockfile 節錄與 `src/render.ts:5`。未檢查完整相依樹、建置與發布流程，因無此證據。
 
-未檢查其他相依套件、完整呼叫鏈、建置／發布流程及部署環境。沒有找到底層資安技能、以基準做法完成；依據為專案規則與已安裝清單。
+**2. 判斷**
 
-### 2. 判斷
+專案未指定底層資安工具，已安裝清單亦無匹配者：沒有找到底層資安技能、以基準做法完成。
 
-- `left-padx`：宣告 `^2.3.1`，鎖定 `2.3.1`，附 integrity；見 `package.json:1`、`package-lock.json:1`。符合 `FICTIONAL-2026-0001` 的受影響範圍 `<2.3.4`，且已有不可信輸入的使用證據。
-- `express`：宣告 `^4.19.2`，鎖定 `4.19.2`，附 integrity；見同一 manifest 及 `package-lock.json:2`。advisory 資料無此證據，亦無查詢能力，不能判為有漏洞或無漏洞。
-- integrity 僅證明鎖檔記錄雜湊，不能排除已知漏洞。
-- pipeline、外部引用、provenance、簽章、SBOM：無此證據，不能判為不存在；SLSA Build 等級無法判定。
+| 套件 | 宣告 → 鎖定版本 | 完整性／判斷 |
+| --- | --- | --- |
+| left-padx | `^2.3.1` → `2.3.1` | 有 integrity；符合模擬 advisory，且有可達使用路徑 |
+| express | `^4.19.2` → `4.19.2` | 有 integrity；advisory 狀態未驗證，不能宣稱無漏洞 |
 
-### 3. 發現
+來源為 `package.json:1`、`package-lock.json:1–2`、`advisory-fixture.json`。未進行網路查詢。lockfile 已鎖定上述版本；版本範圍本身不另列漏洞。
 
-**D1｜已確認｜High｜綁定上述 SHA**
+外部 pipeline 引用、provenance、簽章、SBOM 均無此證據，不能判定不存在；SLSA Build 等級及下一級缺口亦無法確定。
 
-證據：`src/render.ts:5`、`package-lock.json:1`、`advisory-fixture.json` 的 `FICTIONAL-2026-0001`。此 advisory 為模擬資料，並非真實漏洞資料庫紀錄。
+**3. 發現**
 
-六要素：
+**SC-1｜Critical｜已確認｜上述 SHA**
 
-- 主體：可控制 `template` 查詢參數的請求者。
-- 輸入：`req.query.template`。
-- 控制：使用會求值輸入佔位符的受影響 `pad()`。
-- 邊界：不可信請求資料進入程式碼執行。
-- 資源：服務程序的執行能力。
-- 結果：依 advisory 與呼叫點，可執行攻擊者控制的程式碼。
+證據：`src/render.ts:5`、`package-lock.json:1`、模擬識別碼 `FICTIONAL-2026-0001`。
 
-分類：OWASP 2025 A03；CWE-94（離線未核實）。程序權限、端點可達性及完整影響範圍無此證據，不擴大評級。
+六要素：主體為可控制請求查詢參數的呼叫者；輸入為 `req.query.template`；控制缺陷為受影響的 `pad()` 會求值輸入中的模板；跨越請求資料至伺服器程式執行邊界；資源為應用程式執行程序；結果依 advisory 與呼叫路徑可推導為攻擊者控制輸入導致程式碼執行，未做動態重現。端點驗證、程序權限及其他資源可達性無此證據，不據此擴大影響。
 
-待驗證項：無；`express` 屬缺乏 advisory 資料，並非具體漏洞疑點。
+分類：OWASP 2025 A03；CWE-94（未經官方來源核實）。最窄修補為升級至 advisory 指定的 `2.3.4` 或經確認不受影響版本，更新 lockfile。
 
-### 4. 分派
+其他待驗證項：無；Express 屬缺少 advisory 資料，並非已知漏洞。
 
-**交付 brief，尚未實際分派：**接收者為專案 `/implement`。目標為消除 D1；證據及六要素如上。不變條件：請求文字不得成為可執行程式碼。最窄修補為升級至 fixture 指定的 `2.3.4` 或已確認修復版本，同步更新鎖檔。加入隔離測試，確認惡意佔位符不執行、正常補齊仍有效。
+**4. 分派**
 
-完成條件：提供修補 diff、固定 SHA、測試結果，由 CISO 複審。目前僅授權評估；實作須另獲授權。既有 tracker 工單無此證據，接收者先查重。
+擬交付 `/implement`，尚未實際分派。Brief：目標為消除 SC-1；證據、六要素及嚴重度如上。不變條件為查詢內容只能作資料，不能執行。採最窄升級；在隔離環境以假資料測試惡意模板不執行，並確認正常補齊行為。完成條件為提交修補 diff、固定 SHA、解析版本及測試證據，再由 CISO 複審。目前僅授權評估，實作需使用者授權；需決定是否採納修補。既有 tracker 工單無此證據。
 
-### 5. 後續
+**5. 後續**
 
-由實作方承接 D1；補齊 advisory 與發布證據後再評估其餘缺口。本次未修改、寫檔、連線或執行任何修補。
+由 `/implement` 承接修補；評估者取得完整相依清單及 advisory 資料後補查。交付修補僅能標為「修補已交付」，複審前不得稱「已驗證」。本次未修改或寫入任何內容。

@@ -160,7 +160,7 @@ Only confirmed findings receive a severity: Critical, High, Medium, Low, or Info
 - **Low:** a real violation with minor consequence.
 - **Info:** confirmed but minimal on its own, useful mainly as part of a larger chain.
 
-Rate an exposure on the reach the evidence demonstrates: who can reach it, how strongly it is authenticated, and what it gives access to. Each unknown, such as the readers, the authentication strength, or the applied state, is stated beside the rating as a gap and neither raises nor lowers it, and a control the evidence does not show is not credited. A credential tied by the evidence to an action such as deploying to production is rated on that reach.
+Rate an exposure by what is reachable and what the evidence shows enforced: who can reach it, what it gives access to, and which controls are shown in force. A control or fact the evidence does not show, such as the authentication strength, the readers, or the applied state, is stated beside the rating as a gap; it neither lowers nor raises the rating, and it is not credited as a protection. An administrative function reachable by an unrestricted audience with no evidence of authentication is High. A credential tied by the evidence to an action such as deploying to production is rated on that reach.
 
 Classify each confirmed finding with the OWASP Top 10 category and a CWE identifier where one fits; see [sources](sources.md) for the editions used.
 
@@ -214,7 +214,7 @@ A secret printed in a log or committed to a repository; a token, role, or workfl
 
 ## Steps
 
-1. **Scope.** Fix the SHA or run and the categories to inspect: secrets, permissions, network. List what cannot be seen, such as who can read a log, the applied state of infrastructure, or a credential's actual reach. **Done:** the inspected set and the unexamined set are written down.
+1. **Scope.** Fix the SHA or run and the categories to inspect: secrets, permissions, network. List what cannot be seen, such as who can read a log, the applied state of infrastructure, or a credential's actual reach. **Done:** the inspected set and the unexamined set are written down, and the report states which of secrets, permissions, and network were checked and which were not, with the reason.
 2. **Look for depth.** Check [delegation](delegation.md) before inspecting by hand; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
 3. **Secrets.** Locate each exposed credential by name and location only, under the entry's [Safety floor](../SKILL.md#safety-floor); never reprint any part of a value and never test it by using it. Note who can read that location. **Done:** each credential has a name, a location, and its readers or the gap.
 4. **Permissions.** For each token, role, or workflow permission, compare what is granted with what the job needs, and name who can trigger or influence it, including untrusted contributors. **Done:** each grant has its principal, granted scope, needed scope, and the narrowest scope that suffices.
@@ -224,7 +224,7 @@ A secret printed in a log or committed to a repository; a token, role, or workfl
 
 ## Output
 
-The fixed report from `SKILL.md`: scope with the unexamined set, each finding with its six elements, location, severity, classification, and [completion state](evidence.md#completion-states), 待驗證 items, and a dispatch brief per action with its authorization marked.
+The fixed report from `SKILL.md`: scope with the unexamined set and which of the three exposure kinds were checked and which not, each finding with its six elements, location, severity, classification, and [completion state](evidence.md#completion-states), 待驗證 items, and a dispatch brief per action with its authorization marked.
 
 ## Done
 
@@ -260,7 +260,7 @@ The security judgment before a release: 放行, 有條件放行, or 阻擋, with
 1. **Scope.** Fix the release SHA and list the findings, acceptances, and changes that bear on it, and what has not been reviewed. **Done:** the release SHA, the relevant findings, and the unreviewed changes are written down.
 2. **Look for depth.** Check [delegation](delegation.md) before judging unreviewed changes yourself; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
 3. **Bind to the release SHA.** For each finding, apply [carrying a state to another SHA](evidence.md#carrying-a-state-to-another-sha); for each acceptance, apply [judging a re-review condition](evidence.md#judging-a-re-review-condition). Review any change since the last review that touches security-relevant code under [review](review.md), or list it as unreviewed; a change confined to documentation that no acceptance condition depends on is not security-relevant code, and the diff's file list is enough to show it. **Done:** each finding has its state at the release SHA with the evidence, and each acceptance is covering, fired, or unresolved, and for an unresolved one the fact the user must supply is named.
-4. **Decide.** 阻擋 when any Critical or High finding is, at the release SHA, neither 已驗證 nor covered by a standing 已接受風險: 已分派 and 修補已交付 do not count, and an acceptance whose re-review condition has fired or is unresolved does not cover. 有條件放行 when no such finding exists but conditions remain, such as open Medium or Low findings, 待驗證 items, unreviewed changes, or an unresolved acceptance that covers only Medium or Low findings; state each condition and who resolves it. 放行 when every relevant finding is 已驗證 or validly accepted at the release SHA and nothing remains open. **Done:** the verdict is stated with one ground per finding or condition that decides it.
+4. **Decide.** 阻擋 when any Critical or High finding is, at the release SHA, neither 已驗證 nor covered by a standing 已接受風險: 已分派 and 修補已交付 do not count, and an acceptance whose re-review condition has fired or is unresolved does not cover. 有條件放行 when no such finding exists but conditions remain, such as open Medium or Low findings, 待驗證 items, unreviewed changes, or an unresolved acceptance that covers only Medium or Low findings; state each condition and who resolves it. 放行 when every relevant finding is 已驗證 or validly accepted at the release SHA and nothing remains open. Whenever an acceptance is uncovered, unresolved, or needs renewal, say that the decision to accept is the user's and this skill can only recommend. **Done:** the verdict is stated with one ground per finding or condition that decides it, and that statement is made whenever an acceptance is uncovered, unresolved, or needs renewal.
 5. **Report.** State what would change the verdict, and what the assessment did not examine. **Done:** the report carries the verdict, grounds, conditions, the unexamined set, and a statement that the verdict starts no release action and does not replace the user's release decision.
 
 ## Output
@@ -277,7 +277,7 @@ The release SHA, the findings' states, or the diff since the last review is unav
 
 ## Handoff
 
-Releasing, tagging, and publishing belong to the user and to the DevOps role's release work (the `devops` skill when installed), only on the user's request. Fixes for blocking findings go to the receivers in [the entry](../SKILL.md#work-with-existing-flows) with a dispatch brief, and are re-reviewed under [evidence](evidence.md#completion-states). A user who wants to accept a blocking risk makes the statement defined in [risk acceptance](evidence.md#risk-acceptance); this skill only recommends.
+Releasing, tagging, and publishing belong to the user and to the DevOps role's release work (the `devops` skill when installed), only on the user's request. Fixes for blocking findings go to the receivers in [the entry](../SKILL.md#work-with-existing-flows) with a dispatch brief, and are re-reviewed under [evidence](evidence.md#completion-states). A user who wants to accept a blocking risk makes the statement defined in [risk acceptance](evidence.md#risk-acceptance).
 
 
 ===== FILE: references/incident.md =====
@@ -473,12 +473,12 @@ A planned feature, an architecture or integration change, "what are the security
 3. **Map.** List the actors, processes, data stores, and data flows, and mark each trust boundary where the level of trust changes. Take every element from the design; add none the design does not state. **Done:** each element and boundary cites the design line or statement it came from.
 4. **Apply STRIDE.** For each element and boundary consider the six categories in [sources](sources.md#threat-modeling-and-supply-chain-references) (spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege). State a threat only where the design gives a basis, and name the design fact it depends on; where a category does not apply, say why in a few words. **Done:** each element and boundary has all six categories considered, as a threat or as not applicable with a reason.
 5. **Keep threats as hypotheses.** A threat about a design does not meet the [threshold for a confirmed finding](evidence.md#threshold-for-a-confirmed-finding): it has no severity and no completion state, and it is never reported as a vulnerability. Where the design depends on a missing fact, state the threat conditionally on it. **Done:** every threat is marked as an assumption with the fact it rests on.
-6. **Mitigate.** For each threat, recommend a mitigation at the boundary where it belongs, and say what evidence would later show it was built. Cite an OWASP ASVS requirement only after looking up its actual identifier in the edition in [sources](sources.md); never from memory. **Done:** each threat has a mitigation and the evidence that would confirm it.
+6. **Mitigate.** For each threat, recommend a mitigation at the boundary where it belongs, and say what evidence would later show it was built. Cite an OWASP ASVS requirement only after looking up its actual identifier in the edition in [sources](sources.md); never from memory. List threats one per row: element or boundary, the STRIDE categories it falls under (one or more), the threat, its own mitigation, and the fact it depends on. Every threat has its own mitigation, and no mitigation is shared across threats. **Done:** each threat has its own mitigation and the evidence that would confirm it.
 7. **Ask.** List the facts to decide before building, ordered by how many threats depend on them. **Done:** each open question names the threats it unblocks.
 
 ## Output
 
-The fixed report from `SKILL.md`: 範圍 with the design and its missing facts; 判斷 with the trust boundaries, then the STRIDE threats as assumptions, each with its mitigation and the fact it depends on; 發現 stating that a threat model yields no confirmed findings; 分派 with who would carry the mitigations if the user adopts them; 後續 with the open questions. Writing follows [the modes in the entry](../SKILL.md#choose-a-mode): only when the user asks, and only to an existing record source or a path the user names; say where it was written, otherwise write nothing.
+The fixed report from `SKILL.md`: 範圍 with the design and its missing facts; 判斷 with the trust boundaries, then the STRIDE threats as assumptions, one per row with its element or boundary, its STRIDE categories, its own mitigation, and the fact it depends on, and no mitigation shared across threats; 發現 stating that a threat model yields no confirmed findings; 分派 with who would carry the mitigations if the user adopts them; 後續 with the open questions. Writing follows [the modes in the entry](../SKILL.md#choose-a-mode): only when the user asks, and only to an existing record source or a path the user names; say where it was written, otherwise write nothing.
 
 ## Done
 

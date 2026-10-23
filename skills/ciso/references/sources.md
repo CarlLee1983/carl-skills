@@ -39,5 +39,5 @@ Ideas were adapted in paraphrase; no text was copied.
 
 | Source | Provenance | Borrowed into |
 | --- | --- | --- |
-| `security-audit` skill | Installed from the GitHub repository `cloudflare/security-audit-skill`, per the install record; no license file is present in the installed copy and the commit is not recorded (only a folder hash), so the license is unverified | The trust-boundary threshold and its six elements, confirmed versus needs-validation, no severity for unconfirmed items, "a checklist deviation is not a finding", the rule against probing deployed systems ([evidence](evidence.md), [review](review.md)) |
+| `security-audit` skill | Provenance and license: see [known underlying security skills](#known-underlying-security-skills) | The trust-boundary threshold and its six elements, confirmed versus needs-validation, no severity for unconfirmed items, "a checklist deviation is not a finding", the rule against probing deployed systems ([evidence](evidence.md), [review](review.md)) |
 | `security-reviewer` agent | A locally authored agent definition; provenance unknown, no upstream or license recorded | OWASP and CWE classification of each finding and the review report layout ([review](review.md)) |

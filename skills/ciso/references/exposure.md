@@ -14,7 +14,7 @@ A secret printed in a log or committed to a repository; a token, role, or workfl
 
 ## Steps
 
-1. **Scope.** Fix the SHA or run and the categories to inspect: secrets, permissions, network. List what cannot be seen, such as who can read a log, the applied state of infrastructure, or a credential's actual reach. **Done:** the inspected set and the unexamined set are written down.
+1. **Scope.** Fix the SHA or run and the categories to inspect: secrets, permissions, network. List what cannot be seen, such as who can read a log, the applied state of infrastructure, or a credential's actual reach. **Done:** the inspected set and the unexamined set are written down, and the report states which of secrets, permissions, and network were checked and which were not, with the reason.
 2. **Look for depth.** Check [delegation](delegation.md) before inspecting by hand; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
 3. **Secrets.** Locate each exposed credential by name and location only, under the entry's [Safety floor](../SKILL.md#safety-floor); never reprint any part of a value and never test it by using it. Note who can read that location. **Done:** each credential has a name, a location, and its readers or the gap.
 4. **Permissions.** For each token, role, or workflow permission, compare what is granted with what the job needs, and name who can trigger or influence it, including untrusted contributors. **Done:** each grant has its principal, granted scope, needed scope, and the narrowest scope that suffices.
@@ -24,7 +24,7 @@ A secret printed in a log or committed to a repository; a token, role, or workfl
 
 ## Output
 
-The fixed report from `SKILL.md`: scope with the unexamined set, each finding with its six elements, location, severity, classification, and [completion state](evidence.md#completion-states), 待驗證 items, and a dispatch brief per action with its authorization marked.
+The fixed report from `SKILL.md`: scope with the unexamined set and which of the three exposure kinds were checked and which not, each finding with its six elements, location, severity, classification, and [completion state](evidence.md#completion-states), 待驗證 items, and a dispatch brief per action with its authorization marked.
 
 ## Done
 

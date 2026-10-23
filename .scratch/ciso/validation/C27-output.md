@@ -1,44 +1,49 @@
-發布流程有已確認的可變參照風險，第三方程式碼可在發布工作中變動；本次僅評估，未執行任何變更。
+發布流程存在可變第三方引用，無法固定建置時執行的程式碼；本次僅評估供應鏈，不作發布放行判斷。
 
-### 範圍
+**1. 範圍**
 
-審查 `ledger-api` 於 SHA `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa` 的 `.github/workflows/release.yml`，聚焦發布供應鏈。
+對象：`ledger-api`，SHA `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa` 的 `.github/workflows/release.yml`，檢查第三方引用及發布完整性。
 
-未檢查：相依套件清單、鎖檔、其他流程、實際產物、執行紀錄及部署環境；均無此證據。
+未檢查：相依套件、lockfile、第三方 action 原始碼、實際執行紀錄、發布憑證與產物；無此證據。沒有 advisory 資料，漏洞公告狀態未驗證。
 
-### 判斷
+**2. 判斷**
 
-沒有找到底層資安技能、以基準做法完成。專案未指定此類工具；已安裝的 `devops` 描述屬交付與維運，可承接流程修改，並非底層資安審查技能。
+專案未指定底層資安工具；已安裝的 `devops` 描述為交付與維運用途，未聲明資安審查用途。沒有找到底層資安技能、以基準做法完成。
 
-兩個外部 action 均未固定不可變識別碼。`contents: read` 限制 repository token 權限，但不限制 action 修改工作區及影響發布內容。
+外部引用均未固定：
 
-此 workflow 的 provenance、簽章及 SBOM 產生步驟均缺席；其他來源是否提供，無此證據。可支持的 **SLSA Build 等級為 L0**；達到 L1 尚需產物 provenance 證據。缺少這些機制本身不另列漏洞。
+- 第 7 行 `actions/checkout@v4`：可移動標籤。
+- 第 8 行 `some-org/build-action@main`：可移動分支，目前 commit 無此證據。
 
-沒有套件版本或 advisory 資料，因此不判定任何套件存在已知漏洞。
+workflow 未產生 provenance、簽章或 SBOM。可支持的 SLSA Build 等級為 **L0**；達到 L1 尚需產生 provenance。缺少這些產物本身不另列漏洞。
 
-### 發現
+**3. 發現**
 
-**SC-1｜已確認｜High：發布工作執行可變的第三方 action**
+**SC-1｜High｜已確認｜上述 SHA**
 
-證據：上述 SHA，`.github/workflows/release.yml:7–9`。
+證據：`.github/workflows/release.yml:7–9`。
 
-- **主體**：能修改上游 action 參照的維護者或控制該帳號者。
-- **輸入**：`actions/checkout@v4`、`some-org/build-action@main` 所解析的程式碼。
-- **控制**：未以完整 commit SHA 固定版本。
-- **邊界**：第三方來源進入專案發布 runner。
-- **資源**：發布工作區與待發布套件。
-- **結果**：上游移動參照即可改變發布時執行的程式碼，並可影響後續 `npm publish` 的內容。
+六要素：
 
-分類：OWASP 2025 **A03 Software Supply Chain Failures**；**CWE-829**（識別碼未經外部核實）。
+- 主體：能更新上述第三方標籤或分支者。
+- 輸入：引用解析出的 action 程式碼。
+- 控制：未以不可變 commit SHA 固定。
+- 邊界：第三方程式碼進入專案發布工作。
+- 資源：發布工作區、建置與待發布套件。
+- 結果：引用變動可使發布工作執行不同程式碼，影響其後 `npm publish` 的內容。
 
-最小修補：將兩個 action 固定至經審查的完整 commit SHA。現行解析 commit、實際執行及是否遭竄改均無此證據；本項不代表已發生入侵。
+評級依據：須先控制第三方引用，但可影響發布完整性。未證明曾遭利用；實際憑證與發布成功情形無此證據。
 
-### 分派
+分類：OWASP 2025 **A03**；**CWE-829**（識別碼未經線上核實）。
 
-交付對象：`devops`；目前僅提供 brief，未實際分派，狀態維持已確認。
+最窄修補：兩個 action 均固定至經審核的完整 commit SHA。待驗證項：無。
 
-目標：修補 SC-1；證據及六要素如上。不變條件：上游移動參照不得改變發布程式碼。最小變更：固定兩個 action SHA。驗證：靜態確認無可變 action 參照，並以假憑證於隔離環境驗證建置。完成條件：提供修補 diff、固定 SHA 與驗證結果，由 CISO 複審。需要使用者決定：授權流程修改及選定可信版本；不含正式發布授權。
+**4. 分派**
 
-### 後續
+擬交付 `devops`；未實際分派，狀態維持已確認。修改 pipeline **需要使用者授權**。
 
-由流程負責人補充實際產物與 provenance、簽章、SBOM 證據；修補交付後再複審。未查證的部署事實不視為既有控制。
+Brief：目標為關閉 SC-1；證據、六要素及嚴重度如上。不變條件：發布執行的第三方程式碼必須固定且可審核。僅替換兩處引用；檢查所有外部 action 均為完整 SHA，並以假憑證、禁止真實發布的隔離流程驗證。完成條件：交付 diff、修補 SHA 與檢查結果，由 CISO 複審。使用者需決定核准的上游 commit 及修改授權。
+
+**5. 後續**
+
+`devops` 可另提 provenance、簽章與 SBOM 方案；本次未授權實作。修補交付後仍須複審，才可標記已驗證。本次未修改檔案或啟動發布。

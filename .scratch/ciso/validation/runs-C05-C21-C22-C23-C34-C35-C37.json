@@ -1,0 +1,44 @@
+[
+  {
+    "case": "C05",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C21",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C22",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C23",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C34",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C35",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C37",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  }
+]
