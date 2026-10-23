@@ -1,0 +1,9 @@
+{
+  "name": "dba-skill",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "eval": "bun eval/run.js"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "source": "#252/#256 required branches, reviewed against specs/b2-candidate.md; IDs identify cases, not expected results",
+  "categories": {
+    "1": [
+      "b2-all-selected-met",
+      "b2-scope-preserved",
+      "b2-live-identity-postgresql",
+      "b2-live-identity-mysql",
+      "b2-live-identity-mariadb"
+    ],
+    "2": [
+      "b2-lag-exceeded",
+      "b2-replication-stopped",
+      "b2-replication-error",
+      "b2-dual-channel-mysql",
+      "b2-dual-channel-mariadb"
+    ],
+    "3": [
+      "b2-zero-lag-stopped",
+      "b2-zero-lag-conflict",
+      "b2-zero-lag-missing-progress"
+    ],
+    "4": [
+      "b2-idle-frontier",
+      "b2-lag-null",
+      "b2-lag-sentinel",
+      "b2-cache",
+      "b2-snapshot",
+      "b2-unaligned-time"
+    ],
+    "5": [
+      "b2-missing-policy",
+      "b2-missing-sample",
+      "b2-missing-stale",
+      "b2-missing-load-budget",
+      "b2-missing-timeout-budget",
+      "b2-truncated-with-known-failure"
+    ],
+    "6": [
+      "b2-retention-exceeded",
+      "b2-retention-missing-capacity",
+      "b2-retention-missing-positions",
+      "b2-retention-missing-setting",
+      "b2-failure-with-aux-blocked"
+    ],
+    "7": [
+      "b2-standby-invisible"
+    ],
+    "8": [
+      "b2-role-conflict",
+      "b2-missing-node",
+      "b2-missing-channel",
+      "b2-identity-unknown",
+      "b2-conflict-with-required-blocked",
+      "b2-visibility-blacklist",
+      "b2-visibility-limit",
+      "b2-visibility-permissions"
+    ],
+    "9": [
+      "b2-old-endpoint",
+      "b2-data-failed-independent-rpo",
+      "b2-protection-not-restored",
+      "b2-application-evidence-missing"
+    ],
+    "10": [
+      "b2-rpo-bound-insufficient",
+      "b2-rto-bound-insufficient",
+      "b2-rto-clock-incompatible",
+      "b2-rpo-reference-incompatible",
+      "b2-rpo-exceeded",
+      "b2-rto-exceeded-including-wait"
+    ],
+    "11": [
+      "b2-unsafe-operation",
+      "b2-unsafe-write-control",
+      "b2-unsafe-isolation",
+      "b2-self-managed-platform"
+    ],
+    "12": [
+      "b2-approval-denied",
+      "b2-approval-expired",
+      "b2-approval-revoked",
+      "b2-approval-unqualified",
+      "b2-approval-scope-retry",
+      "b2-approval-plan-changed",
+      "b2-revoked-in-flight",
+      "b2-handoff-instance",
+      "b2-handoff-cluster",
+      "b2-handoff-promotion"
+    ],
+    "13": [
+      "b2-capability-unavailable",
+      "b2-capability-unknown",
+      "b2-unsupported-contract",
+      "b2-tls-profile-absent"
+    ],
+    "14": [
+      "b2-call-denied",
+      "b2-aws-cli-missing",
+      "b2-iam-denied",
+      "b2-native-denied",
+      "b2-query-failed"
+    ],
+    "15": [
+      "b2-history-changed-topology",
+      "b2-history-changed-version",
+      "b2-history-changed-application-baseline",
+      "b2-platform-automatic-event",
+      "b2-historical-human-missing-approval"
+    ],
+    "16": [
+      "b2-cleanup-failed",
+      "b2-rebuild-failed",
+      "b2-save-failed-no-replacement",
+      "b2-save-failed-with-replacement"
+    ]
+  }
+}
