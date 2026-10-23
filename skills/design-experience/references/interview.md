@@ -27,7 +27,7 @@ The order is a dependency order: a later item waits for the answers it builds on
 2. Hard constraints: existing brand assets (and which may change), platform, language, light/dark needs.
 3. Mood trade-offs: 3–5 opposing word pairs, each end paired with an example site (label sites not checked this session as recalled), recommended position stated. Include tone axes when copy matters: formal↔casual, serious↔playful, respectful↔irreverent, matter-of-fact↔enthusiastic. Derive 2–3 mood adjectives (plus one to avoid) and ask the user to confirm them. When a mood word could read either way, such as "sophisticated", state your reading and let one visual treatment test the stronger reading.
 4. Type-specific questions: pick the 2–4 from the type's set below that would change this design.
-5. Optional references and anti-references: for each site named, ask which attribute (type, spacing, color, imagery) is liked or disliked, and record the attribute rather than the site.
+5. Optional references and anti-references: for each site named, ask which attribute (type, spacing, color, imagery) is liked or disliked, and record the attribute rather than the site. A site the user brings as a reference site is marked attribute by attribute instead, as [reference-sources.md](reference-sources.md) describes.
 
 Combine rounds when answers are already known. Record answers taken from project materials as sourced and the rest as design assumptions. Record conflicting answers from different stakeholders as a stated conflict to resolve, rather than averaging them.
 

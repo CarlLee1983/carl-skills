@@ -41,7 +41,7 @@ When one problem fits two layers, assign the one whose change fixes it with less
 
 Problems are symptoms; a set of per-problem patches reproduces 現況 with fixes bolted on. Before proposing structure or flow changes, restate the main task as a job: who does it, how often, and what finishing it looks like (「客服每天清空待出貨佇列」). Ask what this screen would be if designed for that job today, within the must-stay items and scope; incremental scope fixes navigation and routes, not the layout inside affected screens. A must-stay item binds the view it belongs to: a new default view may take another form when the original view stays reachable with that item intact (a table kept whole under 「所有訂單」).
 
-Span a **range of ambition**: one direction is the smallest fix of the high-severity problems, and at least one reshapes the representative flow around the job, still covering every problem it touches. State each direction's relearning cost so the user weighs ambition against disruption rather than receiving only the safe option.
+Span a **range of ambition**: one direction is the smallest fix of the high-severity problems, and at least one reshapes the representative flow around the job, still covering every problem it touches. State each direction's relearning cost so the user weighs ambition against disruption rather than receiving only the safe option. A user's target mockup, after its feasibility review, is one of these directions.
 
 ## Comparing with 現況
 
