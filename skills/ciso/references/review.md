@@ -28,7 +28,7 @@ The fixed report from `SKILL.md`, with the SHA, reviewed and unexamined sets, co
 
 ## Done
 
-A review is done when every entry point in scope has a disposition and every candidate is confirmed, 待驗證, or excluded. A report with no findings states what was examined and what was not; it never claims the code is secure.
+A review is done when every entry point in scope has a disposition and every candidate is confirmed, 待驗證, or excluded. A report with no findings states what was examined and what was not; it never claims the code is secure. Each confirmed finding carries its [completion state](evidence.md#completion-states); a re-review of a delivered fix is this capability's run on the fixed SHA.
 
 ## Blocked
 
@@ -36,4 +36,4 @@ Source for a deciding helper or a deployment fact is missing: mark the affected 
 
 ## Handoff
 
-Code fixes go to the project's implementation entry point with the brief, after checking the tracker for an existing ticket or PR. Leaked or exposed credentials, over-broad permissions, and containment are outside this capability's authority: report them by name and location, say the action needs the user's authorization, and recommend the owner the project designates. The reviewer does not verify its own handed-off fix; re-review after delivery is a separate step.
+Code fixes go to the project's implementation entry point with the brief, after checking the tracker for an existing ticket or PR. Leaked or exposed credentials, over-broad permissions, and containment are outside this capability's authority: report them by name and location, say the action needs the user's authorization, and recommend the owner the project designates.

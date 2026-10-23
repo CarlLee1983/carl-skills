@@ -10,6 +10,7 @@
 State: open
 
 - [ ] gate reference：判斷依完成狀態（未驗證的 Critical／High 如何影響判斷）並附依據；不觸發發布
+- [ ] gate 明定已驗證如何延伸到發布 SHA（例如修補 commit 為發布 SHA 的祖先且相關檔案未再變更），以及已接受風險的重新檢視條件如何判定是否已觸發（ticket 03 review 提出；evidence.md 規定結果綁定審查的 SHA）
 - [ ] incident reference：判斷、指揮、分派圍堵給 `devops`；範圍擴大只就差額要授權
 - [ ] SKILL.md 職責表補齊六項與多職責排序規則
 - [ ] acceptance：gate 三種判斷至少涵蓋阻擋與放行；incident 分派圍堵；多職責時 incident 先處理；治理合規與滲透測試→不在範圍

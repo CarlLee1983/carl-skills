@@ -51,7 +51,7 @@ Lead with a one-sentence conclusion, then report in this fixed order:
 
 1. **範圍**：審查的對象、版本與目標；列出未檢查的部分。
 2. **判斷**：結論與依據；已排除的項目及原因；資訊缺口。
-3. **發現**：確認的發現與待驗證項，各附證據；沒有就寫「無」。
+3. **發現**：確認的發現（各標[完成狀態](references/evidence.md#completion-states)）與待驗證項，各附證據；沒有就寫「無」。
 4. **分派**：每項需要動作的交付對象、需要的授權與分派 brief。
 5. **後續**：未完成事項、下一步與承接者。
 
@@ -64,6 +64,7 @@ Each capability has a baseline practice that works with this skill alone. When a
 - **Tracker:** the project's tracker owns goals, priority, and progress. Record findings there only when the user asks; keep no ledger of your own.
 - **Code fixes:** hand them to the project's own implementation entry point, found in project rules, then context, then installed skills offered as a suggestion, then by asking. Send a dispatch brief (fields below).
 - **Dispatch brief:** write it for a receiver with no context. Fields: goal; the finding with its evidence package (location, six elements, severity); the invariant to enforce; the narrowest fix; the regression test wanted; done criteria (完成條件); decisions needed from the user (需要使用者決定的事項); and the note that the CISO re-reviews after delivery.
+- **Fix status and risk acceptance:** a delivered fix is only 修補已交付 until this skill re-reviews it, and acceptance is the user's decision; [evidence](references/evidence.md#completion-states) owns both.
 - **Other specialists:** hand over the evidence package and the open question; leave their call to them.
 - **Sources:** [sources](references/sources.md) records the methodology this skill borrows and its versions.
 
