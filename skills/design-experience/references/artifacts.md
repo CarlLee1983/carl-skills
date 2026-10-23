@@ -27,12 +27,12 @@ Use concise Markdown and meaningful fields rather than empty templates. Early ex
 - **Interview (theme-first):** inferred product type and its evidence, settled answers, design assumptions, and scope questions left to the planning entry point.
 - **Diagnosis (improve):** 現況 location, version, and screenshots; the problem list with IDs, layers, sources, and severity; items that must stay; improvement scope.
 - **參考來源 (with an image or URL):** per source its ID (R1, R2, …), kind (目標稿 or 參考網站), saved location under `references/`, and whether it was reviewed as a rendered screen; for a target mockup, the findings with region, kind, decision, and reason; for a reference site, each attribute with its screenshot region, the user's mark, and the measured values taken as token starting points.
-- **Current stage:** understanding/diagnosis/comparison/prototype/refinement/finalization/handoff. Record latest progress and the next unresolved question; continue existing records rather than restarting.
+- **Current stage:** understanding/diagnosis/comparison/prototype/refinement/finalization/handoff. Rewrite this field each round so it holds one current stage, the latest progress, and the next unresolved question; history lives in the decisions and refinement log. Continue existing records rather than restarting. When a choice is recorded or a later answer overturns an earlier one, update every field it touches in the same round (directions, components, stage), and mark the overturned answer superseded where it stands, with the round and what replaced it.
 - **Directions and decisions:** stable IDs, trade-offs, user choices, and reasons. If no reason was given, write「未陳述」rather than inventing one. Separate later agent recommendations from accepted decisions. Record structure (letters) and visual treatment (numbers) choices separately, and for a combined treatment the parts taken from each.
 - **Design and entry points:** paths or URLs for current comparisons, refined designs, and accepted versions; opening instructions and required environment; sample data versus real integration points.
 - **Verification:** version, method, results, relevant screen dimensions/scenarios, unperformed checks, and blocking reasons. Record user acceptance separately; it does not replace interaction evidence. Record what the user likes apart from where they got stuck on the main action.
 - **Refinement log:** one line per detail refinement: version, element, change, and before/after screenshot paths.
-- **Open items and handoff:** consequential questions, work that can proceed independently, and whether production implementation is authorized.
+- **Open items and handoff:** consequential questions, work that can proceed independently (including a track set aside when the focus moved, kept until the user drops it), and whether production implementation is authorized. Before finalization, reread SESSION and bring every field in line with the accepted version.
 
 ## Finalized-design handoff
 
@@ -42,7 +42,7 @@ Add enough information to the same SESSION for another agent to begin. Link exis
 | --- | --- |
 | Tasks and screens | Main entry points, navigation, screen responsibilities, step-by-step operations, and completion feedback |
 | States and recovery | Required empty/loading/failure/permission states; retry, return, and cancel behavior |
-| Visuals and components | Accepted visual treatment and its token source, reusable components, copy and interaction rules, responsive intent |
+| Visuals and components | Accepted visual treatment and its token source, reusable components, copy and interaction rules, responsive intent, and how existing screens outside scope relate to it (left as is, or brought in line) |
 | Data and boundaries | Existing contract-backed content versus sample data; required new read/write or permission capabilities |
 | Acceptance scenarios | User actions and observable results; keyboard and relevant screen-size checks |
 | Changes from 現況 (improve) | Problem IDs resolved and left open, what changed versus what stayed, and the relearning impact on existing users |

@@ -49,4 +49,10 @@ Draw interface icons (buttons, links, navigation, list markers, states) as inlin
 
 Check every presented screen as rendered screenshots at the relevant sizes against each section above; in improve, review 現況 the same way. Record each section as passed, corrected, failing with its reason (a value the visual source sets, or out of this round's scope), or unchecked with its reason (not visible in the material at hand). Code-only checks, such as contrast computed from token values, cover only what they measure; without screenshots, label the check partial.
 
+Every new version, combined treatment, or rework is a new presented screen with its own section-by-section record. A result carries over only to a screen whose rendering has not changed since it was checked, shared stylesheets and scripts included.
+
+Judge the first screen at the browser's visible height, not the device frame: about 390×664 and 360×640 on phones, and the window height minus browser chrome on desktop (about 950px on a 1080-tall monitor). A claim that something sits above or below the fold, or that a fix took effect, names the screenshot that shows it.
+
+When the readers include older adults or people with low vision, also check at 200% text zoom and say how the platform's system text size reaches the page; a check made by simulating it (a larger root size) is labeled a simulation.
+
 **Complete when:** every section is checked on every presented screen, and each failure is corrected or recorded with its reason.
