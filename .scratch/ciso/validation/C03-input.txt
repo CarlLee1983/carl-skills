@@ -8,6 +8,30 @@ DEFAULT OFFLINE EVIDENCE:
 | `refs.json` | HEAD = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`；審查對象為此 SHA 的工作區，乾淨。 |
 | `authorization.txt` | 只要求審查與評估；沒有修改程式碼、commit、寫檔、輪替密鑰或連線任何環境的授權。 |
 
+共用的具名證據；案例以名稱引用，只寫覆寫的部分。
+
+`F-invoices`：
+
+```text
+src/routes/invoices.ts
+1: import { requireLogin } from '../auth';
+2: router.get('/invoices/:id', requireLogin, async (req, res) => {
+3:   const rows = await db.query(
+4:     `SELECT * FROM invoices WHERE id = '${req.params.id}'`
+5:   );
+6:   res.json(rows[0] ?? null);
+7: });
+```
+
+`F-audit-skill`：已安裝 skill 的 description。
+
+```text
+codebase-security-audit — Source-first security review of a codebase. Guidance mode (default): focused,
+read-only review of named files or questions; returns a report to the caller. Full audit mode: only for an
+explicit request to audit a whole codebase, a full or comprehensive review, or report files; runs parallel
+agents and writes report files under artifacts/.
+```
+
 
 
 CASE INPUT (the user request and fixtures):
@@ -25,4 +49,3 @@ src/lib/etag.ts
 ```
 
 背景：此服務只回 JSON；`etag` 只用於公開靜態資產的快取驗證；`apiRouter` 內的每個路由都套 `requireLogin`，並以 `tenant_id` 過濾資料（已於他處確認）。checklist 要求：設定安全標頭（helmet）、全站速率限制、不使用 MD5。
-

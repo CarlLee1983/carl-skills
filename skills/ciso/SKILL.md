@@ -55,6 +55,10 @@ Lead with a one-sentence conclusion, then report in this fixed order:
 4. **分派**：每項需要動作的交付對象、需要的授權與分派 brief。
 5. **後續**：未完成事項、下一步與承接者。
 
+## Delegate depth
+
+Each capability has a baseline practice that works with this skill alone. When a project-designated or installed security skill fits the work better, hand the depth to it and keep the judgment here. [Delegation](references/delegation.md) owns how to discover one, which uses need the user's consent first, and how its report is received; read it before dispatching and when deciding whether to look for one.
+
 ## Work with existing flows
 
 - **Tracker:** the project's tracker owns goals, priority, and progress. Record findings there only when the user asks; keep no ledger of your own.

@@ -32,8 +32,20 @@ for md in root.rglob('*.md'):
         if root.resolve() not in dest.resolve().parents and dest.resolve() != root.resolve():
             bad.append(f'{md.relative_to(root)} -> {target} (outside skill)')
 abs_paths = [str(p.relative_to(root)) for p in root.rglob('*.md') if re.search(r'/Users/|~/\.|carl-skills/', p.read_text())]
-named = [n for n in ['security-audit', 'security-reviewer'] if n in (root / 'SKILL.md').read_text()]  # ADR 0006 Falsified if: the entry must not name underlying skills
-need = ['SKILL.md', 'LICENSE'] + [f'references/{n}.md' for n in 'evidence review sources acceptance'.split()]
+# ADR 0006 Falsified if: the entry and the references (except sources.md and acceptance.md) must not name underlying skills.
+# The names come from the known-skills list in sources.md, so a new entry is covered automatically; an empty list only warns (no must-maintain registry).
+src = (root / 'references/sources.md').read_text() if (root / 'references/sources.md').exists() else ''
+section = re.search(r'^## Known underlying security skills\n([\s\S]*?)(?=^## |\Z)', src, re.M)
+rec_names = re.findall(r'^\| `([^`]+)`', section.group(1), re.M) if section else []
+named = []
+for md in root.rglob('*.md'):
+    rel = md.relative_to(root).as_posix()
+    if rel in ('references/sources.md', 'references/acceptance.md'):
+        continue
+    named += [f'{rel}: {n}' for n in rec_names if re.search(r'(?<![\w-])' + re.escape(n) + r'(?![\w-])', md.read_text())]
+if not rec_names:
+    print('warning: sources.md lists no known underlying security skills; the no-names check had nothing to compare')
+need = ['SKILL.md', 'LICENSE'] + [f'references/{n}.md' for n in 'evidence review delegation sources acceptance'.split()]
 missing = [n for n in need if not (root / n).exists()]
 sections = {}
 for cap in ['review']:
@@ -43,6 +55,6 @@ for cap in ['review']:
     heads = re.findall(r'^## (.+)$', f.read_text(), re.M)
     lack = [h for h in ['Triggers', 'Inputs', 'Steps', 'Output', 'Done', 'Blocked', 'Handoff'] if h not in heads]
     if lack: sections[cap] = lack
-print({'links_checked': count, 'broken_links': bad, 'personal_or_repo_paths': abs_paths, 'missing_files': missing, 'missing_sections': sections, 'underlying_skills_named_in_entry': named})
+print({'links_checked': count, 'broken_links': bad, 'personal_or_repo_paths': abs_paths, 'missing_files': missing, 'missing_sections': sections, 'underlying_skills_named_outside_sources': named})
 sys.exit(1 if bad or missing or sections or abs_paths or named else 0)
 PY

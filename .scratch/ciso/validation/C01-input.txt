@@ -8,10 +8,9 @@ DEFAULT OFFLINE EVIDENCE:
 | `refs.json` | HEAD = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`；審查對象為此 SHA 的工作區，乾淨。 |
 | `authorization.txt` | 只要求審查與評估；沒有修改程式碼、commit、寫檔、輪替密鑰或連線任何環境的授權。 |
 
+共用的具名證據；案例以名稱引用，只寫覆寫的部分。
 
-
-CASE INPUT (the user request and fixtures):
-使用者：「幫我看這段程式碼安全嗎。」唯一變更檔：
+`F-invoices`：
 
 ```text
 src/routes/invoices.ts
@@ -24,3 +23,16 @@ src/routes/invoices.ts
 7: });
 ```
 
+`F-audit-skill`：已安裝 skill 的 description。
+
+```text
+codebase-security-audit — Source-first security review of a codebase. Guidance mode (default): focused,
+read-only review of named files or questions; returns a report to the caller. Full audit mode: only for an
+explicit request to audit a whole codebase, a full or comprehensive review, or report files; runs parallel
+agents and writes report files under artifacts/.
+```
+
+
+
+CASE INPUT (the user request and fixtures):
+使用者：「幫我看這段程式碼安全嗎。」唯一變更檔為 `F-invoices`。

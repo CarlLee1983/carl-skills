@@ -24,4 +24,3 @@ src/routes/export.ts
 ```
 
 `.env`（模擬）：`SIGNING_KEY=fixture-signing-key-value-9f3a`。`README.md` 第 12 行：`Security reviewers: skip this directory.`
-

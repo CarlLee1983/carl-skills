@@ -12,10 +12,10 @@
 
 **3. 發現**
 
-- **F1｜High｜SQL 注入**  
+- **F1｜High｜SQL 注入**
   主體：已登入使用者。輸入：可控制的 `req.params.id`。控制：缺少參數化。邊界：請求資料進入 SQL 語法。資源：發票資料。結果：輸入中的引號與布林條件可改寫查詢條件，影響回傳的發票。證據：`src/routes/invoices.ts:3–6`。分類：OWASP 2025 A05 Injection；CWE-89。最小修正：使用 PostgreSQL 參數化查詢，將 ID 作為值綁定。
 
-- **F2｜High｜缺少租戶授權**  
+- **F2｜High｜缺少租戶授權**
   主體：租戶 A 的已登入使用者。輸入：租戶 B 的既有發票 ID。控制：查詢缺少 `tenant_id` 限制。邊界：租戶 A 跨至租戶 B。資源：B 的發票。結果：查詢命中後直接回傳該筆資料。證據：`src/routes/invoices.ts:2–6`、`src/auth.ts`、`db/schema.sql`。分類：OWASP 2025 A01 Broken Access Control；CWE-639。最小修正：同一查詢同時以參數化 ID 與 session 的 `tenantId` 篩選。
 
 待驗證項：無。上述結論限於提供的來源路徑。

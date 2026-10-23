@@ -25,4 +25,3 @@ src/lib/etag.ts
 ```
 
 背景：此服務只回 JSON；`etag` 只用於公開靜態資產的快取驗證；`apiRouter` 內的每個路由都套 `requireLogin`，並以 `tenant_id` 過濾資料（已於他處確認）。checklist 要求：設定安全標頭（helmet）、全站速率限制、不使用 MD5。
-

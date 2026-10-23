@@ -23,4 +23,3 @@ src/routes/invoices.ts
 6:   res.json(rows[0] ?? null);
 7: });
 ```
-

@@ -13,6 +13,14 @@ OWASP Top 10:2025 categories: A01 Broken Access Control; A02 Security Misconfigu
 
 The CWE Top 25 page could not be fetched on 2026-10-23 (cwe.mitre.org unreachable), so the edition URL is recorded without its publication date or ranking. Give each confirmed finding its best-known CWE identifier; confirm it on cwe.mitre.org when reachable, and when it is not, keep the identifier and mark it unconfirmed rather than omitting it.
 
+## Known underlying security skills
+
+Facts about tools that exist, for installers; a hint only, never a routing basis. Discovery and dispatch rules live in [delegation](delegation.md). Facts below were read from the local install record on 2026-10-23.
+
+| Name | What it is | Provenance |
+| --- | --- | --- |
+| `security-audit` | A skill: source-first security audit. Its guidance mode reviews named files read-only; its full audit mode spawns agents and writes report files | GitHub repository `cloudflare/security-audit-skill`, per the install record; commit not recorded (folder hash only) and no license file in the installed copy, so the license is unverified |
+
 ## Borrowed practices
 
 Ideas were adapted in paraphrase; no text was copied.

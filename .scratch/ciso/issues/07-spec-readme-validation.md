@@ -12,4 +12,5 @@ State: open
 - [ ] `docs/ciso/` 中文 SPEC，結構比照 devops SPEC（目的與範圍、職責表、工作模式與授權、驗收），頭註「狀態：定稿（日期）。決策依據：ADR 0006」
 - [ ] README 列出 `ciso` 與安裝方式；依 ADR 0003 標版本
 - [ ] 完整重放全部 acceptance 情境與靜態檢查（有 skill-creator 工具時加跑 quick_validate），結果寫成 validation 報告
+- [ ] 決定 C05「並一併處理 `tenant_id` 限制」：該子句在 ticket 02 重放中時有時無（見 02-grading.md）；放寬預期或在 review 分派步驟補規則，擇一並記錄理由
 - [ ] `git diff --check` 與新檔空白檢查通過

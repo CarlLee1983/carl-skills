@@ -28,5 +28,35 @@
     "exit_code": 0,
     "non_message_event_types": [],
     "output_exists": true
+  },
+  {
+    "case": "C06",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C07",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C08",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C09",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C10",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
   }
 ]
