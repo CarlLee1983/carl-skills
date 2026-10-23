@@ -1,0 +1,134 @@
+{
+  "source": "#253/#257 required branches, reviewed against specs/b3-candidate.md; IDs identify cases, not expected results",
+  "categories": {
+    "1": [
+      "b3-all-selected-met",
+      "b3-scope-preserved",
+      "b3-live-privileges-postgresql",
+      "b3-live-privileges-mysql",
+      "b3-live-privileges-mariadb"
+    ],
+    "2": [
+      "b3-missing-privilege-baseline",
+      "b3-missing-tls-baseline",
+      "b3-exception-expired",
+      "b3-baseline-inapplicable"
+    ],
+    "3": [
+      "b3-grant-inheritance-excess",
+      "b3-grant-public-excess",
+      "b3-grant-owner-excess",
+      "b3-grant-admin-regrant-excess",
+      "b3-grant-default-acl-future",
+      "b3-rds-managed-role-semantics"
+    ],
+    "4": [
+      "b3-visibility-self-only",
+      "b3-visibility-null-empty",
+      "b3-visibility-native-denied",
+      "b3-visibility-blacklist",
+      "b3-visibility-limit",
+      "b3-visibility-query-failed",
+      "b3-identity-unknown"
+    ],
+    "5": [
+      "b3-over-privileged-with-aux-blocked"
+    ],
+    "6": [
+      "b3-encrypted-missing-enforcement-and-client",
+      "b3-encrypted-enforcement-violated",
+      "b3-encrypted-client-hostname-failed"
+    ],
+    "7": [
+      "b3-rds-parameter-pending-reboot",
+      "b3-rds-parameter-engine-conflict",
+      "b3-rds-cert-valid-client-untrusted"
+    ],
+    "8": [
+      "b3-blocker-long-transaction",
+      "b3-high-load-threshold-exceeded",
+      "b3-insufficient-space",
+      "b3-replication-lag-threshold-exceeded",
+      "b3-observation-load-budget-truncated",
+      "b3-observation-timeout-budget-truncated",
+      "b3-truncated-with-known-violation"
+    ],
+    "9": [
+      "b3-version-operation-inapplicable",
+      "b3-algorithm-lock-unsatisfied",
+      "b3-external-osc-required"
+    ],
+    "10": [
+      "b3-ddl-partial-commit-mysql",
+      "b3-ddl-partial-commit-mariadb",
+      "b3-ddl-temp-table-non-rollbackable",
+      "b3-ddl-disconnect-outcome-unknown"
+    ],
+    "11": [
+      "b3-pg-concurrent-index-invalid"
+    ],
+    "12": [
+      "b3-no-rollback-backup-only",
+      "b3-irreversible-risk-unaccepted",
+      "b3-mandatory-recovery-cannot-waive",
+      "b3-irreversible-risk-accepted",
+      "b3-recovery-backed-by-b1"
+    ],
+    "13": [
+      "b3-grant-revoke-app-access-failed",
+      "b3-grant-revoke-admin-lockout-risk",
+      "b3-grant-existing-vs-new-session"
+    ],
+    "14": [
+      "b3-tls-rotated-client-untrusted",
+      "b3-tls-rotated-reconnect-failed",
+      "b3-tls-rotated-noncompliant-accepted",
+      "b3-tls-rotated-missing-app-evidence"
+    ],
+    "15": [
+      "b3-approval-denied",
+      "b3-approval-expired",
+      "b3-approval-revoked",
+      "b3-approval-unqualified",
+      "b3-approval-plan-changed",
+      "b3-approval-scope-retry",
+      "b3-revoked-in-flight",
+      "b3-handoff-ddl",
+      "b3-handoff-privileges",
+      "b3-handoff-tls",
+      "b3-self-managed-platform-change"
+    ],
+    "16": [
+      "b3-post-ddl-schema-mismatch",
+      "b3-post-ddl-data-invariant-failed",
+      "b3-post-ddl-app-failed",
+      "b3-post-ddl-replication-exceeded",
+      "b3-post-ddl-validation-missing"
+    ],
+    "17": [
+      "b3-capability-unavailable",
+      "b3-capability-unknown",
+      "b3-unsupported-contract",
+      "b3-tls-profile-absent",
+      "b3-call-denied",
+      "b3-aws-cli-missing",
+      "b3-iam-denied"
+    ],
+    "18": [
+      "b3-history-changed-policy",
+      "b3-history-changed-schema-or-grants",
+      "b3-history-changed-client-or-cert",
+      "b3-preflight-evidence-stale",
+      "b3-historical-change-missing-approval",
+      "b3-history-evidence-unavailable",
+      "b3-save-failed-no-replacement",
+      "b3-save-failed-with-replacement"
+    ],
+    "19": [
+      "b3-cleanup-failed",
+      "b3-recovery-failed",
+      "b3-cleanup-handoff-four-checks",
+      "b3-probe-requires-human-write-or-identity"
+    ]
+  }
+}

@@ -6,6 +6,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 
 | Skill | 適用工具 | 用途 |
 | --- | --- | --- |
+| [dba](skills/dba/SKILL.md) | Codex、Claude Code 等；仍為候選 | PostgreSQL、MySQL、MariaDB 的備份／PITR／還原、Replication／HA、原生權限／TLS 與生產變更治理；唯讀蒐證與人工 runbook。[規格、驗證與限制](docs/dba/README.md)。尚未發布，完整驗收仍待完成。 |
 | [devops](skills/devops/SKILL.md) | Codex、Claude Code 等 | 軟體交付與維運的統一入口：環境、CI、發布評估與套件發布、部署與回復、監控告警、事故、備份還原、容量與成本；先取得證據，在明確授權內執行並核驗。取代原 release-assessment。[規格](docs/devops/SPEC.md) |
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；程式碼、網址、路徑、引言與各類聲明逐字保留；敘事段落（事故經過、個人經驗、小說）另有保留情節與節奏的規則；介面文案另有規則；附繁中審閱腳本；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |

@@ -14,6 +14,8 @@
 
 No collection-wide build system, package manager, linter, or runtime is configured.
 
+DBA development tooling lives in `docs/dba/`. Run `make -C docs/dba check` with `DBCLI_COMMAND` pointing at a built dbcli. Its full behavior gate also requires a complete `EVAL_DIR`; see `docs/dba/README.md`. Keep historical evidence under `.scratch/dba/validation/` and distinguish migration checks from pending DBA acceptance.
+
 - `git status --short --branch` — inspect the branch and pending changes before editing.
 - `git diff --check` — check tracked changes for whitespace errors.
 - `git diff --no-index --check /dev/null <new-file>` — check a new Markdown file.
