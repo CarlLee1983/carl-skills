@@ -33,7 +33,7 @@ Keep each skill independently portable: required files and relative links must w
 
 ## Testing Guidelines
 
-Verify affected behavior against the skill's specification and acceptance cases. For devops, replay `skills/devops/references/release-acceptance.md` first, then `skills/devops/references/acceptance.md`; simulate releases, deployments, and restores rather than publishing real artifacts or changing real environments. `.scratch/devops/validation/replay.py` runs the offline replay and `static_check.sh` the packaging check. Metadata and link checks do not establish behavioral correctness. Reuse prior behavioral results for unchanged skill content after mechanical moves.
+Verify affected behavior against the skill's specification and acceptance cases. For devops, replay `skills/devops/references/release-acceptance.md` first, then `skills/devops/references/acceptance.md`; simulate releases, deployments, and restores rather than publishing real artifacts or changing real environments. `.scratch/devops/validation/replay.py` runs the offline replay and `static_check.sh` the packaging check. For ciso, `.scratch/ciso/validation/replay.py` runs the offline replay of `skills/ciso/references/acceptance.md` and `static_check.sh` the packaging check. Metadata and link checks do not establish behavioral correctness. Reuse prior behavioral results for unchanged skill content after mechanical moves.
 
 ## Commit & Pull Request Guidelines
 

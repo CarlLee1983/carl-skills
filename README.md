@@ -7,6 +7,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | Skill | 適用工具 | 用途 |
 | --- | --- | --- |
 | [dba](skills/dba/SKILL.md) | Codex、Claude Code 等；仍為候選 | PostgreSQL、MySQL、MariaDB 的備份／PITR／還原、Replication／HA、原生權限／TLS 與生產變更治理；唯讀蒐證與人工 runbook。[規格、驗證與限制](docs/dba/README.md)。尚未發布，完整驗收仍待完成。 |
+| [ciso](skills/ciso/SKILL.md) | Codex、Claude Code 等 | 資安長：程式碼審查、威脅建模、供應鏈、密鑰與權限暴露、發布前資安判斷與安全事件指揮；只評估與分派，不修改程式碼、密鑰或權限，每項確認的發現附證據與嚴重度，修補由專案入口與 DevOps 角色執行；找到專精的底層資安技能時分派給它。[規格](docs/ciso/SPEC.md) |
 | [devops](skills/devops/SKILL.md) | Codex、Claude Code 等 | 軟體交付與維運的統一入口：環境、CI、發布評估與套件發布、部署與回復、監控告警、事故、備份還原、容量與成本；先取得證據，在明確授權內執行並核驗。取代原 release-assessment。[規格](docs/devops/SPEC.md) |
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；程式碼、網址、路徑、引言與各類聲明逐字保留；敘事段落（事故經過、個人經驗、小說）另有保留情節與節奏的規則；介面文案另有規則；附繁中審閱腳本；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
@@ -43,6 +44,9 @@ npx skills add CarlLee1983/carl-skills --skill humanize-writing -g -a codex clau
 
 # Codex 行為調校
 npx skills add CarlLee1983/carl-skills --skill calibrate-codex -g -a codex
+
+# 資安長：安全審查、威脅建模、供應鏈、暴露、發布前判斷與事件指揮
+npx skills add CarlLee1983/carl-skills --skill ciso -g -a codex claude-code
 
 # UI／UX 探索與原型比較
 npx skills add CarlLee1983/carl-skills --skill design-experience -g -a codex claude-code
@@ -119,6 +123,19 @@ npx skills add CarlLee1983/carl-skills --skill devops -g -a codex claude-code
 ```
 
 手動安裝的副本則刪除自己安裝的 `release-assessment/` 目錄。
+
+### 使用 ciso
+
+在要處理的專案中，Codex 用 `$ciso`，Claude Code 用 `/ciso`，以自然語言描述需求，不需要子指令：
+
+```text
+$ciso 幫我看 src/routes/invoices.ts 的安全，列出確認的發現與嚴重度。
+/ciso 我們要做付款商的 webhook 接收器，先做威脅建模。
+$ciso run #420 的 log 印出 DEPLOY_TOKEN，評估外洩並建議處置。
+/ciso v2.4.0 資安可以放行嗎？
+```
+
+ciso 只評估與分派，不修改程式碼、密鑰或權限；修補與輪替交給專案入口與 DevOps 角色，並標明需要授權。
 
 ### 潤稿與 Codex 調校
 
@@ -278,6 +295,7 @@ docs/agents/               本 repo 的協作設定
 若已安裝 Codex skill-creator 的驗證工具，可檢查技能 metadata：
 
 ```sh
+python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/ciso
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/devops
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/humanize-writing
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/calibrate-codex
@@ -285,7 +303,7 @@ python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/d
 python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/pm
 ```
 
-這項檢查不代替行為驗收。devops 先以 [發布驗收案例](skills/devops/references/release-acceptance.md) 驗證遷移行為，再以 [devops 驗收案例](skills/devops/references/acceptance.md) 驗證其他能力；[本次驗證紀錄](.scratch/devops/validation/SUMMARY.md) 與 release-assessment 的 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
+這項檢查不代替行為驗收。ciso 以 [驗收案例](skills/ciso/references/acceptance.md) 離線重放，[驗證報告](.scratch/ciso/validation/07-validation.md) 記錄結果。devops 先以 [發布驗收案例](skills/devops/references/release-acceptance.md) 驗證遷移行為，再以 [devops 驗收案例](skills/devops/references/acceptance.md) 驗證其他能力；[本次驗證紀錄](.scratch/devops/validation/SUMMARY.md) 與 release-assessment 的 [既有驗證紀錄](.scratch/release-assessment/validation/SUMMARY.md) 可作為維護依據。
 
 每個 skill 以 `<skill>/vX.Y.Z` tag 各自打版號並建立 GitHub Release，依行為合約決定升哪一位；規則與理由見 [ADR 0003](docs/adr/0003-per-skill-versioning.md)。尚未打過 tag 的 skill 沒有版號。沒有自動發布流程。
 

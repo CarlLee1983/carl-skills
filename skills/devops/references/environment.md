@@ -33,4 +33,4 @@ Missing access or an unavailable platform tool: deliver the inventory from decla
 
 ## Handoff
 
-Exposed secrets, overly broad permissions, or network exposure → the security process, with evidence. Architecture choices (new environments, network topology) → SA. Pipeline changes → [ci](ci.md). Deploying into the environment → [deploy](deploy.md).
+Exposed secrets, overly broad permissions, or network exposure → the CISO role (the `ciso` skill when installed), with evidence. Architecture choices (new environments, network topology) → SA. Pipeline changes → [ci](ci.md). Deploying into the environment → [deploy](deploy.md).

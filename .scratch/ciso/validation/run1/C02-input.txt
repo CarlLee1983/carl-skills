@@ -1,0 +1,29 @@
+DEFAULT OFFLINE EVIDENCE:
+| 證據位置 | 預設內容 |
+| --- | --- |
+| `AGENTS.md` | 服務 `ledger-api`（Node.js／Express／PostgreSQL）；實作入口為專案的 `/implement`；tracker 為 `.scratch/sec/issues/`；未宣告任何底層資安技能。 |
+| 已安裝 skill／agent | 除 `ciso` 外，沒有任何資安相關的 skill 或 agent。 |
+| `src/auth.ts` | `requireLogin` 驗證 session，並設定 `req.user = { id, tenantId }`；沒有角色或授權檢查。 |
+| `db/schema.sql` | 表 `invoices(id, tenant_id, owner_id, amount, note)`；每位使用者只應讀取自己租戶的發票。 |
+| `refs.json` | HEAD = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`；審查對象為此 SHA 的工作區，乾淨。 |
+| `authorization.txt` | 只要求審查與評估；沒有修改程式碼、commit、寫檔、輪替密鑰或連線任何環境的授權。 |
+
+
+
+CASE INPUT (the user request and fixtures):
+使用者：「審查這個 webhook 功能的安全。」檔案：
+
+```text
+src/webhooks.ts
+1: import { assertSafeUrl } from './lib/url';
+2: router.post('/webhooks', requireLogin, async (req, res) => {
+3:   const hook = await saveHook(req.user.tenantId, req.body.callbackUrl);
+4:   res.status(201).json(hook);
+5: });
+6: export async function deliver(hook, payload) {
+7:   await assertSafeUrl(hook.callbackUrl);
+8:   await fetch(hook.callbackUrl, { method: 'POST', body: JSON.stringify(payload) });
+9: }
+```
+
+`src/lib/url.ts`：無此證據。部署的出站網路政策：無此證據。其餘共用證據不變。

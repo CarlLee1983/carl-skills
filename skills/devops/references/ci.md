@@ -34,4 +34,4 @@ No access to logs or settings: report what the visible evidence supports and the
 
 ## Handoff
 
-Code and test fixes → the project's implementation entry point, after checking for an existing ticket or PR. Permission or secret exposure → the security process. Releases that were waiting on the check → [release](release.md).
+Code and test fixes → the project's implementation entry point, after checking for an existing ticket or PR. Permission or secret exposure → the CISO role (the `ciso` skill when installed). Releases that were waiting on the check → [release](release.md).
