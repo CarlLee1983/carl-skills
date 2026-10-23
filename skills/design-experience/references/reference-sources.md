@@ -6,12 +6,20 @@ Read when the user brings an image or a URL. Once records are kept, record each 
 
 Classify each source by what the user wants from it, not by its medium:
 
-- **目標稿** (target mockup): the user wants to build this. Often an AI-generated UI image; a URL saying「做成這樣」counts too.
+- **目標稿** (target mockup): the user wants to build this. Often an AI-generated UI image; a URL saying「做成這樣」counts too, unless it is another company's real product (see「Someone else's product」).
 - **參考網站** (reference site): the user likes some of its attributes. Liking a site's design (「喜歡這個網站的設計」) reads as a reference site, and so does a screenshot saying「喜歡它的配色」. A reference site gets no feasibility review: what matters is which of its qualities to borrow.
 
 State the classification and its evidence alongside the entry mode, as a correctable understanding. When the message does not say (「你看看這張圖」), recommend the reading the material supports and say what would change if the other one holds; the feasibility review holds for both readings, so run it; building from the image waits for the answer.
 
-Look at the whole source before judging it. When an image is too small to read, is cut off, or hides parts behind other elements, ask for the full-size original when it would reveal them, and mark the parts you cannot see as「看不到」in every finding, leaving them out of judgments rather than imagining them.
+Look at the whole source before judging it. When an image is too small to read, is cut off, or hides parts behind other elements, ask for the full-size original when it would reveal them, and mark the parts you cannot see as「看不到」in every finding, leaving them out of judgments rather than imagining them. A URL source of either kind without a browser follows the reference site's fallback below, with page sections standing in for regions.
+
+## Several sources
+
+Give each source a stable ID (R1, R2, …) in the order it arrived, kept across rounds beside directions A/B/C, treatments 1/2/3, and problems P1…; the user can then say「R2 的導覽」. Classify each one on its own: a single request can mix them (「照這張圖做，但配色像這個網站」makes the image a target mockup and the site a reference site lending only its color attributes). The mockup enters the flow as its entry mode says under「Build from the target mockup」; list only the site's attributes in the layers the user named, plus any that clash with the mockup, and let the treatments keep the mockup's other layers while differing in how closely those attributes fill the named ones. When two sources pull the same attribute apart (R1 airy, R2 dense), ask which one wins as a numbered question with your recommendation, rather than averaging them into something neither shows. With several reference sites, list each attribute once, naming the sources that show it, so the user marks a short list; a row may take a mark per source (「要 R1，不要 R2」). A borrowed attribute that conflicts with the project's visual source is shown beside it, as for a target mockup in feature-first.
+
+## Someone else's product
+
+A target mockup must be the user's to build: their own design, or an image generated for them. When the user asks to copy another company's real product (「做成跟 Stripe 首頁一模一樣」), treat it as a reference site and say why: its layout, copy, and brand belong to that company, so only its attributes can be borrowed. A generated image carrying another brand's logo or name has those elements removed before the review.
 
 ## Feasibility review (目標稿)
 
@@ -30,7 +38,7 @@ Give every finding one decision with its reason:
 - **刪除**: drop it; it is decoration or a fabricated claim (invented metrics, testimonials, partnerships) that serves no user task.
 - **待產品決定**: it serves a plausible user task through a capability the product lacks; list it as an unresolved scope question for the planning entry point rather than designing it in.
 
-Content that needs no capability (staff bios, real testimonials the owner supplies) is 改做法 as owner-supplied content. Names and logos in the image are placeholders until the user confirms them.
+Content that needs no capability (staff bios, real testimonials the owner supplies) is 改做法 as owner-supplied content. Names and logos of another real company are removed, as「Someone else's product」says; any other names and logos are placeholders until the user confirms them.
 
 Separately, name what the image gets right and that the prototype keeps: the mood, hierarchy, or composition the user most likely chose it for. Confirm with the user which parts are what they really want and which only came out that way.
 
@@ -54,7 +62,7 @@ Capture the site as rendered screenshots at the sizes the user's interface needs
 
 Judge attributes from the rendered page: where the code declares something the screen does not show (a webfont that never loads), describe what the user actually saw and name the declared value separately. Point out a taste-baseline failure only in an attribute you recommend or the user marks「要」, alongside a compliant way to borrow it.
 
-Borrow qualities, never the site itself. Measured values (type ratio, spacing scale, radii, line weights) are starting points for the project's own tokens, rebuilt rather than copied. Leave out its logo, imagery, copy, and the brand's own color combination: a palette marked「要」lends its structure (surface, primary, and accent roles and their proportions), with hues chosen anew; for a commercial typeface, record its name and suggest licensed or open alternatives. A borrowed pattern that implies data the product does not hold (seats left on a service list) comes without that part.
+Borrow qualities, never the site itself. Measured values (type ratio, spacing scale, radii, line weights) are starting points for the project's own tokens, rebuilt rather than copied. Leave out its logo, imagery, copy, any signature element that identifies the brand on sight (a trademark gradient or mascot), and the brand's own color combination: a palette marked「要」lends its structure (surface, primary, and accent roles and their proportions), with hues chosen anew; for a commercial typeface, record its name and suggest licensed or open alternatives. A borrowed pattern that implies data the product does not hold (seats left on a service list) comes without that part.
 
 Then build 2–3 visual treatments on the project's own representative screen (in theme-first, the shared provisional layout), each adopting the「要」attributes to a different degree (close, adapted, loosely inspired), each with its one-line concept. Present them beside the reference site's screenshots at the same size. Later feedback follows the usual treatment numbers and the main skill's feedback table.
 

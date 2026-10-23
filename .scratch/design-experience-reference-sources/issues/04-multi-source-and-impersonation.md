@@ -8,8 +8,9 @@
 
 **Status:** ready-for-agent
 State: open
+Owner: claude-code (feat/design-experience-reference-sources)
 
-- [ ] 參考來源 reference 補上多來源編號、衝突詢問、混用、冒用邊界
-- [ ] SESSION 與回饋表能以 R 編號引用來源（「R2 的導覽」）
-- [ ] 驗收文件新增情境 5（Stripe）、6（多來源衝突）
-- [ ] 獨立代理跑情境 5、6，結果追加到驗證紀錄
+- [x] 參考來源 reference 補上多來源編號、衝突詢問、混用、冒用邊界
+- [x] SESSION 與回饋表能以 R 編號引用來源（「R2 的導覽」）
+- [x] 驗收文件新增情境 5（Stripe）、6（多來源衝突）
+- [x] 獨立代理跑情境 5、6，結果追加到驗證紀錄
