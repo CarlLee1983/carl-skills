@@ -7,7 +7,7 @@
 **Blocked by:** None (can start immediately)
 
 **Status:** ready-for-agent
-State: open
+State: closed
 Owner: claude-code (feat/design-experience-reference-sources)
 
 - [x] 新增參考來源 reference，只在有參考來源時讀取；涵蓋意圖判斷（依意圖不依媒介）、三類可行性審查（缺少能力或資料、生成瑕疵、品味基線）、四種取捨（照做／改做法／刪除／待產品決定，附理由）、與原圖並排的原型比較
@@ -19,3 +19,7 @@ Owner: claude-code (feat/design-experience-reference-sources)
 - [x] 驗收文件新增情境 1（主題起手加目標稿）、7（意圖不明）、9（被裁切的目標稿）
 - [x] 獨立 general-purpose 代理只讀技能目錄與夾具跑上述情境，結果寫進 `.scratch/design-experience/validation/reference-sources.md`，行為與提案品質兩層判定皆通過
 - [x] `git diff --check` 與新檔空白檢查通過
+
+## Comments
+
+2026-10-23：已整合並驗證。實作 commit `c1c0566`，經 [PR #28](https://github.com/CarlLee1983/carl-skills/pull/28) 合併進 main（合併 commit `68ee271`）。驗證證據見 `.scratch/design-experience/validation/reference-sources.md` 的工單 01 段落；未以最終文字重跑的情境列在該檔「彙整與限制」。
