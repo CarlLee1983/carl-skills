@@ -7,11 +7,16 @@
 **Blocked by:** 03, 04
 
 **Status:** ready-for-agent
-State: open
+State: closed
+Owner: claude-code (feat/ciso)
 
-- [ ] gate reference：判斷依完成狀態（未驗證的 Critical／High 如何影響判斷）並附依據；不觸發發布
-- [ ] gate 明定已驗證如何延伸到發布 SHA（例如修補 commit 為發布 SHA 的祖先且相關檔案未再變更），以及已接受風險的重新檢視條件如何判定是否已觸發（ticket 03 review 提出；evidence.md 規定結果綁定審查的 SHA）
-- [ ] incident reference：判斷、指揮、分派圍堵給 `devops`；範圍擴大只就差額要授權
-- [ ] SKILL.md 職責表補齊六項與多職責排序規則
-- [ ] acceptance：gate 三種判斷至少涵蓋阻擋與放行；incident 分派圍堵；多職責時 incident 先處理；治理合規與滲透測試→不在範圍
-- [ ] 重放新情境通過，既有情境不退步
+- [x] gate reference：判斷依完成狀態（未驗證的 Critical／High 如何影響判斷）並附依據；不觸發發布
+- [x] gate 明定已驗證如何延伸到發布 SHA（例如修補 commit 為發布 SHA 的祖先且相關檔案未再變更），以及已接受風險的重新檢視條件如何判定是否已觸發（ticket 03 review 提出；evidence.md 規定結果綁定審查的 SHA）
+- [x] incident reference：判斷、指揮、分派圍堵給 `devops`；範圍擴大只就差額要授權
+- [x] SKILL.md 職責表補齊六項與多職責排序規則
+- [x] acceptance：gate 三種判斷至少涵蓋阻擋與放行；incident 分派圍堵；多職責時 incident 先處理；治理合規與滲透測試→不在範圍
+- [x] 重放新情境通過，既有情境不退步
+
+## Comments
+
+- 2026-10-23：實作完成於 `feat/ciso`。新增 gate（放行／有條件放行／阻擋；已驗證延伸到發布 SHA 須修補 SHA 為祖先且相關檔案未變；未決或已觸發的接受不涵蓋，涉及 Critical／High 即阻擋）與 incident（判斷、證據保全、逐項決定圍堵步驟並交 DevOps 角色、需授權；與 devops 事件共用時間線）。SKILL.md 補齊六項職責、事件優先排序與範圍外回覆；GLOSSARY 新增「資安判斷」。C01–C40：C05、C21、C22、C23、C34、C35 部分通過，其餘通過，見 `.scratch/ciso/validation/06-grading.md`；多數部分通過屬單次取樣的輸出不穩定，交 ticket 07 以多次重放判定。

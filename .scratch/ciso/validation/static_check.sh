@@ -45,7 +45,7 @@ for md in root.rglob('*.md'):
     named += [f'{rel}: {n}' for n in rec_names if re.search(r'(?<![\w-])' + re.escape(n) + r'(?![\w-])', md.read_text())]
 if not rec_names:
     print('warning: sources.md lists no known underlying security skills; the no-names check had nothing to compare')
-caps = 'review exposure threat-model supply-chain'.split()
+caps = 'review exposure threat-model supply-chain gate incident'.split()
 need = ['SKILL.md', 'LICENSE'] + [f'references/{n}.md' for n in caps + 'evidence delegation sources acceptance'.split()]
 missing = [n for n in need if not (root / n).exists()]
 sections = {}

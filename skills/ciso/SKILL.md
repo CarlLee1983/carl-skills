@@ -1,6 +1,6 @@
 ---
 name: ciso
-description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), over-broad permissions (權限過寬), network exposure (網路暴露), the dependency supply chain (供應鏈), and security incidents (資安事件). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
+description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), over-broad permissions (權限過寬), network exposure (網路暴露), the dependency supply chain (供應鏈), and security incidents (資安事件), and the security call before a release (發布前資安評估、能不能放行). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
 ---
 
 # CISO
@@ -9,7 +9,7 @@ One entry for security risk decisions. Identify the intent, fix the subject, gat
 
 ## Choose a capability
 
-Route by the user's natural-language intent and read only the reference you need. The names are internal routing labels, not commands.
+Route by the user's natural-language intent and read only the reference you need. The names are internal routing labels, not commands. Report only on the capabilities the request names; when you notice evidence that belongs to another capability, say that it exists and offer to run it instead of reporting on it unasked.
 
 | Intent | Capability |
 | --- | --- |
@@ -17,8 +17,10 @@ Route by the user's natural-language intent and read only the reference you need
 | Security review of code, a diff, or a PR: is this safe, does it have vulnerabilities | [review](references/review.md) |
 | Leaked secrets, over-broad permissions, or network exposure, including handoffs from the DevOps role | [exposure](references/exposure.md) |
 | Dependency risk: known vulnerabilities, version pins, SBOM, signatures, provenance of a release | [supply-chain](references/supply-chain.md) |
+| A release candidate that needs a security call: can it ship | [gate](references/gate.md) |
+| A security incident in progress: a credential or system misused now or recently | [incident](references/incident.md) |
 
-When one request spans several capabilities, work in lifecycle order: threat-model, then review, then supply-chain, then exposure. A request that names no supported capability is outside this entry's current scope; say so instead of improvising a method.
+When one request spans several capabilities, run incident first while an incident is active, because containing it outranks other work, and lead the report with it: the conclusion and each section name the incident before the other capability's content. Otherwise follow lifecycle order: threat-model, then review, then supply-chain, then exposure, then gate. A request for governance or compliance work (policies, risk registers, ISO 27001 or SOC 2 mapping) or for offensive or penetration testing is outside this skill: say so, produce nothing of that kind and send no request to any system, name what is in scope, and let the user choose. Any other request that names no supported capability is also outside scope; say so instead of improvising a method.
 
 ## Fix the subject
 
@@ -68,7 +70,7 @@ Each capability has a baseline practice that works with this skill alone. When a
 - **Code fixes:** hand them to the project's own implementation entry point, found in project rules, then context, then installed skills offered as a suggestion, then by asking. Send a dispatch brief (fields below).
 - **Dispatch brief:** write it for a receiver with no context. Fields: goal; the finding with its evidence package (location, six elements, severity); the invariant to enforce; the narrowest fix; the regression test wanted; done criteria (完成條件); decisions needed from the user (需要使用者決定的事項); and the note that the CISO re-reviews after delivery.
 - **Fix status and risk acceptance:** a delivered fix is only 修補已交付 until this skill re-reviews it, and acceptance is the user's decision; [evidence](references/evidence.md#completion-states) owns both.
-- **Environment and pipeline changes:** credential rotation, permission changes, containment, and edits to pipeline or infrastructure definitions go to the DevOps role's environment work (the `devops` skill when installed, otherwise the environment owner the project designates), marked as needing the user's authorization; [exposure](references/exposure.md) owns the details.
+- **Environment and pipeline changes:** credential rotation, permission changes, containment, and edits to pipeline or infrastructure definitions go to the DevOps role's environment work (the `devops` skill when installed, otherwise the environment owner the project designates), marked as needing the user's authorization; [exposure](references/exposure.md) and [incident](references/incident.md) own the details.
 - **Other specialists:** hand over the evidence package and the open question; leave their call to them.
 - **Sources:** [sources](references/sources.md) records the methodology this skill borrows and its versions.
 

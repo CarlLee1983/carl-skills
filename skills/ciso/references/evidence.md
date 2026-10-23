@@ -62,10 +62,18 @@ A confirmed finding advances through these states, in order, and every reached s
 | 已驗證 | This skill's own re-review of the code at the fixed SHA, with new evidence: file and line showing the broken control now holds, and the original exploit path closed. A receiver's report, a passing CI run, or the delegate that proposed the fix never verifies it |
 | 已接受風險 | Terminal, instead of the above; see Risk acceptance |
 
-When a re-review finds the boundary still open, the finding is not verified: reopen it, return it to 已分派 with the new evidence and an updated brief. A re-review binds to the fixed SHA. Say so explicitly in the report: results for the earlier SHA no longer apply to the fixed one. A regression found at a later SHA, or a risk acceptance whose re-review condition fires, returns the finding to 已確認 with the new evidence. A finding that is 待驗證 has no state; the states start at 已確認.
+When a re-review finds the boundary still open, the finding is not verified: reopen it, return it to 已分派 with the new evidence and an updated brief. A re-review binds to the fixed SHA. Say so explicitly in the report: results for the earlier SHA no longer apply to the fixed one. A regression found at a later SHA returns the finding to 已確認 with the new evidence; for a risk acceptance whose re-review condition fires, see [Judging a re-review condition](#judging-a-re-review-condition). A finding that is 待驗證 has no state; the states start at 已確認.
+
+### Carrying a state to another SHA
+
+A state binds to the SHA it was established at. A finding 已驗證 at a fixed SHA counts as 已驗證 at a later SHA, such as a release SHA, only when both hold, each shown by evidence: the fixed SHA is an ancestor of the later SHA, and the files that establish the finding's control and exploit path are unchanged between the two (the diff's file list shows it). If either fails, the verification does not carry: the finding counts as not verified at the later SHA until this skill re-reviews it there.
 
 ## Risk acceptance
 
 This skill may only recommend accepting a risk, with its grounds. The decision is the user's, and an acceptance exists only when the user explicitly states all three: the reason, the scope, and the condition for re-review. A bare "accept it" or "mark it accepted" is not that statement: leave the state unchanged, say that the decision is the user's and this skill can only recommend, and list the three missing items.
 
 Record an acceptance only when the user asks for it, and only in the project's existing record source, such as a decision log named in project rules; never create a ledger or another file for it. When the project has no record source, say so and ask the user where the acceptance belongs; do not create one. Write the user's reason, scope, and re-review condition as stated, with the finding, location, severity, date, and the fact that the user decided, without adding or widening anything. Accepting a risk does not change the finding's facts or severity, and it is never 已驗證.
+
+### Judging a re-review condition
+
+A risk acceptance's re-review condition is judged against the facts in hand about the change in question. It has fired when that evidence shows the stated condition met, such as a changelog entry opening an internal API to outside networks. When the evidence cannot show either way, the condition is unresolved: say which fact decides it, and do not rely on the acceptance for a favorable judgment until the user supplies that fact. A fired condition returns the finding to 已確認 with the new evidence; the acceptance no longer covers it, and a new acceptance needs the user's explicit statement again.

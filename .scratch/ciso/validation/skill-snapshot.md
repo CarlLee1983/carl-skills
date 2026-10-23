@@ -1,7 +1,7 @@
 ===== FILE: SKILL.md =====
 ---
 name: ciso
-description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), over-broad permissions (權限過寬), network exposure (網路暴露), the dependency supply chain (供應鏈), and security incidents (資安事件). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
+description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), over-broad permissions (權限過寬), network exposure (網路暴露), the dependency supply chain (供應鏈), and security incidents (資安事件), and the security call before a release (發布前資安評估、能不能放行). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
 ---
 
 # CISO
@@ -10,7 +10,7 @@ One entry for security risk decisions. Identify the intent, fix the subject, gat
 
 ## Choose a capability
 
-Route by the user's natural-language intent and read only the reference you need. The names are internal routing labels, not commands.
+Route by the user's natural-language intent and read only the reference you need. The names are internal routing labels, not commands. Report only on the capabilities the request names; when you notice evidence that belongs to another capability, say that it exists and offer to run it instead of reporting on it unasked.
 
 | Intent | Capability |
 | --- | --- |
@@ -18,8 +18,10 @@ Route by the user's natural-language intent and read only the reference you need
 | Security review of code, a diff, or a PR: is this safe, does it have vulnerabilities | [review](references/review.md) |
 | Leaked secrets, over-broad permissions, or network exposure, including handoffs from the DevOps role | [exposure](references/exposure.md) |
 | Dependency risk: known vulnerabilities, version pins, SBOM, signatures, provenance of a release | [supply-chain](references/supply-chain.md) |
+| A release candidate that needs a security call: can it ship | [gate](references/gate.md) |
+| A security incident in progress: a credential or system misused now or recently | [incident](references/incident.md) |
 
-When one request spans several capabilities, work in lifecycle order: threat-model, then review, then supply-chain, then exposure. A request that names no supported capability is outside this entry's current scope; say so instead of improvising a method.
+When one request spans several capabilities, run incident first while an incident is active, because containing it outranks other work, and lead the report with it: the conclusion and each section name the incident before the other capability's content. Otherwise follow lifecycle order: threat-model, then review, then supply-chain, then exposure, then gate. A request for governance or compliance work (policies, risk registers, ISO 27001 or SOC 2 mapping) or for offensive or penetration testing is outside this skill: say so, produce nothing of that kind and send no request to any system, name what is in scope, and let the user choose. Any other request that names no supported capability is also outside scope; say so instead of improvising a method.
 
 ## Fix the subject
 
@@ -69,7 +71,7 @@ Each capability has a baseline practice that works with this skill alone. When a
 - **Code fixes:** hand them to the project's own implementation entry point, found in project rules, then context, then installed skills offered as a suggestion, then by asking. Send a dispatch brief (fields below).
 - **Dispatch brief:** write it for a receiver with no context. Fields: goal; the finding with its evidence package (location, six elements, severity); the invariant to enforce; the narrowest fix; the regression test wanted; done criteria (完成條件); decisions needed from the user (需要使用者決定的事項); and the note that the CISO re-reviews after delivery.
 - **Fix status and risk acceptance:** a delivered fix is only 修補已交付 until this skill re-reviews it, and acceptance is the user's decision; [evidence](references/evidence.md#completion-states) owns both.
-- **Environment and pipeline changes:** credential rotation, permission changes, containment, and edits to pipeline or infrastructure definitions go to the DevOps role's environment work (the `devops` skill when installed, otherwise the environment owner the project designates), marked as needing the user's authorization; [exposure](references/exposure.md) owns the details.
+- **Environment and pipeline changes:** credential rotation, permission changes, containment, and edits to pipeline or infrastructure definitions go to the DevOps role's environment work (the `devops` skill when installed, otherwise the environment owner the project designates), marked as needing the user's authorization; [exposure](references/exposure.md) and [incident](references/incident.md) own the details.
 - **Other specialists:** hand over the evidence package and the open question; leave their call to them.
 - **Sources:** [sources](references/sources.md) records the methodology this skill borrows and its versions.
 
@@ -178,13 +180,21 @@ A confirmed finding advances through these states, in order, and every reached s
 | 已驗證 | This skill's own re-review of the code at the fixed SHA, with new evidence: file and line showing the broken control now holds, and the original exploit path closed. A receiver's report, a passing CI run, or the delegate that proposed the fix never verifies it |
 | 已接受風險 | Terminal, instead of the above; see Risk acceptance |
 
-When a re-review finds the boundary still open, the finding is not verified: reopen it, return it to 已分派 with the new evidence and an updated brief. A re-review binds to the fixed SHA. Say so explicitly in the report: results for the earlier SHA no longer apply to the fixed one. A regression found at a later SHA, or a risk acceptance whose re-review condition fires, returns the finding to 已確認 with the new evidence. A finding that is 待驗證 has no state; the states start at 已確認.
+When a re-review finds the boundary still open, the finding is not verified: reopen it, return it to 已分派 with the new evidence and an updated brief. A re-review binds to the fixed SHA. Say so explicitly in the report: results for the earlier SHA no longer apply to the fixed one. A regression found at a later SHA returns the finding to 已確認 with the new evidence; for a risk acceptance whose re-review condition fires, see [Judging a re-review condition](#judging-a-re-review-condition). A finding that is 待驗證 has no state; the states start at 已確認.
+
+### Carrying a state to another SHA
+
+A state binds to the SHA it was established at. A finding 已驗證 at a fixed SHA counts as 已驗證 at a later SHA, such as a release SHA, only when both hold, each shown by evidence: the fixed SHA is an ancestor of the later SHA, and the files that establish the finding's control and exploit path are unchanged between the two (the diff's file list shows it). If either fails, the verification does not carry: the finding counts as not verified at the later SHA until this skill re-reviews it there.
 
 ## Risk acceptance
 
 This skill may only recommend accepting a risk, with its grounds. The decision is the user's, and an acceptance exists only when the user explicitly states all three: the reason, the scope, and the condition for re-review. A bare "accept it" or "mark it accepted" is not that statement: leave the state unchanged, say that the decision is the user's and this skill can only recommend, and list the three missing items.
 
 Record an acceptance only when the user asks for it, and only in the project's existing record source, such as a decision log named in project rules; never create a ledger or another file for it. When the project has no record source, say so and ask the user where the acceptance belongs; do not create one. Write the user's reason, scope, and re-review condition as stated, with the finding, location, severity, date, and the fact that the user decided, without adding or widening anything. Accepting a risk does not change the finding's facts or severity, and it is never 已驗證.
+
+### Judging a re-review condition
+
+A risk acceptance's re-review condition is judged against the facts in hand about the change in question. It has fired when that evidence shows the stated condition met, such as a changelog entry opening an internal API to outside networks. When the evidence cannot show either way, the condition is unresolved: say which fact decides it, and do not rely on the acceptance for a favorable judgment until the user supplies that fact. A fired condition returns the finding to 已確認 with the new evidence; the acceptance no longer covers it, and a new acceptance needs the user's explicit statement again.
 
 
 ===== FILE: references/exposure.md =====
@@ -226,7 +236,88 @@ The applied state of infrastructure, the readers of a log, or a credential's rea
 
 ## Handoff
 
-Rotation, revocation, log removal, permission changes, containment, and code changes go to the receivers in [the entry](../SKILL.md#work-with-existing-flows). Evidence that a credential was used by someone else, or of a compromise in progress: say that commanding an active incident is not yet part of this skill, hand the evidence to the user and the environment receiver, and note that containment needs the user's authorization. The task the handoff came from, such as diagnosing a failing run, stays with the sender; say that it can continue. After delivery, re-review the fixed state under [evidence](evidence.md#completion-states).
+Rotation, revocation, log removal, permission changes, containment, and code changes go to the receivers in [the entry](../SKILL.md#work-with-existing-flows). Evidence that a credential was used by someone else, or of a compromise in progress: hand it to [incident](incident.md). The task the handoff came from, such as diagnosing a failing run, stays with the sender; say that it can continue. After delivery, re-review the fixed state under [evidence](evidence.md#completion-states).
+
+
+===== FILE: references/gate.md =====
+# Gate
+
+The security judgment before a release: 放行, 有條件放行, or 阻擋, with grounds. It is an assessment only; a favorable verdict starts nothing.
+
+## Triggers
+
+"Can we release", "is this safe to ship", a release candidate that needs a security call (發布前資安判斷、可以放行嗎).
+
+## Inputs
+
+- The release candidate resolved to a fixed SHA, and its diff against what was last reviewed.
+- Every finding for the subject with its [completion state](evidence.md#completion-states) and the SHA each state was established at, 待驗證 items, and the risk acceptances with their re-review conditions.
+- The change record for the release, such as a changelog.
+- The authorization in force; this capability needs read access only.
+
+## Steps
+
+1. **Scope.** Fix the release SHA and list the findings, acceptances, and changes that bear on it, and what has not been reviewed. **Done:** the release SHA, the relevant findings, and the unreviewed changes are written down.
+2. **Look for depth.** Check [delegation](delegation.md) before judging unreviewed changes yourself; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
+3. **Bind to the release SHA.** For each finding, apply [carrying a state to another SHA](evidence.md#carrying-a-state-to-another-sha); for each acceptance, apply [judging a re-review condition](evidence.md#judging-a-re-review-condition). Review any change since the last review that touches security-relevant code under [review](review.md), or list it as unreviewed; a change confined to documentation that no acceptance condition depends on is not security-relevant code, and the diff's file list is enough to show it. **Done:** each finding has its state at the release SHA with the evidence, and each acceptance is covering, fired, or unresolved, and for an unresolved one the fact the user must supply is named.
+4. **Decide.** 阻擋 when any Critical or High finding is, at the release SHA, neither 已驗證 nor covered by a standing 已接受風險: 已分派 and 修補已交付 do not count, and an acceptance whose re-review condition has fired or is unresolved does not cover. 有條件放行 when no such finding exists but conditions remain, such as open Medium or Low findings, 待驗證 items, unreviewed changes, or an unresolved acceptance that covers only Medium or Low findings; state each condition and who resolves it. 放行 when every relevant finding is 已驗證 or validly accepted at the release SHA and nothing remains open. **Done:** the verdict is stated with one ground per finding or condition that decides it.
+5. **Report.** State what would change the verdict, and what the assessment did not examine. **Done:** the report carries the verdict, grounds, conditions, the unexamined set, and a statement that the verdict starts no release action and does not replace the user's release decision.
+
+## Output
+
+The fixed report from `SKILL.md`: the verdict as the leading conclusion; 範圍 with the release SHA and the unexamined set; 判斷 with the state of each relevant finding at the release SHA and how each acceptance was judged; 發現 with any new findings and 待驗證 items; 分派 with what would change a 阻擋 or 有條件放行, each with its receiver; 後續 with the conditions to resolve.
+
+## Done
+
+A gate is done when the verdict is given with grounds for every deciding finding and condition. The verdict is an assessment: it never starts, prepares, or replaces a release, and it never claims the release is secure. These verdicts are security assessments, not the 被阻擋 timing state of a `devops` release assessment.
+
+## Blocked
+
+The release SHA, the findings' states, or the diff since the last review is unavailable: give no 放行; state 有條件放行 or 阻擋 as the evidence supports and name the data needed.
+
+## Handoff
+
+Releasing, tagging, and publishing belong to the user and to the DevOps role's release work (the `devops` skill when installed), only on the user's request. Fixes for blocking findings go to the receivers in [the entry](../SKILL.md#work-with-existing-flows) with a dispatch brief, and are re-reviewed under [evidence](evidence.md#completion-states). A user who wants to accept a blocking risk makes the statement defined in [risk acceptance](evidence.md#risk-acceptance); this skill only recommends.
+
+
+===== FILE: references/incident.md =====
+# Incident
+
+Judgment and command for a security incident in progress: scope, severity, evidence preservation, and a containment plan carried out by others only with the user's authorization.
+
+## Triggers
+
+Signs that a credential or system is being misused now or was recently, such as unexpected use of an account, bulk data access, unknown keys or users, a leak in progress (資安事件、帳號被盜用).
+
+## Inputs
+
+- The evidence: audit or access logs with their time range, alerts, and what the user observed.
+- The affected resources, the time window, and the recent changes.
+- The authorizations already given, and the project's recorded runbooks and contacts.
+
+## Steps
+
+1. **Judge.** Build the timeline from the evidence with each entry's source. Separate what the evidence shows from what it suggests, such as an unusual source address versus a stolen credential, and list what is unknown, such as the data in an accessed bucket or whether other credentials are involved. Rate what is confirmed under [evidence](evidence.md) and mark the rest as hypotheses with what would settle them. **Done:** the timeline, the confirmed facts, the hypotheses, and the unknowns are written, each with its source.
+2. **Look for depth.** Check [delegation](delegation.md) before analyzing forensic detail yourself; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
+3. **Command.** Write the plan in order. Preserve evidence first, such as exporting the logs and keeping snapshots, before any step that destroys it. Then stop the damage, deciding each of these as taken or skipped with a reason: revoke or rotate the affected credentials, disable the account, isolate the system, restrict the source (such as an unfamiliar address). For each step state the expected effect, the risk, how to undo it, and who carries it out. **Done:** every step has its effect, risk, undo path, receiver, and the authorization it needs.
+4. **Dispatch.** Hand each containment, rotation, and isolation step to the receiver [the entry](../SKILL.md#work-with-existing-flows) names for environment changes, each marked as needing the user's authorization, with the dispatch brief defined there. Take no step yourself; credentials appear by name and location only, under the entry's [Safety floor](../SKILL.md#safety-floor). Authorization the user already gave stays valid; when new evidence widens the scope, ask only for the added steps. **Done:** every step is dispatched or awaiting authorization, and the already authorized steps are named.
+5. **Follow up.** When new evidence arrives, update the timeline, the judgment, and the plan, and report each action's status with its evidence; an unknown stays unknown. Each confirmed finding then moves through its [completion state](evidence.md#completion-states). **Done:** the report names the open actions, the open unknowns, and the next evidence to collect.
+
+## Output
+
+The fixed report from `SKILL.md`: the conclusion first, 範圍 with the affected resources and window, 判斷 with the timeline, confirmed facts, hypotheses, and unknowns, 發現 with confirmed findings and 待驗證 items, 分派 with the ordered plan and each step's receiver and authorization, 後續 with open actions and what to collect next.
+
+## Done
+
+An incident judgment is done when the scope, the confirmed facts and hypotheses, the ordered plan, and the dispatch with its authorizations are delivered. No containment has been executed by this skill, and none is reported as done without its receiver's evidence.
+
+## Blocked
+
+The evidence is too thin to separate fact from hypothesis: say so, give the evidence-preservation and the safest reversible steps, and name the evidence to collect. Never probe a deployed system to unblock; the entry's [Safety floor](../SKILL.md#safety-floor) applies.
+
+## Handoff
+
+Containment, rotation, and isolation go to the receiver named in the dispatch step. Code fixes → the project's implementation entry point. Credential hygiene found along the way → [exposure](exposure.md). When a `devops` incident for the same outage is running, this skill owns the security judgment and the containment decisions and the DevOps role keeps service restoration; share one timeline. After the plan is carried out, the fixed state is re-reviewed under [evidence](evidence.md#completion-states).
 
 
 ===== FILE: references/review.md =====

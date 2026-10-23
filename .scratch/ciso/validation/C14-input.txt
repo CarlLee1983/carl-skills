@@ -168,6 +168,18 @@ design note; returns a report to the caller. Deep mode: only on an explicit requ
 parallel agents and writes data-flow diagrams and report files under threat-models/.
 ```
 
+`F-audit-log`：事件相關證據。
+
+```text
+audit/2026-10-23.log
+09:12:03 principal=svc-reports action=ListBuckets src=203.0.113.50 (first seen for this principal)
+09:14:20 principal=svc-reports action=GetObject bucket=customer-exports count=1204 src=203.0.113.50
+09:15:02 principal=svc-reports action=CreateApiKey key=key-77 src=203.0.113.50
+09:20:41 principal=svc-reports action=RunJob job=nightly-report src=198.51.100.7 (usual source)
+```
+
+`F-release-refs`：發布候選的版本證據。`refs.json`：發布候選 `v2.4.0` 的 SHA `dddddddddddddddddddddddddddddddddddddddd`；修補 SHA `bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`。
+
 
 
 CASE INPUT (the user request and fixtures):
