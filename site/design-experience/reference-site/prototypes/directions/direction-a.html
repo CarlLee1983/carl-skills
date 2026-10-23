@@ -1,0 +1,41 @@
+<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>結構方向 A：店面首頁（示例）</title><style>
+:root{--bg:#fbf7f1;--card:#fffdf9;--ink:#2b2420;--muted:#6b5f57;--pri:#8a3a1e;--on-pri:#fbf7f1;--rule:#e8ddd0;--field:#8f8073;--tint:#f3e2d2;--err:#a1260d;--ok:#2f6b3a;
+--f1:40px;--f2:28px;--f3:20px;--f4:16px;--f5:14px;--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:72px;--r:6px;
+--display:Georgia,"Songti TC","STSong",serif;--text:"PingFang TC","Helvetica Neue",sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--f4)/1.7 var(--text)}
+h1,h2,h3,p,ol,ul,fieldset{margin:0}ul,ol{padding:0;list-style:none}fieldset{border:0;padding:0;min-width:0}
+h1,h2,.brand{font-family:var(--display);font-weight:600}
+h1{font-size:var(--f2);line-height:1.3}h2{font-size:var(--f3);line-height:1.4}h3{font-size:var(--f4);font-weight:600;line-height:1.5}
+@media (min-width:761px){h1{font-size:var(--f1);line-height:1.25}h2{font-size:var(--f2)}}
+.wrap{max-width:1040px;margin:0 auto;padding:0 var(--s2)}@media (min-width:761px){.wrap{padding:0 var(--s4)}}
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+a{color:var(--ink);text-underline-offset:4px}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);padding:var(--s2) 0;border-bottom:1px solid var(--rule)}
+.brand{font-size:var(--f3)}.brand small{font-family:var(--text);font-size:var(--f5);color:var(--muted);margin-left:var(--s1);font-weight:400}
+.muted{color:var(--muted)}.small{font-size:var(--f5)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s1);min-height:48px;padding:0 var(--s3);background:var(--pri);color:var(--on-pri);font:600 var(--f4)/1 var(--text);text-decoration:none;border:0;border-radius:var(--r);cursor:pointer}
+.btn:hover{filter:brightness(1.12)}.btn[disabled],.btn[aria-disabled=true]{background:#d9cdc0;color:#5e534b;cursor:not-allowed;filter:none}
+.btn-2{display:inline-flex;align-items:center;justify-content:center;gap:var(--s1);min-height:44px;padding:0 var(--s2);background:transparent;color:var(--ink);font:600 var(--f5)/1 var(--text);border:1px solid var(--field);border-radius:var(--r);cursor:pointer;text-decoration:none}
+.link{background:none;border:0;padding:var(--s1) 0;font:600 var(--f5) var(--text);color:var(--pri);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.num{display:inline-grid;place-items:center;min-width:32px;height:32px;border-radius:999px;background:var(--tint);color:var(--pri);font:600 var(--f5)/1 var(--display)}
+.tag{display:inline-block;font-size:var(--f5);background:var(--tint);padding:0 var(--s1);border-radius:var(--r);font-family:var(--text);font-weight:400;vertical-align:middle}
+.meta{display:flex;flex-wrap:wrap;gap:var(--s2);font-size:var(--f5);font-variant-numeric:tabular-nums}
+.meta span{display:inline-flex;align-items:center;gap:4px}.price{font-weight:600}
+.foot{padding:var(--s4) 0 var(--s5);border-top:1px solid var(--rule);font-size:var(--f5);color:var(--muted);margin-top:var(--s5)}
+
+.hero{padding:var(--s5) 0 var(--s4)}.hero p{max-width:32em;margin:var(--s2) 0 var(--s3)}
+.sec{padding:var(--s4) 0;border-top:1px solid var(--rule)}.sec-head{display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s2)}
+.rows{border-top:1px solid var(--ink)}
+.row{display:grid;grid-template-columns:1fr auto;gap:var(--s1) var(--s3);padding:var(--s3) 0;border-bottom:1px solid var(--rule);align-items:start}
+.row:last-child{border-bottom:0}.row .desc{grid-column:1}.row .btn-2{grid-column:2;grid-row:1/span 3;align-self:center}
+.info{display:grid;gap:var(--s1)}.info li{display:flex;gap:var(--s1);align-items:center}
+@media (max-width:760px){.hero .btn{width:100%}.row{grid-template-columns:1fr}.row .btn-2{grid-column:1;grid-row:auto;justify-self:start}}
+</style></head><body><div class="wrap"><header class="top"><div class="brand">（店名待定）<small>寵物美容</small></div><a class="small" href="#svc">服務與價格</a></header></div><main class="wrap"><section class="hero"><h1>洗澡、修剪，<br>線上挑好時段就能來。</h1>
+<p class="muted">先選服務，再挑一個方便的時段。送出後會收到預約編號與簡訊，臨時有事也能從簡訊裡的連結取消。</p>
+<a class="btn" href="#svc"><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>線上預約</a></section>
+<section class="sec" id="svc"><div class="sec-head"><span class="num">01</span><h2>服務與價格 <span class="tag">示例資料</span></h2></div>
+<ul class="rows"><li class="row"><h3>小型犬洗澡</h3><div class="meta"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>60 分鐘</span><span class="price">NT$ 600</span></div><p class="desc small muted">洗澡、吹整、剪指甲、清耳朵。</p><button class="btn-2" type="button">預約這項</button></li><li class="row"><h3>小型犬洗澡＋全身修剪</h3><div class="meta"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>120 分鐘</span><span class="price">NT$ 1,200</span></div><p class="desc small muted">含洗澡項目，再依毛孩毛量做全身造型修剪。</p><button class="btn-2" type="button">預約這項</button></li><li class="row"><h3>中大型犬洗澡＋除廢毛（雙層毛犬種適用）</h3><div class="meta"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>150 分鐘</span><span class="price">NT$ 1,800</span></div><p class="desc small muted">柴犬、柯基、黃金獵犬等換毛季常選。</p><button class="btn-2" type="button">預約這項</button></li><li class="row"><h3>貓咪洗澡（需事先完成年度疫苗）</h3><div class="meta"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>90 分鐘</span><span class="price">NT$ 1,100</span></div><p class="desc small muted">安靜獨立的美容檯，全程一位美容師。</p><button class="btn-2" type="button">預約這項</button></li></ul></section>
+<section class="sec"><div class="sec-head"><span class="num">02</span><h2>來店資訊</h2></div>
+<ul class="info muted"><li><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>地址（待店家提供）</li><li><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>營業時間（待店家提供）</li><li><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>電話（待店家提供）</li></ul></section></main><div class="wrap"><footer class="foot">結構方向 A 代表畫面｜服務、價格、時段皆為示例資料，非店家實際資料；送出不會建立真的預約。圖示取自 Lucide（ISC License，© Lucide Icons and Contributors）。</footer></div></body></html>

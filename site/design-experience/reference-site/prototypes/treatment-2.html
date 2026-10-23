@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>視覺處理 2：溫暖手帖（示例）</title>
+<style>
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--f4)/1.7 var(--text)}
+h1,h2,h3,p,ol{margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding:0 var(--s4)}
+a{color:var(--ink)}
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);padding:var(--s3) 0;border-bottom:1px solid var(--rule)}
+.brand{font-size:var(--f3)}.brand small{font-family:var(--text);font-size:var(--f5);color:var(--muted);margin-left:var(--s2);font-weight:400}
+nav.top-nav{display:flex;gap:var(--s4)}nav.top-nav a{font-size:var(--f5);text-decoration:none;color:var(--ink)}
+nav.top-nav a:hover{text-decoration:underline}
+.eyebrow{font-size:var(--f5);color:var(--acc);margin-bottom:var(--s3);letter-spacing:.06em}
+.lede{font-size:var(--f4);color:var(--muted);max-width:32em;margin:var(--s3) 0 var(--s4)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3)}
+.btn{display:inline-flex;align-items:center;gap:var(--s2);min-height:48px;padding:0 var(--s4);background:var(--pri);color:var(--on-pri);font:600 var(--f4)/1 var(--text);text-decoration:none;border:0;cursor:pointer}
+.btn:hover{filter:brightness(1.12)}
+.link{font-size:var(--f4);color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.steps h3{font-family:var(--text);font-size:var(--f5);font-weight:600;color:var(--muted);margin-bottom:var(--s2)}
+.steps ol{list-style:none;padding:0;display:grid;gap:var(--s2)}
+.steps li{display:flex;gap:var(--s2);align-items:flex-start}
+.steps li .i{flex:none;margin-top:4px;color:var(--acc)}
+.steps li strong{font-weight:600}
+section.block{padding:var(--s5) 0;border-top:1px solid var(--rule)}
+.sec-lede{color:var(--muted);margin:var(--s2) 0 var(--s4);max-width:36em}
+.svc h3{margin-bottom:var(--s1)}
+.svc .meta{display:flex;gap:var(--s3);font-size:var(--f5);font-variant-numeric:tabular-nums}
+.svc .meta span{display:inline-flex;gap:var(--s1);align-items:center}
+.svc .price{font-weight:600}
+.svc .desc{color:var(--muted);font-size:var(--f5)}
+.pick{font-size:var(--f5);color:var(--pri);background:none;border:0;padding:var(--s1) 0;text-decoration:underline;text-underline-offset:4px;cursor:pointer;font-family:var(--text);font-weight:600}
+.slot-date{display:flex;align-items:center;gap:var(--s2);font-size:var(--f5);color:var(--muted);margin-bottom:var(--s3)}
+.chips{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.chip{min-height:44px;min-width:88px;padding:0 var(--s3);border:1px solid var(--field);background:transparent;color:var(--ink);font:500 var(--f4)/1 var(--text);font-variant-numeric:tabular-nums;cursor:pointer}
+.chip[aria-pressed=true]{border:2px solid var(--pri);background:var(--tint);color:var(--ink);font-weight:600}
+.tile{padding:var(--s5) 0}
+.tile h2{font-size:var(--f3);font-family:var(--text);font-weight:600;margin-bottom:var(--s2)}
+.concept{color:var(--muted);max-width:44em;margin-bottom:var(--s4)}
+.tile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s4)}
+.tile-grid h3{font-family:var(--text);font-size:var(--f5);font-weight:600;color:var(--muted);margin-bottom:var(--s2)}
+.scale li{list-style:none;line-height:1.3;margin-bottom:var(--s2)}.scale{padding:0}
+.scale small{font-size:var(--f5);color:var(--muted);font-family:var(--text);margin-left:var(--s2)}
+.sw{display:grid;grid-template-columns:32px 1fr;gap:var(--s2);align-items:center;font-size:var(--f5);margin-bottom:var(--s2)}
+.sw i{width:32px;height:32px;border:1px solid var(--field);border-radius:var(--r);display:block}
+.sw span{color:var(--muted);font-variant-numeric:tabular-nums}
+.icons{display:flex;flex-wrap:wrap;gap:var(--s3);color:var(--ink)}
+.field label{display:block;font-size:var(--f5);font-weight:600;margin-bottom:var(--s1)}
+.field input{width:100%;min-height:48px;padding:0 var(--s3);font:var(--f4) var(--text);color:var(--ink);background:var(--card,#fff);border:1px solid var(--field);border-radius:var(--r)}
+.field input:focus-visible{outline:2px solid var(--pri);outline-offset:1px}
+.field .err{display:flex;gap:var(--s1);align-items:center;font-size:var(--f5);color:#a1260d;margin-top:var(--s1)}
+.field input.bad{border:2px solid #a1260d}
+footer.foot{padding:var(--s4) 0 var(--s5);border-top:1px solid var(--rule);font-size:var(--f5);color:var(--muted)}
+.sample-tag{display:inline-block;font-size:var(--f5);background:var(--tint);color:var(--ink);padding:0 var(--s2);border-radius:var(--r);margin-left:var(--s2);font-family:var(--text);font-weight:400;vertical-align:middle}
+@media (max-width:760px){.wrap{padding:0 var(--s3)}nav.top-nav{display:none}.actions .btn{width:100%;justify-content:center}}
+
+:root{--bg:#fbf7f1;--ink:#2b2420;--muted:#6b5f57;--pri:#8a3a1e;--on-pri:#fbf7f1;--acc:#8a3a1e;--rule:#e8ddd0;--field:#8f8073;--tint:#f3e2d2;
+--f1:40px;--f2:28px;--f3:20px;--f4:16px;--f5:14px;--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:72px;--r:6px;
+--display:Georgia,"Songti TC","STSong",serif;--text:"PingFang TC","Helvetica Neue",sans-serif}
+h1,h2,h3,.brand{font-family:var(--display);font-weight:600}.num{font-family:var(--display);font-weight:600}
+h1{font-size:var(--f1);line-height:1.25}h2{font-size:var(--f2);line-height:1.3}h3{font-size:var(--f4);line-height:1.5;font-family:var(--text);font-weight:600}
+.wrap{max-width:1040px}
+.hero{display:grid;grid-template-columns:3fr 2fr;gap:var(--s5);padding:var(--s6) 0 var(--s5);align-items:start}
+.steps{background:var(--tint);border-radius:var(--r);padding:var(--s3)}
+.sec{display:block}
+.sec-head{display:flex;align-items:baseline;gap:var(--s2)}
+.num{display:inline-grid;place-items:center;min-width:40px;height:40px;border-radius:999px;background:var(--tint);color:var(--pri);font-size:var(--f5)}
+.svc-list{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--ink)}
+.svc{display:grid;grid-template-columns:1fr auto;column-gap:var(--s4);row-gap:var(--s1);padding:var(--s3) 0;border-bottom:1px solid var(--rule)}
+.svc:last-child{border-bottom:0}.svc .meta{grid-column:2;grid-row:1;text-align:right}.svc .desc{grid-column:1}.svc .pick{grid-column:2;grid-row:2;justify-self:end}
+.btn{border-radius:var(--r)}.chip{border-radius:var(--r)}
+.tile{border-top:1px solid var(--rule)}
+@media (max-width:760px){h1{font-size:var(--f2)}h2{font-size:var(--f3)}
+.hero{grid-template-columns:1fr;gap:var(--s4);padding:var(--s5) 0 var(--s4)}
+.svc{grid-template-columns:1fr;}.svc .meta{grid-column:1;grid-row:auto;text-align:left}.svc .pick{grid-column:1;grid-row:auto;justify-self:start}}
+
+.i{stroke-width:1.75}</style></head>
+<body><div class="wrap">
+<header class="top"><div class="brand">（店名待定）<small>寵物美容</small></div>
+<nav class="top-nav" aria-label="頁內導覽"><a href="#services">服務與價格</a><a href="#slots">可預約時段</a></nav></header>
+<section class="hero"><div>
+<p class="eyebrow">寵物美容・採預約制</p>
+<h1>洗澡、修剪，<br>線上挑好時段就能來。</h1>
+<p class="lede">先選服務，再挑一個方便的時段。送出後會收到預約編號與簡訊，臨時有事也能從簡訊裡的連結取消。</p>
+<div class="actions"><a class="btn" href="#slots"><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>線上預約</a><a class="link" href="#services">先看服務與價格</a></div></div>
+<aside class="steps" aria-label="預約只要三步"><h3>預約只要三步</h3><ol>
+<li><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg><div><strong>選服務</strong>：看清楚時長與價格</div></li>
+<li><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg><div><strong>選時段</strong>：只列出還能預約的時間</div></li>
+<li><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><div><strong>留資料</strong>：飼主電話、毛孩名字與體型</div></li></ol></aside></section>
+
+<section class="block sec" id="services"><span class="num" aria-hidden="true">01</span><div>
+<div class="sec-head"><h2>服務與價格<span class="sample-tag">示例資料</span></h2></div>
+<p class="sec-lede">價格與時長依店家服務清單顯示；實際金額以現場確認毛況後為準。</p>
+<div class="svc-list"><article class="svc">
+<h3>小型犬洗澡</h3><div class="meta"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>60 分鐘</span><span class="price">NT$ 600</span></div>
+<p class="desc">洗澡、吹整、剪指甲、清耳朵。</p><button class="pick" type="button">選這個服務</button></article><article class="svc">
+<h3>小型犬洗澡＋全身修剪</h3><div class="meta"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>120 分鐘</span><span class="price">NT$ 1,200</span></div>
+<p class="desc">含洗澡項目，再依毛孩毛量做全身造型修剪。</p><button class="pick" type="button">選這個服務</button></article><article class="svc">
+<h3>中大型犬洗澡＋除廢毛（雙層毛犬種適用）</h3><div class="meta"><span><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>150 分鐘</span><span class="price">NT$ 1,800</span></div>
+<p class="desc">柴犬、柯基、黃金獵犬等換毛季常選。</p><button class="pick" type="button">選這個服務</button></article></div></div></section>
+
+<section class="block sec" id="slots"><span class="num" aria-hidden="true">02</span><div>
+<div class="sec-head"><h2>最近可預約時段<span class="sample-tag">示例資料</span></h2></div>
+<p class="sec-lede">已額滿的時間不會出現在這裡。</p>
+<div class="slot-date"><svg class="i" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>10 月 25 日（六）</div>
+<div class="chips" role="group" aria-label="可預約時段"><button class="chip" type="button" aria-pressed="false">10:00</button><button class="chip" type="button" aria-pressed="false">10:30</button><button class="chip" type="button" aria-pressed="true">13:00</button><button class="chip" type="button" aria-pressed="false">14:30</button><button class="chip" type="button" aria-pressed="false">16:00</button></div></div></section>
+
+<section class="tile" aria-label="樣式板"><h2>樣式板・視覺處理 2「溫暖手帖」（轉化 R1）</h2>
+<p class="concept">溫暖手帖：保留襯線標題與編號，字級收斂、節奏收緊，服務改成可掃讀的價目列，像店員手寫的價目手帖。<br>採用程度：a1 襯線標題但比例降到 1.4、a2 間距收緊一階（8–72）、a3 三角色結構保留並把點綴改成淺杏色底塊、a5 編號保留但改單欄價目列、a6 細線為主、圓角放寬到 6px、a7 主鈕＋底線連結。</p>
+<div class="tile-grid">
+<div><h3>字級（5 級）</h3><ul class="scale"><li style="font-size:40px;font-family:var(--display)">預約 Aa<small>40px</small></li><li style="font-size:28px;font-family:var(--display)">預約 Aa<small>28px</small></li><li style="font-size:20px;font-family:var(--text)">預約 Aa<small>20px</small></li><li style="font-size:16px;font-family:var(--text)">預約 Aa<small>16px</small></li><li style="font-size:14px;font-family:var(--text)">預約 Aa<small>14px</small></li></ul></div>
+<div><h3>色彩角色</h3><div class="sw"><i style="background:#fbf7f1"></i><div>底色 surface<br><span>#fbf7f1｜文字對比 14.3:1</span></div></div><div class="sw"><i style="background:#2b2420"></i><div>文字 ink<br><span>#2b2420｜對底色 14.3:1</span></div></div><div class="sw"><i style="background:#6b5f57"></i><div>次要文字 muted<br><span>#6b5f57｜對底色 5.8:1</span></div></div><div class="sw"><i style="background:#8a3a1e"></i><div>主要動作 primary（赤陶棕）<br><span>#8a3a1e｜對底色 7.3:1</span></div></div><div class="sw"><i style="background:#f3e2d2"></i><div>點綴底 accent tint（杏）<br><span>#f3e2d2｜對底色 1.2:1</span></div></div><div class="sw"><i style="background:#e8ddd0"></i><div>分隔線 rule<br><span>#e8ddd0｜對底色 1.3:1</span></div></div><div class="sw"><i style="background:#8f8073"></i><div>欄位框 field<br><span>#8f8073｜對底色 3.6:1</span></div></div></div>
+<div><h3>圖示（Lucide，線寬 1.75）</h3><div class="icons"><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg><svg class="i" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></div>
+<h3 style="margin-top:24px">欄位</h3>
+<div class="field"><label for="pet2">毛孩名字</label><input id="pet2" value="麻糬"></div>
+<div class="field" style="margin-top:16px"><label for="tel2">飼主手機</label><input id="tel2" class="bad" value="0912-34" aria-invalid="true" aria-describedby="e2">
+<p class="err" id="e2"><svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>手機號碼少了幾碼，請輸入 10 碼</p></div></div>
+</div></section>
+<footer class="foot">視覺處理 2 示例頁｜服務、價格、時段皆為示例資料，非店家實際資料｜圖示取自 Lucide（ISC License，© Lucide Icons and Contributors）</footer>
+</div>
+<script>
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));c.setAttribute('aria-pressed','true');}));
+</script></body></html>

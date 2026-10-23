@@ -1,0 +1,259 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>照著生成圖做預約網站：主題起手加目標稿｜design-experience 案例</title>
+  <meta name="description" content="參考來源是目標稿的案例：使用者拿一張 AI 生成圖說「想做成這樣」，技能先逐區審查圖、決定哪些照做哪些不做，再做原型和原圖並排，依回饋改一版後定稿。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/design-experience/target-mockup/">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="照著生成圖做預約網站：主題起手加目標稿｜design-experience 案例">
+  <meta property="og:description" content="參考來源是目標稿的案例：使用者拿一張 AI 生成圖說「想做成這樣」，技能先逐區審查圖、決定哪些照做哪些不做，再做原型和原圖並排，依回饋改一版後定稿。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/design-experience/target-mockup/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/target-mockup.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="照著生成圖做預約網站">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="照著生成圖做預約網站：主題起手加目標稿｜design-experience 案例">
+  <meta name="twitter:description" content="參考來源是目標稿的案例：使用者拿一張 AI 生成圖說「想做成這樣」，技能先逐區審查圖、決定哪些照做哪些不做，再做原型和原圖並排，依回饋改一版後定稿。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/target-mockup.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="bar">
+    <a class="wordmark" href="../../">carl-skills</a>
+    <nav aria-label="主要">
+      <ul>
+        <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部案例</a></li>
+        <li><a href="#review">逐區審查</a></li>
+        <li><a href="#feedback">回饋與 v2</a></li>
+        <li><a href="#verify">驗證</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <h1><span>照著生成圖做</span><span>預約網站</span></h1>
+    <p class="lede">主題起手加目標稿：使用者手上有一張 AI 生成的預約網站圖，說「想做成這樣」。技能不照圖畫，先逐區審查，把每一處判成照做、改做法、刪除或待產品決定，再做原型和原圖並排給使用者看。</p>
+    <dl class="facts">
+      <div><dt>進入模式</dt><dd>主題起手</dd></div>
+      <div><dt>參考來源</dt><dd>目標稿（AI 生成圖）</dd></div>
+      <div><dt>試跑性質</dt><dd>腳本試跑</dd></div>
+      <div><dt>日期</dt><dd>2026-10-23</dd></div>
+      <div><dt>使用者回覆</dt><dd>取自腳本，沒有真人</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="honest f-flame">
+  <p><strong>這是腳本試跑。</strong>使用者每句回覆都取自腳本，沒有真人。店名 PawLux（暫名）、服務、價格、時段與預約編號都是虛構的示例資料。所謂的 AI 生成圖，是用本機 HTML 渲染出來的 AI 風格圖，刻意埋了拼錯字、虛構宣稱這類瑕疵，用來檢查技能抓不抓得到，不是真的 AI 作品。</p>
+</div>
+
+<main id="main">
+  <section class="round wrap f-black" aria-labelledby="r-intent">
+    <div class="round-head">
+      <h2 id="r-intent" class="rv"><span class="nw">這張圖是</span><span class="nw">目標稿</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote><p>做一個寵物美容店的預約網站，我用 AI 生成了這張圖，想做成這樣。</p></blockquote>
+        <p>專案只有後端 API（服務清單、某日時段、建立預約、取消預約），沒有介面、品牌、logo 或設計系統，店名也沒定，所以進入模式是主題起手。</p>
+        <p>圖的種類判成目標稿，不是參考網站。依據是「想做成這樣」，而且這是為使用者生成的圖，不是別家公司的真實產品。目標稿是要做出來的提案，所以先審查再動手；圖上的名稱與 logo 都先當佔位。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <figure class="rv big-fig"><a class="zoom" href="img/r1.webp"><img src="img/r1.webp" width="1440" height="1000" loading="lazy" alt="目標稿 R1：深紫到珊瑚漸層的深色背景，左側是拼錯字的英文大標題與兩顆按鈕，右側有數張旋轉重疊的半透明卡片，分別是心情指數、美容師位置與五星評價"></a><figcaption>目標稿 R1，1440×1000。導覽與主標的拼錯、卡片重疊與虛構宣稱都是刻意埋的瑕疵。</figcaption></figure>
+      <div class="stack measure rv">
+        <p>審查先列出圖做對的地方，這些會保留：暖紫到珊瑚的色溫、大而友善的主標、醒目的橘色「立即預約」、第一屏就看得到今天還能約的時段、大圓角柔和的卡片。</p>
+        <p>圖只畫了首頁第一屏。選時段、填資料、確認、完成這些步驟圖上沒有，技能依 API 用同一套視覺補上，並標明是新增步驟。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" id="review" aria-labelledby="r-review">
+    <div class="round-head">
+      <h2 id="r-review" class="rv">逐區審查</h2>
+      <div class="stack rv" style="--d:1">
+        <p>圖分成八區：頁首、主標與副文、行動按鈕、心情指數與時段卡、美容師位置卡、評價卡、背景與構圖、頁尾。審查共 25 項發現（F1 到 F25）：照做 1、改做法 15、刪除 5、待產品決定 2，另有 2 項被其他卡片蓋住、不臆測。</p>
+        <p>下表挑出有代表性的幾項。「待產品決定」不是設計問題：會員登入與美容師即時位置都需要專案沒有的能力，要不要做是產品範圍。F23 的「Partnered with airbnb」是別家公司的名稱與 logo，也是不實的合作宣稱，一律移除。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="table-scroll rv">
+        <table class="dtable" style="min-width:640px">
+          <caption class="sr-only">目標稿審查發現（節錄，共 25 項）</caption>
+          <thead><tr><th scope="col">編號</th><th scope="col">圖上看到的</th><th scope="col">類別</th><th scope="col">決定</th></tr></thead>
+          <tbody>
+            <tr><td>F2</td><td>導覽拼錯：Servcies、Grooomers、Pricnig、Lgoin</td><td>生成痕跡</td><td>改做法：改成正確的繁中文字</td></tr>
+            <tr><td>F5</td><td>會員中心、Login、加入會員</td><td>缺能力</td><td>待產品決定：專案沒有會員與登入</td></tr>
+            <tr><td>F8</td><td>副文宣稱即時追蹤、AI 心情指數、會員點數，還混了 lorem ipsum</td><td>缺能力、虛構宣稱</td><td>刪除：副文改寫成 API 真的做得到的事</td></tr>
+            <tr><td>F10</td><td>橘、粉兩顆高彩按鈕並列搶主角</td><td>品味基線</td><td>改做法：只留「立即預約」一個主要行動</td></tr>
+            <tr><td>F12</td><td>「AI 毛孩心情指數 98.7%」</td><td>缺能力、虛構精度</td><td>刪除：沒有 AI 分析，也不服務任何任務</td></tr>
+            <tr><td>F13</td><td>今日可預約時段</td><td>有能力</td><td>改做法：保留「第一屏就能開始預約」的意圖，時段併入預約卡的步驟</td></tr>
+            <tr><td>F16</td><td>美容師即時位置 LIVE GPS</td><td>缺能力</td><td>待產品決定：只有到府美容才有意義</td></tr>
+            <tr><td>F17</td><td>卡片旋轉、互相重疊、絕對定位</td><td>生成痕跡</td><td>改做法：換成不重疊、隨寬度重排的版面</td></tr>
+            <tr><td>F18</td><td>五星評價、已累積 12,480 點、白金會員</td><td>虛構評價、缺能力</td><td>刪除：日後若有真實回饋，可當店家內容再加</td></tr>
+            <tr><td>F23</td><td>Partnered with airbnb</td><td>他牌名稱</td><td>刪除：他牌與不實的合作宣稱</td></tr>
+            <tr><td>F24</td><td>隱私權政策、服務條款</td><td>店家內容</td><td>照做：連結保留，內容由店家提供</td></tr>
+            <tr><td>F15、F19</td><td>卡片下半部被別張卡片蓋住或空白</td><td>看不到</td><td>不臆測被蓋住的內容</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note rv">審查是肉眼看靜態圖。焦點、溢出這類基線項目從圖上看不出來，留到原型截圖時才檢查。</p>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" aria-labelledby="r-ask">
+    <div class="round-head">
+      <h2 id="r-ask" class="rv"><span class="nw">只問圖</span><span class="nw">回答不了的題</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>圖已經回答了不少事，所以訪談只問它回答不了的：誰在用、淺色還是深色、圖上哪些是真的想要。每題有編號、建議答案與理由，使用者可以只回題號。</p>
+        <blockquote><p>審查的取捨都照你的建議。Q1：讀者是附近的飼主，主要行動是線上預約。Q2、Q3、Q4：只做繁中、淺色、手機優先。Q5：圖上我真正想要的是溫暖親近的氣氛，以及第一屏就能選服務。Q6：對。其他題目照你的建議。</p></blockquote>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="table-scroll rv">
+        <table class="dtable" style="min-width:640px">
+          <caption class="sr-only">第一輪訪談</caption>
+          <thead><tr><th scope="col">題目</th><th scope="col">技能的建議</th><th scope="col">使用者回答</th></tr></thead>
+          <tbody>
+            <tr><td>Q1 讀者與主要行動</td><td>住附近的飼主，在手機上線上預約一次美容。API 的全部能力就是預約。</td><td>是</td></tr>
+            <tr><td>Q3 淺色或深色</td><td>淺色：飼主多半白天用手機預約，淺色在戶外更好讀；暖色調保留。</td><td>淺色</td></tr>
+            <tr><td>Q5 圖上真正想要的</td><td>溫暖的色調與氣氛，加上第一屏就能開始預約；玻璃卡片疊放與數據卡看起來是生成時順便出現的。</td><td>是</td></tr>
+            <tr><td>Q6 氣質形容詞</td><td>從圖上推導出「溫暖、親近、輕快」，要避免「科技炫光」。</td><td>對</td></tr>
+            <tr><td>Q7 到 Q9 照片、店名、待決定項目</td><td>先不放照片；店名用「PawLux（暫名）」；會員與美容師位置不進原型，列成開放項目。</td><td>腳本沒有涵蓋，紀錄採用建議</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" id="compare" aria-labelledby="r-compare">
+    <div class="round-head">
+      <h2 id="r-compare" class="rv"><span class="nw">原型和原圖</span><span class="nw">並排</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>v1 是一個離線 HTML：第一屏就能選服務，往下走完選時段、填資料、確認、完成，載入、無時段、載入失敗、時段被約走、表單錯誤都做成看得到的狀態。技能把原圖和 v1 第一屏放成同為 1440×1000 並排，每個差異都標上它對應的發現編號。</p>
+        <p>右側那疊玻璃卡片變成一張預約卡（F13、F17）；橘色只留給卡裡的「下一步」（F10、F11）；主標改成繁中，副文只說 API 做得到的事，也就是免註冊、簡訊通知、點簡訊連結取消（F6 到 F9）；深色底改成淺色，紫到珊瑚的色溫留在淡漸層與品牌紫（F20）。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <figure class="rv big-fig"><a class="zoom" href="img/comparison-v1.webp"><img src="img/comparison-v1.webp" width="2400" height="1350" loading="lazy" alt="左邊是深紫色的目標稿，標著 F1 到 F24 的編號；右邊是淺色的原型 v1 第一屏，左側繁中主標，右側一張預約卡列出六項服務與價格；下方兩張表列出每個差異對應的發現與決定"></a><figcaption>目標稿（左）與原型 v1（右）並排，點開看原尺寸。下方兩張表是差異與不放進原型的部分。</figcaption></figure>
+      <div class="stack measure rv">
+        <p>原型裡沒有的也寫明了：刪除的有 AI 心情指數、虛構評價、airbnb 字樣與裝飾用 emoji；待產品決定而沒放進去的是會員與登入、美容師即時位置。</p>
+        <p>技能看 v1 截圖時抓到並修了五處：390 寬第 2 步整頁橫向捲動、步驟條在手機上逐字換行、體型選項內距被蓋掉、輸入框邊框對比只有 2.19:1（改為 3.81:1），以及「無時段」文案原本寫「約滿」，但 API 只回空陣列、分不出約滿還是公休，改成「沒有可預約的時段」。</p>
+        <p>它還自己走查時量到：390 寬選了第三項以後，「下一步」按鈕在 985px，視窗只有 844px。技能把這點標成「我自己的檢查，不是使用者試用」，沒有先改，請使用者試用時確認。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" id="feedback" aria-labelledby="r-feedback">
+    <div class="round-head">
+      <h2 id="r-feedback" class="rv"><span class="nw">一句回饋，</span><span class="nw">改一版</span></h2>
+      <div class="stack rv" style="--d:1">
+        <p>試用任務是「幫你家狗約下週二下午做全身美容，走到看見預約編號為止」，並請使用者分開回答喜歡哪裡、哪一步卡住。</p>
+        <blockquote><p>我試用了。喜歡那個溫暖的感覺。不過做預約的時候，選完服務我不知道下一步要去哪裡。</p></blockquote>
+        <p>這句腳本沒有為了配合而調整：v1 在 390 寬確實有這個問題，程式量測也記錄在驗證檔裡。喜歡的部分不動；卡住的部分，原因和技能先前量到的一致，按鈕在畫面外，選了也看不出有什麼變化。</p>
+        <p>v2 只改第 1 步的行動列：手機寬度（767px 以下）且已選服務時，它固定在畫面底部，上面一行寫「已選　服務名稱　價格」，下面是橘色的「下一步：選時段」。沒選時維持原樣，桌機版不變，1440 寬選完服務按鈕本來就在畫面內（y=840，視窗 1000）。改後量到按鈕在 780px，落在畫面內。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <figure class="rv"><a class="zoom" href="img/before-after-v2.webp"><img src="img/before-after-v2.webp" width="936" height="1003" loading="lazy" alt="同一個 390×844 視窗選了第三項服務：左邊 v1 的下一步按鈕在畫面外，右邊 v2 在畫面底部固定出現已選摘要與橘色的下一步：選時段按鈕"></a><figcaption>修改前後，同一個操作、同一個視窗。左：v1，按鈕在 y=985，畫面外。右：v2，摘要與按鈕固定在底部，y=780。</figcaption></figure>
+      <div class="trio">
+        <figure class="rv phone"><a class="zoom" href="img/v2-390-form-errors.webp"><img src="img/v2-390-form-errors.webp" width="780" height="1688" loading="lazy" alt="v2 第 3 步在 390 寬：表單空白送出，各欄位標紅並附錯誤說明"></a><figcaption>表單空白送出，逐欄顯示錯誤。</figcaption></figure>
+        <figure class="rv phone" style="--d:1"><a class="zoom" href="img/v2-390-slot-taken.webp"><img src="img/v2-390-slot-taken.webp" width="780" height="1688" loading="lazy" alt="v2 第 2 步在 390 寬：提示選的時段剛被約走，該時段已從清單移除，其餘資料保留"></a><figcaption>時段被約走：回到第 2 步，資料保留。</figcaption></figure>
+        <figure class="rv phone" style="--d:2"><a class="zoom" href="img/v2-390-done.webp"><img src="img/v2-390-done.webp" width="780" height="1688" loading="lazy" alt="v2 完成頁在 390 寬：顯示示例預約編號、簡訊提示與預約摘要"></a><figcaption>完成頁：示例預約編號與簡訊提示。</figcaption></figure>
+      </div>
+      <p class="note rv">v2 重做了整套主要路徑的程式檢查，但使用者沒有重新試用 v2。「不知道下一步」有沒有真的解決，目前只有量測與截圖支持。</p>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" id="handoff" aria-labelledby="r-handoff">
+    <div class="round-head">
+      <h2 id="r-handoff" class="rv"><span class="nw">定稿，</span><span class="nw">交接清單</span></h2>
+      <div class="stack rv" style="--d:1">
+        <blockquote><p>定稿。</p></blockquote>
+        <p>定稿的是 v2：結構 A（左主標、右預約卡，第一屏選服務）加視覺處理 1（從原圖延伸的淺色版，暖米白底、深紫字、品牌紫標示選取、橘色只給每一步唯一的主要行動）。結構與視覺分開記為已接受。生產實作沒有授權，設計停在交接。</p>
+        <p>交接寫了畫面、四個步驟的操作、六種狀態與復原方式、可重用元件、資料來源與 9 條驗收情境，並把目標稿上不要照做的部分列清楚，避免實作時照圖補回。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="table-scroll rv">
+        <table class="dtable" style="min-width:640px">
+          <caption class="sr-only">交接裡的取捨與未決事項</caption>
+          <thead><tr><th scope="col">類別</th><th scope="col">項目</th><th scope="col">為什麼</th></tr></thead>
+          <tbody>
+            <tr><td>刪除</td><td>裝飾 emoji、追蹤與 AI 與點數宣稱（含 lorem ipsum）、AI 心情指數、虛構評價與會員點數、airbnb 合作字樣</td><td>能力不存在或是別家的名稱，實作時不要照圖補回</td></tr>
+            <tr><td>待產品決定</td><td>會員中心與登入、美容師即時位置</td><td>需要專案沒有的能力；位置只對到府服務有意義</td></tr>
+            <tr><td>需要別人決定</td><td>價格是否隨體型變動、<code>POST /bookings</code> 時段衝突的回應格式、店名與店家內容</td><td>前兩項會影響實作；店家與後端各自回答</td></tr>
+            <tr><td>還沒設計</td><td>簡訊連結進入的取消頁；第 3 步手機上送出按鈕也在畫面外（使用者沒有在這一步卡住，只列為提案）</td><td>排在下一輪</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="rv"><a class="zoom" href="img/v2-home.webp"><img src="img/v2-home.webp" width="1440" height="1000" loading="lazy" alt="定稿 v2 在 1440 寬的第一屏：淺色漸層底，左側繁中主標與三點能力說明，右側預約卡列出六項服務、時長與價格"></a><figcaption>定稿 v2 的第一屏，1440 寬。</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="band wrap f-panel" id="verify" aria-labelledby="v-h">
+    <h2 id="v-h" class="h2 rv">驗證到哪裡</h2>
+    <p class="lede rv" style="--d:1;margin-top:20px;color:var(--body)">用 Playwright 1.64.1（Chromium headless，macOS）開啟原型、截圖並跑程式化檢查。下面摘自 SESSION 與驗證檔。</p>
+    <div class="checks" style="margin-top:56px">
+      <div class="rv">
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>做過的檢查</h3>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>主要路徑程式檢查：v1 與 v2 各 32 項，全部通過。涵蓋 390 與 1440 寬走完選服務到完成、鍵盤路徑、時段載入失敗與被約走，以及沒有外部網路請求。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>選完服務後「下一步」的位置：v1 在 y=985（視窗 844，畫面外），v2 在 y=780（畫面內）。量測值，不算斷言。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>各步驟與狀態在 390 與 1440 寬截圖。v1 逐張審看；v2 逐張看了受影響的畫面，其餘步驟原始碼與 v1 相同，沿用 v1 的審看結果。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>對比以 token 值計算：文字對底皆在 4.5:1 以上（最低 5.86:1），主按鈕深紫字配橘 7.12:1。只涵蓋計算過的色對。</li>
+        </ul>
+      </div>
+      <div class="rv" style="--d:1">
+        <h3><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>沒有做的檢查</h3>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>真人試用，以及 v2 的重新試用。腳本中的回饋是示範，不是使用者測試證據。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>實機；390 寬是 Chromium 模擬的。Safari、Firefox 也沒測。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>螢幕閱讀器、200% 縮放。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>服務清單載入失敗與送出的其他錯誤，原型沒有涵蓋。另有已知限制：卡片與時段按鈕的邊框對底只有 1.32:1，未達 3:1，這兩者靠選取圓圈與文字辨識，不靠邊框；原型每次選取都重畫卡片，鍵盤方向鍵切換服務時焦點會跑掉。</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg>視覺方向技能沒有呼叫。技能只讀了候選技能的描述、沒讀完整指示，視覺語言由目標稿決定，紀錄把這點記為限制。</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="rv" style="margin-top:96px">打開原型</h3>
+    <p class="note rv">單檔離線 HTML，原樣複製自試跑產物。並排頁與對照頁已把圖片路徑改成指向本站的檔案。表單只在頁面內驗證，送出是模擬，不會建立預約或寄出簡訊。</p>
+    <div class="protos rv">
+      <a href="prototypes/booking-v2.html"><strong>預約網站 v2</strong><span>定稿：手機固定行動列</span><em>開啟原型</em></a>
+      <a href="prototypes/booking-v1.html"><strong>預約網站 v1</strong><span>選完服務看不到下一步</span><em>開啟原型</em></a>
+      <a href="prototypes/comparison-v1.html"><strong>目標稿與 v1 並排</strong><span>每個差異標上發現編號</span><em>開啟頁面</em></a>
+      <a href="prototypes/before-after-v2.html"><strong>v2 修改前後</strong><span>390 寬，同一個操作</span><em>開啟頁面</em></a>
+    </div>
+  </section>
+</main>
+
+<footer class="band wrap f-flame">
+  <div class="next-case">
+    <p>下一個案例：參考來源是一個喜歡的網站</p>
+    <a class="big" href="../reference-site/">借網站<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </div>
+</footer>
+</body>
+</html>

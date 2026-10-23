@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<title>R1 目標稿 vs 原型 v1（1440×1000 並排）</title>
+<style>
+:root{--ink:#2B1A40;--ink-2:#5E4E70;--line:#E7DCEF;--del:#A3261B;--chg:#6B3FA0;--keep:#1F6F47;--open:#8A4B00}
+*{box-sizing:border-box}
+body{margin:0;padding:24px;background:#F4F1F6;color:var(--ink);font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;font-size:16px;line-height:1.6;width:2976px}
+h1{font-size:32px;margin:0 0 8px}
+p.sub{margin:0 0 24px;color:var(--ink-2);font-size:20px}
+.pair{display:grid;grid-template-columns:1440px 1440px;gap:48px}
+figure{margin:0}
+figcaption{font-size:20px;font-weight:700;margin-bottom:8px}
+.frame{position:relative;width:1440px;height:1000px;outline:1px solid var(--line)}
+.frame img{display:block;width:1440px;height:1000px}
+.m{position:absolute;transform:translate(-50%,-50%);background:var(--chg);color:#fff;font-weight:700;font-size:16px;line-height:1;padding:6px 10px;border-radius:999px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);white-space:nowrap}
+.m.del{background:var(--del)}.m.keep{background:var(--keep)}.m.open{background:var(--open)}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:32px}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:16px}
+th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:#FBF8FD}
+.k{font-weight:700;white-space:nowrap}
+.k.del{color:var(--del)}.k.chg{color:var(--chg)}.k.keep{color:var(--keep)}.k.open{color:var(--open)}
+h2{font-size:20px;margin:0 0 8px}
+</style>
+</head>
+<body>
+<h1>R1 目標稿與原型 v1 並排比較（同為 1440×1000）</h1>
+<p class="sub">標記顏色：紫＝改做法、紅＝刪除、綠＝照做、褐＝待產品決定（不放進原型）。編號對應 SESSION.md 的可行性審查發現。</p>
+<div class="pair">
+  <figure>
+    <figcaption>R1 目標稿（使用者提供的 AI 生成圖）</figcaption>
+    <div class="frame">
+      <img src="../img/r1.webp" alt="R1 目標稿">
+      <span class="m" style="left:60px;top:22px">F1</span>
+      <span class="m" style="left:1080px;top:22px">F2–F4</span>
+      <span class="m open" style="left:1300px;top:22px">F5</span>
+      <span class="m" style="left:200px;top:140px">F6</span>
+      <span class="m del" style="left:440px;top:225px">F7</span>
+      <span class="m del" style="left:720px;top:315px">F8</span>
+      <span class="m" style="left:720px;top:345px">F9</span>
+      <span class="m keep" style="left:145px;top:445px">F10 立即預約</span>
+      <span class="m open" style="left:318px;top:445px">F5 加入會員</span>
+      <span class="m" style="left:200px;top:407px">F11</span>
+      <span class="m del" style="left:960px;top:185px">F12</span>
+      <span class="m" style="left:1060px;top:240px">F13</span>
+      <span class="m" style="left:1080px;top:270px">F14</span>
+      <span class="m open" style="left:1300px;top:420px">F16</span>
+      <span class="m" style="left:1000px;top:540px">F17</span>
+      <span class="m del" style="left:960px;top:610px">F18</span>
+      <span class="m" style="left:300px;top:700px">F20／F21</span>
+      <span class="m keep" style="left:330px;top:952px">F24</span>
+      <span class="m del" style="left:1220px;top:930px">F23</span>
+    </div>
+  </figure>
+  <figure>
+    <figcaption>原型 v1（booking-v1.html，1440×1000 第一屏實際截圖）</figcaption>
+    <div class="frame">
+      <img src="../img/v1-1440-home.webp" alt="原型 v1 第一屏">
+      <span class="m" style="left:420px;top:70px">F1 文字字標（暫名）</span>
+      <span class="m" style="left:1000px;top:70px">F2–F4</span>
+      <span class="m" style="left:560px;top:245px">F6</span>
+      <span class="m" style="left:640px;top:366px">F8／F9</span>
+      <span class="m" style="left:470px;top:450px">新增：真實能力說明</span>
+      <span class="m" style="left:1180px;top:210px">F13＋Q5 第一屏選服務</span>
+      <span class="m" style="left:1290px;top:520px">F17</span>
+      <span class="m" style="left:1030px;top:905px">F10／F11 唯一主要行動</span>
+      <span class="m" style="left:300px;top:700px">F20 淺色（Q3）</span>
+    </div>
+  </figure>
+</div>
+<div class="legend">
+  <div>
+    <h2>差異與它解決的發現</h2>
+    <table>
+      <tr><th>發現</th><th>決定</th><th>原型裡看到的差異</th></tr>
+      <tr><td>F1</td><td class="k chg">改做法</td><td>🐾 字形換成 Lucide 腳印圖示，店名標「（暫名）」</td></tr>
+      <tr><td>F2–F4</td><td class="k chg">改做法</td><td>導覽改成繁中「線上預約、預約須知、取消預約」；價目併入服務清單；美容師介紹留待店家內容</td></tr>
+      <tr><td>F6、F7</td><td class="k chg">改做法／刪除</td><td>主標改為繁中「讓毛孩舒舒服服，漂漂亮亮回家」，拿掉 ✨</td></tr>
+      <tr><td>F8、F9</td><td class="k chg">改做法</td><td>副文只說真的做得到的事；16px、對比達 AA；左側三點說明都對應 API 能力（免註冊、簡訊、簡訊連結取消）</td></tr>
+      <tr><td>F10、F11</td><td class="k chg">改做法</td><td>橘色只留給預約卡裡的「下一步」，是全畫面唯一主要行動；箭頭改 SVG</td></tr>
+      <tr><td>F13＋Q5</td><td class="k chg">改做法</td><td>右側卡片從「時段」改成預約卡：第一屏就選服務，時段在第 2 步</td></tr>
+      <tr><td>F17、F21</td><td class="k chg">改做法</td><td>旋轉疊放的三張卡變成一張會隨寬度重排的卡片；390 寬見 v1-390-home.png</td></tr>
+      <tr><td>F20</td><td class="k chg">改做法</td><td>深紫全版底改成淺色；紫到珊瑚的色溫留在主視覺漸層與品牌紫</td></tr>
+      <tr><td>F22</td><td class="k chg">改做法</td><td>新增步驟與狀態：載入、無時段、載入失敗、時段被約走、表單錯誤、完成（見 screenshots/v1-390-*.png）</td></tr>
+    </table>
+  </div>
+  <div>
+    <h2>不在原型裡的部分</h2>
+    <table>
+      <tr><th>發現</th><th>決定</th><th>原因</th></tr>
+      <tr><td>F7、F12</td><td class="k del">刪除</td><td>✨ 裝飾、AI 心情指數 98.7%：沒有能力，也不服務任務</td></tr>
+      <tr><td>F8</td><td class="k del">刪除</td><td>即時追蹤、AI 分析、會員點數等宣稱與 lorem ipsum</td></tr>
+      <tr><td>F18</td><td class="k del">刪除</td><td>虛構的五星評價、點數、白金會員</td></tr>
+      <tr><td>F23</td><td class="k del">刪除</td><td>「Partnered with airbnb」：他牌名稱與不實合作宣稱</td></tr>
+      <tr><td>F5</td><td class="k open">待產品決定</td><td>會員中心、登入、加入會員：專案沒有會員能力</td></tr>
+      <tr><td>F16</td><td class="k open">待產品決定</td><td>美容師即時位置：只對到府服務有意義，專案沒有定位能力</td></tr>
+      <tr><td>F24</td><td class="k keep">照做</td><td>隱私權政策、服務條款連結（在頁尾，第一屏以下）</td></tr>
+      <tr><td>F15、F19</td><td class="k">看不到</td><td>被其他卡片蓋住的部分，不臆測</td></tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
