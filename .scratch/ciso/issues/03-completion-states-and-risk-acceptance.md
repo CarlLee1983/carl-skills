@@ -19,3 +19,4 @@ Owner: claude-code (feat/ciso)
 ## Comments
 
 - 2026-10-23：實作完成於 `feat/ciso`。evidence.md 新增完成狀態（已確認 → 已分派 → 修補已交付 → 已驗證；終點已接受風險）與風險接受規則，其他檔案改為連結。兩軸 review 無 HIGH；依 review 補上：只說「修好了」也算修補已交付、沒有紀錄來源時詢問使用者不自建、回歸或重新檢視條件觸發回到已確認，並新增 C16–C18 覆蓋。C01–C18 全數通過（C01–C15 由獨立代理評分），見 `.scratch/ciso/validation/03-grading.md`。gate 的 SHA 延伸問題記入 ticket 06，嚴重度與 CWE 一致性記入 ticket 07。
+- 2026-10-23：已隨 PR #33 合併進 `main`（merge commit `01d0eb5`，head `4184d36`）。最終驗證見 `.scratch/ciso/validation/07-validation.md`。

@@ -20,3 +20,4 @@ Owner: claude-code (feat/ciso)
 ## Comments
 
 - 2026-10-23：實作完成於 `feat/ciso`。新增 exposure reference（密鑰、權限、網路暴露，分派給 DevOps 角色的環境工作並標需授權）；`devops` 四處「the security process」改為「the CISO role (the `ciso` skill when installed)」，D16 只改收件者名稱；ADR 0006 與 GLOSSARY 同步。兩個 skill 的 static check 通過；devops D10、D12、D14、D15、D16 新舊結果一致，見 `.scratch/ciso/validation/04-devops-regression.md`。ciso C01–C22：C05、C21 部分通過，其餘通過，見 `04-grading.md`；C21 的評級偏差併入 ticket 07。審查期間發現 ticket 03 的空白清理清空了 166 個重放檔，55 個已還原、111 個遺失，紀錄見 `03-grading.md`。
+- 2026-10-23：已隨 PR #33 合併進 `main`（merge commit `01d0eb5`，head `4184d36`）。最終驗證見 `.scratch/ciso/validation/07-validation.md`。

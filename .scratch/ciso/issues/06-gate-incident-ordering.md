@@ -20,3 +20,4 @@ Owner: claude-code (feat/ciso)
 ## Comments
 
 - 2026-10-23：實作完成於 `feat/ciso`。新增 gate（放行／有條件放行／阻擋；已驗證延伸到發布 SHA 須修補 SHA 為祖先且相關檔案未變；未決或已觸發的接受不涵蓋，涉及 Critical／High 即阻擋）與 incident（判斷、證據保全、逐項決定圍堵步驟並交 DevOps 角色、需授權；與 devops 事件共用時間線）。SKILL.md 補齊六項職責、事件優先排序與範圍外回覆；GLOSSARY 新增「資安判斷」。C01–C40：C05、C21、C22、C23、C34、C35 部分通過，其餘通過，見 `.scratch/ciso/validation/06-grading.md`；多數部分通過屬單次取樣的輸出不穩定，交 ticket 07 以多次重放判定。
+- 2026-10-23：已隨 PR #33 合併進 `main`（merge commit `01d0eb5`，head `4184d36`）。最終驗證見 `.scratch/ciso/validation/07-validation.md`。

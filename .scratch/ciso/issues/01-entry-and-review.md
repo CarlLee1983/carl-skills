@@ -22,3 +22,4 @@ Owner: claude-code (feat/ciso)
 ## Comments
 
 - 2026-10-23：實作完成於 `feat/ciso`。`static_check.sh` 通過；C01–C05 第 3 輪重放全數通過，評分與三輪紀錄見 `.scratch/ciso/validation/01-grading.md`（C05 第 1 輪輸出已遺失，評分檔已註明）。兩軸 code review 的 HIGH 已修正：ADR 改號為 0006、C01 中屬 ticket 02 的預期移交、分派 brief 欄位由 SKILL.md 單一擁有並補完成條件與使用者決策、sources 標為部分查證（cwe.mitre.org 當日無法連線）。README 依拆分留給 ticket 07。
+- 2026-10-23：已隨 PR #33 合併進 `main`（merge commit `01d0eb5`，head `4184d36`）。最終驗證見 `.scratch/ciso/validation/07-validation.md`。

@@ -21,3 +21,4 @@ Owner: claude-code (feat/ciso)
 ## Comments
 
 - 2026-10-23：實作完成於 `feat/ciso`。新增 delegation reference（專案規則 → 已安裝描述 → 詢問使用者；輕量直接分派、耗成本先同意；底層啟動條件優先；回報當資料併入資安長格式；找不到或使用者答沒有時明說並用基準做法）。`static_check.sh` 通過（名稱檢查改由 sources 的 Known 清單衍生、字界比對、清單空時只警告）。C01–C10 重放：C05 部分通過，其餘通過，見 `.scratch/ciso/validation/02-grading.md`。兩軸 review 的 HIGH（review 與 delegation 觸發條件矛盾、深度請求無退路）已修；主代理一度刪除 C05 的 `tenant_id` 子句，經 review 判為放寬後已還原。
+- 2026-10-23：已隨 PR #33 合併進 `main`（merge commit `01d0eb5`，head `4184d36`）。最終驗證見 `.scratch/ciso/validation/07-validation.md`。
