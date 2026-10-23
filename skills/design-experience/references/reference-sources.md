@@ -15,7 +15,7 @@ Look at the whole source before judging it. When an image is too small to read, 
 
 ## Feasibility review (目標稿)
 
-Treat a target mockup as a proposal to test, not a finished design: a generated image fixes some choices on purpose and many by accident. Walk it region by region and record each finding (one issue each; a region may hold several) with its region and one of three kinds:
+When the mockup covers more than the request (a whole home page for a new booking flow), confirm which part is in scope; until the answer arrives, review the parts serving the request in depth and the rest briefly. Treat a target mockup as a proposal to test, not a finished design: a generated image fixes some choices on purpose and many by accident. Walk it region by region and record each finding (one issue each; a region may hold several) with its region and one of three kinds:
 
 | Kind | What to look for |
 | --- | --- |
@@ -36,9 +36,15 @@ Separately, name what the image gets right and that the prototype keeps: the moo
 
 ## Build from the target mockup
 
-In theme-first, the first round carries the review and the interview together; the prototype built from the mockup then stands in for the style-tile round as the first proposal of both structure and visuals. A structural problem that earns another direction is one like the main task being unreachable from the drawn screen, or content the main task needs having no place in its layout; a layout fixed by rearranging its own parts is 改做法.
+How the reviewed mockup enters the flow depends on the entry mode:
 
-Build the representative screen as a prototype following the decisions, with real or labeled sample data from the project's contracts. Present it beside the original image on the same task and viewport, and annotate each difference with the finding it resolves, so the user sees what changed and why. A finding marked 待產品決定 stays out of the prototype and appears as an open item.
+- **Theme-first**: the first round carries the review and the interview together; the prototype built from the mockup then stands in for the style-tile round as the first proposal of both structure and visuals.
+- **Feature-first**: the mockup's structure is direction A, and the project's visual source wins. Where the mockup's visuals conflict with the source, show the screen「照目標稿」beside「照來源」and let the user decide whether to release the source (a rule the brand guide marks fixed needs its owner's release), as [collaboration.md](collaboration.md)'s preference rule does for a preferred skill. Without a visual source that fixes the visuals, its visuals are treatment 1 as in theme-first.
+- **Improve**: capture 現況 and diagnose first, skipping questions the mockup already answers; the feasibility review can share the first round with the diagnosis. The reviewed mockup is then one direction compared with 現況 like any proposal in [improvement.md](improvement.md), also listing every must-stay item it breaks, since the image was drawn without them; unless it is itself the smallest fix, that fix still stands beside it. Visual conflicts with the project's visual source are shown as in feature-first.
+
+In theme-first and feature-first, a structural problem that earns another direction is one like the main task being unreachable from the drawn screen, or content the drawn screen itself must hold having no place in its layout; a layout fixed by rearranging its own parts is 改做法, and later screens the image never draws are added steps.
+
+Build the representative screen as a prototype following the decisions, with real or labeled sample data from the project's contracts. Present it beside the original image on the same task and viewport, and annotate each difference with the finding it resolves, so the user sees what changed and why. A finding marked 待產品決定 stays out of the prototype and appears as an open item. Steps of the main task the image never draws are designed from the project's contracts in the mockup's language and labeled as added.
 
 **Complete when:** every region of the image has been reviewed or marked「看不到」, every finding has a decision and reason, and the prototype is shown beside the original with each difference traced to a finding.
 

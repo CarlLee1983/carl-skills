@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>線上預約 - 毛毛日和</title>
+<style>
+body{margin:0;font-family:"Noto Sans TC",system-ui,sans-serif;background:#fff;color:#1f2d2b}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 48px;border-bottom:1px solid #dde}
+.logo{color:#1f8a7a;font-weight:800;font-size:22px;border:2px solid #1f8a7a;border-radius:12px;padding:4px 10px}
+nav a{margin-left:28px;color:#1f2d2b;font-size:15px}
+main{max-width:760px;margin:32px auto;padding:0 24px}
+h1{font-size:26px;margin:0 0 8px}.note{font-size:13px;color:#888;margin-bottom:20px}
+label{display:block;font-size:14px;margin:14px 0 4px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;font-size:15px;box-sizing:border-box}
+.row{display:flex;gap:12px}.row>div{flex:1}
+.slots{border:1px solid #ccc;border-radius:4px;padding:10px;font-size:14px;color:#555}
+.btns{margin-top:24px;display:flex;gap:12px}
+.b{padding:12px 24px;border-radius:999px;border:0;font-size:15px}
+.b1{background:#1f8a7a;color:#fff}.b2{background:#f2b544;color:#1f2d2b}.b3{background:#e5e5e5}
+</style></head><body>
+<header><span class="logo">毛毛日和</span><nav><a>首頁</a><a>服務與價格</a><a>線上預約</a><a>交通資訊</a></nav></header>
+<main><h1>線上預約</h1><div class="note">請完整填寫以下欄位，送出後我們將以簡訊通知預約結果。* 為必填</div>
+<label>飼主姓名 *</label><input>
+<label>聯絡電話 *</label><input>
+<div class="row"><div><label>毛孩名字 *</label><input></div><div><label>體型 *</label><select><option>請選擇</option></select></div></div>
+<label>服務項目 *（價格請參考「服務與價格」頁）</label><select><option>請選擇服務</option></select>
+<label>預約日期 *</label><input placeholder="YYYY/MM/DD">
+<label>預約時段 *</label><div class="slots">請先選擇日期後按「查詢時段」</div>
+<label>備註</label><textarea rows="4"></textarea>
+<div class="btns"><button class="b b2">查詢時段</button><button class="b b3">清除重填</button><button class="b b1">送出預約</button></div>
+</main></body></html>
