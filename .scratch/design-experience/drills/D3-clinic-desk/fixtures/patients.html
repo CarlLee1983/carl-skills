@@ -1,0 +1,25 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>安和診所後台 - 病患資料</title>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,"PingFang TC",sans-serif;font-size:16px;color:#212529;background:#fff}
+.navbar{background:#0d6efd;color:#fff;padding:12px 24px;display:flex;gap:24px;align-items:center}
+.navbar b{font-size:20px}.navbar a{color:rgba(255,255,255,.75);text-decoration:none}.navbar a.active{color:#fff}
+.container{max-width:1140px;margin:24px auto;padding:0 12px}
+h2{font-weight:500;font-size:32px;margin:0 0 16px}
+.btn{display:inline-block;padding:6px 12px;border-radius:6px;border:1px solid transparent;font-size:16px;cursor:pointer}
+.btn-primary{background:#0d6efd;color:#fff}.btn-danger{background:#dc3545;color:#fff}.btn-secondary{background:#6c757d;color:#fff}
+.form-control{padding:6px 12px;border:1px solid #ced4da;border-radius:6px;font-size:16px;width:260px}
+table{width:100%;border-collapse:collapse;margin-top:16px}th,td{padding:8px;border-bottom:1px solid #dee2e6;text-align:left}
+th{font-weight:700}tr:nth-child(even){background:rgba(0,0,0,.05)}
+.badge{background:#198754;color:#fff;border-radius:6px;padding:2px 6px;font-size:12px}
+</style></head><body>
+<div class="navbar"><b>安和診所</b><a class="active" href="#">病患資料</a><a href="#">設定</a><span style="margin-left:auto">櫃台 林小姐 ｜ 登出</span></div>
+<div class="container">
+<h2>病患資料</h2>
+<input class="form-control" placeholder="搜尋姓名／電話／身分證"> <button class="btn btn-primary">搜尋</button> <button class="btn btn-secondary">新增病患</button>
+<table><thead><tr><th>病歷號</th><th>姓名</th><th>電話</th><th>生日</th><th>最近就診</th><th></th></tr></thead><tbody>
+<tr><td>A00123</td><td>陳美玲</td><td>0912-345-678</td><td>1958/03/12</td><td>2026/10/20</td><td><button class="btn btn-primary">編輯</button> <button class="btn btn-danger">刪除</button></td></tr>
+<tr><td>A00124</td><td>林建宏</td><td>0921-778-002</td><td>1984/11/02</td><td>2026/10/18</td><td><button class="btn btn-primary">編輯</button> <button class="btn btn-danger">刪除</button></td></tr>
+<tr><td>A00125</td><td>王小明 <span class="badge">初診</span></td><td>0935-110-245</td><td>2019/06/30</td><td>2026/10/22</td><td><button class="btn btn-primary">編輯</button> <button class="btn btn-danger">刪除</button></td></tr>
+<tr><td>A00126</td><td>黃淑芬</td><td>0988-201-337</td><td>1971/01/25</td><td>2026/09/30</td><td><button class="btn btn-primary">編輯</button> <button class="btn btn-danger">刪除</button></td></tr>
+</tbody></table></div></body></html>

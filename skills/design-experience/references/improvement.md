@@ -25,7 +25,7 @@ Walk the representative task on 現況 yourself. Check it against Nielsen's ten 
 
 ## Problem list and layers
 
-Record each problem with an ID (P1, P2, …), a one-line description, its layer, its source (user, reports from users, or agent review), its severity, and the 現況 screenshot that shows it. Rate severity high, medium, or low by how often the main task meets it and how badly it blocks the task (after NN/g severity ratings), with the reason; mark it provisional until the user has said who uses the screen and how often. Unconfirmed agent-review findings stay in the list under their source. Proposals cite these IDs.
+Record each problem with an ID (P1, P2, …), a one-line description, its layer, its source (user, reports from users, or agent review) and for agent review the heuristic or baseline section it breaks, its severity, and the 現況 screenshot that shows it. Rate severity high, medium, or low by how often the main task meets it and how badly it blocks the task (after NN/g severity ratings), with the reason; mark it provisional until the user has said who uses the screen and how often. Unconfirmed agent-review findings stay in the list under their source. Proposals cite these IDs.
 
 | Layer | Typical signals | Path |
 | --- | --- | --- |
