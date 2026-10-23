@@ -14,10 +14,12 @@ Route by the user's natural-language intent and read only the reference you need
 
 | Intent | Capability |
 | --- | --- |
+| Threat modeling and security design review of a planned feature or change, before code exists | [threat-model](references/threat-model.md) |
 | Security review of code, a diff, or a PR: is this safe, does it have vulnerabilities | [review](references/review.md) |
 | Leaked secrets, over-broad permissions, or network exposure, including handoffs from the DevOps role | [exposure](references/exposure.md) |
+| Dependency risk: known vulnerabilities, version pins, SBOM, signatures, provenance of a release | [supply-chain](references/supply-chain.md) |
 
-A request that names no supported capability is outside this entry's current scope; say so instead of improvising a method.
+When one request spans several capabilities, work in lifecycle order: threat-model, then review, then supply-chain, then exposure. A request that names no supported capability is outside this entry's current scope; say so instead of improvising a method.
 
 ## Fix the subject
 
@@ -67,7 +69,7 @@ Each capability has a baseline practice that works with this skill alone. When a
 - **Code fixes:** hand them to the project's own implementation entry point, found in project rules, then context, then installed skills offered as a suggestion, then by asking. Send a dispatch brief (fields below).
 - **Dispatch brief:** write it for a receiver with no context. Fields: goal; the finding with its evidence package (location, six elements, severity); the invariant to enforce; the narrowest fix; the regression test wanted; done criteria (完成條件); decisions needed from the user (需要使用者決定的事項); and the note that the CISO re-reviews after delivery.
 - **Fix status and risk acceptance:** a delivered fix is only 修補已交付 until this skill re-reviews it, and acceptance is the user's decision; [evidence](references/evidence.md#completion-states) owns both.
-- **Credential, permission, and containment changes:** hand them to the DevOps role's environment work, marked as needing the user's authorization; [exposure](references/exposure.md) owns the details.
+- **Environment and pipeline changes:** credential rotation, permission changes, containment, and edits to pipeline or infrastructure definitions go to the DevOps role's environment work (the `devops` skill when installed, otherwise the environment owner the project designates), marked as needing the user's authorization; [exposure](references/exposure.md) owns the details.
 - **Other specialists:** hand over the evidence package and the open question; leave their call to them.
 - **Sources:** [sources](references/sources.md) records the methodology this skill borrows and its versions.
 
@@ -114,7 +116,7 @@ When no project rule and no installed description fits and the request does not 
 ===== FILE: references/evidence.md =====
 # Findings and evidence
 
-Shared by every capability. A claim about this system is evidence only when it points to a location someone else can open: a file and line, a diff, a commit, a reproduction, or a CVE identifier. Memory, a summary, or another tool's report is a lead, not evidence.
+Shared by every capability. A claim about this system is evidence only when it points to a location someone else can open: a file and line, a diff, a commit, a reproduction, or a CVE or other advisory identifier. Memory, a summary, or another tool's report is a lead, not evidence.
 
 ## Threshold for a confirmed finding
 
@@ -127,7 +129,9 @@ A finding is confirmed only when it states all six, drawn from the code or other
 - **Resource:** the data, capability, or system affected.
 - **Result:** the observable outcome, derived from the source path or shown by a reproduction.
 
-Plus one of: a `file:line` that establishes the path, a reproduction another person can run in isolation, or a CVE identifier for a known-vulnerable component actually in use. A finding missing any element is not confirmed.
+Plus one of: a `file:line` that establishes the path, a reproduction another person can run in isolation, or a CVE or other advisory identifier for a known-vulnerable component actually in use. A finding missing any element is not confirmed.
+
+A declaration in a manifest, pipeline, or infrastructure definition is evidence for the effect it declares: when the six elements follow from what the definition states, the finding is confirmed on it, and what the definition does not show, such as the applied state or what a moving reference currently resolves to, is stated as a gap.
 
 A credential value found in a log, repository, or artifact meets the threshold on that evidence alone: the principal is whoever can read that location (the count may be unknown); the input is read access to it; the control is the missing masking or secret handling; the boundary is the secret store to the reader; the resource is the credential and what it reaches; the result is the value disclosed at that file and line.
 
@@ -201,11 +205,12 @@ A secret printed in a log or committed to a repository; a token, role, or workfl
 ## Steps
 
 1. **Scope.** Fix the SHA or run and the categories to inspect: secrets, permissions, network. List what cannot be seen, such as who can read a log, the applied state of infrastructure, or a credential's actual reach. **Done:** the inspected set and the unexamined set are written down.
-2. **Secrets.** Locate each exposed credential by name and location only, under the entry's [Safety floor](../SKILL.md#safety-floor); never reprint any part of a value and never test it by using it. Note who can read that location. **Done:** each credential has a name, a location, and its readers or the gap.
-3. **Permissions.** For each token, role, or workflow permission, compare what is granted with what the job needs, and name who can trigger or influence it, including untrusted contributors. **Done:** each grant has its principal, granted scope, needed scope, and the narrowest scope that suffices.
-4. **Network.** Read the infrastructure and configuration for ports, endpoints, and interfaces reachable beyond their intended audience. The definition establishes the declared exposure; whether it is applied, and how well the service behind it authenticates, are separate gaps, each with a concrete check the owner can run, such as reading the applied rule from the provider's console or CLI and trying the login from an approved network. Never connect to, scan, or log in to a live host. **Done:** each exposure has its source location, declared reach, and the unverified applied state.
-5. **Judge.** Apply the threshold in [evidence](evidence.md). A credential value in a log, repository, or artifact, and a permission or exposure whose elements follow from its definition, are confirmed on that evidence; [evidence](evidence.md#threshold-for-a-confirmed-finding) maps the elements and [rates by reach](evidence.md#severity-and-classification). **Done:** every item is confirmed with severity and classification, 待驗證 with the missing fact, or excluded with the reason.
-6. **Dispatch.** Treat an exposed credential as compromised and recommend rotating it first; deleting the log or history alone does not undo the exposure. Hand rotation, revocation, log removal or masking, permission changes, and containment to the DevOps role's environment work (the `devops` skill when installed, otherwise the environment owner the project designates), each marked as needing the user's authorization, with the dispatch brief from [the entry](../SKILL.md#work-with-existing-flows). A pipeline or infrastructure definition that sets a permission or an exposure is a permission change, not a code change, and goes to the DevOps role as well. Application code changes, such as stopping a program from printing a secret, go to the project's implementation entry point. **Done:** every confirmed finding has a receiver, a named action, and the authorization it needs.
+2. **Look for depth.** Check [delegation](delegation.md) before inspecting by hand; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
+3. **Secrets.** Locate each exposed credential by name and location only, under the entry's [Safety floor](../SKILL.md#safety-floor); never reprint any part of a value and never test it by using it. Note who can read that location. **Done:** each credential has a name, a location, and its readers or the gap.
+4. **Permissions.** For each token, role, or workflow permission, compare what is granted with what the job needs, and name who can trigger or influence it, including untrusted contributors. **Done:** each grant has its principal, granted scope, needed scope, and the narrowest scope that suffices.
+5. **Network.** Read the infrastructure and configuration for ports, endpoints, and interfaces reachable beyond their intended audience. The definition is the evidence for the declared exposure; whether it is applied, and how well the service behind it authenticates, are separate gaps, each with a concrete check the owner can run, such as reading the applied rule from the provider's console or CLI and trying the login from an approved network. Never connect to, scan, or log in to a live host. **Done:** each exposure has its source location, declared reach, and the unverified applied state.
+6. **Judge.** Apply the threshold in [evidence](evidence.md). A credential value in a log, a permission, or an exposure is confirmed as [evidence](evidence.md#threshold-for-a-confirmed-finding) maps it, and rated [by reach](evidence.md#severity-and-classification). **Done:** every item is confirmed with severity and classification, 待驗證 with the missing fact, or excluded with the reason.
+7. **Dispatch.** Treat an exposed credential as compromised and recommend rotating it first; deleting the log or history alone does not undo the exposure. Hand rotation, revocation, log removal or masking, permission changes, and containment to the receiver [the entry](../SKILL.md#work-with-existing-flows) names for environment and pipeline changes, each marked as needing the user's authorization, with the dispatch brief defined there. A pipeline or infrastructure definition that sets a permission or an exposure is such a change, not a code change. Application code changes, such as stopping a program from printing a secret, go to the project's implementation entry point. **Done:** every confirmed finding has a receiver, a named action, and the authorization it needs.
 
 ## Output
 
@@ -221,7 +226,7 @@ The applied state of infrastructure, the readers of a log, or a credential's rea
 
 ## Handoff
 
-Rotation, revocation, log removal, permission changes, containment, and code changes go to the receivers named in step 6. Evidence that a credential was used by someone else, or of a compromise in progress: say that commanding an active incident is not yet part of this skill, hand the evidence to the user and the DevOps role's environment work, and note that containment needs the user's authorization. The task the handoff came from, such as diagnosing a failing run, stays with the sender; say that it can continue. After delivery, re-review the fixed state under [evidence](evidence.md#completion-states).
+Rotation, revocation, log removal, permission changes, containment, and code changes go to the receivers in [the entry](../SKILL.md#work-with-existing-flows). Evidence that a credential was used by someone else, or of a compromise in progress: say that commanding an active incident is not yet part of this skill, hand the evidence to the user and the environment receiver, and note that containment needs the user's authorization. The task the handoff came from, such as diagnosing a failing run, stays with the sender; say that it can continue. After delivery, re-review the fixed state under [evidence](evidence.md#completion-states).
 
 
 ===== FILE: references/review.md =====
@@ -282,6 +287,18 @@ OWASP Top 10:2025 categories: A01 Broken Access Control; A02 Security Misconfigu
 
 The CWE Top 25 page could not be fetched on 2026-10-23 (cwe.mitre.org unreachable), so the edition URL is recorded without its publication date or ranking. Give each confirmed finding its best-known CWE identifier; confirm it on cwe.mitre.org when reachable, and when it is not, keep the identifier and mark it unconfirmed rather than omitting it.
 
+## Threat modeling and supply chain references
+
+Verified on 2026-10-23 unless noted; describe them in your own words, never copy their text.
+
+| Reference | Edition and location | License or terms | Used in |
+| --- | --- | --- | --- |
+| STRIDE | Six categories: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege, as listed in Microsoft Learn, [Threats - Microsoft Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats) (docs repository commit `2862bc030bf88db4a315e37429f65194a585312d`) | Not verified; the descriptions are not reproduced here | [threat-model](threat-model.md) |
+| OWASP ASVS | 5.0.0, released 2025-05-30; repository [OWASP/ASVS](https://github.com/OWASP/ASVS), tag `v5.0.0_release`, master commit `2b47a9dd16760ee484a6672d197f1f7e25d9c632` | CC BY-SA 4.0 | Mitigation references in [threat-model](threat-model.md) |
+| SLSA | v1.2, status Approved per [slsa.dev/spec](https://slsa.dev/spec/); repository [slsa-framework/slsa](https://github.com/slsa-framework/slsa), main commit `7b05aeb8ce7722d4c55849370dc903dca1de0933` | Community Specification License 1.0 (repository `LICENSE.md`) | Build-level reference in [supply-chain](supply-chain.md) |
+
+SLSA v1.2 Build track levels, from [build-track-basics](https://slsa.dev/spec/v1.2/build-track-basics): L0 no guarantees; L1 provenance exists; L2 hosted build platform; L3 hardened builds. v1.2 also defines a [Source track](https://slsa.dev/spec/v1.2/tracks#source-track); its levels were not verified here.
+
 ## Known underlying security skills
 
 Facts about tools that exist, for installers; a hint only, never a routing basis. Discovery and dispatch rules live in [delegation](delegation.md). Facts below were read from the local install record on 2026-10-23.
@@ -298,3 +315,88 @@ Ideas were adapted in paraphrase; no text was copied.
 | --- | --- | --- |
 | `security-audit` skill | Installed from the GitHub repository `cloudflare/security-audit-skill`, per the install record; no license file is present in the installed copy and the commit is not recorded (only a folder hash), so the license is unverified | The trust-boundary threshold and its six elements, confirmed versus needs-validation, no severity for unconfirmed items, "a checklist deviation is not a finding", the rule against probing deployed systems ([evidence](evidence.md), [review](review.md)) |
 | `security-reviewer` agent | A locally authored agent definition; provenance unknown, no upstream or license recorded | OWASP and CWE classification of each finding and the review report layout ([review](review.md)) |
+
+
+===== FILE: references/supply-chain.md =====
+# Supply chain
+
+Dependency risk and build integrity: known vulnerabilities in the packages a project resolves, version pinning, and whether releases carry provenance, signatures, and an SBOM, with SLSA as the reference.
+
+## Triggers
+
+"Is this package safe", known vulnerabilities (CVE) in dependencies, version pins and lockfiles, third-party actions or images in a pipeline, an SBOM, signing, provenance, or the integrity of a release pipeline (供應鏈、相依套件、套件安全嗎).
+
+## Inputs
+
+- Manifests and lockfiles, and the pipeline definitions that build and publish, resolved to a fixed SHA.
+- Advisory data: whatever the evidence in hand contains, or a lookup the environment actually provides. Without either, advisory status is unverified.
+- Where each dependency is used in the code, when its risk depends on how it is called.
+- The authorization in force; this capability needs read access only.
+
+## Steps
+
+1. **Scope.** Fix the SHA and list the manifests, lockfiles, and pipelines in scope, and what is out of reach. **Done:** the inspected set and the unexamined set are written down.
+2. **Look for depth.** Check [delegation](delegation.md) before matching advisories yourself; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
+3. **Resolve.** For each dependency record the declared range and the version the lockfile resolves, and whether the lockfile carries integrity hashes. **Done:** each dependency has a declared range, a resolved version, and its source location, or the gap.
+4. **Match advisories.** Compare resolved versions with the advisory data available. Say where the data came from; never claim a lookup that did not happen, and when no data is available say the advisory status is unverified. A matching advisory is a candidate: apply the [threshold](evidence.md#threshold-for-a-confirmed-finding), where the shown use of the component supplies the elements and the advisory identifier is the reference; a match without shown use is 待驗證 with the missing fact. A package with no advisory data is not reported as vulnerable. **Done:** every dependency has a disposition: confirmed, 待驗證, no data, or no match, with the data source.
+5. **Pins and references.** Check that versions are pinned by a lockfile and that third-party actions, images, and tools in pipelines are referenced by an immutable identifier such as a commit digest, not a branch or movable tag. A reference that moves, in a job that builds or publishes, is evidenced by its definition under the [threshold](evidence.md#threshold-for-a-confirmed-finding). **Done:** each external reference has its location, its form, and a disposition.
+6. **Integrity and provenance.** Check whether the release produces provenance, signatures, and an SBOM, and place the build on the SLSA Build track in [sources](sources.md#threat-modeling-and-supply-chain-references): state the level the evidence supports and no higher. Do not rate the Source track, whose levels are not verified in sources. **Done:** each of provenance, signature, and SBOM is present with its location or absent, and the supported Build level is named.
+7. **Judge and dispatch.** Rate and classify each confirmed finding under [evidence](evidence.md), normally OWASP A03 Software Supply Chain Failures. Every confirmed finding gets a receiver, a named change, and the authorization it needs, per Handoff. **Done:** each confirmed finding has its dispatch.
+
+## Output
+
+The fixed report from `SKILL.md`, with the SHA, inspected and unexamined sets, each confirmed finding with its six elements, location, advisory identifier or reference, severity, classification, and [completion state](evidence.md#completion-states), 待驗證 items, the supported SLSA Build level with what is missing for the next, the data source for every advisory claim, and a dispatch brief per change.
+
+## Done
+
+A supply-chain review is done when every dependency and every external pipeline reference in scope has a disposition and provenance, signature, and SBOM are each marked present or absent. A report with no findings states the data source and what was not examined; it never claims the supply chain is secure.
+
+## Blocked
+
+No advisory data and no lookup: report the resolved versions, mark advisory status unverified, and name the lookup that would settle it. A lockfile or pipeline is missing: report what the visible evidence supports. The entry's [Safety floor](../SKILL.md#safety-floor) still applies.
+
+## Handoff
+
+Dependency upgrades → the project's implementation entry point, with the brief. Pipeline pinning, provenance, signing, and permission changes → the receivers in [the entry](../SKILL.md#work-with-existing-flows), marked as needing authorization. Exposed credentials found along the way → [exposure](exposure.md). After delivery, re-review the fixed state under [evidence](evidence.md#completion-states).
+
+
+===== FILE: references/threat-model.md =====
+# Threat model
+
+STRIDE threat modeling and security design review for a feature or change that is planned, not yet built or not yet reviewable as code: trust boundaries, threats, mitigations, and the open questions that block a sound model.
+
+## Triggers
+
+A planned feature, an architecture or integration change, "what are the security risks of this design", "do a threat model" (威脅建模、設計新功能的資安風險); a design note, diagram, or description with little or no code behind it.
+
+## Inputs
+
+- The design: a note, diagram, or the user's description, resolved to a document revision where one exists. Facts the user states count as design facts; anything else is a gap.
+- Project rules and any recorded security decisions.
+- The authorization in force; this capability needs read access only.
+
+## Steps
+
+1. **Scope.** Fix what is being modeled and the design revision, and sort the design's facts into stated and missing. **Done:** the modeled scope and the list of missing facts are written down.
+2. **Look for depth.** Check [delegation](delegation.md) before applying STRIDE yourself; it decides whether a project-designated or installed security skill takes the depth, and the baseline runs when it finds nothing. **Done:** the discovery result and the source that decided it are stated.
+3. **Map.** List the actors, processes, data stores, and data flows, and mark each trust boundary where the level of trust changes. Take every element from the design; add none the design does not state. **Done:** each element and boundary cites the design line or statement it came from.
+4. **Apply STRIDE.** For each element and boundary consider the six categories in [sources](sources.md#threat-modeling-and-supply-chain-references) (spoofing, tampering, repudiation, information disclosure, denial of service, elevation of privilege). State a threat only where the design gives a basis, and name the design fact it depends on; where a category does not apply, say why in a few words. **Done:** each element and boundary has all six categories considered, as a threat or as not applicable with a reason.
+5. **Keep threats as hypotheses.** A threat about a design does not meet the [threshold for a confirmed finding](evidence.md#threshold-for-a-confirmed-finding): it has no severity and no completion state, and it is never reported as a vulnerability. Where the design depends on a missing fact, state the threat conditionally on it. **Done:** every threat is marked as an assumption with the fact it rests on.
+6. **Mitigate.** For each threat, recommend a mitigation at the boundary where it belongs, and say what evidence would later show it was built. Cite an OWASP ASVS requirement only after looking up its actual identifier in the edition in [sources](sources.md); never from memory. **Done:** each threat has a mitigation and the evidence that would confirm it.
+7. **Ask.** List the facts to decide before building, ordered by how many threats depend on them. **Done:** each open question names the threats it unblocks.
+
+## Output
+
+The fixed report from `SKILL.md`: 範圍 with the design and its missing facts; 判斷 with the trust boundaries, then the STRIDE threats as assumptions, each with its mitigation and the fact it depends on; 發現 stating that a threat model yields no confirmed findings; 分派 with who would carry the mitigations if the user adopts them; 後續 with the open questions. Writing follows [the modes in the entry](../SKILL.md#choose-a-mode): only when the user asks, and only to an existing record source or a path the user names; say where it was written, otherwise write nothing.
+
+## Done
+
+A threat model is done when each element and boundary has the six categories considered, every threat has a mitigation, and the open questions are listed. It never claims the design is secure, and it never states a severity.
+
+## Blocked
+
+The design is too thin to name elements: list the missing facts as questions, give only conditional threats that name the fact each depends on, and ask the user to supply them before refining. Never invent a design detail to proceed.
+
+## Handoff
+
+Design decisions → the project's design or architecture owner. Mitigations the user adopts → the project's implementation entry point, with a dispatch brief from [the entry](../SKILL.md#work-with-existing-flows). Once code exists, the built mitigations are checked by [review](review.md); permission and exposure questions in the deployed system belong to [exposure](exposure.md).

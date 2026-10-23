@@ -111,6 +111,63 @@ infra/network.tf
 
 `docs/runbook.md` 記載管理主控台位於 `admin.ledger.example:8443`，使用內建帳號密碼登入（登入強度無此證據）。
 
+`F-webhook-design`：規劃中的功能設計說明（`docs/design/payment-webhook.md`）。
+
+```text
+Payment webhook receiver (planned, not yet implemented)
+1: The payment provider calls POST /hooks/pay on a public endpoint of ledger-api.
+2: The receiver enqueues the raw payload to an internal Redis queue and returns 200.
+3: A worker consumes the queue and runs the `reconcile` job with the production database credentials.
+4: The raw payload is also stored in an object-storage bucket for 90 days.
+5: Support staff read stored payloads through the existing admin console.
+6: Open: how requests from the provider are authenticated has not been decided.
+```
+
+`F-lockfile`：相依套件證據。
+
+```text
+package.json
+1: "dependencies": { "left-padx": "^2.3.1", "express": "^4.19.2" }
+
+package-lock.json (excerpt)
+1: "node_modules/left-padx": { "version": "2.3.1", "resolved": "https://registry.example/left-padx-2.3.1.tgz", "integrity": "sha512-FIXTURE" }
+2: "node_modules/express": { "version": "4.19.2", "resolved": "https://registry.example/express-4.19.2.tgz", "integrity": "sha512-FIXTURE" }
+
+src/render.ts
+5: const out = pad(req.query.template as string, 40);   // pad is imported from 'left-padx'
+
+advisory-fixture.json  (simulated advisory data, FICTIONAL, not a real database record)
+{ "id": "FICTIONAL-2026-0001", "package": "left-padx", "affected": "<2.3.4", "fixed": "2.3.4",
+  "summary": "pad() evaluates template placeholders in its input, allowing code execution when the input is attacker-controlled." }
+```
+
+沒有 `express` 4.19.2 的任何 advisory 資料；環境沒有提供網路查詢。
+
+`F-release-workflow`：
+
+```text
+.github/workflows/release.yml
+1: on: { push: { tags: ['v*'] } }
+2: permissions: { contents: read }
+3: jobs:
+4:   publish:
+5:     runs-on: ubuntu-latest
+6:     steps:
+7:       - uses: actions/checkout@v4
+8:       - uses: some-org/build-action@main
+9:       - run: npm publish
+```
+
+此 workflow 沒有產生 provenance、簽章或 SBOM 的步驟；`some-org/build-action@main` 目前指向哪個 commit：無此證據。
+
+`F-threat-skill`：已安裝 skill 的 description。
+
+```text
+threat-modeler — STRIDE threat modeling of a software design. Quick mode (default): read-only analysis of a
+design note; returns a report to the caller. Deep mode: only on an explicit request for a full model; runs
+parallel agents and writes data-flow diagrams and report files under threat-models/.
+```
+
 
 
 CASE INPUT (the user request and fixtures):

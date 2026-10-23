@@ -1,6 +1,6 @@
 # Findings and evidence
 
-Shared by every capability. A claim about this system is evidence only when it points to a location someone else can open: a file and line, a diff, a commit, a reproduction, or a CVE identifier. Memory, a summary, or another tool's report is a lead, not evidence.
+Shared by every capability. A claim about this system is evidence only when it points to a location someone else can open: a file and line, a diff, a commit, a reproduction, or a CVE or other advisory identifier. Memory, a summary, or another tool's report is a lead, not evidence.
 
 ## Threshold for a confirmed finding
 
@@ -13,7 +13,9 @@ A finding is confirmed only when it states all six, drawn from the code or other
 - **Resource:** the data, capability, or system affected.
 - **Result:** the observable outcome, derived from the source path or shown by a reproduction.
 
-Plus one of: a `file:line` that establishes the path, a reproduction another person can run in isolation, or a CVE identifier for a known-vulnerable component actually in use. A finding missing any element is not confirmed.
+Plus one of: a `file:line` that establishes the path, a reproduction another person can run in isolation, or a CVE or other advisory identifier for a known-vulnerable component actually in use. A finding missing any element is not confirmed.
+
+A declaration in a manifest, pipeline, or infrastructure definition is evidence for the effect it declares: when the six elements follow from what the definition states, the finding is confirmed on it, and what the definition does not show, such as the applied state or what a moving reference currently resolves to, is stated as a gap.
 
 A credential value found in a log, repository, or artifact meets the threshold on that evidence alone: the principal is whoever can read that location (the count may be unknown); the input is read access to it; the control is the missing masking or secret handling; the boundary is the secret store to the reader; the resource is the credential and what it reaches; the result is the value disclosed at that file and line.
 
