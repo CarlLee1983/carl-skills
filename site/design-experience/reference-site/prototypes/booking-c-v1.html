@@ -1,0 +1,271 @@
+<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>預約流程原型 v1：結構 C × 視覺處理 2（示例）</title><style>
+:root{--bg:#fbf7f1;--card:#fffdf9;--ink:#2b2420;--muted:#6b5f57;--pri:#8a3a1e;--on-pri:#fbf7f1;--rule:#e8ddd0;--field:#8f8073;--tint:#f3e2d2;--err:#a1260d;--ok:#2f6b3a;
+--f1:40px;--f2:28px;--f3:20px;--f4:16px;--f5:14px;--s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:72px;--r:6px;
+--display:Georgia,"Songti TC","STSong",serif;--text:"PingFang TC","Helvetica Neue",sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 var(--f4)/1.7 var(--text)}
+h1,h2,h3,p,ol,ul,fieldset{margin:0}ul,ol{padding:0;list-style:none}fieldset{border:0;padding:0;min-width:0}
+h1,h2,.brand{font-family:var(--display);font-weight:600}
+h1{font-size:var(--f2);line-height:1.3}h2{font-size:var(--f3);line-height:1.4}h3{font-size:var(--f4);font-weight:600;line-height:1.5}
+@media (min-width:761px){h1{font-size:var(--f1);line-height:1.25}h2{font-size:var(--f2)}}
+.wrap{max-width:1040px;margin:0 auto;padding:0 var(--s2)}@media (min-width:761px){.wrap{padding:0 var(--s4)}}
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+a{color:var(--ink);text-underline-offset:4px}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:var(--s2);padding:var(--s2) 0;border-bottom:1px solid var(--rule)}
+.brand{font-size:var(--f3)}.brand small{font-family:var(--text);font-size:var(--f5);color:var(--muted);margin-left:var(--s1);font-weight:400}
+.muted{color:var(--muted)}.small{font-size:var(--f5)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s1);min-height:48px;padding:0 var(--s3);background:var(--pri);color:var(--on-pri);font:600 var(--f4)/1 var(--text);text-decoration:none;border:0;border-radius:var(--r);cursor:pointer}
+.btn:hover{filter:brightness(1.12)}.btn[disabled],.btn[aria-disabled=true]{background:#d9cdc0;color:#5e534b;cursor:not-allowed;filter:none}
+.btn-2{display:inline-flex;align-items:center;justify-content:center;gap:var(--s1);min-height:44px;padding:0 var(--s2);background:transparent;color:var(--ink);font:600 var(--f5)/1 var(--text);border:1px solid var(--field);border-radius:var(--r);cursor:pointer;text-decoration:none}
+.link{background:none;border:0;padding:var(--s1) 0;font:600 var(--f5) var(--text);color:var(--pri);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.num{display:inline-grid;place-items:center;min-width:32px;height:32px;border-radius:999px;background:var(--tint);color:var(--pri);font:600 var(--f5)/1 var(--display)}
+.tag{display:inline-block;font-size:var(--f5);background:var(--tint);padding:0 var(--s1);border-radius:var(--r);font-family:var(--text);font-weight:400;vertical-align:middle}
+.meta{display:flex;flex-wrap:wrap;gap:var(--s2);font-size:var(--f5);font-variant-numeric:tabular-nums}
+.meta span{display:inline-flex;align-items:center;gap:4px}.price{font-weight:600}
+.foot{padding:var(--s4) 0 var(--s5);border-top:1px solid var(--rule);font-size:var(--f5);color:var(--muted);margin-top:var(--s5)}
+
+body{padding-bottom:104px}
+main.wrap{padding-top:var(--s3)}
+.progress{display:flex;gap:var(--s1);margin-bottom:var(--s2);font-size:var(--f5);color:var(--muted);align-items:center}
+.progress ol{display:flex;gap:4px}.progress li{width:32px;height:4px;border-radius:2px;background:var(--rule)}.progress li.on{background:var(--pri)}
+h1:focus{outline:none}h1:focus-visible{outline:2px solid var(--pri)}
+.lead{margin:var(--s1) 0 var(--s3)}
+.back{display:inline-flex;align-items:center;gap:4px;min-height:44px;background:none;border:0;padding:0;font:600 var(--f5) var(--text);color:var(--ink);cursor:pointer;margin-bottom:var(--s1)}
+.opts{display:grid;gap:var(--s1)}
+.opt{display:grid;grid-template-columns:24px 1fr;gap:var(--s1) var(--s2);padding:var(--s2);border:1px solid var(--field);border-radius:var(--r);background:var(--card);cursor:pointer}
+.opt input{width:20px;height:20px;margin:4px 0 0;accent-color:var(--pri)}
+.opt:has(input:checked){border:2px solid var(--pri);background:var(--tint);padding:15px}
+.opt:has(input:focus-visible){outline:2px solid var(--pri);outline-offset:2px}
+.opt .desc{grid-column:2}
+.days{display:flex;gap:var(--s1);overflow-x:auto;padding:4px 4px var(--s1);margin:0 -4px var(--s3)}
+.day{flex:none;min-width:64px;min-height:64px;border:1px solid var(--field);border-radius:var(--r);background:var(--card);font:500 var(--f5)/1.4 var(--text);color:var(--ink);cursor:pointer;font-variant-numeric:tabular-nums}
+.day b{display:block;font-size:var(--f4)}.day[aria-pressed=true]{border:2px solid var(--pri);background:var(--tint)}
+.grp{margin-bottom:var(--s3)}.grp h2{font:600 var(--f5) var(--text);color:var(--muted);margin-bottom:var(--s1)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:var(--s1)}
+.slot{min-height:48px;border:1px solid var(--field);border-radius:var(--r);background:var(--card);font:500 var(--f4) var(--text);font-variant-numeric:tabular-nums;color:var(--ink);cursor:pointer}
+.slot[aria-pressed=true]{border:2px solid var(--pri);background:var(--tint);font-weight:600}
+.state{border:1px solid var(--rule);border-radius:var(--r);background:var(--card);padding:var(--s3);display:grid;gap:var(--s2);justify-items:start}
+.state p{display:flex;gap:var(--s1);align-items:flex-start}
+.state .i{flex:none;margin-top:4px}
+.loading{color:var(--muted)}
+.alert{border:2px solid var(--err);border-radius:var(--r);background:#fdf1ec;padding:var(--s2);margin-bottom:var(--s3);display:grid;gap:var(--s1);justify-items:start}
+.alert p{display:flex;gap:var(--s1);align-items:flex-start;color:var(--ink)}.alert .i{flex:none;margin-top:4px;color:var(--err)}
+.alert strong{color:var(--err)}
+.fields{display:grid;gap:var(--s3)}
+.field label,.field legend{display:block;font-size:var(--f5);font-weight:600;margin-bottom:var(--s1)}
+.field .hint{font-size:var(--f5);color:var(--muted);margin:-4px 0 var(--s1)}
+.field input[type=text],.field input[type=tel]{width:100%;min-height:48px;padding:0 var(--s2);font:var(--f4) var(--text);color:var(--ink);background:var(--card);border:1px solid var(--field);border-radius:var(--r)}
+.field input:focus-visible{outline:2px solid var(--pri);outline-offset:1px}
+.field input[aria-invalid=true]{border:2px solid var(--err)}
+.err{display:flex;gap:4px;align-items:center;font-size:var(--f5);color:var(--err);margin-top:var(--s1)}
+.sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s1)}
+.size{position:relative}.size input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.size span{display:grid;place-items:center;min-height:56px;padding:var(--s1);border:1px solid var(--field);border-radius:var(--r);background:var(--card);text-align:center;font-size:var(--f5);line-height:1.4}
+.size span b{font-size:var(--f4)}
+.size input:checked+span{border:2px solid var(--pri);background:var(--tint)}
+.size input:focus-visible+span{outline:2px solid var(--pri);outline-offset:2px}
+.sizes[aria-invalid=true] span{border-color:var(--err)}
+.review{border-top:1px solid var(--ink);margin:var(--s3) 0 0}
+.review div{display:grid;grid-template-columns:96px 1fr;gap:var(--s2);padding:var(--s2) 0;border-bottom:1px solid var(--rule)}
+.review dt{font-size:var(--f5);color:var(--muted)}.review dd{margin:0;font-variant-numeric:tabular-nums}
+.done-mark{display:inline-grid;place-items:center;width:48px;height:48px;border-radius:999px;background:var(--tint);color:var(--pri);margin-bottom:var(--s2)}
+.code{font:600 var(--f2)/1.2 var(--text);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.note{display:flex;gap:var(--s1);align-items:flex-start;font-size:var(--f5);color:var(--muted);margin-top:var(--s3)}.note .i{flex:none;margin-top:2px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--rule);padding:var(--s2) 0;z-index:2}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:var(--s2)}
+.bar .sumline{font-size:var(--f5);min-width:0}
+.sum{display:none}
+.ctl{margin-top:var(--s5);border:1px dashed var(--field);border-radius:var(--r);padding:var(--s2);font-size:var(--f5)}
+.ctl summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+.ctl label{display:flex;gap:var(--s1);align-items:center;min-height:36px}
+[hidden]{display:none!important}
+@media (min-width:761px){.layout{display:grid;grid-template-columns:1fr 300px;gap:var(--s5);align-items:start}
+.sum{display:block;border:1px solid var(--rule);border-radius:var(--r);padding:var(--s3);background:var(--card);position:sticky;top:var(--s3)}
+.sum h2{font:600 var(--f5) var(--text);color:var(--muted);margin-bottom:var(--s2)}.sum dl{margin:0;display:grid;gap:4px}.sum dt{font-size:var(--f5);color:var(--muted)}.sum dd{margin:0 0 var(--s1)}}
+</style></head><body>
+
+<div class="wrap"><header class="top"><div class="brand">（店名待定）<small>寵物美容</small></div><span class="small muted">線上預約</span></header></div>
+<main class="wrap"><div class="layout"><div id="view"></div>
+<aside class="sum" aria-label="你的預約"><h2>你的預約</h2><dl id="sum"></dl></aside></div>
+<details class="ctl" id="ctl"><summary>原型控制：示例情境（不屬於設計）</summary>
+<p class="muted">切換下一次「載入時段」或「送出預約」時要模擬的結果。</p>
+<label><input type="radio" name="scn" value="ok" checked>正常</label>
+<label><input type="radio" name="scn" value="taken">送出時：時段剛被別人訂走</label>
+<label><input type="radio" name="scn" value="neterr">送出時：網路中斷</label>
+<label><input type="radio" name="scn" value="slotserr">載入時段時：伺服器錯誤</label></details>
+</main>
+<div class="wrap"><footer class="foot">預約流程原型 v1（結構 C × 視覺處理 2）｜服務、價格、時段皆為示例資料，非店家實際資料；送出不會建立真的預約。圖示取自 Lucide（ISC License，© Lucide Icons and Contributors）。</footer></div>
+<div class="bar" id="bar"><div class="wrap"><span class="sumline" id="sumline"></span><span id="baract"></span></div></div>
+
+<script>
+const SVC = [{"id": "s1", "name": "小型犬洗澡", "dur": 60, "price": 600, "desc": "洗澡、吹整、剪指甲、清耳朵。"}, {"id": "s2", "name": "小型犬洗澡＋全身修剪", "dur": 120, "price": 1200, "desc": "含洗澡項目，再依毛孩毛量做全身造型修剪。"}, {"id": "s3", "name": "中大型犬洗澡＋除廢毛（雙層毛犬種適用）", "dur": 150, "price": 1800, "desc": "柴犬、柯基、黃金獵犬等換毛季常選。"}, {"id": "s4", "name": "貓咪洗澡（需事先完成年度疫苗）", "dur": 90, "price": 1100, "desc": "安靜獨立的美容檯，全程一位美容師。"}];
+const IC = {"clock": "<svg class=\"i\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/></svg>", "chevron-left": "<svg class=\"i\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m15 18-6-6 6-6\"/></svg>", "chevron-right": "<svg class=\"i\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg>", "check": "<svg class=\"i\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg>", "circle-alert": "<svg class=\"i\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\"/><line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\"/></svg>", "rotate-ccw": "<svg class=\"i\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/></svg>", "calendar-days": "<svg class=\"i\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 2v4\"/><path d=\"M16 2v4\"/><rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\"/><path d=\"M3 10h18\"/><path d=\"M8 14h.01\"/><path d=\"M12 14h.01\"/><path d=\"M16 14h.01\"/><path d=\"M8 18h.01\"/><path d=\"M12 18h.01\"/><path d=\"M16 18h.01\"/></svg>", "info": "<svg class=\"i\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 16v-4\"/><path d=\"M12 8h.01\"/></svg>", "message-square-text": "<svg class=\"i\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z\"/><path d=\"M7 11h10\"/><path d=\"M7 15h6\"/><path d=\"M7 7h8\"/></svg>"};
+// 示例時段資料，對應 GET /slots?date= 的回傳（只有可預約時間）
+const DAYS = [["10/23","今天"],["10/24","五"],["10/25","六"],["10/26","日"],["10/27","一"],["10/28","二"],["10/29","三"]];
+const SLOTS = {"10/23":["15:00","16:30"],"10/24":["10:00","13:00","14:30"],"10/25":["10:00","10:30","11:30","13:00","14:30","15:00","16:00"],
+  "10/26":["11:00","15:30"],"10/27":[],"10/28":["10:00","10:30","13:00","16:00"],"10/29":["10:30","14:00"]};
+const S = {step:1, svc:null, day:"10/25", slot:null, owner:"", phone:"", pet:"", size:"", errors:{}, alert:null, slotsState:"ok", code:null, busy:false};
+const $ = s => document.querySelector(s);
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money = n => "NT$ " + n.toLocaleString("en-US");
+const svc = () => SVC.find(s => s.id === S.svc);
+const scenario = () => document.querySelector('input[name=scn]:checked').value;
+const takeScenario = () => { const v = scenario(); document.querySelector('input[name=scn][value=ok]').checked = true; return v; };
+
+function progress(n, label){ return `<div class="progress"><ol aria-hidden="true">${[1,2,3].map(i=>`<li class="${i<=n?'on':''}"></li>`).join("")}</ol><span>步驟 ${n}／3・${label}</span></div>`; }
+function back(to, label){ return `<button class="back" type="button" data-back="${to}">${IC["chevron-left"]}${label}</button>`; }
+
+function renderSum(){
+  const s = svc();
+  $("#sum").innerHTML = `<dt>服務</dt><dd>${s?`${esc(s.name)}<br><span class="small muted">${s.dur} 分鐘・${money(s.price)}</span>`:'<span class="muted">尚未選擇</span>'}</dd>
+  <dt>時段</dt><dd>${S.slot?`${S.day}（${DAYS.find(d=>d[0]===S.day)[1]}）${S.slot}`:'<span class="muted">'+(S.step<2?'下一步選擇':'尚未選擇')+'</span>'}</dd>
+  <dt>飼主與毛孩</dt><dd>${S.step>=3&&S.pet?esc(S.pet)+(S.size?`（${S.size}）`:''):'<span class="muted">最後填寫</span>'}</dd>`;
+}
+
+function bar(){
+  const s = svc(); let line = "", act = "";
+  if (S.step===1){ line = s?`<b>${money(s.price)}</b><span class="muted">・${s.dur} 分鐘</span>`:'<span class="muted">先選一項服務</span>';
+    act = `<button class="btn" type="button" id="next" ${s?'':'aria-disabled="true"'}>下一步：選時段${IC["chevron-right"]}</button>`; }
+  else if (S.step===2){ line = S.slot?`<b>${S.day} ${S.slot}</b><span class="muted">・${s.dur} 分鐘</span>`:'<span class="muted">先選一個時段</span>';
+    act = `<button class="btn" type="button" id="next" ${S.slot?'':'aria-disabled="true"'}>下一步：留資料${IC["chevron-right"]}</button>`; }
+  else if (S.step===3){ line = `<b>${money(s.price)}</b><span class="muted">・${S.day} ${S.slot}</span>`;
+    act = `<button class="btn" type="button" id="submit" ${S.busy?'aria-disabled="true"':''}>${S.busy?'送出中…':'確認預約'}</button>`; }
+  $("#bar").hidden = S.step===4;
+  $("#sumline").innerHTML = line; $("#baract").innerHTML = act;
+}
+
+function step1(){
+  return progress(1,"選服務") + `<h1 tabindex="-1">想幫毛孩做什麼？</h1>
+  <p class="lead muted">價格與時長來自店家服務清單，實際金額以現場確認毛況後為準。<span class="tag">示例資料</span></p>
+  ${S.errors.svc?`<p class="err" role="alert" id="e-svc">${IC["circle-alert"]}${S.errors.svc}</p>`:''}
+  <fieldset><legend class="small muted" style="margin-bottom:8px">服務項目</legend><div class="opts">${SVC.map(s=>`
+  <label class="opt"><input type="radio" name="svc" value="${s.id}" ${S.svc===s.id?'checked':''}>
+  <div><h3>${esc(s.name)}</h3><div class="meta"><span>${IC.clock}${s.dur} 分鐘</span><span class="price">${money(s.price)}</span></div></div>
+  <p class="desc small muted">${esc(s.desc)}</p></label>`).join("")}</div></fieldset>`;
+}
+
+function slotsBody(){
+  if (S.slotsState==="loading") return `<div class="state loading" role="status"><p>${IC["calendar-days"]}正在載入 ${S.day} 的可預約時段…</p></div>`;
+  if (S.slotsState==="error") return `<div class="state" role="alert"><p>${IC["circle-alert"]}<span>時段沒有載入成功，可能是網路不穩。你選的服務都還在。</span></p>
+    <button class="btn-2" type="button" id="retry">${IC["rotate-ccw"]}重新載入</button></div>`;
+  const list = SLOTS[S.day];
+  if (!list.length){ const next = DAYS.find(d => SLOTS[d[0]].length && d[0] > S.day);
+    return `<div class="state" role="status"><p>${IC.info}<span>${S.day}（${DAYS.find(d=>d[0]===S.day)[1]}）已經沒有可預約的時段。</span></p>
+    ${next?`<button class="btn-2" type="button" data-day="${next[0]}">看 ${next[0]}（${next[1]}）的時段</button>`:''}</div>`; }
+  const am = list.filter(t => t < "12:00"), pm = list.filter(t => t >= "12:00");
+  const g = (lab, xs) => xs.length ? `<div class="grp"><h2>${lab}</h2><div class="slots" role="group" aria-label="${lab}時段">${xs.map(t=>`<button class="slot" type="button" data-slot="${t}" aria-pressed="${S.slot===t}">${t}</button>`).join("")}</div></div>` : "";
+  return g("上午", am) + g("下午", pm);
+}
+
+function step2(){
+  return back(1,"改服務") + progress(2,"選時段") + `<h1 tabindex="-1">哪個時間方便？</h1>
+  <p class="lead muted">只列出還能預約的時間。<span class="tag">示例資料</span></p>
+  ${S.alert?`<div class="alert" role="alert"><p>${IC["circle-alert"]}<span>${S.alert}</span></p></div>`:''}
+  <div class="days" role="group" aria-label="日期">${DAYS.map(([d,w])=>`<button class="day" type="button" data-day="${d}" aria-pressed="${S.day===d}"><b>${d}</b>${w}</button>`).join("")}</div>
+  <div id="slotsbox" aria-live="polite">${slotsBody()}</div>`;
+}
+
+function field(id, label, type, val, hint, auto){
+  const e = S.errors[id];
+  return `<div class="field"><label for="f-${id}">${label}</label>${hint?`<p class="hint" id="h-${id}">${hint}</p>`:''}
+  <input id="f-${id}" name="${id}" type="${type}" value="${esc(val)}" autocomplete="${auto}" ${type==='tel'?'inputmode="tel"':''}
+   aria-invalid="${!!e}" aria-describedby="${[hint?'h-'+id:'', e?'e-'+id:''].filter(Boolean).join(' ')}">
+  ${e?`<p class="err" id="e-${id}">${IC["circle-alert"]}${e}</p>`:''}</div>`;
+}
+
+function step3(){
+  const sizes = [["小型","10 公斤以下"],["中型","10–25 公斤"],["大型","25 公斤以上"]];
+  return back(2,"改時段") + progress(3,"留資料") + `<h1 tabindex="-1">最後，留下聯絡方式</h1>
+  <p class="lead muted">我們只用這些資料聯絡你這次的預約。</p>
+  ${S.alert?`<div class="alert" role="alert">${S.alert}</div>`:''}
+  <div class="fields">
+  ${field("owner","飼主姓名","text",S.owner,"","name")}
+  ${field("phone","手機號碼","tel",S.phone,"預約編號與取消連結會用簡訊傳到這支手機","tel")}
+  ${field("pet","毛孩名字","text",S.pet,"","off")}
+  <fieldset class="field"><legend>體型</legend>
+  <div class="sizes" role="radiogroup" aria-invalid="${!!S.errors.size}" ${S.errors.size?'aria-describedby="e-size"':''}>${sizes.map(([k,w])=>`<label class="size"><input type="radio" name="size" value="${k}" ${S.size===k?'checked':''}><span><b>${k}</b>${w}</span></label>`).join("")}</div>
+  ${S.errors.size?`<p class="err" id="e-size">${IC["circle-alert"]}${S.errors.size}</p>`:''}</fieldset></div>
+  <dl class="review"><div><dt>服務</dt><dd>${esc(svc().name)}・${svc().dur} 分鐘</dd></div><div><dt>時段</dt><dd>${S.day}（${DAYS.find(d=>d[0]===S.day)[1]}）${S.slot}</dd></div><div><dt>金額</dt><dd>${money(svc().price)}<span class="small muted">（現場付款，依毛況可能調整）</span></dd></div></dl>`;
+}
+
+function step4(){
+  return `<div class="done-mark">${IC.check}</div><h1 tabindex="-1">預約完成</h1>
+  <p class="lead muted">請記下預約編號，到店時告訴美容師即可。</p>
+  <p class="small muted">預約編號 <span class="tag">示例</span></p><p class="code" id="code">${S.code}</p>
+  <dl class="review"><div><dt>服務</dt><dd>${esc(svc().name)}</dd></div><div><dt>時段</dt><dd>${S.day}（${DAYS.find(d=>d[0]===S.day)[1]}）${S.slot}</dd></div>
+  <div><dt>毛孩</dt><dd>${esc(S.pet)}（${S.size}）</dd></div><div><dt>金額</dt><dd>${money(svc().price)}</dd></div></dl>
+  <p class="note">${IC["message-square-text"]}<span>簡訊會傳到 ${esc(S.phone)}。臨時有事，請點簡訊裡的取消連結；這個原型不會真的發簡訊。</span></p>
+  <p style="margin-top:24px"><button class="link" type="button" id="again">再預約一筆</button></p>`;
+}
+
+function render(focus){
+  $("#view").innerHTML = [null, step1, step2, step3, step4][S.step]();
+  renderSum(); bar();
+  if (focus) { const h = $("#view h1"); h && h.focus(); }
+  const d = $("button.day[aria-pressed=true]"); d && d.scrollIntoView({block:"nearest", inline:"nearest"});
+}
+
+// 只更新時段區塊，不重繪整個步驟，避免焦點跑掉
+function refreshSlots(){
+  const box = $("#slotsbox"); if (!box) return;
+  document.querySelectorAll("button.day").forEach(x => x.setAttribute("aria-pressed", x.dataset.day===S.day));
+  box.innerHTML = slotsBody(); renderSum(); bar();
+}
+function loadSlots(){
+  S.slotsState = "loading"; refreshSlots();
+  const fail = scenario()==="slotserr"; if (fail) takeScenario();
+  setTimeout(() => { S.slotsState = fail ? "error" : "ok"; refreshSlots(); }, 500);
+}
+
+function validate(){
+  const e = {};
+  if (!S.owner.trim()) e.owner = "請填寫飼主姓名";
+  const digits = S.phone.replace(/\D/g, "");
+  if (!digits) e.phone = "請填寫手機號碼"; else if (!/^09\d{8}$/.test(digits)) e.phone = "手機號碼要是 09 開頭的 10 碼";
+  if (!S.pet.trim()) e.pet = "請填寫毛孩名字";
+  if (!S.size) e.size = "請選擇體型";
+  return e;
+}
+
+document.addEventListener("input", ev => { const n = ev.target.name; if (["owner","phone","pet"].includes(n)) S[n] = ev.target.value; });
+document.addEventListener("change", ev => {
+  const t = ev.target;
+  if (t.name==="svc"){ S.svc = t.value; S.errors = {}; renderSum(); bar(); }
+  if (t.name==="size"){ S.size = t.value; }
+});
+document.addEventListener("click", ev => {
+  const b = ev.target.closest("button"); if (!b) return;
+  if (b.id==="next"){
+    if (b.getAttribute("aria-disabled")==="true"){
+      if (S.step===1){ S.errors = {svc:"請先選一項服務"}; render(false); }
+      else { S.alert = "請先選一個時段"; render(false); S.alert = null; }
+      return; }
+    if (S.step===1){ S.step = 2; S.alert = null; render(true); loadSlots(); }
+    else if (S.step===2){ S.step = 3; S.alert = null; S.errors = {}; render(true); }
+  }
+  if (b.dataset.back){ S.step = +b.dataset.back; S.alert = null; render(true); if (S.step===2) loadSlots(); }
+  if (b.dataset.day){ S.day = b.dataset.day; S.slot = null; S.alert = null; loadSlots(); }
+  if (b.dataset.slot){ S.slot = b.dataset.slot; S.alert = null; document.querySelectorAll(".slot").forEach(x=>x.setAttribute("aria-pressed", x===b)); renderSum(); bar(); }
+  if (b.id==="retry"){ loadSlots(); }
+  if (b.id==="submit" || b.id==="resubmit"){
+    if (S.busy) return;
+    S.errors = validate(); S.alert = null;
+    if (Object.keys(S.errors).length){ render(false); const first = document.querySelector('[aria-invalid=true] input, input[aria-invalid=true]'); (first||$("#f-owner")).focus(); return; }
+    S.busy = true; render(false);
+    const scn = takeScenario();
+    setTimeout(() => {
+      S.busy = false;
+      if (scn==="taken"){ // POST /bookings 回傳時段衝突
+        const lost = S.slot; SLOTS[S.day] = SLOTS[S.day].filter(t => t !== lost); S.slot = null; S.step = 2; S.slotsState = "ok";
+        S.alert = `<strong>${S.day} ${lost} 剛剛被其他人預約了。</strong>請改選一個時段，你填的資料都還在。`; render(true); return; }
+      if (scn==="neterr"){ S.alert = `<p>${IC["circle-alert"]}<span><strong>預約還沒送出：網路好像中斷了。</strong>你填的資料都還在，可以直接再送一次。</span></p><button class="btn-2" type="button" id="resubmit">${IC["rotate-ccw"]}再送一次</button>`; render(false); $("#resubmit").focus(); return; }
+      S.code = "PG-" + S.day.replace("/", "") + "-" + S.slot.replace(":", ""); S.step = 4; render(true);
+    }, 600);
+  }
+  if (b.id==="again"){ Object.assign(S, {step:1, svc:null, slot:null, owner:"", phone:"", pet:"", size:"", errors:{}, alert:null, code:null}); render(true); }
+});
+render(false);
+</script>
+</body></html>

@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PawLux（暫名）預約｜原型 v1</title>
+<!--
+  介面圖示取自 Lucide（https://lucide.dev），ISC License：
+  Copyright (c) 2026 Lucide Icons and Contributors
+  Permission to use, copy, modify, and/or distribute this software for any purpose
+  with or without fee is hereby granted, provided that the above copyright notice
+  and this permission notice appear in all copies.
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES.
+-->
+<style>
+:root{
+  /* 色彩角色 */
+  --bg:#FFF7F0;          /* 暖米白底 */
+  --surface:#FFFFFF;
+  --ink:#2B1A40;         /* 深紫文字（取自目標稿底色） */
+  --ink-2:#5E4E70;       /* 次要文字 */
+  --brand:#6B3FA0;       /* 品牌紫：選取、步驟、焦點 */
+  --brand-soft:#F3ECFB;
+  --accent:#FF9152;      /* 唯一主要行動：橘（取自目標稿「立即預約」） */
+  --accent-hover:#F67E3A;
+  --line:#E7DCEF;
+  --danger:#A3261B;
+  --danger-soft:#FDECEA;
+  --success:#1F6F47;
+  --success-soft:#E7F5EC;
+  --hero:linear-gradient(140deg,#EEE3FF 0%,#FFEADF 62%,#FFDCD2 100%);
+  /* 字級（5 階） */
+  --fs-1:14px; --fs-2:16px; --fs-3:20px; --fs-4:32px; --fs-5:48px;
+  /* 間距（4 的倍數） */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px;
+  /* 圓角與陰影 */
+  --r-field:12px; --r-panel:24px; --r-pill:999px;
+  --shadow:0 12px 32px rgba(75,40,110,.12);
+  --font:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:var(--fs-2);line-height:1.6;-webkit-font-smoothing:antialiased}
+svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+a{color:var(--brand)}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.proto-strip{background:var(--ink);color:#fff;font-size:var(--fs-1);padding:var(--s2) var(--s4);text-align:center}
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--s4)}
+header.site{display:flex;align-items:center;justify-content:space-between;height:64px}
+.mark{display:flex;align-items:center;gap:var(--s2);font-weight:700;font-size:var(--fs-3);color:var(--ink);text-decoration:none}
+.mark svg{color:var(--brand);width:24px;height:24px}
+.mark small{font-size:var(--fs-1);font-weight:400;color:var(--ink-2)}
+nav.top{display:flex;gap:var(--s5)}
+nav.top a{color:var(--ink);text-decoration:none;font-size:var(--fs-2)}
+nav.top a:hover{text-decoration:underline}
+
+.hero{background:var(--hero)}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:var(--s5);padding:var(--s5) var(--s4) var(--s7)}
+.hero h1{font-size:var(--fs-4);line-height:1.25;margin:0 0 var(--s3);letter-spacing:.01em}
+.hero-grid > *{min-width:0}
+.hero p.lead{margin:0;color:var(--ink-2);max-width:32em}
+.facts{list-style:none;padding:0;margin:var(--s5) 0 0;display:none;gap:var(--s3)}
+.facts li{display:flex;align-items:center;gap:var(--s3)}
+.facts svg{color:var(--brand)}
+
+.panel{background:var(--surface);border-radius:var(--r-panel);box-shadow:var(--shadow);padding:var(--s5) var(--s4)}
+.steps{list-style:none;display:flex;gap:var(--s2);padding:0;margin:0 0 var(--s4);font-size:var(--fs-1);color:var(--ink-2)}
+.steps li{display:flex;align-items:center;gap:var(--s1);white-space:nowrap}
+.steps li+li::before{content:"";width:16px;height:1px;background:var(--line);margin-right:var(--s1)}
+.steps .dot{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:var(--r-pill);border:1px solid var(--line);font-weight:700}
+.steps .dot svg{width:14px;height:14px}
+.steps li[aria-current] {color:var(--ink);font-weight:700}
+.steps li[aria-current] .dot{background:var(--brand);border-color:var(--brand);color:#fff}
+.steps li.done .dot{background:var(--brand-soft);border-color:var(--brand-soft);color:var(--brand)}
+.panel h2{font-size:var(--fs-3);margin:0 0 var(--s1);line-height:1.3}
+.panel .hint{margin:0 0 var(--s4);color:var(--ink-2);font-size:var(--fs-1)}
+.tag{display:inline-block;font-size:var(--fs-1);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:0 var(--s2);margin-left:var(--s2);font-weight:400;vertical-align:middle}
+
+.options{display:grid;gap:var(--s2);margin:0;padding:0;border:0;min-width:0}
+.opt{position:relative;display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s4);border:1px solid var(--line);border-radius:var(--r-field);cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--brand)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .radio{width:20px;height:20px;border-radius:var(--r-pill);border:2px solid #9C8AAE;flex:none;display:flex;align-items:center;justify-content:center}
+.opt .radio svg{width:14px;height:14px;opacity:0;color:#fff;stroke-width:3}
+.opt input:checked ~ .radio{background:var(--brand);border-color:var(--brand)}
+.opt input:checked ~ .radio svg{opacity:1}
+.opt:has(input:checked){border-color:var(--brand);background:var(--brand-soft);box-shadow:inset 0 0 0 1px var(--brand)}
+.opt:has(input:focus-visible){outline:3px solid var(--brand);outline-offset:2px}
+.opt .body{flex:1;min-width:0}
+.opt .name{font-weight:700;display:block}
+.opt .meta{font-size:var(--fs-1);color:var(--ink-2);display:flex;align-items:center;gap:var(--s1)}
+.opt .meta svg{width:14px;height:14px}
+.opt .price{font-weight:700;white-space:nowrap}
+
+.chips{display:flex;gap:var(--s2);flex-wrap:wrap;margin:0;padding:0;border:0;min-width:0}
+.dates{flex-wrap:nowrap;overflow-x:auto;padding:var(--s1) var(--s1) var(--s2);margin:0 calc(-1 * var(--s1)) var(--s3)}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip > span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:64px;min-height:44px;padding:var(--s1) var(--s3);border:1px solid var(--line);border-radius:var(--r-field);cursor:pointer;background:var(--surface);font-variant-numeric:tabular-nums;line-height:1.3}
+.chip small{font-size:var(--fs-1);color:var(--ink-2)}
+.chip input:checked + span{background:var(--brand);border-color:var(--brand);color:#fff}
+.chip input:checked + span small{color:#fff}
+.chip input:focus-visible + span{outline:3px solid var(--brand);outline-offset:2px}
+.chip input:disabled + span{color:#8A7B99;background:#F6F1F8;border-style:dashed;cursor:not-allowed}
+.chip input:disabled + span small{color:#8A7B99}
+.times{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:var(--s2)}
+.times .chip span{min-width:0}
+
+.skeleton{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:var(--s2)}
+.skeleton i{height:44px;border-radius:var(--r-field);background:linear-gradient(90deg,#F3ECF6,#FBF7FC,#F3ECF6);background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.skeleton i{animation:none}}
+
+.note{display:flex;gap:var(--s3);align-items:flex-start;padding:var(--s3) var(--s4);border-radius:var(--r-field);font-size:var(--fs-2);margin:0 0 var(--s4)}
+.note svg{margin-top:2px}
+.note.err{background:var(--danger-soft);color:var(--danger)}
+.note.info{background:var(--brand-soft);color:var(--ink)}
+.note.info svg{color:var(--brand)}
+.note.ok{background:var(--success-soft);color:var(--success)}
+
+.field{display:grid;gap:var(--s1);margin-bottom:var(--s4)}
+.field > label,.field > legend{font-weight:700;font-size:var(--fs-2);padding:0}
+.field input[type=text],.field input[type=tel]{font:inherit;color:var(--ink);padding:var(--s3);border:1px solid #8E7BA3;border-radius:var(--r-field);min-height:48px;width:100%;background:var(--surface)}
+.field input[aria-invalid=true]{border-color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.field .err{color:var(--danger);font-size:var(--fs-1);display:flex;gap:var(--s1);align-items:center}
+.field .err svg{width:16px;height:16px}
+.field .help{color:var(--ink-2);font-size:var(--fs-1)}
+fieldset.field{border:0;margin:0 0 var(--s4);padding:0}
+
+.actions{display:flex;gap:var(--s3);align-items:center;margin-top:var(--s5)}
+.btn{font:inherit;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);min-height:48px;padding:0 var(--s5);border-radius:var(--r-pill);border:0;cursor:pointer;text-decoration:none}
+.btn-primary{background:var(--accent);color:var(--ink);flex:1}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary[aria-disabled=true]{background:#F1E6DD;color:#7A6A88;cursor:not-allowed}
+.btn-quiet{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-quiet:hover{border-color:var(--brand)}
+
+.summary{margin:0;display:grid;grid-template-columns:auto 1fr auto;gap:var(--s2) var(--s4);align-items:baseline}
+.summary dt{color:var(--ink-2);font-size:var(--fs-1)}
+.summary dd{margin:0;font-weight:700;min-width:0;overflow-wrap:anywhere}
+.summary button{font:inherit;font-size:var(--fs-1);background:none;border:0;color:var(--brand);text-decoration:underline;cursor:pointer;padding:0}
+.done-head{display:flex;gap:var(--s3);align-items:center;margin-bottom:var(--s4)}
+.done-head svg{width:32px;height:32px;color:var(--success)}
+.code{font-size:var(--fs-3);font-weight:700;letter-spacing:.04em}
+
+section.info{padding:var(--s7) 0}
+section.info h2{font-size:var(--fs-3);margin:0 0 var(--s4)}
+.info-grid{display:grid;gap:var(--s5)}
+.info-grid h3{font-size:var(--fs-2);margin:0 0 var(--s1);display:flex;gap:var(--s2);align-items:center}
+.info-grid h3 svg{color:var(--brand)}
+.info-grid p{margin:0;color:var(--ink-2)}
+footer.site{border-top:1px solid var(--line);padding:var(--s5) 0 var(--s7);font-size:var(--fs-1);color:var(--ink-2)}
+footer.site .row{display:flex;flex-wrap:wrap;gap:var(--s4);justify-content:space-between}
+footer.site a{color:var(--ink-2)}
+.proto-ctl{margin-top:var(--s5);padding:var(--s3) var(--s4);border:1px dashed #B9A9C9;border-radius:var(--r-field)}
+.proto-ctl legend{font-weight:700;padding:0 var(--s1)}
+.proto-ctl label{margin-right:var(--s4);display:inline-flex;gap:var(--s1);align-items:center}
+
+@media (max-width:767px){ nav.top{display:none} .steps li:not([aria-current]) .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)} }
+@media (min-width:768px){
+  .wrap{padding:0 var(--s6)}
+  .hero-grid{padding:var(--s7) var(--s6) var(--s8)}
+  .panel{padding:var(--s6)}
+  .info-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (min-width:1024px){
+  .hero-grid{grid-template-columns:1fr 520px;gap:var(--s8);align-items:start;padding-top:var(--s8)}
+  .hero h1{font-size:var(--fs-5);line-height:1.2;margin-bottom:var(--s5)}
+  .facts{display:grid}
+  .hero-copy{padding-top:var(--s7)}
+}
+</style>
+</head>
+<body>
+<div class="proto-strip">原型 v1｜資料皆為示例，不會真的送出預約</div>
+
+<div class="hero">
+  <div class="wrap">
+    <header class="site">
+      <a class="mark" href="#"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>PawLux <small>（暫名）</small></a>
+      <nav class="top" aria-label="主選單"><a href="#book">線上預約</a><a href="#info">預約須知</a><a href="#cancel">取消預約</a></nav>
+    </header>
+  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>讓毛孩舒舒服服，<br>漂漂亮亮回家</h1>
+      <p class="lead">選好服務和時段，填上毛孩的名字就完成預約，不用註冊會員。</p>
+      <ul class="facts">
+        <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>一分鐘內完成預約</li>
+        <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/><path d="M7 11h10"/><path d="M7 15h6"/><path d="M7 7h8"/></svg>預約成功會收到簡訊</li>
+        <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>要取消，點簡訊裡的連結就好</li>
+      </ul>
+    </div>
+    <section class="panel" id="book" aria-labelledby="step-title">
+      <ol class="steps" id="steps"></ol>
+      <div id="step" aria-live="polite"></div>
+    </section>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="info" id="info">
+    <h2>預約須知 <span class="tag">示例內容，待店家提供</span></h2>
+    <div class="info-grid">
+      <div><h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>營業時間</h3><p>週二至週日 10:00–19:00，週一公休。</p></div>
+      <div id="cancel"><h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/><path d="M7 11h10"/><path d="M7 15h6"/><path d="M7 7h8"/></svg>取消預約</h3><p>預約成功後會收到簡訊，要取消請點簡訊中的連結。</p></div>
+      <div><h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>到店前</h3><p>請在預約時間前 10 分鐘到店，讓毛孩先熟悉環境。</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row"><span>© 2026 PawLux（暫名）</span><span><a href="#">隱私權政策</a>・<a href="#">服務條款</a></span></div>
+    <fieldset class="proto-ctl">
+      <legend>原型控制（只用來看不同狀態）</legend>
+      <label><input type="radio" name="sim" value="normal" checked>正常</label>
+      <label><input type="radio" name="sim" value="slots-error">時段載入失敗</label>
+      <label><input type="radio" name="sim" value="taken">送出時時段已被約走</label>
+    </fieldset>
+  </div>
+</footer>
+
+<script>
+const ICON = {
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  right:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  left:'<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+  alert:'<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>',
+  ok:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+  info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>'
+};
+const icon = (n) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${ICON[n]}</svg>`;
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* 示例資料：欄位只用 API 有的（GET /services：名稱、時長、價格） */
+const SERVICES = [
+  {id:'s1', name:'基礎洗澡', minutes:60, price:600},
+  {id:'s2', name:'洗澡＋修腳底毛與指甲', minutes:75, price:800},
+  {id:'s3', name:'全身美容造型（含洗澡、剪毛、修指甲、清耳朵）', minutes:150, price:2400},
+  {id:'s4', name:'貓咪洗澡', minutes:90, price:1200},
+  {id:'s5', name:'護毛 SPA', minutes:90, price:1500},
+  {id:'s6', name:'單修指甲', minutes:20, price:200}
+];
+const WEEK = ['日','一','二','三','四','五','六'];
+const DATES = Array.from({length:7}, (_, k) => {
+  const d = new Date(2026, 9, 24 + k);
+  return {key:`2026-10-${String(24 + k).padStart(2,'0')}`, label:`${d.getMonth()+1}/${d.getDate()}`, wd:WEEK[d.getDay()]};
+});
+/* GET /slots?date= 的示例回應；10/26 回傳空陣列（約滿） */
+const SLOTS = {
+  '2026-10-24':['10:00','11:30','14:00','15:30','17:00'],
+  '2026-10-25':['10:30','13:00','16:30'],
+  '2026-10-26':[],
+  '2026-10-27':['10:00','10:30','11:00','13:30','14:00','15:00','16:00','17:30'],
+  '2026-10-28':['11:00','14:30','18:00'],
+  '2026-10-29':['10:00','12:00','15:30','17:00'],
+  '2026-10-30':['13:00','16:00']
+};
+const SIZES = ['小型犬（10 公斤以下）','中型犬（10–25 公斤）','大型犬（25 公斤以上）','貓'];
+const STEP_NAMES = ['選服務','選時段','填資料','確認'];
+
+let state = {step:0, service:null, date:DATES[0].key, time:null, slots:null, slotsStatus:'idle',
+  form:{owner:'', phone:'', pet:'', size:''}, errors:{}, notice:null, taken:[], bookingId:null, submitting:false};
+const setState = (patch) => { state = {...state, ...patch}; render(); };
+const sim = () => document.querySelector('input[name=sim]:checked').value;
+const money = (n) => `NT$ ${n.toLocaleString('en-US')}`;
+const svc = () => SERVICES.find((s) => s.id === state.service);
+const dateObj = () => DATES.find((d) => d.key === state.date);
+
+function loadSlots(date){
+  setState({date, time:null, slotsStatus:'loading', slots:null});
+  setTimeout(() => {
+    if (sim() === 'slots-error') { setState({slotsStatus:'error'}); return; }
+    const list = (SLOTS[date] || []).filter((t) => !state.taken.includes(`${date} ${t}`));
+    setState({slotsStatus:'ready', slots:list});
+  }, 500);
+}
+
+function renderSteps(){
+  document.getElementById('steps').innerHTML = STEP_NAMES.map((n, i) => {
+    const cur = state.bookingId ? false : i === state.step;
+    const done = state.bookingId || i < state.step;
+    return `<li class="${done ? 'done' : ''}" ${cur ? 'aria-current="step"' : ''}><span class="dot">${done ? icon('check') : i + 1}</span><span class="lbl">${n}</span></li>`;
+  }).join('');
+}
+
+function viewService(){
+  const s = state.service;
+  return `<h2 id="step-title">想幫毛孩做什麼？<span class="tag">示例資料</span></h2>
+  <p class="hint">價格依店家公告；時長是預估。</p>
+  <fieldset class="options"><legend class="sr">服務項目</legend>
+  ${SERVICES.map((x) => `<label class="opt"><input type="radio" name="svc" value="${x.id}" ${s === x.id ? 'checked' : ''}><span class="radio">${icon('check')}</span>
+    <span class="body"><span class="name">${esc(x.name)}</span><span class="meta">${icon('clock')}約 ${x.minutes} 分鐘</span></span>
+    <span class="price num">${money(x.price)}</span></label>`).join('')}
+  </fieldset>
+  <div class="actions"><button class="btn btn-primary" data-act="to-slots" aria-disabled="${s ? 'false' : 'true'}">下一步：選時段${icon('right')}</button></div>`;
+}
+
+function viewSlots(){
+  const x = svc();
+  let body = '';
+  if (state.slotsStatus === 'loading') body = `<div class="skeleton" aria-label="正在載入時段">${'<i></i>'.repeat(6)}</div>`;
+  else if (state.slotsStatus === 'error') body = `<div class="note err" role="alert">${icon('alert')}<div>時段暫時載入不了，請稍後再試。<br><button class="btn btn-quiet" data-act="retry" style="margin-top:8px">重新載入</button></div></div>`;
+  else if (state.slots && state.slots.length === 0) body = `<div class="note info">${icon('info')}<div>${dateObj().label}（${dateObj().wd}）沒有可預約的時段，換一天看看。</div></div>`;
+  else if (state.slots) body = `<fieldset class="chips times"><legend class="sr">${dateObj().label} 可預約時段</legend>${state.slots.map((t) => `<label class="chip"><input type="radio" name="time" value="${t}" ${state.time === t ? 'checked' : ''}><span class="num">${t}</span></label>`).join('')}</fieldset>`;
+  return `<h2 id="step-title">什麼時候方便？</h2>
+  <p class="hint">${esc(x.name)}・約 ${x.minutes} 分鐘</p>
+  ${state.notice ? `<div class="note err" role="alert">${icon('alert')}<div>${state.notice}</div></div>` : ''}
+  <fieldset class="chips dates"><legend class="sr">日期</legend>${DATES.map((d) => `<label class="chip"><input type="radio" name="date" value="${d.key}" ${state.date === d.key ? 'checked' : ''}><span><small>週${d.wd}</small><span class="num">${d.label}</span></span></label>`).join('')}</fieldset>
+  ${body}
+  <div class="actions"><button class="btn btn-quiet" data-act="back">${icon('left')}上一步</button><button class="btn btn-primary" data-act="to-form" aria-disabled="${state.time ? 'false' : 'true'}">下一步：填資料${icon('right')}</button></div>`;
+}
+
+function field(id, label, type, help){
+  const err = state.errors[id];
+  return `<div class="field"><label for="f-${id}">${label}</label>
+  <input id="f-${id}" name="${id}" type="${type}" value="${esc(state.form[id])}" ${err ? 'aria-invalid="true"' : ''} aria-describedby="h-${id}" ${type === 'tel' ? 'inputmode="tel" autocomplete="tel"' : ''} ${id === 'owner' ? 'autocomplete="name"' : ''}>
+  <span id="h-${id}" class="${err ? 'err' : 'help'}">${err ? icon('alert') + err : (help || '')}</span></div>`;
+}
+
+function viewForm(){
+  const err = state.errors.size;
+  return `<h2 id="step-title">留下聯絡方式</h2>
+  <p class="hint">預約成功會傳簡訊到這支手機。</p>
+  ${field('owner','你的名字','text','')}
+  ${field('phone','手機號碼','tel','例如 0912345678')}
+  ${field('pet','毛孩的名字','text','')}
+  <fieldset class="field"><legend>毛孩體型</legend>
+  <div class="options">${SIZES.map((z) => `<label class="opt"><input type="radio" name="size" value="${z}" ${state.form.size === z ? 'checked' : ''}><span class="radio">${icon('check')}</span><span class="body">${z}</span></label>`).join('')}</div>
+  ${err ? `<span class="err" style="color:var(--danger);font-size:14px;display:flex;gap:4px;align-items:center">${icon('alert')}${err}</span>` : ''}</fieldset>
+  <div class="actions"><button class="btn btn-quiet" data-act="back">${icon('left')}上一步</button><button class="btn btn-primary" data-act="to-confirm">下一步：確認${icon('right')}</button></div>`;
+}
+
+function summary(edit){
+  const x = svc(), d = dateObj(), f = state.form;
+  const row = (k, v, step) => `<dt>${k}</dt><dd>${v}</dd><span>${edit ? `<button data-go="${step}">修改</button>` : ''}</span>`;
+  return `<dl class="summary">
+  ${row('服務', `${esc(x.name)}<br><span class="num">${money(x.price)}</span>・約 ${x.minutes} 分鐘`, 0)}
+  ${row('時間', `<span class="num">${d.label}（${d.wd}）${state.time}</span>`, 1)}
+  ${row('毛孩', `${esc(f.pet)}・${esc(f.size)}`, 2)}
+  ${row('聯絡', `${esc(f.owner)}・<span class="num">${esc(f.phone)}</span>`, 2)}
+  </dl>`;
+}
+
+function viewConfirm(){
+  return `<h2 id="step-title">確認預約內容</h2>
+  <p class="hint">送出後會傳簡訊給你，要取消請點簡訊中的連結。</p>
+  ${summary(true)}
+  <div class="actions"><button class="btn btn-quiet" data-act="back">${icon('left')}上一步</button><button class="btn btn-primary" data-act="submit" ${state.submitting ? 'aria-disabled="true"' : ''}>${state.submitting ? '送出中…' : '確認預約'}</button></div>`;
+}
+
+function viewDone(){
+  return `<div class="done-head">${icon('ok')}<div><h2 id="step-title">預約好了</h2><p class="hint" style="margin:0">預約編號（示例）<span class="code num">${state.bookingId}</span></p></div></div>
+  <div class="note ok">${icon('ok')}<div>簡訊已傳到 <span class="num">${esc(state.form.phone)}</span>。要取消，點簡訊中的連結即可。</div></div>
+  ${summary(false)}
+  <div class="actions"><button class="btn btn-quiet" data-act="restart">再約一次</button></div>`;
+}
+
+function render(){
+  renderSteps();
+  const v = state.bookingId ? viewDone() : [viewService, viewSlots, viewForm, viewConfirm][state.step]();
+  document.getElementById('step').innerHTML = v;
+}
+
+function validate(f){
+  const e = {};
+  if (!f.owner.trim()) e.owner = '請填你的名字';
+  if (!/^09\d{8}$/.test(f.phone.replace(/[-\s]/g, ''))) e.phone = '請填 09 開頭的 10 碼手機號碼';
+  if (!f.pet.trim()) e.pet = '請填毛孩的名字';
+  if (!f.size) e.size = '請選毛孩體型';
+  return e;
+}
+
+const stepEl = document.getElementById('step');
+stepEl.addEventListener('change', (ev) => {
+  const t = ev.target;
+  if (t.name === 'svc') setState({service:t.value});
+  else if (t.name === 'date') loadSlots(t.value);
+  else if (t.name === 'time') setState({time:t.value, notice:null});
+  else if (t.name === 'size') setState({form:{...state.form, size:t.value}, errors:{...state.errors, size:undefined}});
+});
+stepEl.addEventListener('input', (ev) => {
+  const t = ev.target;
+  if (['owner','phone','pet'].includes(t.name)) state = {...state, form:{...state.form, [t.name]:t.value}};
+});
+stepEl.addEventListener('click', (ev) => {
+  const b = ev.target.closest('button'); if (!b) return;
+  if (b.dataset.go) { setState({step:Number(b.dataset.go)}); focusTitle(); return; }
+  if (b.getAttribute('aria-disabled') === 'true') return;
+  const a = b.dataset.act;
+  if (a === 'to-slots') { setState({step:1}); loadSlots(state.date); focusTitle(); }
+  else if (a === 'retry') loadSlots(state.date);
+  else if (a === 'back') { setState({step:state.step - 1}); focusTitle(); }
+  else if (a === 'to-form') { setState({step:2}); focusTitle(); }
+  else if (a === 'to-confirm') {
+    const e = validate(state.form);
+    if (Object.keys(e).length) { setState({errors:e}); const first = document.querySelector('[aria-invalid=true], input[name=size]'); if (first) first.focus(); return; }
+    setState({step:3, errors:{}}); focusTitle();
+  }
+  else if (a === 'submit') {
+    setState({submitting:true});
+    setTimeout(() => {
+      if (sim() === 'taken') {
+        const key = `${state.date} ${state.time}`;
+        setState({submitting:false, step:1, taken:[...state.taken, key], notice:`${dateObj().label} ${state.time} 剛剛被約走了，請改選其他時段，其他資料都還在。`});
+        loadSlots(state.date); focusTitle(); return;
+      }
+      setState({submitting:false, bookingId:'PL-1024-0137'}); focusTitle();
+    }, 600);
+  }
+  else if (a === 'restart') { setState({step:0, service:null, time:null, bookingId:null, notice:null, date:DATES[0].key}); focusTitle(); }
+});
+function focusTitle(){ const h = document.getElementById('step-title'); if (h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:false}); } }
+render();
+</script>
+</body>
+</html>
