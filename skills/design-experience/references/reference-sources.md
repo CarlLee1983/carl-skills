@@ -7,7 +7,7 @@ Read when the user brings an image or a URL. Once records are kept, record each 
 Classify each source by what the user wants from it, not by its medium:
 
 - **目標稿** (target mockup): the user wants to build this. Often an AI-generated UI image; a URL saying「做成這樣」counts too.
-- **參考網站** (reference site): the user likes some of its attributes. A screenshot saying「喜歡它的配色」counts too.
+- **參考網站** (reference site): the user likes some of its attributes. Liking a site's design (「喜歡這個網站的設計」) reads as a reference site, and so does a screenshot saying「喜歡它的配色」. A reference site gets no feasibility review: what matters is which of its qualities to borrow.
 
 State the classification and its evidence alongside the entry mode, as a correctable understanding. When the message does not say (「你看看這張圖」), recommend the reading the material supports and say what would change if the other one holds; the feasibility review holds for both readings, so run it; building from the image waits for the answer.
 
@@ -41,3 +41,17 @@ In theme-first, the first round carries the review and the interview together; t
 Build the representative screen as a prototype following the decisions, with real or labeled sample data from the project's contracts. Present it beside the original image on the same task and viewport, and annotate each difference with the finding it resolves, so the user sees what changed and why. A finding marked 待產品決定 stays out of the prototype and appears as an open item.
 
 **Complete when:** every region of the image has been reviewed or marked「看不到」, every finding has a decision and reason, and the prototype is shown beside the original with each difference traced to a finding.
+
+## Borrow from a reference site (參考網站)
+
+Capture the site as rendered screenshots at the sizes the user's interface needs (marking can start from one size; capture the rest before building treatments), then break it into 5–8 **attributes**, each a named quality with the screenshot region that shows it: type character and scale, spacing rhythm, color structure, imagery treatment, layout rhythm, surface and line work, interaction pattern, voice of the copy. Ask the user to mark each one「要／不要／無所謂」, with your recommended mark and its reason; the marks are the feedback, so no design vocabulary is needed from the user. Record a condition the user attaches (「要，但主色換暖」) with its mark, and what they want instead of a「不要」when they say it; attributes marked「無所謂」may vary between treatments.
+
+Judge attributes from the rendered page: where the code declares something the screen does not show (a webfont that never loads), describe what the user actually saw and name the declared value separately. Point out a taste-baseline failure only in an attribute you recommend or the user marks「要」, alongside a compliant way to borrow it.
+
+Borrow qualities, never the site itself. Measured values (type ratio, spacing scale, radii, line weights) are starting points for the project's own tokens, rebuilt rather than copied. Leave out its logo, imagery, copy, and the brand's own color combination: a palette marked「要」lends its structure (surface, primary, and accent roles and their proportions), with hues chosen anew; for a commercial typeface, record its name and suggest licensed or open alternatives. A borrowed pattern that implies data the product does not hold (seats left on a service list) comes without that part.
+
+Then build 2–3 visual treatments on the project's own representative screen (in theme-first, the shared provisional layout), each adopting the「要」attributes to a different degree (close, adapted, loosely inspired), each with its one-line concept. Present them beside the reference site's screenshots at the same size. Later feedback follows the usual treatment numbers and the main skill's feedback table.
+
+Without a browser, extract the page's text and CSS for structural and token clues, ask the user for screenshots, and record the source as「未以畫面審看」until screenshots arrive. Attributes inferred from code alone are provisional and point to page sections instead of screenshot regions; treatments may proceed on them, labeled provisional.
+
+**Complete when:** every attribute carries the user's mark or a recorded assumption, and the treatments are shown beside the reference with the degree of adoption stated for each.
