@@ -1,7 +1,7 @@
 ===== FILE: SKILL.md =====
 ---
 name: ciso
-description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), the dependency supply chain (供應鏈), and security incidents (資安事件). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
+description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), over-broad permissions (權限過寬), network exposure (網路暴露), the dependency supply chain (供應鏈), and security incidents (資安事件). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
 ---
 
 # CISO
@@ -15,6 +15,7 @@ Route by the user's natural-language intent and read only the reference you need
 | Intent | Capability |
 | --- | --- |
 | Security review of code, a diff, or a PR: is this safe, does it have vulnerabilities | [review](references/review.md) |
+| Leaked secrets, over-broad permissions, or network exposure, including handoffs from the DevOps role | [exposure](references/exposure.md) |
 
 A request that names no supported capability is outside this entry's current scope; say so instead of improvising a method.
 
@@ -66,6 +67,7 @@ Each capability has a baseline practice that works with this skill alone. When a
 - **Code fixes:** hand them to the project's own implementation entry point, found in project rules, then context, then installed skills offered as a suggestion, then by asking. Send a dispatch brief (fields below).
 - **Dispatch brief:** write it for a receiver with no context. Fields: goal; the finding with its evidence package (location, six elements, severity); the invariant to enforce; the narrowest fix; the regression test wanted; done criteria (完成條件); decisions needed from the user (需要使用者決定的事項); and the note that the CISO re-reviews after delivery.
 - **Fix status and risk acceptance:** a delivered fix is only 修補已交付 until this skill re-reviews it, and acceptance is the user's decision; [evidence](references/evidence.md#completion-states) owns both.
+- **Credential, permission, and containment changes:** hand them to the DevOps role's environment work, marked as needing the user's authorization; [exposure](references/exposure.md) owns the details.
 - **Other specialists:** hand over the evidence package and the open question; leave their call to them.
 - **Sources:** [sources](references/sources.md) records the methodology this skill borrows and its versions.
 
@@ -127,6 +129,8 @@ A finding is confirmed only when it states all six, drawn from the code or other
 
 Plus one of: a `file:line` that establishes the path, a reproduction another person can run in isolation, or a CVE identifier for a known-vulnerable component actually in use. A finding missing any element is not confirmed.
 
+A credential value found in a log, repository, or artifact meets the threshold on that evidence alone: the principal is whoever can read that location (the count may be unknown); the input is read access to it; the control is the missing masking or secret handling; the boundary is the secret store to the reader; the resource is the credential and what it reaches; the result is the value disclosed at that file and line.
+
 ## 待驗證
 
 A specific, source-grounded suspicion whose decisive fact is outside the evidence at hand, such as a helper whose source is not provided, a deployment control, or an environment setting. Report it as 待驗證 with the exact missing fact and a safe plan to settle it. It carries no severity: it is not a low-confidence finding. Never assume a missing control is present or absent.
@@ -145,10 +149,12 @@ These may appear in 判斷 as excluded items with the reason and the condition t
 Only confirmed findings receive a severity: Critical, High, Medium, Low, or Info. Severity follows what the evidence demonstrates, never more than the proven impact and reach; if the concrete damage cannot be stated, the severity is lower than it feels.
 
 - **Critical:** a low-privilege or anonymous principal fully defeats a core control, with broad impact such as cross-tenant data access or remote code execution.
-- **High:** a real boundary violation with serious consequences but narrower reach or an extra precondition.
+- **High:** a real boundary violation with serious consequences but narrower reach or an extra precondition, such as an administrative function reachable by an unrestricted audience.
 - **Medium:** a real violation with limited blast radius or uncommon preconditions.
 - **Low:** a real violation with minor consequence.
 - **Info:** confirmed but minimal on its own, useful mainly as part of a larger chain.
+
+Rate an exposure on the reach the evidence demonstrates: who can reach it, how strongly it is authenticated, and what it gives access to. Each unknown, such as the readers, the authentication strength, or the applied state, is stated beside the rating as a gap and neither raises nor lowers it, and a control the evidence does not show is not credited. A credential tied by the evidence to an action such as deploying to production is rated on that reach.
 
 Classify each confirmed finding with the OWASP Top 10 category and a CWE identifier where one fits; see [sources](sources.md) for the editions used.
 
@@ -175,6 +181,47 @@ When a re-review finds the boundary still open, the finding is not verified: reo
 This skill may only recommend accepting a risk, with its grounds. The decision is the user's, and an acceptance exists only when the user explicitly states all three: the reason, the scope, and the condition for re-review. A bare "accept it" or "mark it accepted" is not that statement: leave the state unchanged, say that the decision is the user's and this skill can only recommend, and list the three missing items.
 
 Record an acceptance only when the user asks for it, and only in the project's existing record source, such as a decision log named in project rules; never create a ledger or another file for it. When the project has no record source, say so and ask the user where the acceptance belongs; do not create one. Write the user's reason, scope, and re-review condition as stated, with the finding, location, severity, date, and the fact that the user decided, without adding or widening anything. Accepting a risk does not change the finding's facts or severity, and it is never 已驗證.
+
+
+===== FILE: references/exposure.md =====
+# Exposure
+
+Leaked secrets, over-broad permissions, and network exposure, found in repository files, pipeline and infrastructure definitions, logs, or a handoff from another skill such as `devops`.
+
+## Triggers
+
+A secret printed in a log or committed to a repository; a token, role, or workflow with more permission than its job needs; a port, endpoint, or admin interface reachable more widely than intended; a handoff of any of these from the DevOps role (密鑰外洩、權限過寬、網路暴露).
+
+## Inputs
+
+- The evidence: a log excerpt with its run and line, a file and line, an infrastructure or pipeline definition, or the handoff's evidence package.
+- A fixed SHA or run identifier, and the project rules.
+- The authorization in force; this capability needs read access only.
+
+## Steps
+
+1. **Scope.** Fix the SHA or run and the categories to inspect: secrets, permissions, network. List what cannot be seen, such as who can read a log, the applied state of infrastructure, or a credential's actual reach. **Done:** the inspected set and the unexamined set are written down.
+2. **Secrets.** Locate each exposed credential by name and location only, under the entry's [Safety floor](../SKILL.md#safety-floor); never reprint any part of a value and never test it by using it. Note who can read that location. **Done:** each credential has a name, a location, and its readers or the gap.
+3. **Permissions.** For each token, role, or workflow permission, compare what is granted with what the job needs, and name who can trigger or influence it, including untrusted contributors. **Done:** each grant has its principal, granted scope, needed scope, and the narrowest scope that suffices.
+4. **Network.** Read the infrastructure and configuration for ports, endpoints, and interfaces reachable beyond their intended audience. The definition establishes the declared exposure; whether it is applied, and how well the service behind it authenticates, are separate gaps, each with a concrete check the owner can run, such as reading the applied rule from the provider's console or CLI and trying the login from an approved network. Never connect to, scan, or log in to a live host. **Done:** each exposure has its source location, declared reach, and the unverified applied state.
+5. **Judge.** Apply the threshold in [evidence](evidence.md). A credential value in a log, repository, or artifact, and a permission or exposure whose elements follow from its definition, are confirmed on that evidence; [evidence](evidence.md#threshold-for-a-confirmed-finding) maps the elements and [rates by reach](evidence.md#severity-and-classification). **Done:** every item is confirmed with severity and classification, 待驗證 with the missing fact, or excluded with the reason.
+6. **Dispatch.** Treat an exposed credential as compromised and recommend rotating it first; deleting the log or history alone does not undo the exposure. Hand rotation, revocation, log removal or masking, permission changes, and containment to the DevOps role's environment work (the `devops` skill when installed, otherwise the environment owner the project designates), each marked as needing the user's authorization, with the dispatch brief from [the entry](../SKILL.md#work-with-existing-flows). A pipeline or infrastructure definition that sets a permission or an exposure is a permission change, not a code change, and goes to the DevOps role as well. Application code changes, such as stopping a program from printing a secret, go to the project's implementation entry point. **Done:** every confirmed finding has a receiver, a named action, and the authorization it needs.
+
+## Output
+
+The fixed report from `SKILL.md`: scope with the unexamined set, each finding with its six elements, location, severity, classification, and [completion state](evidence.md#completion-states), 待驗證 items, and a dispatch brief per action with its authorization marked.
+
+## Done
+
+An exposure review is done when every inspected category has a disposition and every finding has a dispatch with its authorization stated. No action has been taken by this skill; rotation, deletion, and permission changes are done only by their receivers after the user authorizes them.
+
+## Blocked
+
+The applied state of infrastructure, the readers of a log, or a credential's reach is not available: report the finding the evidence supports and name the owner-run check that would close the gap. The entry's [Safety floor](../SKILL.md#safety-floor) still applies; never probe a deployed system to unblock.
+
+## Handoff
+
+Rotation, revocation, log removal, permission changes, containment, and code changes go to the receivers named in step 6. Evidence that a credential was used by someone else, or of a compromise in progress: say that commanding an active incident is not yet part of this skill, hand the evidence to the user and the DevOps role's environment work, and note that containment needs the user's authorization. The task the handoff came from, such as diagnosing a failing run, stays with the sender; say that it can continue. After delivery, re-review the fixed state under [evidence](evidence.md#completion-states).
 
 
 ===== FILE: references/review.md =====
@@ -216,7 +263,7 @@ Source for a deciding helper or a deployment fact is missing: mark the affected 
 
 ## Handoff
 
-Code fixes go to the project's implementation entry point with the brief, after checking the tracker for an existing ticket or PR. Leaked or exposed credentials, over-broad permissions, and containment are outside this capability's authority: report them by name and location, say the action needs the user's authorization, and recommend the owner the project designates.
+Code fixes go to the project's implementation entry point with the brief, after checking the tracker for an existing ticket or PR. Leaked or exposed credentials, over-broad permissions, and network exposure belong to [exposure](exposure.md); a review that meets one hands it there instead of acting on it.
 
 
 ===== FILE: references/sources.md =====

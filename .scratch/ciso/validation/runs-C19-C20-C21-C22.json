@@ -1,0 +1,26 @@
+[
+  {
+    "case": "C19",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C20",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C21",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C22",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  }
+]

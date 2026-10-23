@@ -15,6 +15,8 @@ A finding is confirmed only when it states all six, drawn from the code or other
 
 Plus one of: a `file:line` that establishes the path, a reproduction another person can run in isolation, or a CVE identifier for a known-vulnerable component actually in use. A finding missing any element is not confirmed.
 
+A credential value found in a log, repository, or artifact meets the threshold on that evidence alone: the principal is whoever can read that location (the count may be unknown); the input is read access to it; the control is the missing masking or secret handling; the boundary is the secret store to the reader; the resource is the credential and what it reaches; the result is the value disclosed at that file and line.
+
 ## 待驗證
 
 A specific, source-grounded suspicion whose decisive fact is outside the evidence at hand, such as a helper whose source is not provided, a deployment control, or an environment setting. Report it as 待驗證 with the exact missing fact and a safe plan to settle it. It carries no severity: it is not a low-confidence finding. Never assume a missing control is present or absent.
@@ -33,10 +35,12 @@ These may appear in 判斷 as excluded items with the reason and the condition t
 Only confirmed findings receive a severity: Critical, High, Medium, Low, or Info. Severity follows what the evidence demonstrates, never more than the proven impact and reach; if the concrete damage cannot be stated, the severity is lower than it feels.
 
 - **Critical:** a low-privilege or anonymous principal fully defeats a core control, with broad impact such as cross-tenant data access or remote code execution.
-- **High:** a real boundary violation with serious consequences but narrower reach or an extra precondition.
+- **High:** a real boundary violation with serious consequences but narrower reach or an extra precondition, such as an administrative function reachable by an unrestricted audience.
 - **Medium:** a real violation with limited blast radius or uncommon preconditions.
 - **Low:** a real violation with minor consequence.
 - **Info:** confirmed but minimal on its own, useful mainly as part of a larger chain.
+
+Rate an exposure on the reach the evidence demonstrates: who can reach it, how strongly it is authenticated, and what it gives access to. Each unknown, such as the readers, the authentication strength, or the applied state, is stated beside the rating as a gap and neither raises nor lowers it, and a control the evidence does not show is not credited. A credential tied by the evidence to an action such as deploying to production is rated on that reach.
 
 Classify each confirmed finding with the OWASP Top 10 category and a CWE identifier where one fits; see [sources](sources.md) for the editions used.
 

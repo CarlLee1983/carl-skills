@@ -1,6 +1,6 @@
 ---
 name: ciso
-description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), the dependency supply chain (供應鏈), and security incidents (資安事件). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
+description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), over-broad permissions (權限過寬), network exposure (網路暴露), the dependency supply chain (供應鏈), and security incidents (資安事件). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
 ---
 
 # CISO
@@ -14,6 +14,7 @@ Route by the user's natural-language intent and read only the reference you need
 | Intent | Capability |
 | --- | --- |
 | Security review of code, a diff, or a PR: is this safe, does it have vulnerabilities | [review](references/review.md) |
+| Leaked secrets, over-broad permissions, or network exposure, including handoffs from the DevOps role | [exposure](references/exposure.md) |
 
 A request that names no supported capability is outside this entry's current scope; say so instead of improvising a method.
 
@@ -65,6 +66,7 @@ Each capability has a baseline practice that works with this skill alone. When a
 - **Code fixes:** hand them to the project's own implementation entry point, found in project rules, then context, then installed skills offered as a suggestion, then by asking. Send a dispatch brief (fields below).
 - **Dispatch brief:** write it for a receiver with no context. Fields: goal; the finding with its evidence package (location, six elements, severity); the invariant to enforce; the narrowest fix; the regression test wanted; done criteria (完成條件); decisions needed from the user (需要使用者決定的事項); and the note that the CISO re-reviews after delivery.
 - **Fix status and risk acceptance:** a delivered fix is only 修補已交付 until this skill re-reviews it, and acceptance is the user's decision; [evidence](references/evidence.md#completion-states) owns both.
+- **Credential, permission, and containment changes:** hand them to the DevOps role's environment work, marked as needing the user's authorization; [exposure](references/exposure.md) owns the details.
 - **Other specialists:** hand over the evidence package and the open question; leave their call to them.
 - **Sources:** [sources](references/sources.md) records the methodology this skill borrows and its versions.
 

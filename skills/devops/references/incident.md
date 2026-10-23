@@ -35,4 +35,4 @@ Missing access to signals or history: say what is unknown, give the exact querie
 
 ## Handoff
 
-Rollback execution → [deploy](deploy.md). Data loss or corruption → [recovery](recovery.md) and DBA. Security compromise → the security process immediately. Code fixes → the project's implementation entry point. Missing detection → [observe](observe.md). Progress and follow-ups → the tracker.
+Rollback execution → [deploy](deploy.md). Data loss or corruption → [recovery](recovery.md) and DBA. Security compromise → the CISO role (the `ciso` skill when installed) immediately. Code fixes → the project's implementation entry point. Missing detection → [observe](observe.md). Progress and follow-ups → the tracker.

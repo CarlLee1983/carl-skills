@@ -91,7 +91,7 @@ _Avoid_: 問題類型、嚴重度
 ## 資安
 
 **資安長**（CISO）：
-擁有資安風險決策的角色：判斷、排序、決定修補或接受風險、分派並驗收；不親自修改程式碼、密鑰或權限。其他 skill 提到「the security process」時指的就是這個角色。
+擁有資安風險決策的角色：判斷、排序、決定修補或接受風險、分派並驗收；不親自修改程式碼、密鑰或權限。其他 skill 以「the CISO role」交接資安問題時，指的就是這個角色。
 _Avoid_: 資安審查員、security process（未定錨時）、資安 agent
 
 **底層資安技能**（underlying security skill）：

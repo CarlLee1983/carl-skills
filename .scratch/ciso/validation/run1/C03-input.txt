@@ -1,1 +1,27 @@
+DEFAULT OFFLINE EVIDENCE:
+| 證據位置 | 預設內容 |
+| --- | --- |
+| `AGENTS.md` | 服務 `ledger-api`（Node.js／Express／PostgreSQL）；實作入口為專案的 `/implement`；tracker 為 `.scratch/sec/issues/`；未宣告任何底層資安技能。 |
+| 已安裝 skill／agent | 除 `ciso` 外，沒有任何資安相關的 skill 或 agent。 |
+| `src/auth.ts` | `requireLogin` 驗證 session，並設定 `req.user = { id, tenantId }`；沒有角色或授權檢查。 |
+| `db/schema.sql` | 表 `invoices(id, tenant_id, owner_id, amount, note)`；每位使用者只應讀取自己租戶的發票。 |
+| `refs.json` | HEAD = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`；審查對象為此 SHA 的工作區，乾淨。 |
+| `authorization.txt` | 只要求審查與評估；沒有修改程式碼、commit、寫檔、輪替密鑰或連線任何環境的授權。 |
 
+
+
+CASE INPUT (the user request and fixtures):
+使用者：「照安全 checklist 看一下這個服務。」變更與背景：
+
+```text
+src/app.ts
+1: const app = express();
+2: app.use(express.json());
+3: app.use('/api', apiRouter);
+4: app.get('/healthz', (_req, res) => res.send('ok'));
+
+src/lib/etag.ts
+1: export const etag = (buf) => createHash('md5').update(buf).digest('hex');
+```
+
+背景：此服務只回 JSON；`etag` 只用於公開靜態資產的快取驗證；`apiRouter` 內的每個路由都套 `requireLogin`，並以 `tenant_id` 過濾資料（已於他處確認）。checklist 要求：設定安全標頭（helmet）、全站速率限制、不使用 MD5。

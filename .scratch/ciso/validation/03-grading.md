@@ -104,3 +104,12 @@
 | C18 | 通過 | F1 重新檢視條件已觸發、回到已確認、舊接受不沿用（L12、L19）且須使用者重新決定（L50）；F2 在新 SHA 退化、回到已確認、舊 SHA 的已驗證不適用（L13、L28）；兩份 brief 未交付故不標已分派（L41–44）；未寫入紀錄 |
 
 現行結果：C01–C18 全數通過（C01–C15 見上一節獨立評分）。C05 的 `tenant_id` 穩定性仍依 ticket 07 處理。
+
+## 證據遺失紀錄（2026-10-23，ticket 04 審查時發現）
+
+主代理在 ticket 03 收尾時用一段去除行尾空白的 Python（`open(p,'w').write(open(p).read()…)`，先以寫入模式開檔再讀取）處理重放檔，把檔案清成只剩換行，並在 commit `b0572f3` 提交了 166 個空檔。處理方式：
+
+- ticket 02 以前就存在的 55 個檔案（`run1`–`run8-pre-recheck`、`run10-case-defect` 等）已從 commit `96bd033` 還原。
+- 無法還原、已刪除的空檔：`run11`、`run11-red`、`run12-red-baseline`、`run13-first-green`、`run14-pre-review-fixes`、`run15-new-cases-pre`（ticket 03 期間產生，從未以完整內容提交），以及 ticket 04 開工時從已被清空的檔案備份的 `run14`、`run16-pre-green`。
+- 本檔上方對 ticket 03 各輪（含 run14 之後的獨立評分與 C16–C18）的評分，所依據的輸出已不存在；那些結論只剩評分當時的引文可查。C01–C18 在 ticket 04 以後續技能版本重新重放，現行結果見 `04-grading.md`。
+- 之後的空白清理改用先讀後寫。

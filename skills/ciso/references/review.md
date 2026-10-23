@@ -36,4 +36,4 @@ Source for a deciding helper or a deployment fact is missing: mark the affected 
 
 ## Handoff
 
-Code fixes go to the project's implementation entry point with the brief, after checking the tracker for an existing ticket or PR. Leaked or exposed credentials, over-broad permissions, and containment are outside this capability's authority: report them by name and location, say the action needs the user's authorization, and recommend the owner the project designates.
+Code fixes go to the project's implementation entry point with the brief, after checking the tracker for an existing ticket or PR. Leaked or exposed credentials, over-broad permissions, and network exposure belong to [exposure](exposure.md); a review that meets one hands it there instead of acting on it.
