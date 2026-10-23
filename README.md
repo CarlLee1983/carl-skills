@@ -9,7 +9,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | [devops](skills/devops/SKILL.md) | Codex、Claude Code 等 | 軟體交付與維運的統一入口：環境、CI、發布評估與套件發布、部署與回復、監控告警、事故、備份還原、容量與成本；先取得證據，在明確授權內執行並核驗。取代原 release-assessment。[規格](docs/devops/SPEC.md) |
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；程式碼、網址、路徑、引言與各類聲明逐字保留；敘事段落（事故經過、個人經驗、小說）另有保留情節與節奏的規則；介面文案另有規則；附繁中審閱腳本；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
-| [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發：訪談釐清風格或診斷問題、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
+| [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發，也接受帶來的 UI 圖或喜歡的網站：訪談釐清風格或診斷問題、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
 | [pm](skills/pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 八項專案經理能力：範圍與計畫稽核（scope、plan）、進度與依賴檢查（check）、下一步建議與交接（next-step）、風險與假設（risk）、變更影響（change）、進度報告（report）、結案（close）；依專案規則查找各自的專案入口，接受明確提案後交接，或在已授權的 Goal 中持續推進。 |
 
 ## 快速安裝
@@ -147,11 +147,12 @@ $calibrate-codex Codex 已連續兩次只改呼叫端，沒有修正共用函式
 $design-experience 我想做一個個人官網，還沒有任何介面，請先訪談我想要的風格，再提出方向與原型。
 $design-experience 這個專案功能大致完成了，請先理解它，找出主要使用流程，提出幾個方向並建立比較原型。
 $design-experience 我對目前訂單頁的 UI／UX 不滿意，請先問我哪裡不好，再提出改善方案與原型。
+$design-experience 我用 AI 生成了這張預約頁的圖，想做成這樣。
 ```
 
-Claude Code 使用 `/design-experience`。沒有既有介面或視覺來源時從主題起手：先訪談風格、選定視覺處理，再比較結構方向；已有介面時先比較結構，再發展視覺；對現有介面不滿意時，先截下現況、以問答診斷問題並分層，再提出與現況並排比較的改善方案與原型。技能會沿用既有設計紀錄，使用相同任務與資料比較方向，並以 `SESSION.md` 保存選擇、原型入口與交接。定稿代表接受指定設計版本，正式實作與新增產品介面仍依實際授權範圍決定。
+Claude Code 使用 `/design-experience`。沒有既有介面或視覺來源時從主題起手：先訪談風格、選定視覺處理，再比較結構方向；已有介面時先比較結構，再發展視覺；對現有介面不滿意時，先截下現況、以問答診斷問題並分層，再提出與現況並排比較的改善方案與原型。使用者帶來的圖片或網址是附加在進入模式上的參考來源，依意圖分為兩類：想做出來的目標稿先做可行性審查，逐項決定照做、改做法、刪除或待產品決定，再做成與原圖並排的原型；只借屬性的參考網站拆成 5–8 個屬性請使用者標「要／不要／無所謂」，再以採用程度不同的視覺處理比較，不沿用對方的品牌、圖像與文案。技能會沿用既有設計紀錄，使用相同任務與資料比較方向，並以 `SESSION.md` 保存選擇、原型入口與交接。定稿代表接受指定設計版本，正式實作與新增產品介面仍依實際授權範圍決定。
 
-瀏覽器無法檢查時會交付可定位的產物並列明缺口；語法與模擬流程通過不代表視覺或真人可用性驗證通過。[維護驗收](docs/design-experience/acceptance.md) 列出檢查情境；[使用故事](docs/design-experience/examples.md) 以四則故事示範三種進入模式與短回覆的實際走法。
+瀏覽器無法檢查時會交付可定位的產物並列明缺口；語法與模擬流程通過不代表視覺或真人可用性驗證通過。[維護驗收](docs/design-experience/acceptance.md) 列出檢查情境；[使用故事](docs/design-experience/examples.md) 以六則故事示範三種進入模式、短回覆，以及目標稿與參考網站的實際走法。
 
 #### 協作技能
 

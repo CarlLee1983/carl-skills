@@ -6,7 +6,7 @@
 
 1. 將單一技能目錄複製到暫存目錄，確認 `SKILL.md`、六份 `references/`、`agents/openai.yaml` 與 `LICENSE` 齊全。
 2. 對暫存副本執行 README 的 `quick_validate.py` 命令。此可選維護工具需要 Python 與 PyYAML，不是技能執行依賴。
-3. 檢查 Markdown 的本機相對連結均在副本內解析成功；目前十二處連結指向六份 references（`SKILL.md` 八處，references 之間四處）。程式碼範例與選用的外部網址不算必要本機檔案。
+3. 檢查 Markdown 的本機相對連結均在副本內解析成功；目前十七處連結指向六份 references（`SKILL.md` 十處，references 之間七處）。程式碼範例與選用的外部網址不算必要本機檔案。
 4. 更新安裝前備份舊目錄至技能搜尋範圍外，依 README 的既有管理方式同步，逐檔比較來源與安裝副本。不要把本 repo 的 docs、驗證紀錄或產品原型一起安裝。
 
 ## 行為情境
@@ -68,4 +68,4 @@
 
 若原型有程式邏輯，檢查其關鍵路徑；若瀏覽器可用，另做實際互動、鍵盤與相關尺寸檢查。兩者結果分開紀錄，真人試用只引用實際操作回饋。
 
-初次移入的 [驗證紀錄](../../.scratch/design-experience/validation/SUMMARY.md) 區分本次封裝檢查與先前試跑證據。主題起手、視覺處理提前、品味基線與細節微調的情境結果見[主題起手驗證](../../.scratch/design-experience/validation/theme-first.md)；改善模式見[改善模式驗證](../../.scratch/design-experience/validation/improve.md)；品味基線擴充見[品味基線驗證](../../.scratch/design-experience/validation/taste-baseline.md)。
+初次移入的 [驗證紀錄](../../.scratch/design-experience/validation/SUMMARY.md) 區分本次封裝檢查與先前試跑證據。主題起手、視覺處理提前、品味基線與細節微調的情境結果見[主題起手驗證](../../.scratch/design-experience/validation/theme-first.md)；改善模式見[改善模式驗證](../../.scratch/design-experience/validation/improve.md)；品味基線擴充見[品味基線驗證](../../.scratch/design-experience/validation/taste-baseline.md)；參考來源（目標稿與參考網站）的情境結果與封裝檢查見[參考來源驗證](../../.scratch/design-experience/validation/reference-sources.md)。
