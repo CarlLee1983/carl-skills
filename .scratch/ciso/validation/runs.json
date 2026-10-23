@@ -1,0 +1,32 @@
+[
+  {
+    "case": "C01",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C02",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C03",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C04",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  },
+  {
+    "case": "C05",
+    "exit_code": 0,
+    "non_message_event_types": [],
+    "output_exists": true
+  }
+]
