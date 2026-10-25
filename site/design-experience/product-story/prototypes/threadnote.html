@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#181818">
+  <meta name="description" content="Threadnote is an interactive design concept: follow customer feedback from its source to a shared theme and a product decision.">
+  <meta property="og:title" content="Threadnote — give every decision a starting point">
+  <meta property="og:description" content="An interactive product design example with fictional feedback and local sample data.">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/design-experience/product-story/img/hero-desktop.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Threadnote — give every decision a starting point</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/Geist.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="threadnote.css">
+  <script src="threadnote.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-head">
+  <nav class="island" aria-label="Main navigation">
+    <a class="brand" href="threadnote.html" aria-current="page"><img src="assets/mark.svg" width="24" height="24" alt="">Threadnote</a>
+    <div class="desktop-links"><a href="#features">The product</a><a href="#workflow">How it works</a><a href="../">Read the case<img class="icon" src="assets/icons/arrow-up-right.svg" alt=""></a></div>
+    <button class="menu-toggle" aria-label="Open menu" aria-controls="navigation-dialog" aria-expanded="false"><span></span><span></span></button>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero shell" aria-labelledby="hero-heading">
+    <div class="hero-copy">
+      <p class="eyebrow reveal"><span class="signal-dot"></span>A little clarity for your next decision</p>
+      <h1 id="hero-heading" class="reveal">Find your next move.<br>Keep the why close.</h1>
+      <p class="hero-description reveal">Bring the scattered conversations together. Find the pattern, keep the context, and give your next decision a clear starting point.</p>
+      <div class="hero-action reveal"><button class="button primary" data-open-sample>Explore the sample<img class="icon" src="assets/icons/arrow-right.svg" alt=""></button><p class="fine">No account. Just a complete example.</p></div>
+    </div>
+
+    <div class="product-frame" data-intro aria-label="Sample feedback workspace preview">
+      <aside class="app-sidebar">
+        <div class="app-brand intro-item"><img src="assets/mark.svg" width="24" height="24" alt="">Threadnote<span class="sample-label">Sample</span></div>
+        <p class="workspace-label intro-item">Studio workspace</p>
+        <div class="app-nav intro-item"><img class="icon" src="assets/icons/chat-circle-text.svg" alt="">All feedback<span>24</span></div>
+        <div class="app-nav intro-item"><img class="icon" src="assets/icons/stack.svg" alt="">Themes<span>06</span></div>
+        <div class="app-nav selected intro-item"><img class="icon" src="assets/icons/circles-three-plus.svg" alt="">Decisions<span>03</span></div>
+        <div class="sidebar-foot intro-item"><span class="avatar">SN</span><span>Studio North<small>Fictional workspace</small></span></div>
+      </aside>
+      <div class="app-body">
+        <div class="app-top intro-item"><span>Decisions <span class="slash">/</span> Under consideration</span><span class="quiet">This week</span></div>
+        <div class="decision-preview">
+          <div class="preview-main">
+            <p class="overline intro-item">The clearest signal</p>
+            <h2 class="intro-item">Find the right project.<br>Without the digging.</h2>
+            <p class="intro-item quiet">Search keeps coming up in the conversations. <br>Here is the context behind the next move.</p>
+            <div class="source-pills intro-item"><span><img class="icon" src="assets/icons/chat-circle-text.svg" alt="">12 linked notes</span><span><img class="icon" src="assets/icons/link.svg" alt="">3 sources</span></div>
+            <div class="decision-status intro-item"><span class="status-ring"></span>Under consideration<span class="quiet">Product search</span></div>
+          </div>
+          <div class="preview-evidence intro-item">
+            <div class="evidence-head"><span class="overline">The words behind it</span><img class="icon" src="assets/icons/link.svg" alt=""></div>
+            <blockquote>“I remember the project, just not what we called it.”<footer><span class="avatar small">AM</span>Amina M.<span>Research call</span></footer></blockquote>
+            <blockquote>“Could I search by the client instead?”<footer><span class="avatar small">JT</span>Jules T.<span>Support note</span></footer></blockquote>
+            <p class="fine">Fictional feedback, connected to its source.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-caption"><span>A complete example, from first comment to product decision.</span><span class="concept-label">Interactive design concept</span></div>
+  </section>
+
+  <section class="features shell section" id="features" aria-labelledby="features-heading">
+    <div class="section-heading reveal"><div><p class="eyebrow">Less scattered. More connected.</p><h2 id="features-heading">The useful part is<br>already there.</h2></div><p>Your customers leave clues in everyday conversations. Give those clues somewhere to come together.</p></div>
+    <div class="feature-grid">
+      <article class="feature feature-collect" data-story="collect">
+        <div class="feature-copy"><span class="feature-number">01 / Collect</span><h3>Keep the words.<br>And what came before.</h3><p>Bring a note into one shared inbox, with the conversation still attached.</p></div>
+        <div class="story-visual collect-visual" role="img" aria-label="Three sample feedback notes arrive in a shared collection">
+          <div class="note-row" data-note="0"><div class="note-source"><span class="avatar">AM</span><span>Amina M.<small>Research call</small></span><span class="source-time">Tuesday</span></div><p>“I remember the project, just not what we called it.”</p><span class="note-tag">Finding work</span></div>
+          <div class="note-row" data-note="1"><div class="note-source"><span class="avatar">JT</span><span>Jules T.<small>Support note</small></span><span class="source-time">Wednesday</span></div><p>“Could I search by the client instead?”</p><span class="note-tag">Finding work</span></div>
+          <div class="note-row" data-note="2"><div class="note-source"><span class="avatar">RL</span><span>Ren L.<small>Team interview</small></span><span class="source-time">Thursday</span></div><p>“The filter is there. I just never know which one to use.”</p><span class="note-tag">Finding work</span></div>
+        </div>
+      </article>
+      <article class="feature feature-connect" data-story="connect">
+        <div class="feature-copy"><span class="feature-number">02 / Connect</span><h3>A pattern,<br>with the people still in it.</h3><p>See the shared need without flattening every conversation into a number.</p></div>
+        <div class="story-visual connect-visual" role="img" aria-label="Three conversation snippets connect to the shared theme of finding work">
+          <svg class="connection-lines" viewBox="0 0 480 280" preserveAspectRatio="none" aria-hidden="true"><path d="M80 68 C80 140 240 100 240 170 M400 68 C400 140 240 100 240 170 M240 30 V170"/><path class="trace" data-trace="connect" d="M80 68 C80 140 240 100 240 170 M400 68 C400 140 240 100 240 170 M240 30 V170"/></svg>
+          <span class="snippet snippet-one" data-snippet="0">“Project name?”</span><span class="snippet snippet-two" data-snippet="1">“Search by client?”</span><span class="snippet snippet-three" data-snippet="2">“Which filter?”</span>
+          <div class="theme-node" data-theme-node><img class="icon" src="assets/icons/stack.svg" alt=""><strong>Finding work</strong><span>12 notes. One shared need.</span><div class="avatar-stack"><span class="avatar small">AM</span><span class="avatar small">JT</span><span class="avatar small">RL</span><span class="fine">+9</span></div></div>
+        </div>
+      </article>
+      <article class="feature feature-decide" data-story="decide">
+        <div class="feature-copy"><span class="feature-number">03 / Decide</span><h3>Give the next move<br>a starting point.</h3><p>Carry the evidence into the decision. Your team can always follow the thread back.</p></div>
+        <div class="story-visual decide-visual" role="img" aria-label="A product decision links back to its theme and original feedback">
+          <div class="decision-tile"><span class="overline">Product decision</span><strong>Search beyond the project name</strong><div class="decision-state"><span class="status-ring"></span>Under consideration</div></div>
+          <div class="evidence-connector"><span data-evidence-beam></span></div>
+          <div class="linked-theme" data-linked-theme><img class="icon" src="assets/icons/stack.svg" alt=""><div><strong>Finding work</strong><span>12 linked notes · 3 sources</span></div><img class="icon" src="assets/icons/link.svg" alt=""></div>
+          <div class="linked-quote" data-linked-quote><span class="avatar small">AM</span><span>“I remember the project…”</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="motion-controls"><span class="fine">A small demonstration of the workflow.</span><button class="text-button" id="motion-toggle" aria-pressed="false"><img class="icon" src="assets/icons/pause.svg" alt=""><span>Pause motion</span></button></div>
+  </section>
+
+  <section class="tagline shell section" aria-label="Core benefit"><p><span>Less</span> <span>guessing</span> <span>what</span> <span>they</span> <span>meant.</span><br><span>More</span> <span>knowing</span> <span>where</span> <span>to</span> <span>begin.</span></p><div class="tagline-foot"><img src="assets/mark.svg" width="32" height="32" alt=""><span>A clear thread from listening to deciding.</span></div></section>
+
+  <section class="workflow shell section" id="workflow" aria-labelledby="workflow-heading">
+    <div class="section-heading reveal"><div><p class="eyebrow">A shorter distance to clarity</p><h2 id="workflow-heading">Follow the thread.</h2></div><p>Start with something a customer actually said. End with a decision your team can explain.</p></div>
+    <ol class="steps"><li class="reveal"><span class="step-count">01</span><h3>Bring a signal in.</h3><p>A research quote. A support note. A conversation worth keeping.</p></li><li class="reveal"><span class="step-count">02</span><h3>Connect the shared need.</h3><p>Group the related notes. Read the context. Give the theme a useful name.</p></li><li class="reveal"><span class="step-count">03</span><h3>Decide with the evidence.</h3><p>Make the next move explicit, with the original voices one click away.</p></li></ol>
+  </section>
+
+  <section class="sample-section shell section" aria-labelledby="sample-heading">
+    <div class="sample-intro reveal"><p class="eyebrow">Look inside the example</p><h2 id="sample-heading">One theme.<br>A trail you can follow.</h2><p>Why consider a better project search? Read the original notes, explore the shared need, and see the proposed decision.</p><button class="button primary" data-open-sample>Explore the sample<img class="icon" src="assets/icons/arrow-right.svg" alt=""></button></div>
+    <div class="sample-summary reveal"><div class="summary-top"><img class="icon" src="assets/icons/stack.svg" alt=""><span class="fine">Sample theme / 06</span></div><h3>Finding work</h3><p>People remember the client, the context, or the conversation. The project name is the part they forget.</p><div class="summary-stats"><span><strong>12</strong>Linked notes</span><span><strong>3</strong>Source types</span><span><strong>1</strong>Decision to explore</span></div><p class="sample-note">All names, feedback and decisions are fictional.</p></div>
+  </section>
+
+  <section class="faq shell section" id="questions" aria-labelledby="faq-heading"><div class="faq-heading reveal"><p class="eyebrow">A few things to know</p><h2 id="faq-heading">Before you<br>pull the thread.</h2></div><div class="faq-list reveal">
+    <details><summary>What is Threadnote?<img class="icon" src="assets/icons/caret-down.svg" alt=""></summary><p>Threadnote is a fictional feedback workspace, created as an interactive design example. The sample shows how conversations can connect to themes and product decisions.</p></details>
+    <details><summary>Can I try it without an account?<img class="icon" src="assets/icons/caret-down.svg" alt=""></summary><p>Yes. Open the sample and follow the three steps. There is nothing to sign up for and no payment information to enter.</p></details>
+    <details><summary>Is this real customer data?<img class="icon" src="assets/icons/caret-down.svg" alt=""></summary><p>No. All people, messages, counts and decisions in this concept are fictional sample data.</p></details>
+    <details><summary>Does the sample connect my tools?<img class="icon" src="assets/icons/caret-down.svg" alt=""></summary><p>No. Research calls, support notes and team interviews illustrate source context. The sample does not access any external account.</p></details>
+    <details><summary>Can I change the sample?<img class="icon" src="assets/icons/caret-down.svg" alt=""></summary><p>You can filter the notes, inspect the theme, read the decision and open its source evidence. Your selections reset when you reload the page.</p></details>
+    <details><summary>Can I pause the animation?<img class="icon" src="assets/icons/caret-down.svg" alt=""></summary><p>Yes. Use Pause motion below the feature cards. If your device requests reduced motion, the page starts with a still composition.</p></details>
+  </div></section>
+
+  <section class="final-cta shell section reveal" aria-labelledby="final-heading"><img src="assets/mark.svg" width="40" height="40" alt=""><h2 id="final-heading">Start with what<br>they already told you.</h2><button class="button primary" data-open-sample>Explore the sample<img class="icon" src="assets/icons/arrow-right.svg" alt=""></button><p class="fine">No account. No upload. A thread worth following.</p></section>
+</main>
+
+<footer class="site-footer shell"><div><a class="brand" href="threadnote.html"><img src="assets/mark.svg" width="24" height="24" alt="">Threadnote</a><p class="fine">An interactive design concept by carl-skills.</p></div><nav aria-label="Footer"><a href="../">Read the case</a><button class="text-button" data-open-legal="privacy">Privacy</button><button class="text-button" data-open-legal="terms">Terms</button></nav></footer>
+
+<dialog id="navigation-dialog" class="navigation-dialog" aria-label="Navigation"><button class="menu-close text-button" aria-label="Close menu"><img class="icon" src="assets/icons/x.svg" alt=""></button><nav><a href="#features">The product</a><a href="#workflow">How it works</a><a href="#questions">Questions</a><a href="../">Read the case</a></nav></dialog>
+
+<dialog id="sample-dialog" class="sample-dialog" aria-labelledby="explorer-title">
+  <header class="explorer-header"><div><span class="eyebrow">Threadnote / Sample workspace</span><h2 id="explorer-title">Follow one signal.</h2></div><button class="icon-button" data-close-sample aria-label="Close sample"><img class="icon" src="assets/icons/x.svg" alt=""></button></header>
+  <nav class="explorer-steps" aria-label="Sample steps"><button data-step="0" aria-current="step">01 <span>The feedback</span></button><button data-step="1">02 <span>The shared need</span></button><button data-step="2">03 <span>The decision</span></button></nav>
+  <div class="explorer-body" id="explorer-body">
+    <section class="explorer-panel" data-panel="0" aria-labelledby="inbox-title">
+      <div class="panel-heading"><h3 id="inbox-title" tabindex="-1">Start with their words.</h3><p>Three notes from the same theme. Select a note to read the original context.</p></div>
+      <label class="search-label" for="feedback-search">Find a note</label><div class="search-field"><img class="icon" src="assets/icons/magnifying-glass.svg" alt=""><input id="feedback-search" type="search" placeholder="Try client, filter, or project" autocomplete="off"><button class="text-button" id="clear-search" hidden>Clear</button></div>
+      <p class="fine search-status" id="search-status" role="status">3 sample notes</p>
+      <div class="sample-note-list" id="sample-notes"></div>
+      <div class="empty-state" id="empty-state" hidden><img class="icon" src="assets/icons/magnifying-glass.svg" alt=""><h4>No notes match that search.</h4><p>Try “client” or return to all three sample notes.</p><button class="button secondary" id="reset-search">Show all notes</button></div>
+      <div id="source-detail" class="source-detail" hidden tabindex="-1"></div>
+    </section>
+    <section class="explorer-panel" data-panel="1" aria-labelledby="theme-title" hidden><div class="panel-heading"><h3 id="theme-title" tabindex="-1">Different words. A shared need.</h3><p>Keep each conversation intact while giving the common thread a name.</p></div><div class="theme-detail"><span class="eyebrow">Sample theme</span><h4>Finding work</h4><p>People remember the client, the context, or the conversation. The project name is the part they forget.</p><div class="theme-evidence"><span class="avatar">AM</span><blockquote>“I remember the project, just not what we called it.”</blockquote></div><div class="theme-evidence"><span class="avatar">JT</span><blockquote>“Could I search by the client instead?”</blockquote></div><div class="theme-evidence"><span class="avatar">RL</span><blockquote>“The filter is there. I just never know which one to use.”</blockquote></div><p class="fine">Three representative notes shown from a fictional set of 12.</p></div></section>
+    <section class="explorer-panel" data-panel="2" aria-labelledby="decision-title" hidden><div class="panel-heading"><h3 id="decision-title" tabindex="-1">A next move you can explain.</h3><p>A proposal, with the evidence beside it. No decision is being saved.</p></div><div class="decision-detail"><span class="decision-state"><span class="status-ring"></span>Under consideration</span><h4>Search beyond the project name</h4><p>Explore searching by client and project description, so people can find work using the details they remember.</p><div class="decision-reason"><h4>Why this direction?</h4><p>The notes point to a recall problem, not a request for more filters. Testing a wider search is a starting hypothesis, not a validated solution.</p></div><button class="button secondary" id="view-evidence"><img class="icon" src="assets/icons/link.svg" alt="">Read the source evidence</button></div><div class="decision-alternative"><strong>What still needs testing</strong><p>Can people find an older project by client or description? The sample does not establish that this change will work.</p></div></section>
+  </div>
+  <footer class="explorer-footer"><p class="fine">Fictional data · Nothing is uploaded or saved</p><div><button class="button secondary" id="previous-step" hidden><img class="icon" src="assets/icons/arrow-left.svg" alt="">Back</button><button class="button primary" id="next-step">Find the shared need<img class="icon" src="assets/icons/arrow-right.svg" alt=""></button></div></footer>
+</dialog>
+
+<dialog id="legal-dialog" class="legal-dialog" aria-labelledby="legal-title"><button class="icon-button" id="close-legal" aria-label="Close information"><img class="icon" src="assets/icons/x.svg" alt=""></button><h2 id="legal-title">Privacy</h2><div id="legal-content"></div></dialog>
+</body>
+</html>
