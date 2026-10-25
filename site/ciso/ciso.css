@@ -53,8 +53,6 @@ summary:hover { color: var(--ink); }
 /* Keep closed native disclosures out of layout as well as out of the paint tree. */
 details:not([open]) > :not(summary) { display: none; }
 :root { --t-small: 16px; }
-.bar { font-size: 17px; }
-.wordmark { font-size: 22px; }
 .capabilities dt { font-size: var(--t-h2); }
 .case-copy blockquote span { font-size: 16px; }
 .close .big { font-size: var(--t-h2); }

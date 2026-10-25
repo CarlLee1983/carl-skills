@@ -1,0 +1,101 @@
+{
+  "baseline": "ec23251",
+  "pages": [
+    {
+      "page": "site/404.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/ciso/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/design-experience/dbcli/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/design-experience/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/design-experience/order-admin/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/design-experience/personal-site/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/design-experience/reference-site/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/design-experience/target-mockup/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/pm/change-and-dependency/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/pm/entry-and-handoff/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/pm/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    },
+    {
+      "page": "site/pm/scope-and-schedule/index.html",
+      "preserved_body": true,
+      "preserved_header_targets": true,
+      "local_targets_valid": true
+    }
+  ],
+  "sha256": {
+    "site/index.html": "cb139f53e969de306fa58f1d26c6c390fd99059274cf9e445b2c0f13b4805dcb",
+    "site/404.html": "d50cc6075617d4fa45a9a82f24a1f68903588835f36a62d1b6e12d8acee855fc",
+    "site/pm/index.html": "933834d222537317677185b6f130adda13280713b8c2937091f8aef7174ae2bb",
+    "site/ciso/index.html": "ffa38568b02e25116d348148159d95a50445976c7678435e6f7bdac2fc1be916",
+    "site/ciso/ciso.css": "9e801a6d9a9589fd967140887d9c04ef05f29fac4dd13c26364ac48138b816da",
+    "site/design-experience/index.html": "a341521e5860d09a774776fec540da325cce5e351de0729cb23798303b3d7bb7",
+    "site/assets/site.css": "a7bb5030d4ea73e844982ca12c491fc4ace97f4c6857684e2dfdbbc1e36b582a",
+    "site/assets/site.js": "8a5618024f4e9bfab0df992bd1a4e7ab00837cc3fb4a716b9b556eaf9e02dd1e",
+    "site/design-experience/dbcli/index.html": "3fea3c49f43195cdaa18e741a317baecc588e09420929c5bff3ae435be5c365f",
+    "site/design-experience/order-admin/index.html": "360907702d652638bb171e26ac43d49b0897b3eae964df152707977ce11bbecf",
+    "site/design-experience/target-mockup/index.html": "87e402b2443736af2210b5fa0060dbc5187cacf283220132a7da999e053e8baf",
+    "site/design-experience/reference-site/index.html": "e47fdecab9cc98c48da80d18511cd72762eb1dba1890ea181725ad4795a07da7",
+    "site/design-experience/personal-site/index.html": "216ae2dab94d5c38632d2e55c7d4c274c4a01e087f1dd65b05fb865583b3bcde",
+    "site/pm/entry-and-handoff/index.html": "a138ce0128c1d483dd8d929e69c40f615dca5387e75705b4d9c1cac14be7eb69",
+    "site/pm/change-and-dependency/index.html": "594ad3fc551af9ee5cd559774cd81fd47a5595be910c3d4a78b2f128051883d0",
+    "site/pm/scope-and-schedule/index.html": "3dd81550a1015a3f7e9a4396dd54afadd97e6e0c8ce679639508b91f93c12ec4"
+  }
+}

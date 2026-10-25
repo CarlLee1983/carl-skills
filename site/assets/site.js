@@ -98,3 +98,45 @@
     if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
   });
 })();
+
+// 手機全站選單：Escape 關閉並還原焦點；點擊其他區域收起。
+(function () {
+  var menu = document.querySelector('.mobile-menu');
+  if (!menu) return;
+  var summary = menu.querySelector('summary');
+  var header = menu.closest('.site-header');
+  var headerFocus = null;
+  // A hidden control can blur before the media-query change event runs.
+  document.addEventListener('focusin', function (event) {
+    headerFocus = header.contains(event.target) ? event.target : null;
+  });
+  document.addEventListener('pointerdown', function (event) {
+    if (!header.contains(event.target)) headerFocus = null;
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && menu.open) {
+      menu.open = false;
+      summary.focus();
+    }
+  });
+  document.addEventListener('click', function (event) {
+    if (menu.open && !menu.contains(event.target)) menu.open = false;
+  });
+  window.matchMedia('(max-width: 900px)').addEventListener('change', function (event) {
+    var focused = document.activeElement === document.body ? headerFocus : document.activeElement;
+    menu.open = false;
+    if (!focused) return;
+    if (event.matches && document.querySelector('.global-nav').contains(focused)) {
+      summary.focus();
+    } else if (!event.matches && menu.contains(focused)) {
+      if (!focused.matches('a')) {
+        document.querySelector('.wordmark').focus();
+        return;
+      }
+      var links = document.querySelectorAll('.global-nav a');
+      Array.prototype.forEach.call(links, function (link) {
+        if (link.href === focused.href) link.focus();
+      });
+    }
+  });
+})();
