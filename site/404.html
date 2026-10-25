@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
   <link rel="stylesheet" href="/carl-skills/assets/site.css">
+  <script src="/carl-skills/assets/site.js" defer></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -22,15 +23,27 @@
   <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
 </svg>
 <header class="seam" id="top">
-  <div class="bar">
-    <a class="wordmark" href="/carl-skills/">carl-skills</a>
-    <nav aria-label="主要">
-      <ul>
-        <li><a href="/carl-skills/design-experience/">設計案例</a></li>
-        <li><a href="/carl-skills/pm/">PM 案例</a></li>
-        <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub<svg class="ico" aria-hidden="true"><use href="#i-up-right"/></svg></a></li>
-      </ul>
-    </nav>
+  <div class="site-header">
+    <div class="bar">
+      <a class="wordmark" href="/carl-skills/">carl-skills</a>
+      <nav class="global-nav" aria-label="全站導覽"><ul>
+          <li><a href="/carl-skills/#skills">技能總覽</a></li>
+          <li><a href="/carl-skills/design-experience/">設計案例</a></li>
+          <li><a href="/carl-skills/pm/">PM 案例</a></li>
+          <li><a href="/carl-skills/ciso/">CISO 案例</a></li>
+          <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub</a></li>
+      </ul></nav>
+      <details class="mobile-menu">
+        <summary>選單<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <nav aria-label="手機全站導覽"><ul>
+          <li><a href="/carl-skills/#skills">技能總覽</a></li>
+          <li><a href="/carl-skills/design-experience/">設計案例</a></li>
+          <li><a href="/carl-skills/pm/">PM 案例</a></li>
+          <li><a href="/carl-skills/ciso/">CISO 案例</a></li>
+          <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub</a></li>
+        </ul></nav>
+      </details>
+    </div>
   </div>
   <div class="seam-title" aria-hidden="true">
     <p class="h404 top"><span>這一頁</span><span>不在軌道上</span></p>

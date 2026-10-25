@@ -42,17 +42,34 @@
 <a class="skip" href="#main">跳到主要內容</a>
 
 <header class="f-black case-hero" id="top">
-  <div class="bar">
-    <a class="wordmark" href="../../">carl-skills</a>
-    <nav aria-label="主要">
-      <ul>
+  <div class="site-header">
+    <div class="bar">
+      <a class="wordmark" href="../../">carl-skills</a>
+      <nav class="global-nav" aria-label="全站導覽"><ul>
+          <li><a href="../../#skills">技能總覽</a></li>
+          <li><a href="../../design-experience/">設計案例</a></li>
+          <li><a href="../../pm/" aria-current="location">PM 案例</a></li>
+          <li><a href="../../ciso/">CISO 案例</a></li>
+          <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub</a></li>
+      </ul></nav>
+      <details class="mobile-menu">
+        <summary>選單<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <nav aria-label="手機全站導覽"><ul>
+          <li><a href="../../#skills">技能總覽</a></li>
+          <li><a href="../../design-experience/">設計案例</a></li>
+          <li><a href="../../pm/" aria-current="location">PM 案例</a></li>
+          <li><a href="../../ciso/">CISO 案例</a></li>
+          <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub</a></li>
+        </ul></nav>
+      </details>
+    </div>
+    <div class="page-nav"><span class="page-location">PM 案例 / 變更衝擊與依賴保護</span><nav aria-label="本頁章節"><ul>
         <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部 PM 案例</a></li>
         <li><a href="#canceling">依賴保護</a></li>
         <li><a href="#writeback">零污染寫回</a></li>
         <li><a href="#adr">不竄改 Spec</a></li>
         <li><a href="#verify">驗證清單</a></li>
-      </ul>
-    </nav>
+      </ul></nav></div>
   </div>
   <div class="wrap">
     <h1><span>取消前置，</span><span>絕不偷偷釋放下游</span></h1>

@@ -68,13 +68,31 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .h2 { font-size: var(--t-h2); }
 .stack > * + * { margin-top: 1em; }
 
-/* 頁首：字標、幾個文字連結 */
-.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 28px; padding: 22px var(--m); font-size: 15px; }
-.bar a { color: inherit; text-decoration: none; }
-.bar a:hover { text-decoration: underline; }
+/* 全站導覽與頁內章節分層；手機以原生 disclosure 保留無 JS 操作。 */
+.site-header { position: relative; z-index: 4; background: var(--black); color: var(--ink); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px 32px; padding: 12px var(--m); font-size: 16px; border-bottom: 1px solid var(--paper); }
+.site-header a { color: inherit; text-decoration: none; }
+.site-header a:hover { text-decoration: underline; }
+.site-header a, .mobile-menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
 .wordmark { font-weight: 900; font-size: 20px; letter-spacing: -.01em; }
-.bar nav ul { display: flex; flex-wrap: wrap; gap: 6px 24px; }
-.bar nav a { display: inline-flex; align-items: center; gap: .35em; padding-block: 6px; }
+.global-nav ul, .page-nav ul { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.global-nav [aria-current], .mobile-menu [aria-current] { box-shadow: inset 0 -3px var(--flame); font-weight: 700; }
+.global-nav li:last-child, .mobile-menu li:last-child { color: var(--muted); }
+.mobile-menu { display: none; }
+.mobile-menu summary { padding: 0; color: var(--ink); font: inherit; cursor: pointer; list-style: none; }
+.mobile-menu summary::-webkit-details-marker { display: none; }
+.page-nav { display: flex; align-items: center; gap: 24px; padding: 8px var(--m); background: var(--panel); color: var(--body); font-size: 14px; }
+.page-location { font-weight: 700; color: var(--ink); }
+@media (max-width: 900px) {
+  .global-nav { display: none; }
+  .mobile-menu { display: block; }
+  .mobile-menu nav { position: absolute; top: 68px; left: 0; right: 0; z-index: 5; max-height: calc(100svh - 84px); overflow-y: auto; padding: 16px var(--m); background: var(--panel); border-bottom: 1px solid var(--muted); }
+  .mobile-menu nav ul { display: flex; flex-direction: column; gap: 4px; }
+  .mobile-menu nav a { display: flex; }
+  .page-nav { display: block; }
+  .page-location { display: block; margin-bottom: 4px; }
+  .page-nav ul { gap: 4px 20px; }
+}
 
 /* 按鈕：直角、單一填色 */
 .btn { display: inline-flex; align-items: center; gap: .5em; padding: 14px 22px; background: var(--flame); color: var(--black); font-weight: 700; text-decoration: none; transition: transform .18s var(--ease), background-color .2s; }
@@ -328,7 +346,6 @@ figure a.zoom:hover img { transform: scale(1.01); }
   .truth tr { padding-block: 12px; }
   .truth td:first-child { font-size: 20px; }
   .close .big { font-size: 10.4vw; }
-  .bar nav ul { gap: 4px 18px; }
 }
 
 /* 首頁技能清單：名稱放大，說明與適用工具在右 */

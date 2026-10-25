@@ -1,0 +1,18 @@
+{
+  "enterOpen": true,
+  "escapeClosedAndFocusSummary": true,
+  "desktopLinkToMobileSummary": true,
+  "mobileSummaryToDesktopWordmark": true,
+  "mobileLinkToMatchingDesktopLink": true,
+  "crossSkill": "/carl-skills/pm/",
+  "chapter": "#truth",
+  "cisoOpenScrollWidth": 390,
+  "noScriptFixture": {
+    "scripts": 0,
+    "nativeDisclosure": true,
+    "visibleLinks": 5,
+    "navigatedTo": "/carl-skills/pm/"
+  },
+  "outsideBodyClickClosed": true,
+  "initialFocusDefect": "fixed and rechecked"
+}
