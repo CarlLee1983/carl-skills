@@ -1,0 +1,246 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "h1": 1,
+      "overflow": false,
+      "images": [
+        {
+          "src": "img/c01.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c13.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c26.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c31.png",
+          "loaded": true
+        }
+      ],
+      "headingLines": [
+        {
+          "text": "先看證據\n再判風險",
+          "lines": 2
+        },
+        {
+          "text": "判斷與修補\n各有承接者",
+          "lines": 2
+        },
+        {
+          "text": "六項資安能力",
+          "lines": 1
+        },
+        {
+          "text": "把判斷攤開看",
+          "lines": 1
+        },
+        {
+          "text": "登入之後，還有租戶邊界",
+          "lines": 1
+        },
+        {
+          "text": "CI 通過，仍須複審",
+          "lines": 1
+        },
+        {
+          "text": "未知，保留為未知",
+          "lines": 1
+        },
+        {
+          "text": "已分派，仍會阻擋",
+          "lines": 1
+        },
+        {
+          "text": "證據到哪裡\n結論就到哪裡",
+          "lines": 2
+        },
+        {
+          "text": "只裝 CISO",
+          "lines": 1
+        }
+      ],
+      "brokenFragments": [],
+      "animations": 0,
+      "keyboardDetails": true,
+      "lightbox": {
+        "open": true,
+        "count": "1 / 4"
+      },
+      "next": "2 / 4",
+      "escape": {
+        "closed": true,
+        "focus": true
+      },
+      "consoleErrors": []
+    },
+    {
+      "width": 768,
+      "h1": 1,
+      "overflow": false,
+      "images": [
+        {
+          "src": "img/c01.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c13.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c26.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c31.png",
+          "loaded": true
+        }
+      ],
+      "headingLines": [
+        {
+          "text": "先看證據\n再判風險",
+          "lines": 2
+        },
+        {
+          "text": "判斷與修補\n各有承接者",
+          "lines": 2
+        },
+        {
+          "text": "六項資安能力",
+          "lines": 1
+        },
+        {
+          "text": "把判斷攤開看",
+          "lines": 1
+        },
+        {
+          "text": "登入之後，還有租戶邊界",
+          "lines": 1
+        },
+        {
+          "text": "CI 通過，仍須複審",
+          "lines": 1
+        },
+        {
+          "text": "未知，保留為未知",
+          "lines": 1
+        },
+        {
+          "text": "已分派，仍會阻擋",
+          "lines": 1
+        },
+        {
+          "text": "證據到哪裡\n結論就到哪裡",
+          "lines": 2
+        },
+        {
+          "text": "只裝 CISO",
+          "lines": 1
+        }
+      ],
+      "brokenFragments": [],
+      "animations": 0,
+      "keyboardDetails": true,
+      "lightbox": {
+        "open": true,
+        "count": "1 / 4"
+      },
+      "next": "2 / 4",
+      "escape": {
+        "closed": true,
+        "focus": true
+      },
+      "consoleErrors": []
+    },
+    {
+      "width": 390,
+      "h1": 1,
+      "overflow": false,
+      "images": [
+        {
+          "src": "img/c01.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c13.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c26.png",
+          "loaded": true
+        },
+        {
+          "src": "img/c31.png",
+          "loaded": true
+        }
+      ],
+      "headingLines": [
+        {
+          "text": "先看證據\n再判風險",
+          "lines": 2
+        },
+        {
+          "text": "判斷與修補\n各有承接者",
+          "lines": 2
+        },
+        {
+          "text": "六項資安能力",
+          "lines": 1
+        },
+        {
+          "text": "把判斷攤開看",
+          "lines": 1
+        },
+        {
+          "text": "登入之後，還有租戶邊界",
+          "lines": 1
+        },
+        {
+          "text": "CI 通過，仍須複審",
+          "lines": 1
+        },
+        {
+          "text": "未知，保留為未知",
+          "lines": 1
+        },
+        {
+          "text": "已分派，仍會阻擋",
+          "lines": 1
+        },
+        {
+          "text": "證據到哪裡\n結論就到哪裡",
+          "lines": 2
+        },
+        {
+          "text": "只裝 CISO",
+          "lines": 1
+        }
+      ],
+      "brokenFragments": [],
+      "animations": 0,
+      "keyboardDetails": true,
+      "lightbox": {
+        "open": true,
+        "count": "1 / 4"
+      },
+      "next": "2 / 4",
+      "escape": {
+        "closed": true,
+        "focus": true
+      },
+      "consoleErrors": []
+    },
+    {
+      "noScript": {
+        "hiddenReveals": 0,
+        "details": 4,
+        "imageLinks": 4
+      }
+    }
+  ],
+  "linksChecked": 53
+}
