@@ -1,0 +1,21 @@
+{
+  "sha": "ebac75344a15b026fd574160f24409db5739cc67",
+  "cases": [
+    {
+      "id": "C01",
+      "source": ".scratch/ciso/validation/C01-output.md"
+    },
+    {
+      "id": "C13",
+      "source": ".scratch/ciso/validation/C13-output.md"
+    },
+    {
+      "id": "C26",
+      "source": ".scratch/ciso/validation/C26-output.md"
+    },
+    {
+      "id": "C31",
+      "source": ".scratch/ciso/validation/C31-output.md"
+    }
+  ]
+}
