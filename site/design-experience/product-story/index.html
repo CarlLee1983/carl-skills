@@ -1,0 +1,228 @@
+<!doctype html>
+<!-- 圖示取自 Lucide（https://lucide.dev），ISC License，Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022. -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threadnote：新裝技能如何接上產品頁設計｜design-experience 案例</title>
+  <meta name="description" content="以虛構客戶回饋產品 Threadnote 示範能力選擇：design-experience 協調設計流程，landing-page-design 負責產品頁，design-to-motion 負責功能展示動效。附可操作原型與驗證邊界。">
+  <meta name="theme-color" content="#0a111b">
+  <link rel="canonical" href="https://carllee1983.github.io/carl-skills/design-experience/product-story/">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="carl-skills">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="Threadnote：新裝技能如何接上產品頁設計｜design-experience 案例">
+  <meta property="og:description" content="以虛構客戶回饋產品 Threadnote 示範能力選擇：design-experience 協調設計流程，landing-page-design 負責產品頁，design-to-motion 負責功能展示動效。附可操作原型與驗證邊界。">
+  <meta property="og:url" content="https://carllee1983.github.io/carl-skills/design-experience/product-story/">
+  <meta property="og:image" content="https://carllee1983.github.io/carl-skills/design-experience/product-story/img/hero-desktop.webp">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="Threadnote 產品頁桌機首屏，主張旁放置客戶回饋工作區示例">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Threadnote：新裝技能如何接上產品頁設計｜design-experience 案例">
+  <meta name="twitter:description" content="以虛構客戶回饋產品 Threadnote 示範能力選擇：design-experience 協調設計流程，landing-page-design 負責產品頁，design-to-motion 負責功能展示動效。附可操作原型與驗證邊界。">
+  <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/design-experience/product-story/img/hero-desktop.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+</svg>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="f-black case-hero" id="top">
+  <div class="site-header">
+    <div class="bar">
+      <a class="wordmark" href="../../">carl-skills</a>
+      <nav class="global-nav" aria-label="全站導覽"><ul>
+          <li><a href="../../#skills">技能總覽</a></li>
+          <li><a href="../../design-experience/" aria-current="location">設計案例</a></li>
+          <li><a href="../../pm/">PM 案例</a></li>
+          <li><a href="../../ciso/">CISO 案例</a></li>
+          <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub</a></li>
+      </ul></nav>
+      <details class="mobile-menu">
+        <summary>選單<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <nav aria-label="手機全站導覽"><ul>
+          <li><a href="../../#skills">技能總覽</a></li>
+          <li><a href="../../design-experience/" aria-current="location">設計案例</a></li>
+          <li><a href="../../pm/">PM 案例</a></li>
+          <li><a href="../../ciso/">CISO 案例</a></li>
+          <li><a href="https://github.com/CarlLee1983/carl-skills">GitHub</a></li>
+        </ul></nav>
+      </details>
+    </div>
+    <div class="page-nav"><span class="page-location">設計案例 / Threadnote 產品頁</span><nav aria-label="本頁章節"><ul>
+        <li><a href="../"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg>全部案例</a></li>
+        <li><a href="#capabilities">能力分工</a></li>
+        <li><a href="#story">產品展示</a></li>
+        <li><a href="#try">試用</a></li>
+        <li><a href="#verify">驗證</a></li>
+      </ul></nav></div>
+  </div>
+  <div class="wrap">
+    <h1><span>讓回饋，</span><span>走到決策。</span></h1>
+    <p class="lede">Threadnote 是一個虛構的客戶回饋產品。這次用它做一張可以操作的產品介紹頁：從散落的訊息看見共同需求，再追到一項有來源的決策。同時觀察 design-experience 如何接上使用者剛安裝、偏好的設計技能。</p>
+    <p style="margin-top:32px"><a class="btn" href="prototypes/threadnote.html">開啟 Threadnote 原型<svg class="ico" aria-hidden="true"><use href="#i-up-right"/></svg></a></p>
+    <dl class="facts">
+      <div><dt>進入模式</dt><dd>主題起手</dd></div>
+      <div><dt>題材</dt><dd>客戶回饋產品頁</dd></div>
+      <div><dt>設計狀態</dt><dd>代理暫定方向</dd></div>
+      <div><dt>交付範圍</dt><dd>網站展示與互動示例</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="honest f-flame">
+  <p><strong>題材由真人使用者選定，設計仍是暫定提案。</strong>頁面結構、視覺處理與文案由代理提出，沒有虛構訪談或定稿回覆。Threadnote、人物、訊息與決策都是示例；真人易用性尚未測試。</p>
+</div>
+
+<main id="main">
+  <section class="round wrap f-black" id="brief" aria-labelledby="brief-h">
+    <div class="round-head">
+      <h2 id="brief-h" class="rv">先讓人看懂，<br>再讓人試一次</h2>
+      <div class="stack rv" style="--d:1">
+        <p>假設讀者是產品團隊：平常收集了不少意見，卻很難回答「這個需求從哪裡來？為什麼先做它？」產品頁的主要動作因此是 Explore the sample，讓讀者沿著一條完整的證據鏈走一遍。</p>
+        <p>這是新題材，沒有既有品牌、介面或目標稿，因此從主題起手。暫定的氣質是精確、沉著、帶一點技術感；英文呈現產品，繁中解釋案例。</p>
+        <p>本輪只深化一個方向：先給產品主張，再展示收集、歸納、追溯三件事，最後讓讀者打開同一份示例。這個取捨便於檢查一條完整路徑，仍需要使用者判斷是否喜歡。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <figure class="rv"><a class="zoom" href="img/hero-desktop.webp"><img src="img/hero-desktop.webp" width="1440" height="900" loading="lazy" alt="Threadnote 桌機首屏：產品主張、Explore the sample 按鈕與回饋工作區示例"></a><figcaption>桌機首屏：用可讀的產品介面支撐主張，主要動作直接通往示例。</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" id="capabilities" aria-labelledby="cap-h">
+    <div class="round-head">
+      <h2 id="cap-h" class="rv">流程有人管，<br>手藝各有分工</h2>
+      <div class="stack rv" style="--d:1">
+        <p>使用者先表達對 Elaya 風格的偏好，再安裝技能。這次從當下可用的技能說明與實際指令選能力：landing-page-design 對應產品頁，design-to-motion 對應頁面上的功能展示。</p>
+        <p>design-experience 保留協調者的責任：定義任務、記錄假設、整理原型與證據。視覺與動效交給適合這次交付的工藝技能，不需要為兩個新名字修改技能白名單。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="table-scroll rv">
+        <table class="dtable" style="min-width:620px">
+          <caption class="sr-only">本案例的技能責任與邊界</caption>
+          <thead><tr><th scope="col">能力</th><th scope="col">這次負責</th><th scope="col">邊界</th></tr></thead>
+          <tbody>
+            <tr><td>design-experience</td><td>設計流程、任務、假設、試用與交付紀錄</td><td>分清代理選擇、自檢與真人接受</td></tr>
+            <tr><td>landing-page-design</td><td>產品頁論述、章節順序、排版與視覺規則</td><td>套在 Threadnote 原型；案例文章沿用既有網站樣式</td></tr>
+            <tr><td>design-to-motion</td><td>產品框的載入進場，以及三個功能展示的短故事</td><td>輸出是可操作網站；這輪沒有 MP4、GIF 匯出</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="stack measure rv">
+        <p>主視覺只選一套規則。其他已安裝的行銷設計技能沒有一層層疊上去；選這兩項是因為使用者偏好與本輪交付相符。</p>
+        <p>規則衝突也要處理：低透明度標語可能難讀，因此先用可讀的灰色，再逐步顯示成白色。這個案例能展示一次具體的能力選擇，不能證明所有未知技能都已被驗證。</p>
+        <p class="note">技能來源：<a href="https://github.com/elayadesign/ai-design-skills">Elaya / ai-design-skills</a>；流程入口：<a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/design-experience">carl-skills / design-experience</a>。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" id="story" aria-labelledby="story-h">
+    <div class="round-head">
+      <h2 id="story-h" class="rv">動起來的，<br>是產品的意思</h2>
+      <div class="stack rv" style="--d:1">
+        <p>暫定視覺處理叫 charcoal signal：深炭色表面、Geist 字體、少量萊姆色標示主要動作與選中路徑。產品介面是畫面主體；不靠客戶標誌、見證或成長數字當作證據。</p>
+        <p>首屏產品框只做一次載入進場。下方三個功能展示各說一件事：新訊息進入收集區、片段聚成共同需求、決策連回來源。動畫的目的是讓讀者看見關係。</p>
+        <p>網站情境也決定交付方式：文字留在 HTML，表面與圖示使用本機資產。試用區和問答維持穩定的操作介面，展示動畫另有暫停與減少動態的檢查項目。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <figure class="rv"><a class="zoom" href="img/features-desktop.webp"><img src="img/features-desktop.webp" width="1440" height="1526" loading="lazy" alt="Threadnote 三個功能展示：收集訊息、找出共同需求、把決策連回原始回饋"></a><figcaption>功能區的三段故事對應同一條資料脈絡。截圖只呈現一刻，動態請開啟原型查看。</figcaption></figure>
+      <div class="wide-narrow">
+        <div class="stack measure rv">
+          <h3>從第一則訊息，到有依據的決定</h3>
+          <p>產品頁的章節沿著這條線前進：主張與示例入口 → 三個功能展示 → 三個使用步驟 → 可追溯的示例決策 → 常見問題 → 再次開啟示例。</p>
+          <p>手機版要保留相同的閱讀與操作順序，讓讀者先知道這個產品幫什麼忙，再決定要不要試。桌機的大型產品框在窄螢幕需要重新排列，不能只把整張畫面縮小。</p>
+          <p class="note">所有來源名稱只用來說明上下文。示例沒有連接 Slack、客服工具或其他外部服務。</p>
+        </div>
+        <figure class="rv phone" style="--d:1"><a class="zoom" href="img/hero-mobile.webp"><img src="img/hero-mobile.webp" width="390" height="664" loading="lazy" alt="Threadnote 在 390 像素寬的首屏，產品主張與主要示例入口直向排列"></a><figcaption>390 × 664 手機首屏。</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-panel" id="try" aria-labelledby="try-h">
+    <div class="round-head">
+      <h2 id="try-h" class="rv">試著找到，<br>決策背後的回饋</h2>
+      <div class="stack rv" style="--d:1">
+        <p>這輪要回答的問題是：讀者能不能從訊息找到共同需求，再理解一項決策引用了哪些來源？下面的步驟是試用任務，不是真人操作紀錄。</p>
+        <ol class="plain-list">
+          <li>開啟原型，按 Explore the sample 進入示例。</li>
+          <li>篩選回饋訊息，查看它們指向的共同需求。</li>
+          <li>打開決策，沿著引用查看原始訊息。</li>
+          <li>試著搜尋沒有結果的字詞，再回到完整清單。</li>
+        </ol>
+        <p>試用後可以分開記下兩件事：喜歡哪一部分，以及在哪一步找不到下一個動作。視覺喜好與操作障礙需要不同的修正。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="protos rv">
+        <a href="prototypes/threadnote.html"><strong>Threadnote 產品頁</strong><span>本機示例資料，免帳號；重新整理會重設狀態</span><em>開啟原型<svg class="ico" aria-hidden="true"><use href="#i-up-right"/></svg></em></a>
+      </div>
+      <div class="wide-narrow">
+        <figure class="rv"><a class="zoom" href="img/explorer-desktop.webp"><img src="img/explorer-desktop.webp" width="1440" height="900" loading="lazy" alt="Threadnote 桌機示例探索器，顯示回饋清單、需求主題與決策來源"></a><figcaption>桌機示例探索器：沿著訊息、需求、決策查看上下文。</figcaption></figure>
+        <figure class="rv phone" style="--d:1"><a class="zoom" href="img/explorer-mobile.webp"><img src="img/explorer-mobile.webp" width="390" height="664" loading="lazy" alt="Threadnote 手機示例探索器，以窄螢幕呈現回饋與下一步操作"></a><figcaption>手機探索器：相同任務，窄螢幕呈現。</figcaption></figure>
+      </div>
+      <p class="note rv">原型在瀏覽器內使用本機資料，沒有後端、登入、遙測或外部寫入。訊息、主題和決策皆為虛構，畫面中的來源不代表已完成整合。</p>
+    </div>
+  </section>
+
+  <section class="round wrap f-surface" id="verify" aria-labelledby="verify-h">
+    <div class="round-head">
+      <h2 id="verify-h" class="rv">驗證到哪裡</h2>
+      <div class="stack rv" style="--d:1">
+        <p>以下是本輪在 Chrome 實際執行的檢查。截圖與程式化斷言支持檢查過的畫面和操作；真人易用性與設計接受仍待回饋。</p>
+      </div>
+    </div>
+    <div class="round-body">
+      <div class="table-scroll rv">
+        <table class="dtable" style="min-width:600px">
+          <caption class="sr-only">Threadnote 驗證項目與目前證據</caption>
+          <thead><tr><th scope="col">檢查</th><th scope="col">觀察範圍</th><th scope="col">目前結果</th></tr></thead>
+          <tbody>
+            <tr><td>桌機與手機版面</td><td>1440 × 900、390 × 664、360 × 640；閱讀順序、主要入口、橫向溢出</td><td>三個尺寸的主要按鈕都在首屏可視範圍內；頁面與示例對話框沒有橫向溢出。桌機、390 寬首屏與決策畫面已逐張檢視。</td></tr>
+            <tr><td>示例主流程與恢復</td><td>開啟、篩選、需求、決策、來源、空搜尋、返回與關閉</td><td>三個尺寸均完成回饋、主題、決策與來源追溯；空搜尋可清除，未附完整來源時保留原始引文與返回路徑。</td></tr>
+            <tr><td>鍵盤與焦點</td><td>手機選單、問答、探索器；可見焦點、Escape、焦點返回</td><td>實際鍵盤檢查 Enter、Tab、Escape；選單與對話框關閉後焦點返回入口，對話框首尾循環。檢查後補上明確的焦點循環。</td></tr>
+            <tr><td>動態與靜態呈現</td><td>進場、功能故事、暫停、減少動態；與自身靜態設計比對</td><td>進場、暫停、離開畫面停止與減少動態通過；五種寬度的移動文字不重疊。逐詞標語、靜態優先、抽樣影格的圓角範圍、回到靜態構圖與循環接點均已檢查。</td></tr>
+            <tr><td>網站整合</td><td>案例、原型、圖片與返回連結；GitHub Pages 子路徑</td><td>新增案例接入第六筆索引與 sitemap；本機相對路徑、片段、圖片尺寸與 CSS 資產檢查通過。完整資料夾也能以本機檔案開啟試用。</td></tr>
+            <tr><td>真人與輔助科技</td><td>真人任務試用、實體手機、其他瀏覽器、螢幕報讀</td><td>尚未執行</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="round wrap f-black" id="limits" aria-labelledby="limits-h">
+    <div class="round-head">
+      <h2 id="limits-h" class="rv">這個示例的邊界</h2>
+      <div class="stack rv" style="--d:1">
+        <p>它呈現一次具體的技能協作與產品頁提案。沒有實際客戶、轉換數據、資料匯入或持續儲存，也沒有驗證這個虛構產品的市場需求。</p>
+        <p>動效只用於這個網站，沒有影片或 GIF 匯出品質的結論。靜態比對的來源是本次自己的設計，並非對外部 Figma 目標稿的還原測試。功能卡片的無腳本構圖與靜態模式比對，最低 PSNR 為 82.7 dB；故事回到靜態構圖的最低值為 87.8 dB。圓角卡片以外的像素、抽樣循環接點與空白拍均相同。</p>
+        <p>獨立審查發現的窄畫面文字重疊、標語整行同亮、靜態連接線改變與模式優先順序問題均已修正，複查未發現新的重大問題。下一個需要真人回答的問題仍是：這個呈現是否符合偏好的風格，以及示例能不能幫人理解產品。使用者本輪已授權將案例與原型收尾發布；發布不代替真人任務試用或產品需求驗證。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="band wrap f-flame">
+  <div class="next-case">
+    <p>回到設計案例，查看其他進入模式與任務。</p>
+    <a class="big" href="../">全部案例<svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </div>
+</footer>
+</body>
+</html>

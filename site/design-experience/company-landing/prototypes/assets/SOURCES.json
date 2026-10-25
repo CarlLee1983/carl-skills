@@ -1,0 +1,52 @@
+{
+  "Geist.woff2": {
+    "source": "https://raw.githubusercontent.com/vercel/geist-font/main/fonts/Geist/webfonts/Geist%5Bwght%5D.woff2",
+    "license": "Geist-OFL.txt",
+    "reuse": "Copied unchanged from product-story prototype local asset"
+  },
+  "inline-icons": {
+    "source": "https://github.com/phosphor-icons/core/tree/main/assets/regular",
+    "license": "Phosphor-LICENSE.txt",
+    "icons": [
+      "arrow-right",
+      "arrow-up-right",
+      "x",
+      "check",
+      "caret-down"
+    ],
+    "reuse": "Inline SVG paths; standard regular icon forms"
+  },
+  "mark.svg": "Original overlapping frames symbol for fictional Shijian consultancy",
+  "shansu-v2.webp": {
+    "source": "AI-generated using built-in image_gen__imagegen",
+    "useCase": "product-mockup",
+    "fictionalConcept": true,
+    "dimensions": [
+      1796,
+      876
+    ],
+    "encoding": "cwebp -q 83; no creative postprocessing",
+    "prompt": "Use case: product-mockup.\nAsset type: a wide landscape portfolio photograph for the fictional Shijian brand strategy consultancy website. This is fictional concept work, not a real client's photography.\nPrimary request: art-directed photorealistic studio still life of an elegant Taiwanese tea brand identity, \"山序製茶\" / \"SHANSU TEA\", showing a coherent packaging family as a tangible brand strategy outcome.\nScene: seamless muted forest-green paper tabletop and background, matte tactile surface, calm warm daylight from upper left. Three tall slender premium tea pouches or folded paper sleeves, one warm ivory, one pale sage, one very deep green; a small off-white brand card leaning beside them. Fine visibly fibrous uncoated paper, subtly embossed thin-line mountain or circular horizon motif, restrained accurate printing, believable folds, crisp clean silhouettes, soft long natural shadows.\nComposition: horizontal 2.05:1 image, polished editorial still-life photography, medium close view slightly above the objects. The packaging family grouped across the center two thirds, with enough green breathing space at both edges for responsive cropping. Products fully inside frame and labels large enough to read when viewed at full width. Strong real volume and light rather than a flat vector render.\nText verbatim: \"山序製茶\" and \"SHANSU TEA\" on the main ivory package, sparse small \"SHANSU\" on secondary pieces. Elegant dark green Chinese typography and restrained Latin tracking; no other copy. Do not put large slogans or website UI in the image. Fine nonverbal mountain linework can be repeated.\nMood: thoughtful, quietly distinctive, contemporary independent design studio, physically plausible material texture, subtle film grain.\nAvoid: human figures, hands, plants as props, cups, busy decoration, fake awards, client marks, watermarks, unreadable filler text, floating objects, glossy plastic, excessive gold, heavy gradients, screenshot borders."
+  },
+  "shansu-v2-900.webp": {
+    "source": "shansu-v2.webp",
+    "encoding": "cwebp -q 82 -resize 900 0 from generated PNG",
+    "purpose": "Responsive smaller image"
+  },
+  "hori-v2.webp": {
+    "source": "AI-generated using built-in image_gen__imagegen",
+    "useCase": "product-mockup",
+    "fictionalConcept": true,
+    "dimensions": [
+      1586,
+      992
+    ],
+    "encoding": "cwebp -q 83; no creative postprocessing",
+    "prompt": "Use case: product-mockup.\nAsset type: landscape portfolio photograph for fictional Shijian brand strategy consultancy. A second original concept project for a fictional coworking brand \"合日空間\" / \"HORI\".\nPrimary request: premium editorial stationery still-life that shows a practical brand messaging system for a shared workspace, physically photographed, not a website screenshot.\nScene: pale powder-blue matte paper tabletop; a broad warm sunlit patch falls diagonally across it with gentle directional shadows. A restrained identity family: one substantial off-white softcover brand manual with dark navy typography, a slim pale blue booklet slightly overlapping, and a neat small stack of midnight-navy business cards showing white type. Fine tactile uncoated paper, visible book spine, subtly raised ink, real dimensional edges. Consistent simple squared frame / open doorway line motif, suggesting a place to work together.\nComposition: horizontal 1.6:1, overhead three-quarter editorial product photography. Asymmetric but balanced arrangement: main manual slightly angled near left-center, secondary blue booklet and navy cards to lower-right. Products fully inside the central 75 percent; airy negative space, no random filler props.\nText verbatim: \"合日空間\", \"HORI\", and small \"WORK, TOGETHER.\" on the main booklet. \"HORI\" on the navy cards. No other visible text. Carefully set, sparse, readable lettering, intentional editorial typography.\nColor palette: pale blue background, warm ivory paper, deep ink-navy printing; soft white sunlight. Physically believable crisp print and rich paper textures. Distinct from a flat vector graphic or generic stock office photo.\nAvoid: people, hands, laptops, coffee, plants, office room interiors, real brand logos, fake awards, watermarks, filler paragraphs, excessive scattered stationery, shiny plastic, digital UI, page frame."
+  },
+  "hori-v2-800.webp": {
+    "source": "hori-v2.webp",
+    "encoding": "cwebp -q 82 -resize 800 0 from generated PNG",
+    "purpose": "Responsive smaller image"
+  }
+}

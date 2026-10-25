@@ -1,0 +1,18 @@
+{
+  "Geist.woff2": "https://raw.githubusercontent.com/vercel/geist-font/main/fonts/Geist/webfonts/Geist%5Bwght%5D.woff2",
+  "Geist-OFL.txt": "https://raw.githubusercontent.com/vercel/geist-font/main/OFL.txt",
+  "Phosphor-LICENSE.txt": "https://raw.githubusercontent.com/phosphor-icons/core/main/LICENSE",
+  "icons/arrow-right.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/arrow-right.svg",
+  "icons/arrow-up-right.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/arrow-up-right.svg",
+  "icons/chat-circle-text.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/chat-circle-text.svg",
+  "icons/check.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/check.svg",
+  "icons/stack.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/stack.svg",
+  "icons/link.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/link.svg",
+  "icons/play.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/play.svg",
+  "icons/pause.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/pause.svg",
+  "icons/x.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/x.svg",
+  "icons/magnifying-glass.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/magnifying-glass.svg",
+  "icons/arrow-left.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/arrow-left.svg",
+  "icons/caret-down.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/caret-down.svg",
+  "icons/circles-three-plus.svg": "https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/circles-three-plus.svg"
+}
