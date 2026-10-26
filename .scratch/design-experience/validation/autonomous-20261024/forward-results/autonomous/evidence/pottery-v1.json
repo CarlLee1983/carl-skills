@@ -1,0 +1,8 @@
+{
+  "source": "autonomous/prototypes/pottery-v1.html",
+  "sha256": "c829691265bf7e0ebf94d61972813b1a9e7a45cd817fae4fb055e3bdcf8462f8",
+  "method": "Node vm with minimal DOM stubs; static link and label checks",
+  "result": "pass",
+  "checks": "filterAndPlan",
+  "limitations": "No browser rendering, native form reset, keyboard, overflow, responsive or human trial verified."
+}

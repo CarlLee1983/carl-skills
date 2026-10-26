@@ -1,0 +1,1 @@
+各情境是獨立專案，授權不互通。只可讀本次skill與fixture，不讀原會話或原產品。實作限制見各request.json。每案將實際回覆記入reply.md，若有產物需實際寫入該案目錄。完成後列出performed actions與檢查結果，不新增產品需求。

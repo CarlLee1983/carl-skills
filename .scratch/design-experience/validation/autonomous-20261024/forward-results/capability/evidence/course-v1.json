@@ -1,0 +1,8 @@
+{
+  "source": "capability/prototypes/course-v1.html",
+  "sha256": "2473dafc4368b20ed7a52bc2c513dee41122d321c77928e8929ca2983b4269af",
+  "method": "Node vm with minimal DOM stubs; static link and label checks",
+  "result": "pass",
+  "checks": "markAndClearReading",
+  "limitations": "No browser rendering, native form reset, keyboard, overflow, responsive or human trial verified."
+}

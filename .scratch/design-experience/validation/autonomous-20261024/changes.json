@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "path": "skills/design-experience/SKILL.md",
+      "before": "dfaa082cbd0133c441315941f6aa7efb0fab978398796abf5d2207b257499a77",
+      "after": "aa1be146dcffb4d297f87cc63f3bb63699e11d21f3c2f3c2e68f0dad742abec7"
+    },
+    {
+      "path": "skills/design-experience/references/artifacts.md",
+      "before": "44b7def6b7751e0550adeb63db012963924563d7fd731c2043d7db163b822b2a",
+      "after": "9f138ba5916f9513b9f99fcfd2f3e8861b9a431d52d948ee739796859ade2be9"
+    },
+    {
+      "path": "skills/design-experience/references/collaboration.md",
+      "before": "783b39b976a6070b3f66d84e79ebb05f38408105dcbe14731cac5b9c62c5ce31",
+      "after": "bd2df3e76151e90e26a8b613044f2efc5c3fb2a5615ae595adc7ca5c8c588f7e"
+    },
+    {
+      "path": "docs/design-experience/acceptance.md",
+      "before": "1a99409cb6d02d1a20bbb10a5cf80825eac1f248a168021391697977c5c2b075",
+      "after": "8fd6d4d2c8166c516bf99b966b9c4e8f8e5384c8a08cb3ac6163180d1d4d678a"
+    },
+    {
+      "path": "README.md",
+      "before": "b8a076404067bd10d02cb75a2c558903ef7651e2c900d014a8264bb4c2b2c097",
+      "after": "8c8ddc64e10fc7290ce266ba8290d0a325d0be798d82bba1aaf2bd4c1486b534"
+    }
+  ],
+  "installedSync": "complete; all 9 skill files match source SHA-256",
+  "backup": "/Users/carl/.codex/backups/design-experience-autonomous-20261024-nxqb0vq5"
+}

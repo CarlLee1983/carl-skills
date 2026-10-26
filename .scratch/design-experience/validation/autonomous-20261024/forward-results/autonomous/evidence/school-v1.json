@@ -1,0 +1,8 @@
+{
+  "source": "autonomous/prototypes/school-v1.html",
+  "sha256": "3bc4f629706dec7651bf48290b5fb8fd34d4780e4cff4732917bc69547f425eb",
+  "method": "Node vm with minimal DOM stubs; static link and label checks",
+  "result": "pass",
+  "checks": "threeCourseChoicesAndReset",
+  "limitations": "No browser rendering, native form reset, keyboard, overflow, responsive or human trial verified."
+}
