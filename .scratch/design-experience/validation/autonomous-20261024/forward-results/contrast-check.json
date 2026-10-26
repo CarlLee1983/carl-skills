@@ -1,0 +1,36 @@
+{
+  "method": "sRGB token contrast calculation only",
+  "results": [
+    {
+      "role": "pottery body",
+      "ratio": 13.53,
+      "result": "pass"
+    },
+    {
+      "role": "pottery action",
+      "ratio": 8.77,
+      "result": "pass"
+    },
+    {
+      "role": "school body",
+      "ratio": 12.49,
+      "result": "pass"
+    },
+    {
+      "role": "school action",
+      "ratio": 7.46,
+      "result": "pass"
+    },
+    {
+      "role": "course body",
+      "ratio": 13.7,
+      "result": "pass"
+    },
+    {
+      "role": "course action",
+      "ratio": 8.63,
+      "result": "pass"
+    }
+  ],
+  "limitation": "Not rendered screen verification"
+}

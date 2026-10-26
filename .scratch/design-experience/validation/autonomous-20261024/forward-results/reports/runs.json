@@ -1,0 +1,22 @@
+{
+  "cases": [
+    {
+      "id": "陶器",
+      "source": "pottery-v1",
+      "checks": [
+        {
+          "id": "run-01",
+          "kind": "interaction",
+          "performed": true,
+          "result": "pass",
+          "action": "切換系列並重設表單"
+        }
+      ]
+    },
+    {
+      "id": "學校",
+      "source": "school-v1",
+      "checks": []
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+ M docs/ciso/SPEC.md
+ M skills/ciso/SKILL.md
+ M skills/ciso/references/acceptance.md
+ M skills/ciso/references/delegation.md
+ M skills/ciso/references/evidence.md
+ M skills/ciso/references/gate.md
+ M skills/ciso/references/supply-chain.md
+?? .scratch/ciso/issues/08-environment-verification-and-unknown-evidence.md
+?? .scratch/ciso/validation/08-review-fixes/
+?? .scratch/design-experience-lab/
+?? .scratch/design-experience/explainer/
+?? .scratch/design-experience/validation/autonomous-20261024/
+?? docs/ciso/CAPABILITY-PLAN.md

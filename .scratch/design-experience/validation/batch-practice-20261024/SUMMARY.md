@@ -1,0 +1,7 @@
+# 批次差異化練兵校準
+
+User acceptance and authorization: prior35 current redesigns accepted; continue practice and improve design-experience. Product source/evidence remains in the separate design-experience-lab repository.
+
+Owning task and evidence: /Users/carl/Dev/CMG/design-experience-lab/cases/product-practice-01/SESSION.md and evidence/calibration.md. Before source/installed package and acceptance document snapshots: that repository's baselines/product-practice-01. Existing source modifications preserved; exact prechange source equals installed-before for amended files.
+
+Scope: SKILL.md pointer, new references/batch-review.md, artifact tool write scoping in references/collaboration.md; four acceptance scenarios and packaging reference wording. No globalAGENTS/config/hooks, publication or commits. Source and installed10-file packages plus isolatedcopy are equal; quick_validate and relative links passed. Real six-case/18-screen forwardexercise complete:76 source-bound layoutchecks,186 root/Pagesflowchecks,148 resource/preservationchecks,50 repositorytests andbuild passed. Independentreview checkpoint-3 Clean after download isolation, querynotice, accepted-state and gallerycaption fixes. Six original sampleDownloads retained; no retrospective no-escape claim. Humanusability/device/AT/200%text remain unverified. This pointer is maintenance evidence, not a second product progress authority.

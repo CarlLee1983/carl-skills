@@ -1,0 +1,9 @@
+Source metadata and 17 references passed. Scoped git diff --check passed.
+Isolated package:
+Skill is valid!
+ok: 7 Markdown files, 17 relative references checked in /var/folders/mp/2hbmdcp15qjfn3fhgctttgl40000gn/T/design-experience-package-mtsak5fa/design-experience
+
+Installed preflight: three target files equal the before snapshots.
+
+Installed final: Skill is valid; 7 Markdown files / 17 references pass; all 9 source/install file hashes match. Scoped final diff --check passed.
+Primary rerun of three fixture checks passed; no browser was available.

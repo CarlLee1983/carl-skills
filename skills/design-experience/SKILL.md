@@ -1,6 +1,6 @@
 ---
 name: design-experience
-description: Act as a product/UI-UX designer who turns themes, concepts, or existing capabilities into style interviews, comparable directions, interactive prototypes, refinements, and finalized designs handed to developers. Use when starting interface design from a theme or concept, when functionality exists but interface design needs a starting point, when an existing UI/UX disappoints and needs diagnosis and improvement proposals, when the user brings a UI image or a site they like, or to resume design exploration; exclude isolated CSS fixes and direct implementation from an established design.
+description: Act as a product/UI-UX designer who turns themes, concepts, or existing capabilities into comparable designs, interactive prototypes, refinements, and developer handoffs. Use for new interface concepts, improving existing UI/UX, image or website references, resuming design exploration, or explicitly authorized autonomous prototype batches; exclude isolated CSS fixes and direct implementation from an established design.
 ---
 
 # Design Experience
@@ -13,7 +13,19 @@ Read the conversation, project rules, and existing design records. Choose the en
 
 Before first persistence or resuming across sessions, read [artifacts.md](references/artifacts.md). Keep context and artifact entry points in one `SESSION.md`. State this round's deliverable before necessary exploration. For discussion only, propose in conversation first; create files and prototypes within the current authorization.
 
-This skill can produce briefs, directions, simple prototypes, and handoffs itself. Read [collaboration.md](references/collaboration.md) before every visual-language step and whenever another specialist capability is needed; choose one primary visual direction at a time. If a skill is unavailable, complete authorized work with available capabilities and name the method actually used, without claiming to have invoked it.
+This skill can produce briefs, directions, simple prototypes, and handoffs itself. Read [collaboration.md](references/collaboration.md) before selecting or initializing a collaborating workflow, including every visual-language step; choose one primary visual direction at a time. If a skill is unavailable, complete authorized work with available capabilities and name the method actually used, without claiming to have invoked it.
+
+## Choose who makes design decisions
+
+Use **collaborative work** by default: the user participates in the interviews and choices below. When the user explicitly delegates design decisions or asks for consecutive cases without selection stops, use **autonomous work** within that grant. Record the decision scope, deliverable and batch boundary in SESSION; retain it on continuation. A reply to one proposal follows the feedback table, rather than granting unrelated work.
+
+This choice is separate from Theme-first, Feature-first and Improve. In autonomous work, the later interview, multiple-direction and human-selection completion criteria are replaced by reasoned agent choices for the delegated decisions. Keep the necessary brief, reference review and Improve 現況/diagnosis; choose one suitable structure and visual treatment, recording assumptions and trade-offs instead of producing extra options for a selection that has been delegated. Ask only when a missing decision exceeds the grant or prevents a meaningful in-scope result.
+
+For each authorized case: establish its task and observable checks, complete the prototype, inspect the actual screens and interactions, fix observed defects, then record results and continue to the next authorized case. Choose collaboration capabilities for this deliverable, not a fixed media or motion quota. If a required check cannot run, retain the specific gap and completion status; proceed with independent authorized work when that gap is not an agreed blocking condition. Stop at the batch boundary, a genuine blocking decision, or a request to pause; do not create background work or new scope to keep the loop running.
+
+For batches of independently designed cases, read [batch-review.md](references/batch-review.md) before choosing their concepts, before expanding a promising example, and at integration. It supplies cross-case comparison without imposing one house style.
+
+Record agent-selected design, prototype completion, verification and human acceptance separately. Autonomous completion is **原型完成／代理自檢** only to the extent supported by performed checks; it does not satisfy user finalization or production/publication authorization. Human trial and feedback collection run when requested or available, rather than holding the next authorized case for unanswered preference questions.
 
 ## Choose the entry mode
 
@@ -91,6 +103,8 @@ Give concrete trial tasks, such as「找出為何不能核准，並找到恢復�
 2. Browser interactions and screenshots support the screens, dimensions, and interactions inspected. Check keyboard focus, overflow, and relevant responsive sizes.
 3. Actual user interaction feedback is trial evidence. AI commentary or direction selection is not human usability testing.
 
+Tie self-review claims to the case and source version actually checked, following the evidence record in artifacts.md. A shared report format does not supply another case's observations, scores or review rounds; record only judgments and checks actually performed.
+
 If the browser is unavailable or a tool refuses an operation, retain deliverables and feasible checks, and state unverified items. Respect tool blocks without bypassing them through another interface. Reuse valid results for unchanged source and environment; recheck affected parts after changes.
 
 **Complete when:** the entry point is discoverable, sample behavior is distinguishable from real capabilities, the key path can be tried, and results and gaps are recorded. Label tool-limited verification as partial rather than claiming visual approval.
@@ -134,6 +148,6 @@ Finalization is user acceptance of a specific design version. Record accepted in
 
 Complete the handoff using [artifacts.md](references/artifacts.md): screens and states, reusable components, real data/permission integration points, observable acceptance scenarios, implementation order, and unresolved scope. Identify reusable capabilities first, then parts requiring new contracts or product decisions.
 
-Stop after design handoff by default. With explicit authorization for production implementation, carry the finalized design and constraints into the project's implementation workflow. Preserve entry points requiring human invocation; design acceptance does not authorize architecture decisions, release, or product scope expansion.
+Stop after design handoff by default; in an authorized autonomous batch, record the current case and continue within the batch boundary above. With explicit authorization for production implementation, carry the finalized design and constraints into the project's implementation workflow. Preserve entry points requiring human invocation; design acceptance does not authorize architecture decisions, release, or product scope expansion.
 
 Finish with the current stage, artifact entry points, main choices, actual verification, and next necessary action.
