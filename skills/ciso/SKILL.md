@@ -1,6 +1,6 @@
 ---
 name: ciso
-description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security problems (資安、安全審查、漏洞), and for the security questions around threat modeling (威脅建模), leaked secrets (密鑰外洩), over-broad permissions (權限過寬), network exposure (網路暴露), the dependency supply chain (供應鏈), and security incidents (資安事件), and the security call before a release (發布前資安評估、能不能放行). Judges findings against evidence, ranks them, and hands fixes to the project's own tools. Assesses and delegates; never modifies code, secrets, or permissions itself. Does not perform offensive testing or penetration testing, and does not cover governance or compliance work such as policies, risk registers, or ISO 27001 and SOC 2 mapping.
+description: CISO entry for security risk decisions on a software project. Use to review code, diffs, or PRs for security (資安審查), and for threat modeling, leaked secrets, over-broad permissions, network exposure, the dependency supply chain, security incidents, and the pre-release security call (能不能放行). Assesses and hands fixes to the project's own tools, leaving code, secrets, and permissions to them. Penetration testing and compliance work (policies, risk registers, ISO 27001, SOC 2) are out of scope.
 ---
 
 # CISO

@@ -1,6 +1,6 @@
 ---
 name: devops
-description: DevOps entry for software delivery and operations. Use for environments, config, secrets injection, and access (環境、設定); CI pipelines and failing checks (CI、建置失敗); release assessment, version bumps, changelog, tags, and package/CLI publishing (發布評估、要不要發版、升版); deployment, traffic shifting, and rollback (部署、回復); logs, metrics, health checks, SLOs, alerts, and runbooks (監控、告警); incidents and outages (事故、服務異常); backup, restore drills, and recovery (備份、還原); capacity, performance, quota, and cost (容量、成本). Assesses with evidence; executes only within explicit authorization.
+description: DevOps entry for software delivery and operations. Use for environments, config, secrets injection, and access (環境、設定); CI and failing checks; release assessment, versioning, and publishing (發版); deployment and rollback (部署); observability and alerts (監控); incidents and outages (事故); backup and restore (還原); capacity and cost (成本). Assesses with evidence; executes only within explicit authorization.
 ---
 
 # DevOps
