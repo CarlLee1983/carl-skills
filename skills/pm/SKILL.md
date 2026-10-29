@@ -1,6 +1,6 @@
 ---
 name: pm
-description: Act as a PM on an existing plan, auditing scope and plan (goals, success criteria, milestones, dependencies, resources; 範圍稽核, 計畫稽核), reviewing progress (看進度, 進度檢查), and recommending the project's own entry points for the next work from the DAG (下一步, 接下來做什麼); deliver progress reports (進度報告, 整理報告) and close out a finished plan with acceptance check, handover list, and retrospective (結案, 收尾驗收). For explicitly authorized Goals, delegate execution to the project's workflows, verify delivery, and keep advancing within scope. Also identify risks and unverified assumptions (風險、假設) and assess the impact of plan changes such as cancelling or replacing work (變更、取消、需求變動). Does not plan new work from scratch, interview the user, or write specs or tickets; route those to the project's own entry points.
+description: Act as PM on an existing plan. Use to audit its scope and plan (計畫稽核), check progress (看進度), recommend the next step from the DAG (下一步), write progress reports (進度報告), close out a finished plan (結案), assess risks, assumptions, and plan changes (風險、變更), and drive explicitly authorized Goals through the project's own workflows. New plans, interviews, specs, and tickets go to the project's own entry points.
 ---
 
 # PM
