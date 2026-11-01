@@ -8,7 +8,6 @@
 - `docs/<skill-name>/` holds specifications and maintenance documents. The devops specification is `docs/devops/SPEC.md`; its release capability keeps the former release-assessment specification at `docs/devops/release-SPEC.md`.
 - `README.md` lists available skills and installation guidance; update it when adding a skill.
 - `.scratch/<feature>/` records tickets and validation evidence. Preserve historical reports as evidence of their original checkpoints.
-- `.gitignore` excludes the local `graft/` cache; `.ignore` controls its search visibility. Preserve these conventions.
 
 ## Build, Test, and Development Commands
 
