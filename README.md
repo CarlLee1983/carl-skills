@@ -12,7 +12,7 @@ Carl 維護的開源 agent skills，提供可重複使用的工作流程。每�
 | [humanize-writing](skills/humanize-writing/SKILL.md) | Codex、Claude Code 等 | 潤飾繁體中文與英文，減少制式語句，保留原文事實、立場與語氣；程式碼、網址、路徑、引言與各類聲明逐字保留；敘事段落（事故經過、個人經驗、小說）另有保留情節與節奏的規則；介面文案另有規則；附繁中審閱腳本；不限定模型。 |
 | [calibrate-codex](skills/calibrate-codex/SKILL.md) | **Codex 專用** | 將明確回饋或重複問題轉成適當範圍的指引、技能、hook、規則或驗證措施。 |
 | [design-experience](skills/design-experience/SKILL.md) | Codex、Claude Code 等 | 以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發，也接受帶來的 UI 圖或喜歡的網站：訪談釐清風格或診斷問題、比較設計方向、建立互動原型，依回饋收斂至設計定稿與交接。 |
-| [pm](skills/pm/SKILL.md) | Codex、Claude Code 等；Goal 模式依環境能力 | 八項專案經理能力：範圍與計畫稽核（scope、plan）、進度與依賴檢查（check）、下一步建議與交接（next-step）、風險與假設（risk）、變更影響（change）、進度報告（report）、結案（close）；依專案規則查找各自的專案入口，接受明確提案後交接，或在已授權的 Goal 中持續推進。 |
+| [pm](skills/pm/SKILL.md) | Codex、Claude Code 等 | 九項專案經理能力：範圍與計畫稽核（scope、plan）、進度與依賴檢查（check）、下一步建議與交接（next-step）、依 DAG 推進剩餘工作（advance）、風險與假設（risk）、變更影響（change）、進度報告（report）、結案（close）；依專案規則查找各自的專案入口，接受明確提案後交接，或在授權後把剩餘工作推進到交付終點。 |
 
 ## 快速安裝
 
@@ -220,9 +220,9 @@ Claude Code 使用 `/pm`。技能沿用專案現有的 spec、工單與 tracker�
 
 自然語言交接仍受宿主與專案的上層規則約束；若環境強制手動輸入指令，需先讓該規則承認明確接受的交接，或使用提供的入口指令。`carl-mode` 是個人路由設定，不是安裝依賴，本技能不會替使用者修改它。
 
-持續推進需要環境提供可查詢與管理的 active Goal，以及使用者對指定計畫與實作入口的明確授權；僅來自已安裝 skill 的候選入口，除非專案規則宣告、Goal 指派點名或你已接受，否則會先問一次，不會自動執行。沒有 Goal 能力時，仍可查看進度與逐次交接；不能宣稱已啟動背景推進。單次交接不自動接下一張，commit、push、merge、發布與 tracker 寫入依既有授權處理。
+要 PM 把剩下的工作一路做完，就明確說「依拓撲把剩下的做完」，或在交接提案後回覆「全部推進」。PM 會依 DAG 派發 ready frontier；可隔離且來源沒記錄衝突的工作會平行派發。每個單元驗收後合入整合分支並重算 frontier，最後推送並開 PR；merge 到預設分支、tag 與發布仍由你決定，專案規則禁止推送時以規則為準。推進不需要宿主的 Goal 工具，有 Goal 時只負責跨 session 的持續性。僅來自已安裝 skill 的候選入口，除非專案規則宣告、授權時點名或你已接受，否則會先問一次。單次交接不自動接下一張。
 
-[維護驗收](docs/pm/acceptance.md) 列出封裝、交接與 Goal 情境；本次納入沿用已驗證的流程內容，完整 Goal 執行與各平台整合的驗證範圍見紀錄。
+[維護驗收](docs/pm/acceptance.md) 列出封裝、交接與推進情境；各層的驗證範圍與限制見紀錄。
 
 ## 更新與移除
 

@@ -5,7 +5,7 @@
 ## 專案管理（pm）
 
 **PM 能力**（PM capability）：
-pm skill 承擔的八項專案經理職責之一：scope、plan、check、next-step、risk、change、report、close。全部由同一個 pm 入口進入，不是各自獨立的 skill。
+pm skill 承擔的九項專案經理職責之一：scope、plan、check、next-step、advance、risk、change、report、close。全部由同一個 pm 入口進入，不是各自獨立的 skill。
 _Avoid_: 子 skill、`pm:<名稱>` 指令
 
 **稽核**（audit）：
@@ -25,8 +25,12 @@ _Avoid_: 預設流程、Matt skill（泛指入口時）
 _Avoid_: 可做清單、下一批
 
 **Goal**：
-宿主提供的原生持續目標物件，讓 pm 在使用者明確授權下持續推進指定計畫；它只保存目標與持續性，不擴張授權，也不取代紀錄來源中的進度。只有使用者明確要求並授權推進時，pm 才進入 Goal 執行；僅存在 Goal 或被提及時仍是查詢。
+宿主提供的原生持續目標物件。pm 推進時若宿主有 Goal，用它保存目標與跨 session 的持續性；它不是進入推進的條件，不擴張授權，也不取代紀錄來源中的進度。僅存在 Goal 或被提及時仍是查詢。
+
 _Avoid_: 計畫目標、scope 稽核的「目標」（指計畫本身要達成的事，英文用 objective）
+
+**推進（advance）**：
+使用者明確要求把指定計畫的剩餘工作做完時，pm 依 DAG 派發 ready frontier、驗收、合入整合分支並重算 frontier，直到交付終點或只剩等人決定的工作。預設交付終點是整合分支加 PR，merge 到預設分支仍由使用者決定。
 
 ## 交付與維運（devops）
 

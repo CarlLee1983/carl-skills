@@ -1,6 +1,6 @@
 # Close
 
-Close out a whole plan: confirm everything in scope is done and delivered, hand over, and record lessons. This extends single-ticket closure in [check](check.md) to the entire plan scope. Sources, evidence labels, and write-back rules come from the main skill; Goal completion conditions in [Goal execution](goal-execution.md) apply unchanged.
+Close out a whole plan: confirm everything in scope is done and delivered, hand over, and record lessons. This extends single-ticket closure in [check](check.md) to the entire plan scope. Sources, evidence labels, and write-back rules come from the main skill; the completion conditions in [advance](advance.md) apply unchanged.
 
 ## Gate: only when every in-scope ticket is closed
 
