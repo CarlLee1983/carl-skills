@@ -16,7 +16,7 @@ Provide a concise handoff for the recommended work with these fields; [advance](
 
 When verification depends on a specific upstream artifact, point to that artifact in the existing project records and state what the recipient should verify with it.
 
-When delivery requires a particular tool or permission, check that the assigned entry point or an already authorized collaborator has it for the required step. If coverage is missing or unknown, identify the affected step before dispatch.
+When delivery requires a particular tool or permission, check that the assigned entry point or an already authorized collaborator has it for the required step. If coverage is missing or unknown, name the affected step and hold that unit until coverage is confirmed. Other independent, authorized units may proceed.
 
 ### Choose the entry point
 
