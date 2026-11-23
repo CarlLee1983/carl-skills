@@ -18,6 +18,8 @@ When verification depends on a specific upstream artifact, point to that artifac
 
 When delivery requires a particular tool or permission, check that the assigned entry point or an already authorized collaborator has it for the required step. If coverage is missing or unknown, name the affected step and hold that unit until coverage is confirmed. Other independent, authorized units may proceed.
 
+When the project assigns an author and a verifier, name both in the handoff. If the entry point supports direct delivery and can wake an idle recipient, have the author send the revision to the verifier. The verifier returns a failed check and its evidence directly to the author, who sends the fix back to the same verifier. Use the existing project handoff when direct delivery is unavailable. Escalate scope, authorization, or cross-unit conflicts to PM.
+
 ### Choose the entry point
 
 Find the entry point using “Find the project entry point” in the main skill. Offer one ticket or a clearly bounded unit by default; offer an entire spec only when the entry point declares it accepts one, the user wants the whole spec executed, and its external prerequisites are satisfied. Write the handoff in the form the project's rules or the host use to invoke that entry point. Read the entry point before the actual handoff; if it cannot be read, report the missing entry point without claiming execution has started. Once an entire spec is handed off, that entry point owns its internal selection and integration; PM must not dispatch its nodes again.
