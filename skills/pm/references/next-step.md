@@ -14,6 +14,10 @@ When recommending parallel work, follow “Parallelism” and “Schedule and co
 
 Provide a concise handoff for the recommended work with these fields; [advance](advance.md) reuses them. ID and link; purpose and scope; work boundaries; prerequisite state, blockers, and completed portions; existing branches and assignees; reading entry points for spec/acceptance/decisions, and acceptance criteria; authorization scope; first concrete action; existing verification and closure requirements. Reference existing contracts rather than rewriting a spec.
 
+When verification depends on a specific upstream artifact, point to that artifact in the existing project records and state what the recipient should verify with it.
+
+When delivery requires a particular tool or permission, check that the assigned entry point or an already authorized collaborator has it for the required step. If coverage is missing or unknown, identify the affected step before dispatch.
+
 ### Choose the entry point
 
 Find the entry point using “Find the project entry point” in the main skill. Offer one ticket or a clearly bounded unit by default; offer an entire spec only when the entry point declares it accepts one, the user wants the whole spec executed, and its external prerequisites are satisfied. Write the handoff in the form the project's rules or the host use to invoke that entry point. Read the entry point before the actual handoff; if it cannot be read, report the missing entry point without claiming execution has started. Once an entire spec is handed off, that entry point owns its internal selection and integration; PM must not dispatch its nodes again.
