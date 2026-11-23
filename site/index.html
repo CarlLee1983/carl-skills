@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>carl-skills｜可以單獨安裝的 agent 技能</title>
-  <meta name="description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm、ciso。每個技能可獨立安裝，附設計、PM 與 CISO 案例。">
+  <meta name="description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm、ciso，另有候選技能 dba。已發布技能可獨立安裝，附設計、PM 與 CISO 案例。">
   <meta name="theme-color" content="#0a111b">
   <link rel="canonical" href="https://carllee1983.github.io/carl-skills/">
   <link rel="icon" href="favicon.ico" sizes="any">
@@ -16,7 +16,7 @@
   <meta property="og:site_name" content="carl-skills">
   <meta property="og:locale" content="zh_TW">
   <meta property="og:title" content="carl-skills｜可以單獨安裝的 agent 技能">
-  <meta property="og:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm、ciso。每個技能可獨立安裝，附設計、PM 與 CISO 案例。">
+  <meta property="og:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm、ciso，另有候選技能 dba。已發布技能可獨立安裝，附設計、PM 與 CISO 案例。">
   <meta property="og:url" content="https://carllee1983.github.io/carl-skills/">
   <meta property="og:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
   <meta property="og:image:alt" content="carl-skills：可以單獨裝的 agent 技能">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="carl-skills｜可以單獨安裝的 agent 技能">
-  <meta name="twitter:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm、ciso。每個技能可獨立安裝，附設計、PM 與 CISO 案例。">
+  <meta name="twitter:description" content="Carl 維護的開源 agent skills：devops、humanize-writing、calibrate-codex、design-experience、pm、ciso，另有候選技能 dba。已發布技能可獨立安裝，附設計、PM 與 CISO 案例。">
   <meta name="twitter:image" content="https://carllee1983.github.io/carl-skills/assets/og/landing.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,7 +65,7 @@
   </div>
   <div class="wrap">
     <h1><span>可以單獨裝的</span><span>agent 技能</span></h1>
-    <p class="lede">Carl 維護的開源 agent skills，提供可重複使用的工作流程。每個技能是一個自足的目錄，Codex 與 Claude Code 都能裝，只裝需要的那一個。</p>
+    <p class="lede">Carl 維護的開源 agent skills，提供可重複使用的工作流程。每個技能是一個自足的目錄，可依用途與支援平台單獨安裝。</p>
     <pre class="rv" style="margin:40px 0 0;padding:18px 20px;background:var(--panel);overflow-x:auto;font-size:15px;max-width:44em"><code style="background:none;padding:0">npx skills add CarlLee1983/carl-skills --list</code></pre>
     <p class="note" style="margin-top:12px">列出可安裝的技能，不會安裝。需要 Node.js 與 npm；完整安裝方式見 <a href="https://github.com/CarlLee1983/carl-skills#readme">README</a>。</p>
   </div>
@@ -74,14 +74,15 @@
 <main id="main">
   <section class="band wrap f-surface ledger" id="skills" aria-labelledby="skills-h">
     <div class="ledger-col" style="margin-left:0;width:min(100%,960px)">
-      <h2 id="skills-h" class="h2 rv" style="font-weight:900;margin-bottom:48px">六個技能</h2>
+      <h2 id="skills-h" class="h2 rv" style="font-weight:900;margin-bottom:48px">技能目錄</h2>
       <ol class="skill-list">
         <li class="rv"><a href="ciso/"><strong>ciso</strong><span>軟體專案的資安判斷：威脅建模、程式碼審查、暴露與供應鏈評估、發布判斷及事件處理。附四個離線重放案例與驗證限制。</span><em>Codex、Claude Code 等</em></a></li>
-        <li class="rv"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/design-experience"><strong>design-experience</strong><span>以產品設計師的角色，從主題、既有功能或不滿意的現有介面出發，也接受帶來的 UI 圖或喜歡的網站：訪談、比較設計方向、建立互動原型，依回饋收斂到定稿與交接。</span><em>Codex、Claude Code 等</em></a></li>
+        <li class="rv"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/design-experience"><strong>design-experience</strong><span>從主題、現有介面或參考圖開始，比較設計方向並製作互動原型。也可授權代理選定方向，逐案檢查並修正一批原型。</span><em>Codex、Claude Code 等</em></a></li>
         <li class="rv" style="--d:1"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/devops"><strong>devops</strong><span>軟體交付與維運的統一入口：環境、CI、發布評估、部署與回復、監控、事故、備份還原。先取得證據，在明確授權內執行並核驗。</span><em>Codex、Claude Code 等</em></a></li>
         <li class="rv" style="--d:2"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/humanize-writing"><strong>humanize-writing</strong><span>潤飾繁體中文與英文，減少制式語句，保留原文的事實、立場與語氣；敘事段落另有保留情節與節奏的規則。</span><em>Codex、Claude Code 等</em></a></li>
-        <li class="rv" style="--d:3"><a href="pm/"><strong>pm</strong><span>專案經理能力：範圍與計畫稽核、進度與依賴、下一步、風險與假設、變更影響、進度報告與結案。附實測邊界案例。</span><em>Codex、Claude Code 等</em></a></li>
+        <li class="rv" style="--d:3"><a href="pm/"><strong>pm</strong><span>專案經理能力：範圍與計畫稽核、進度與依賴、單次交接、依相依順序推進剩餘工單、風險與假設、變更影響、進度報告與結案。附實測邊界案例。</span><em>Codex、Claude Code 等</em></a></li>
         <li class="rv" style="--d:4"><a href="https://github.com/CarlLee1983/carl-skills/tree/main/skills/calibrate-codex"><strong>calibrate-codex</strong><span>把明確回饋或重複出現的問題，轉成範圍適當的指引、技能、hook、規則或驗證措施。</span><em>Codex 專用</em></a></li>
+        <li class="rv"><a href="https://github.com/CarlLee1983/carl-skills/blob/main/docs/dba/README.md"><strong>dba</strong><span>涵蓋 PostgreSQL、MySQL 與 MariaDB 的備份還原、高可用性、權限與生產變更。提供唯讀查證與人工操作手冊，完整驗收仍在進行。</span><em>候選技能・尚未發布</em></a></li>
       </ol>
     </div>
   </section>
