@@ -29,6 +29,8 @@ At start and at every resume, including after context compaction, rebuild state 
 
 Each scope has one scheduler: PM schedules outer units; an entry point holding a whole spec schedules inside it until delivery or a blocker report. Wait on an active unit's existing handle rather than starting another for the same scope.
 
+Before waiting, compare any pending delivery with its intended recipient's current state. If the recipient is still waiting for a result already delivered, direct them to it through the existing handoff. If units are waiting on each other, identify who can act next and route the available input to them. If no one can proceed, report the specific blocker.
+
 ## Blockers and decisions
 
 When a unit needs user judgment or more authorization, ask one concrete question naming the affected units, and keep advancing independent authorized work meanwhile. One blocked unit holds back only its descendants. Skip no unmet prerequisite.
