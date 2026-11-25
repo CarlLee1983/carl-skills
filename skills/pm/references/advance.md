@@ -20,23 +20,27 @@ A candidate that comes only from installed skills or agent capabilities runs wit
 
 At start and at every resume, including after context compaction, rebuild state from the tracker, branches and PRs, worktrees, running execution agents, and verification results. The tracker and the repository hold progress; the conversation and any Goal hold only the objective. Continue the original execution unit for assigned, active, or integration-pending work, and confirm missing assignment state before dispatching to avoid duplicate starts.
 
+Reconcile a rediscovered delivery against existing execution records by work unit, revision, and verification item. Reuse valid completed results, follow the existing handle for work in progress, and continue the original handoff for delivered work that still awaits action. Handle new verification items and new failure evidence even for a known revision. Record only new progress in the tracker.
+
 ## Loop
 
 1. **Select the frontier.** From the ready frontier and user priorities, pick the units to dispatch now. Use an entry point's whole-spec form only when it declares one and the spec's external prerequisites are met; leave that spec's internal DAG to it. Treat completed nodes as context.
 2. **Dispatch.** Pass the [handoff fields](next-step.md#handoff-fields) per unit, based on the integration branch tip. Dispatch independent units concurrently when each runs isolated (its own branch and worktree, or the entry point's own isolation) and “Parallelism” in [plan](plan.md) finds no recorded shared files, person, or integration step between them; otherwise run them one after another. A user request for sequential work wins.
-3. **Verify delivery.** The entry point reviews and tests under project rules; PM checks the actual diff, check results, and acceptance against the ticket. When a verifier is assigned, keep the unit pending until that verifier confirms acceptance of the delivered revision. Return unmet criteria to the producing unit through the agreed handoff. Reuse valid results for unchanged work.
+3. **Verify delivery.** The entry point reviews and tests under project rules; PM checks the actual diff, check results, and acceptance against the ticket. Attribute each result to the revision it actually checked. For each check on an earlier revision, use the diff to determine whether its evidence still applies to the current delivery. Reuse evidence that still applies and send affected or uncertain checks to the original verifier through the agreed handoff. When a verifier is assigned, keep the unit pending until that verifier confirms acceptance of the current delivered revision. Return unmet criteria to the producing unit through the agreed handoff.
 4. **Integrate and recompute.** Merge each verified unit into the integration branch, re-run the checks the merge affects, and record evidenced progress in the tracker within authorization, following “Proactively verify closure” in [check](check.md). Recompute the frontier and dispatch what it newly unblocks while other units are still running.
 
 Each scope has one scheduler: PM schedules outer units; an entry point holding a whole spec schedules inside it until delivery or a blocker report. Wait on an active unit's existing handle rather than starting another for the same scope.
 
-Before waiting, compare any pending delivery with its intended recipient's current state. If the recipient is still waiting for a result already delivered, direct them to it through the existing handoff. If units are waiting on each other, identify who can act next and route the available input to them. If no one can proceed, report the specific blocker.
+Before waiting, compare any pending delivery with its intended recipient's current state. If the recipient is still waiting for a result already delivered, direct them to it through the existing handoff. If units are waiting on each other, identify who can act next and route the available input to them.
 
 ## Blockers and decisions
 
 When a unit needs user judgment or more authorization, ask one concrete question naming the affected units, and keep advancing independent authorized work meanwhile. One blocked unit holds back only its descendants. Skip no unmet prerequisite.
 
+Before waiting or reporting a blocker, recheck the specific blocking source once, such as the CI run a unit is waiting for. Recompute readiness from the result and continue any newly available work within the advance authorization. If waiting is still necessary, name what or whom the unit is waiting for, the condition that clears the blocker, and the existing run or record to resume from. Use an existing wait handle when available. If the source cannot be checked, report the information gap.
+
 ## Finish
 
-Advance ends when the loop has nothing to dispatch. Report which of these holds, with evidence and continuation pointers: all in-scope work delivered to the endpoint; waiting for running units; waiting for a person (name who and what); or information missing. Waiting or an exhausted budget is not completion.
+When the loop has nothing left to dispatch, report which of these holds, with evidence and continuation pointers: all in-scope work delivered to the endpoint; waiting for running units; waiting for a person (name who and what); or information missing. Waiting or an exhausted budget is not completion.
 
 Declare completion only when every in-scope unit meets its closure conditions and integration, acceptance, and the delivery endpoint are satisfied; a ready PR whose source requires merging is still unfinished, and the reply lists the operations left to the user. Then follow the [closure exit](next-step.md#closure-exit). Clean up worktrees PM's dispatches created once their work is integrated.

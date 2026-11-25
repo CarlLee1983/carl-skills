@@ -39,6 +39,8 @@ Reuse existing record sources (tracker, specs, ADRs), without adding progress fi
 
 State the query source and time: to the minute with timezone when the host gives a clock, otherwise the date with the time marked unknown. If data is unavailable, report coverage and gaps; label stale data as stale instead of filling in current state from conversation memory.
 
+When a query encounters a late result or repeated delivery, or is about to report a blocker, apply the [delivery and waiting rules](references/advance.md) to the evidence and report the next step within query mode.
+
 ## Find the project entry point
 
 PM does not assume any particular workflow. Hand work to the project's own entry points (planning, implementation, research, and so on), found in this order; stop at the first step that yields one:
